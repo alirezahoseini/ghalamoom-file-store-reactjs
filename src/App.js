@@ -1,8 +1,13 @@
 import { useRoutes } from "react-router-dom";
+import routes from './routes.js';
+
+
+
 function App() {
-  const router = useRoutes();
+
+  const router = useRoutes(routes);
   return (
-    <div className="App">
+    <div className="App bg-gray-1">
       {router}
     </div>
   );
