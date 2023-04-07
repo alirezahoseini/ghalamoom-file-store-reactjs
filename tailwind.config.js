@@ -25,6 +25,8 @@ module.exports = {
     },
     boxShadow: {
       'both': '0 0px 20px rgba(0, 0, 0, 0.1)',
+      'both-2': '0 0px 30px rgba(128, 128, 128, 0.1)',
+      'both-3': '0 0px 40px rgba(179, 179, 179, 0.068)',
     },
     extend: {},
   },
