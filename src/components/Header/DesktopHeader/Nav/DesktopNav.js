@@ -14,7 +14,7 @@ export default function Nav() {
 
   return (
     <>
-      <ul id='desktop-nav' className='flex mr-20 gap-2 items-center'>
+      <ul id='desktop-nav' className='flex lg:mr-10 xl:mr-20 gap-2 items-center'>
         {
           navLinks.map(link => (
             <DesktopNavItem key={'desktop-' +link.id} {...link} />

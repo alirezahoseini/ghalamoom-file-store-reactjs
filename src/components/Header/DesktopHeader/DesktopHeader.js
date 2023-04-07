@@ -20,7 +20,9 @@ export default function DesktopHeader() {
         {/* Section Two */}
         <div id='left-section' className=' w-fit flex items-center justify-between gap-3'>
           <DesktopShopingCart />
-          <SearchBox />
+          <div className='md:hidden xl:inline-block'>
+            <SearchBox />
+          </div>
           <Button type={'button'} value='ورود | ثبت نام' hover={true} />
         </div>
       </div>
