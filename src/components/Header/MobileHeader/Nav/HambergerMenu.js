@@ -17,7 +17,7 @@ export default function HambergerMenu({ isShow, onClose }) {
 
 
     return (
-        <div id='hamberger-menu-mobile' className={`w-screen h-screen p-0 m-0 fixed top-0 right-0 transition-all bg-black duration-700
+        <div id='hamberger-menu-mobile' className={`w-screen h-screen p-0 m-0 fixed top-0 right-0 transition-all bg-black duration-700 z-50
         ${isShow ? ' pointer-events-auto visible bg-opacity-50	' : 'pointer-events-none invisible bg-opacity-0'}`}>
             {/* BackDrop Filter  */}
             <div id='BackDropFilter'

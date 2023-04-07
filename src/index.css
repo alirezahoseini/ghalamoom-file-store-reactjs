@@ -2,137 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/*---------------------------
-        Import Rokh font  
----------------------------*/
-@font-face {
-  font-family: 'rokh';
-  src: url('../public/fonts/rokh/eot/Rokh-Thin.eot'); /* IE9 Compat Modes */
-  src: url('../public/fonts/rokh/woff2/Rokh-Thin.woff2') format('woff2'),
-       url('../public/fonts/rokh/woff/Rokh-Thin.woff') format('woff'),
-       url('../public/fonts/rokh/ttf/Rokh-Thin.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 100;
-}
-@font-face {
-  font-family: 'rokh';
-  src: url('../public/fonts/rokh/eot/Rokh-ExtraLight.eot'); /* IE9 Compat Modes */
-  src: url('../public/fonts/rokh/woff2/Rokh-ExtraLight.woff2') format('woff2'),
-       url('../public/fonts/rokh/woff/Rokh-ExtraLight.woff') format('woff'),
-       url('../public/fonts/rokh/ttf/Rokh-ExtraLight.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 200;
-}
-@font-face {
-  font-family: 'rokh';
-  src: url('../public/fonts/rokh/eot/Rokh-Light.eot'); /* IE9 Compat Modes */
-  src: url('../public/fonts/rokh/woff2/Rokh-Light.woff2') format('woff2'),
-       url('../public/fonts/rokh/woff/Rokh-Light.woff') format('woff'),
-       url('../public/fonts/rokh/ttf/Rokh-Light.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 300;
-}
-@font-face {
-  font-family: 'rokh';
-  src: url('../public/fonts/rokh/eot/Rokh-Normal.eot'); /* IE9 Compat Modes */
-  src: url('../public/fonts/rokh/woff2/Rokh-Normal.woff2') format('woff2'),
-       url('../public/fonts/rokh/woff/Rokh-Normal.woff') format('woff'),
-       url('../public/fonts/rokh/ttf/Rokh-Normal.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'rokh';
-  src: url('../public/fonts/rokh/eot/Rokh-Regular.eot'); /* IE9 Compat Modes */
-  src: url('../public/fonts/rokh/woff2/Rokh-Regular.woff2') format('woff2'),
-       url('../public/fonts/rokh/woff/Rokh-Regular.woff') format('woff'),
-       url('../public/fonts/rokh/ttf/Rokh-Regular.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 500;
-}
-@font-face {
-  font-family: 'rokh';
-  src: url('../public/fonts/rokh/eot/Rokh-Medium.eot'); /* IE9 Compat Modes */
-  src: url('../public/fonts/rokh/woff2/Rokh-Medium.woff2') format('woff2'),
-       url('../public/fonts/rokh/woff/Rokh-Medium.woff') format('woff'),
-       url('../public/fonts/rokh/ttf/Rokh-Medium.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 600;
-}
-@font-face {
-  font-family: 'rokh';
-  src: url('../public/fonts/rokh/eot/Rokh-Bold.eot'); /* IE9 Compat Modes */
-  src: url('../public/fonts/rokh/woff2/Rokh-Bold.woff2') format('woff2'),
-       url('../public/fonts/rokh/woff/Rokh-Bold.woff') format('woff'),
-       url('../public/fonts/rokh/ttf/Rokh-Bold.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 700;
-}
-@font-face {
-  font-family: 'rokh';
-  src: url('../public/fonts/rokh/eot/Rokh-ExtraBold.eot'); /* IE9 Compat Modes */
-  src: url('../public/fonts/rokh/woff2/Rokh-ExtraBold.woff2') format('woff2'),
-       url('../public/fonts/rokh/woff/Rokh-ExtraBold.woff') format('woff'),
-       url('../public/fonts/rokh/ttf/Rokh-ExtraBold.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 800;
-}
-@font-face {
-  font-family: 'rokh';
-  src: url('../public/fonts/rokh/eot/Rokh-Black.eot'); /* IE9 Compat Modes */
-  src: url('../public/fonts/rokh/woff2/Rokh-Black.woff2') format('woff2'),
-       url('../public/fonts/rokh/woff/Rokh-Black.woff') format('woff'),
-       url('../public/fonts/rokh/ttf/Rokh-Black.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 900;
-}
+
 
 
 /*---------------------------
         Import Yekan font  
 ---------------------------*/
-@font-face {
-  font-family: 'yekan';
-  src: url('../public/fonts/iranyekan/IRANYekanLight.ttf');
-  font-style: normal;
-  font-weight: 200;
-}
-@font-face {
-  font-family: 'yekan';
-  src: url('../public/fonts/iranyekan/IRANYekanRegular.ttf');
-  font-style: normal;
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'yekan';
-  src: url('../public/fonts/iranyekan/IRANYekanMedium.ttf');
-  font-style: normal;
-  font-weight: 600;
-}
-@font-face {
-  font-family: 'yekan';
-  src: url('../public/fonts/iranyekan/IRANYekanExtraBold.ttf');
-  font-style: normal;
-  font-weight: 800;
-} 
+@import url('./Style/fontface.css');
 
 
 
-/*---------------------------
-        Import Yekan-bakh font  
----------------------------*/
-@font-face {
-  font-family: 'yekan-bakh';
-  src: url('../public/fonts/yekanbakh/YekanBakh_Light.ttf');
-  font-style: normal;
-  font-weight: 200;
-}
-@font-face {
-  font-family: 'yekan-bakh';
-  src: url('../public/fonts/yekanbakh/Yekan\ Bakh.ttf');
-  font-style: normal;
-  font-weight: 400;
-}
+
 
 body {
   margin: 0;

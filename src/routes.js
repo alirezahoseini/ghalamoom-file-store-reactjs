@@ -5,7 +5,7 @@ import Home from './components/Home/Home'
 
 // Website Routes Config
 const routes = [
-    {path: '*' , element: <Home />}
+    {path: '/' , element: <Home />}
 ];
 
 
