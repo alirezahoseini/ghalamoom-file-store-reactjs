@@ -52,7 +52,7 @@ export default function Footer() {
                     {/* Section 1 - about */}
                     <section id='about' className='p-6 lg:w-5/12'>
                         <Logo width={120} />
-                        <h2 className='font-yekan text-gray-3 mt-7 mb-3 text-sm break-words'>
+                        <h2 className='font-yekan text-gray-3 mt-7 mb-3 text-sm break-words leading-7'>
                             قلموم یکی از فعالیت ترین و پرتلاش ترین تولیدکنندگان محتوای گرافیک در ایران است و همیشه تلاش کرده تا با انتشار بروزترین و جدیدترین مقالات و دوره های آموزشی گرافیک دیزاین، قدمی در ارتقای سطح طراحان جوان ایرانی برداشته باشد.
                         </h2>
                         <form id='newslater' onSubmit={event => event.preventDefault()} className='w-full'>

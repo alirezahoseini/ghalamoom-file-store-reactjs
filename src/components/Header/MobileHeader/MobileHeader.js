@@ -16,15 +16,17 @@ export default function MobileHeader() {
             {/* Visable Header  */}
             <div id='visable-header' className='flex justify-between w-full items-center pr-2'>
                 <Logo />
-                <Button type='button' value='ورود | ثبت نام' link={true} url='/panel' />
+                <div className='flex items-center ml-2'>
+                    <Button type='button' value='ورود | ثبت نام' link={true} url='/panel' />
+                    <button id='hamberger-opener' className=' bg-gray-1  text-2xl p-2 rounded-lg text-secondary-1 shadow-both mr-6' onClick={() => setShowHamberger(prevState => !prevState)}>
+                        {showHamberger ? <FaTimes /> : <FaBars />}
+                    </button>
+
+                </div>
             </div>
-            {/* Hamberger menu  */}
-            <div className='text-left mt-7 ml-2'>
-                <button id='hamberger-opener' className=' bg-gray-1  text-2xl p-2 rounded-lg text-secondary-1 shadow-both' onClick={() => setShowHamberger(prevState => !prevState)}>
-                    {showHamberger ? <FaTimes /> : <FaBars />}
-                </button>
-            </div>
+            {/* Start Hamberger menu  */}
             <HambergerMenu isShow={showHamberger} onClose={() => setShowHamberger(prevState => !prevState)} />
+            {/* End of Hamberger menu  */}
         </div>
     )
 }
