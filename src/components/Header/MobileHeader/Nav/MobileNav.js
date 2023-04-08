@@ -10,7 +10,7 @@ export default function MobileNav() {
         <ul id='mobile-nav'>
             {
                 navLinks.length && navLinks.map(link => (
-                    <MobileNavItem key={'mobile-' + link.id} {...link} />
+                    <MobileNavItem key={'mobile-' + link.id}  {...link} />
                 ))
             }
         </ul>
