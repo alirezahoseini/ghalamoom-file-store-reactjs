@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+// Files
+import {dynamicLinks} from '../../../dynamicLinks.js'
+
 // Components
 import DesktopNav from './Nav/DesktopNav'
 import Logo from '../../Global/Logo'
@@ -23,7 +26,7 @@ export default function DesktopHeader() {
           <div className='md:hidden xl:inline-block'>
             <SearchBox />
           </div>
-          <Button type={'button'} value='ورود | ثبت نام' hover={true} />
+          <Button type={'button'} value='ورود | ثبت نام' hover={true} link={true} url={dynamicLinks.panel} />
         </div>
       </div>
     </div>

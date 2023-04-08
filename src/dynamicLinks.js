@@ -9,7 +9,8 @@ const dynamicLinks = {
     blog: '/blog',
     mag: '/blog/mag',
     videos: '/blog/video',
-    cast: '/blog/cast'
+    cast: '/blog/cast',
+    panel: '/panel',
 }
 
 const navigaitionLinks = [

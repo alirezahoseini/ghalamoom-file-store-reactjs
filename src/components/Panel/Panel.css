@@ -1,0 +1,9 @@
+#admin-panel .mobile-menu-item.active{
+    background-color: #3B82F6;
+    color: white;
+}
+
+/* Tailwind Breakpoint Lg  */
+@media (min-width: 768px) { 
+
+ }
