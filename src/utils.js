@@ -5,4 +5,5 @@ const formValidation = (inputsValue) => {
     return result
 }
 
+
 export { formValidation }
