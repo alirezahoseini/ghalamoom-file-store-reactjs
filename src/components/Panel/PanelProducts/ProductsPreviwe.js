@@ -7,10 +7,10 @@ export default function ProductsPreviwe({ productsData, isLoadProducts, onRemove
 
   return (
     <div id='products-preview' className='bg-white rounded-xl p-2'>
-      <h2 className='text-2xl text-gray-5 text-center'>محصولات</h2>
+      <h2 className='text-xl font-bold text-gray-5 text-center'>محصولات</h2>
       <table className='w-full flex flex-col mt-3 '>
         <thead>
-          <tr className='w-full flex justify-evenly text-white text-center bg-gray-4 rounded-lg p-3'>
+          <tr className='w-full flex text-sm justify-evenly text-white text-center bg-gray-4 rounded-lg p-3'>
             <td className='w-2/12' >آیدی</td>
             <td className='w-3/12' >تصویر</td>
             <td className='w-7/12'>عنوان</td>
@@ -41,8 +41,6 @@ export default function ProductsPreviwe({ productsData, isLoadProducts, onRemove
                   </td>
                 </tr>
               )
-
-
             )
           }
 

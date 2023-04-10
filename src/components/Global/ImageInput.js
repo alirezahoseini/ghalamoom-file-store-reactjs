@@ -35,7 +35,7 @@ export default function ImageInput({ imageValue, setNewImageValue , inputId = 'n
                 ) : (
                     /// If selected image show this
                     <div className='flex justify-around items-center'>
-                        <label htmlFor={inputId} className='flex flex-col w-4/12  cursor-pointer text-text-1 text-xs p-2 text-center items-center justify-center bg-gray-1 p-4 gap-3 rounded-2xl border-2 border-dashed border-gray-4 h-fit '>
+                        <label htmlFor={inputId} className='flex flex-col w-4/12  cursor-pointer text-text-1 text-xs p-2 text-center items-center justify-center bg-gray-1 lg:p-4 gap-3 rounded-2xl border-2 border-dashed border-gray-4 h-fit '>
                             <RiImageEditLine className='text-3xl' />
                             <h4>ویرایش تصویر</h4>
                         </label>

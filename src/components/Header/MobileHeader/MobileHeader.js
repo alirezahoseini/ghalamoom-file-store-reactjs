@@ -38,12 +38,12 @@ export default function MobileHeader() {
             {/* Start Hamberger menu  */}
             <HambergerMenu isShow={showHamberger} onClose={() => setShowHamberger(prevState => !prevState)}>
                 {/* Navigation  */}
-                <MobileNav />
+                <MobileNav onClose={() => setShowHamberger(prevState => !prevState)} />
                 {/* Social icons  */}
                 <div className='flex justify-center items-center gap-2 my-4'>
                     {
                         socialIcons.map(icon => (
-                            <SocialIcon key={icon.id} {...icon} >
+                            <SocialIcon key={icon.id} {...icon} پ >
                                 {icon.iconName}
                             </SocialIcon>
                         ))

@@ -9,9 +9,13 @@ import PanelHeader from './PanelHeader/PanelHeader'
 
 export default function Panel() {
   return (
-    <div id="admin-panel">
-        <PanelHeader />
+    <div id="admin-panel" className='flex items-center justify-center flex-col
+    '>
+      <PanelHeader />
+      <div className='container'>
+
         <Outlet />
+      </div>
     </div>
   )
 }

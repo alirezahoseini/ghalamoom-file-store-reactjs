@@ -1,23 +1,28 @@
 import React, { useState } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
+import { FiUser } from 'react-icons/fi'
+import { BsBoxSeam, BsMortarboard, BsHouse, BsColumns } from 'react-icons/bs'
 import { NavLink } from 'react-router-dom'
 
 // Components 
 import UserAvatar from './UserAvatar'
 import HambergerMenu from '../../Global/HambergerMenu'
+import PanelHeaderItem from './PanelHeaderItem'
 
 export default function PanelHeader() {
 
     const [showMobileMenu, setShowMobileMenu] = useState(false)
 
     const panelLinks = [
-        { id: 'panelLink-1', title: 'محصولات', path: 'products' },
-        { id: 'panelLink-2', title: 'دوره ها', path: 'courses' },
-        // {id: 'panelLink-3', title: 'پست ها', path: 'posts' },
+        { id: 'panelLink-3', title: 'داشبورد', path: 'dashbord', icon: <BsHouse /> },
+        { id: 'panelLink-1', title: 'محصولات', path: 'products', icon: <BsBoxSeam /> },
+        { id: 'panelLink-2', title: 'دوره ها', path: 'courses', icon: <BsMortarboard /> },
+        { id: 'panelLink-5', title: 'نمونه کار ها', path: 'artworks', icon: <BsColumns /> },
+        { id: 'panelLink-6', title: 'حساب کاربری', path: 'profile', icon: <FiUser /> },
     ]
 
     return (
-        <div id="panel-header">
+        <div id="panel-header" className='w-full'>
             {/* // Mobile Header  */}
             <div id='mobile-header' className='lg:hidden bg-white flex items-center p-4'>
                 <div className='w-full flex items-center justify-between'>
@@ -31,13 +36,7 @@ export default function PanelHeader() {
                     <ul>
                         {
                             panelLinks.map(link => (
-                                <li key={link.id}>
-                                    <NavLink onClick={() => setShowMobileMenu(prevState => !prevState)} to={link.path} className={`mobile-menu-item p-2 my-5 flex rounded-lg 
-                                     ${isActive => isActive ? "active" : ""}`
-                                    } >
-                                        {link.title}
-                                    </NavLink>
-                                </li>
+                                <PanelHeaderItem key={`mobile-${link.id}`} {...link} />
                             ))
                         }
                     </ul>
@@ -50,13 +49,7 @@ export default function PanelHeader() {
                 <ul className='flex items-center gap-3'>
                     {
                         panelLinks.map(link => (
-                            <li key={link.id}>
-                                <NavLink onClick={() => setShowMobileMenu(prevState => !prevState)} to={link.path} className={`mobile-menu-item py-2 px-5 my-5 flex hover:bg-gray-1 rounded-xl duration-300
-                                     ${isActive => isActive ? "active" : ""}`
-                                } >
-                                    {link.title}
-                                </NavLink>
-                            </li>
+                            <PanelHeaderItem key={`desktop-${link.id}`} {...link} />
                         ))
                     }
                 </ul>

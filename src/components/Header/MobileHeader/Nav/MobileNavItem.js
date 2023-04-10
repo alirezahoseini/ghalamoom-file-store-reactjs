@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FaChevronLeft } from 'react-icons/fa'
 
-export default function MobileNavItem({ name, url, subMenu, subLinks = null }) {
+export default function MobileNavItem({ name, url, subMenu, subLinks = null , onClose}) {
     const [isShowSubMenu, setIsShowSubMenu] = useState(false)
 
 
@@ -10,7 +10,7 @@ export default function MobileNavItem({ name, url, subMenu, subLinks = null }) {
         <>
             {!subMenu ? (
                 // single item ------------
-                <li className='mobile-nav-item font-yekan-bakh p-6 border-b-2 border-gray-1 text-xs font-bold text-primary-1'>
+                <li className='mobile-nav-item font-yekan-bakh p-6 border-b-2 border-gray-1 text-xs font-bold text-primary-1' onClick={onClose}>
                     <Link to={url}>{name}</Link>
                 </li>
             ) : (
@@ -25,7 +25,7 @@ export default function MobileNavItem({ name, url, subMenu, subLinks = null }) {
                     <div className={` transition-all duration-500 ${!isShowSubMenu ? ' max-h-0 overflow-hidden' : 'h-auto'}`}>
                         {
                             subLinks.map(subItem => (
-                                <div key={subItem.id} className={`submenu-item font-yekan-bakh pt-7 p-6 border-b-2 border-gray-1 text-xs font-bold text-primary-1 `}>
+                                <div key={subItem.id} className={`submenu-item font-yekan-bakh pt-7 p-6 border-b-2 border-gray-1 text-xs font-bold text-primary-1 `} onClick={onClose}>
                                     <Link to={subItem.url}>{subItem.name}</Link>
                                 </div>
                             ))

@@ -10,7 +10,11 @@ import Loader from '../../Global/Loader';
 
 export default function PanelProducts() {
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(
+    [
+
+  ]
+  );
   const [isLoadProducts, setIsLoadProducts] = useState(true);
   const [updateComponent, setUpdateComponent] = useState(false)
   const [isLoadDataFromApi, setIsLoadDataFromApi] = useState(false)
@@ -93,13 +97,8 @@ export default function PanelProducts() {
       setIsShowProductEditePopup(true)
     } else {
       ////// Edit product from server and app
-      const { productId } = editdProductObjectFromPopup;
-      const newProduct = {
-        title: editdProductObjectFromPopup.title,
-        description: editdProductObjectFromPopup.description,
-        size: editdProductObjectFromPopup.size,
-        image: editdProductObjectFromPopup.image
-      };
+      const productId = editdProductObjectFromPopup[1];
+      const newProduct = editdProductObjectFromPopup[0]
 
       // show loader
       setIsLoadDataFromApi(true)
@@ -116,7 +115,7 @@ export default function PanelProducts() {
         })
         .catch(err => {
           console.log(err)
-          alert("محصول ویرایش نشد : لطفا با از vpn استفاده کنید")
+          alert("محصول ویرایش نشد : لطفا با  vpn استفاده کنید")
           setIsLoadDataFromApi(false)
           setIsShowProductEditePopup(false)
         })
