@@ -11,8 +11,8 @@ export default function Dashbord() {
                 <div id="alert" className='bg-red-2 text-white p-3 rounded-2xl leading-8 shadow-both md:w-6/12'>
                     سلام دوست من <br />
                     این پنل کاربری برای <strong>تست نیست</strong> و تمام اطلاعات سایت رو مدیریت میکنه. <br />
-                    <strong> لطفا چیزی رو حذف نکنید</strong>.<br />
-                    اگر هم برای تست محصولی اضافه کردید آخرسر پاکش کنید.<br />
+                    <strong> لطفا چیزی رو حذف نکن</strong>.<br />
+                    اگر هم برای تست محصولی اضافه کردی آخرسر پاکش کن.<br />
                     مرسی ❤️
                 </div>
                 <div className='bg-blue text-white p-3 rounded-2xl leading-8 shadow-both md:w-6/12'>

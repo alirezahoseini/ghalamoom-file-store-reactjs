@@ -1,6 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
+// files
+import { productsData } from '../../../backup/backup';
+
 // Components 
 import NewProductForm from './NewProductForm'
 import ProductsPreviwe from './ProductsPreviwe'
@@ -8,13 +11,10 @@ import ProductEditPopup from './ProductEditPopup';
 import Loader from '../../Global/Loader';
 
 
+
 export default function PanelProducts() {
 
-  const [products, setProducts] = useState(
-    [
-
-  ]
-  );
+  const [products, setProducts] = useState([]);
   const [isLoadProducts, setIsLoadProducts] = useState(true);
   const [updateComponent, setUpdateComponent] = useState(false)
   const [isLoadDataFromApi, setIsLoadDataFromApi] = useState(false)
@@ -84,8 +84,6 @@ export default function PanelProducts() {
         alert("محصول پاک نشد : لطفا با از vpn استفاده کنید")
         setIsLoadDataFromApi(false)
       })
-
-
   }
 
   // Edit product
@@ -105,7 +103,7 @@ export default function PanelProducts() {
 
       // request
       const url = `https://x8ki-letl-twmt.n7.xano.io/api:_UjxYfOm/products/${productId}`
-      axios.post(url,newProduct)
+      axios.post(url, newProduct)
         .then(res => res)
         .then(data => {
           setUpdateComponent(prevState => !prevState)
@@ -122,9 +120,6 @@ export default function PanelProducts() {
 
     }
   }
-
-
-
 
 
   return (

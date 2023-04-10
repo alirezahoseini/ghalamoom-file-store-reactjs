@@ -2,7 +2,7 @@
 
 
 // Products 
-const products = [
+const productsData = [
     {
         "id": 58,
         "created_at": 1681081729672,
@@ -76,3 +76,7 @@ const products = [
         "info": "فونت Magistic از فونت های سریف هست که ازش در طراحی های رسمی خودتون میتونین استفاده کنین."
     }
 ]
+
+
+
+export {productsData}

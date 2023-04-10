@@ -24,7 +24,7 @@ export default function ProductPreviewItem({ id, image, title, category, like, o
                             <TbCategory className='text-sm' />
                             <span>{category}</span>
                         </div>
-                        <div className='flex items-center justify-between py-1 px-2 bg-gray-1 bg-opacity-50 rounded-md text-xs gap-2 text-gray-4' >
+                        <div className='flex items-center justify-between py-1 px-2 bg-pink  rounded-md text-xs gap-2 bg-opacity-10 text-pink ' >
                             <BsHeart />
                             <span>{like}</span>
                         </div>
