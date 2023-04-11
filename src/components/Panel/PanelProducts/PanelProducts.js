@@ -123,13 +123,16 @@ export default function PanelProducts() {
 
 
   return (
-    <div id='panel-products' className='flex flex-col-reverse lg:flex-row items-start justify-around'>
-      <div className='w-full p-3 lg:w-4/12 lg:p-5'>
-        <NewProductForm addNewProductToList={addNewProduct} />
-      </div>
-      <div className='w-full p-3 lg:w-8/12 lg:p-5'>
+    <div id='panel-products' className='flex flex-col items-start justify-around'>
+      {/* Products list  */}
+      <div className='w-full p-3'>
         <ProductsPreviwe productsData={products} onRemoveProduct={removeProduct} onEditProduct={editProduct} isLoadProducts={isLoadProducts} />
       </div>
+      {/* New product form  */}
+      <div className='w-full p-3'>
+        <NewProductForm addNewProductToList={addNewProduct} />
+      </div>
+
       {
         <ProductEditPopup isShow={isShowProductEditePopup} onClose={() => setIsShowProductEditePopup(prevState => !prevState)} productData={currentProductForEdit} onSubmitForm={editProduct} />
       }

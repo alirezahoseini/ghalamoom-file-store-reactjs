@@ -5,8 +5,6 @@ export default function PrivatePage({ children }) {
 
     const navegate = useNavigate()
 
-
-
     useEffect(() => {
         const a = true
         if (a) {

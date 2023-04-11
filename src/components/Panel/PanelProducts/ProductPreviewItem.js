@@ -21,7 +21,7 @@ export default function ProductPreviewItem({ id, image, title, category, like, o
                     <div>{title}</div>
                     <div className='flex items-center justify-start mt-3 gap-3' >
                         <div className='flex items-center justify-between py-1 px-2 bg-gray-1 bg-opacity-50 rounded-md text-xs gap-2 text-gray-4' >
-                            <TbCategory className='text-sm' />
+                            <TbCategory className='text-sm hidden lg:inline-block' />
                             <span>{category}</span>
                         </div>
                         <div className='flex items-center justify-between py-1 px-2 bg-pink  rounded-md text-xs gap-2 bg-opacity-10 text-pink ' >

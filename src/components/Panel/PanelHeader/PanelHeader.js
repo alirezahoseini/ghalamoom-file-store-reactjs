@@ -24,19 +24,19 @@ export default function PanelHeader() {
     return (
         <div id="panel-header" className='w-full'>
             {/* // Mobile Header  */}
-            <div id='mobile-header' className='lg:hidden bg-white flex items-center p-4'>
+            <div id='mobile-header' className='rounded-none sm:rounded-xl lg:hidden bg-white flex items-center p-4'>
                 <div className='w-full flex items-center justify-between'>
-                    <button id='menu-opener-btn' className='  text-2xl p-2  mr-6' onClick={() => setShowMobileMenu(prevState => !prevState)}>
+                    <button id='menu-opener-btn' className='  text-2xl p-2  mr-1' onClick={() => setShowMobileMenu(prevState => !prevState)}>
                         {showMobileMenu ? <FaTimes /> : <FaBars />}
                     </button>
                     <UserAvatar />
                 </div>
                 {/* Start Hamberger menu  */}
-                <HambergerMenu isShow={showMobileMenu} onClose={() => setShowMobileMenu(prevState => !prevState)} position='right' width='w-5/12' closeBtn={false}>
+                <HambergerMenu isShow={showMobileMenu} onClose={() => setShowMobileMenu(prevState => !prevState)} position='right' width='w-7/12' closeBtn={false}>
                     <ul>
                         {
                             panelLinks.map(link => (
-                                <PanelHeaderItem key={`mobile-${link.id}`} {...link} />
+                                <PanelHeaderItem key={`mobile-${link.id}`} {...link} onClose={() => setShowMobileMenu(prevState => !prevState)} />
                             ))
                         }
                     </ul>
@@ -45,15 +45,14 @@ export default function PanelHeader() {
             </div>
             {/* // End of Mobile Header  */}
             {/* // Desktop Header  */}
-            <div id="desktop-header" className='hidden lg:flex bg-white p-4 items-center justify-between'>
-                <ul className='flex items-center gap-3'>
+            <div id="desktop-header" className='hidden lg:flex bg-white h-fit py-3 pl-3 rounded-2xl'>
+                <ul className='w-full' >
                     {
                         panelLinks.map(link => (
-                            <PanelHeaderItem key={`desktop-${link.id}`} {...link} />
+                            <PanelHeaderItem key={`desktop-${link.id}`} {...link} onClose={() => setShowMobileMenu(prevState => !prevState)} />
                         ))
                     }
                 </ul>
-                <UserAvatar />
             </div>
             {/* // End of Desktop Header  */}
         </div>

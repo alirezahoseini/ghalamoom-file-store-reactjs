@@ -16,8 +16,8 @@ export default function ProductListItem({ title, image, format, like, category, 
                     <span className='bg-gray-1 w-fit py-1 px-2 rounded-md'>{category}</span>
                 </td>
                 <td className='w-4/12 flex flex-col gap-3'>
-                    <span className='bg-gray-1 w-fit py-1 px-2 rounded-md text-xs '>
-                        فرمت : {format}
+                    <span className='bg-gray-1 w-fit py-1 px-2 rounded-md' style={{fontSize:10}}>
+                       {format}
                     </span>
                     <span className='bg-pink flex w-fit py-1 px-2 text-xs bg-opacity-10 text-pink gap-2 items-center rounded-lg' >
                         <BsHeart />

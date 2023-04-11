@@ -58,9 +58,9 @@ module.exports = {
         '12': '5rem',
         '13': '6rem',
       },
+    },
   },
-},
-plugins: [],
+  plugins: [],
 }
 
 
