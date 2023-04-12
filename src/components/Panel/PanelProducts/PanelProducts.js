@@ -23,7 +23,7 @@ export default function PanelProducts() {
 
 
   useEffect(() => {
-    const url = 'https://x8ki-letl-twmt.n7.xano.io/api:_UjxYfOm/products'
+    const url = 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/products'
     axios.get(url)
       .then(res => res)
       .then(data => {
@@ -43,7 +43,7 @@ export default function PanelProducts() {
     // show loader
     setIsLoadDataFromApi(true)
 
-    const url = 'https://x8ki-letl-twmt.n7.xano.io/api:_UjxYfOm/products'
+    const url = 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/products'
     // request
     axios.post(url, newProductInputValues)
       .then(res => res)
@@ -69,7 +69,7 @@ export default function PanelProducts() {
     // show loader
     setIsLoadDataFromApi(true)
     // request
-    const url = `https://x8ki-letl-twmt.n7.xano.io/api:_UjxYfOm/products/${productId}`
+    const url = `https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/${productId}`
     axios.delete(url)
       .then(res => res)
       .then(data => {
@@ -102,7 +102,7 @@ export default function PanelProducts() {
       setIsLoadDataFromApi(true)
 
       // request
-      const url = `https://x8ki-letl-twmt.n7.xano.io/api:_UjxYfOm/products/${productId}`
+      const url = `https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/products/${productId}`
       axios.post(url, newProduct)
         .then(res => res)
         .then(data => {

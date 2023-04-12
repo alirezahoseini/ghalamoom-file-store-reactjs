@@ -1,0 +1,21 @@
+.form-input ~ span{
+    display: none;
+    transition: .5s all;
+    -webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -ms-transition: .5s all;
+    -o-transition: .5s all;
+    opacity: 0;
+    border-color: white;
+}
+input:invalid[focused=true] ~ span{
+    border-color: red;
+    display: inline-block;
+    opacity: 1;
+}
+.form-input {
+    border-color: white;
+}
+input:invalid[focused=true]{
+    border-color: red;
+}

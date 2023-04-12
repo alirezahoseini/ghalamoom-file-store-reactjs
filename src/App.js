@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App bg-gray-1 text-sm font-yekan">
       <Header />
-        {router}
+      {router}
       <Footer />
     </div>
   );

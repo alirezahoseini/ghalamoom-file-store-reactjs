@@ -10,7 +10,7 @@ export default function ProductList({ category, headTitle = 'عنوان پیشف
 
 
     useEffect(() => {
-        const url = `https://x8ki-letl-twmt.n7.xano.io/api:_UjxYfOm/${category}`
+        const url = `https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/${category}`
         axios.get(url)
             .then(res => res)
             .then(data => {
