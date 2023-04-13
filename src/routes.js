@@ -1,8 +1,8 @@
-
+import { Navigate } from 'react-router-dom';
 // Import Components 
 import Home from './components/Home/Home'
 import Panel from './components/Panel/Panel';
-import Dashbord from './components/Panel/Dashbord/Dashbord';
+import Dashboard from './components/Panel/Dashboard/Dashboard';
 import PanelProducts from './components/Panel/PanelProducts/PanelProducts';
 import PanelCourses from './components/Panel/PanelCourses/PanelCourses';
 import LoginPage from './components/Panel/LoginPage/LoginPage';
@@ -14,12 +14,14 @@ const routes = [
     { path: '/', element: <Home /> },
     {
         path: '/panel', element: <PrivatePage ><Panel /></PrivatePage>, children: [
-            { path: 'dashbord', element:<PrivatePage ><Dashbord /></PrivatePage>},
-            { path: 'products', element:<PrivatePage ><PanelProducts /></PrivatePage>},
-            { path: 'courses', element:<PrivatePage ><PanelCourses /></PrivatePage>},
-        ]
+            { path: 'dashboard', element: <PrivatePage ><Dashboard /></PrivatePage> },
+            { path: 'products', element: <PrivatePage ><PanelProducts /></PrivatePage> },
+            { path: 'courses', element: <PrivatePage ><PanelCourses /></PrivatePage> },
+            { path: '', element:<Navigate to="dashboard" replace={ true} />},
+            { path: '*', element:<Navigate to="dashboard" replace={ true} />},
+]
     },
-    { path: '/login', element: <LoginPage /> },
+{ path: '/login', element: <LoginPage /> },
 
 ];
 

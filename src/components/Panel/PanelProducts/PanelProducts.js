@@ -69,20 +69,21 @@ export default function PanelProducts() {
     // show loader
     setIsLoadDataFromApi(true)
     // request
-    const url = `https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/${productId}`
+    const url = `https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/products/${productId}`
     axios.delete(url)
-      .then(res => res)
-      .then(data => {
-        /// Reomve product from app
+      .then(res => {
         const newProductsList = products.filter(product => product.id !== productId)
         setProducts(newProductsList);
         alert('محصول با موفقیت پاک شد')
         setIsLoadDataFromApi(false)
-      })
-      .catch(err => {
-        console.log(err)
-        alert("محصول پاک نشد : لطفا با از vpn استفاده کنید")
-        setIsLoadDataFromApi(false)
+      }).catch(err => {
+        if (err.response) {
+          console.log(err.response)
+          setIsLoadDataFromApi(false)
+        } else if (err.request) {
+          alert("محصول پاک نشد : لطفا با از vpn استفاده کنید")
+          setIsLoadDataFromApi(false)
+        }
       })
   }
 

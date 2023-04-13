@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
+// Import functions
+import { setCooki } from '../../../../utils'
+
+// Components
 import SubmitButton from '../ChilldComponents/SubmitButton'
 import LoginWithSocials from '../ChilldComponents/LoginWithSocials'
 import Input from '../ChilldComponents/Input'
 
 export default function LoginForm({ showLogin }) {
-    const [values , setValues] = useState({
+    const [values, setValues] = useState({
         email: '',
         password: ''
     });
+    const [isLoadingDataFromApi, setLoadingDataFromApi] = useState(false);
+    const navigateTo = useNavigate();
 
     const inputsArray = [
         {
@@ -33,11 +40,38 @@ export default function LoginForm({ showLogin }) {
     ]
 
     const onChangeHandler = (event) => {
-        setValues({...values , [event.target.name] : event.target.value})
+        setValues({ ...values, [event.target.name]: event.target.value })
     }
 
-    const onSubmitHandler = (event) => {
-        console.log(values)
+    const onSubmitHandler = async (event) => {
+        setLoadingDataFromApi(true)
+        event.preventDefault()
+        const url = 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/login'
+
+        axios.post(url, values)
+            .then(res => {
+                setCooki('token', res.data.authToken, 7)
+                setCooki('email', values.email, 7)
+                setLoadingDataFromApi(false)
+                alert('با موفقیت وارد شدید')
+                navigateTo('/panel/dashbord')
+            })
+            .catch(err => {
+                if (err.response) {
+                    if (err.response.status === 403) {
+                        setLoadingDataFromApi(false)
+                        alert('ایمیل یا رمز عبور اشتباه است.!')
+                    }else{
+                        console.log(err.response)
+                    }
+                } else if (err.request) {
+                    setLoadingDataFromApi(false)
+                    alert('پاسخی از سرور دریافت نشد. حتما از VPN استفاده کنید.!')
+                } else {
+                    setLoadingDataFromApi(false)
+                    console.log(err)
+                }
+            })
     }
 
     return (
@@ -52,7 +86,7 @@ export default function LoginForm({ showLogin }) {
                     <Input key={input.id} onChangeEvent={onChangeHandler} {...input} />
                 ))}
                 {/* Submit button  */}
-                <SubmitButton value='ورود' />
+                <SubmitButton value='ورود' loading={isLoadingDataFromApi} />
                 {/* Login with socials  */}
                 <LoginWithSocials />
                 {/* End of Login with socials  */}

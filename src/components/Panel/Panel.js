@@ -1,5 +1,4 @@
-import React from 'react'
-import { useNavigate, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 // Files 
 import './Panel.css'
@@ -8,9 +7,6 @@ import './Panel.css'
 import PanelHeader from './PanelHeader/PanelHeader'
 
 export default function Panel() {
-
-
-
 
   return (
     <div className='container mx-auto'>

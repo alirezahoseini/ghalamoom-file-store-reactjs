@@ -14,7 +14,7 @@ export default function PanelHeader() {
     const [showMobileMenu, setShowMobileMenu] = useState(false)
 
     const panelLinks = [
-        { id: 'panelLink-3', title: 'داشبورد', path: 'dashbord', icon: <BsHouse /> },
+        { id: 'panelLink-3', title: 'داشبورد', path: 'dashboard', icon: <BsHouse /> },
         { id: 'panelLink-1', title: 'محصولات', path: 'products', icon: <BsBoxSeam /> },
         { id: 'panelLink-2', title: 'دوره ها', path: 'courses', icon: <BsMortarboard /> },
         { id: 'panelLink-5', title: 'نمونه کار ها', path: 'artworks', icon: <BsColumns /> },

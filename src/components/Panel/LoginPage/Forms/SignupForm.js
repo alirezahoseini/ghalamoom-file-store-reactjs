@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
-// 
-import { addNewMessage } from '../../../Header/Message/NewMessage.js'
+// Import functions
+import { setCooki } from '../../../../utils'
 
 // Commponents
 import Input from '../ChilldComponents/Input.js'
 import SubmitButton from '../ChilldComponents/SubmitButton.js'
 import LoginWithSocials from '../ChilldComponents/LoginWithSocials.js'
-import Message from '../../../Header/Message/Message.js'
 
 export default function SignupForm({ showLogin }) {
-    const [messages, setMessages] = useState([])
     const [values, setValues] = useState({
         name: "",
         email: "",
         password: ""
     })
+    const [isLoadingDataFromApi, setLoadingDataFromApi] = useState(false);
+    const navigateTo = useNavigate();
 
     const inputsArray = [
         {
@@ -53,19 +54,34 @@ export default function SignupForm({ showLogin }) {
     }
 
     const submitHandler = async (event) => {
+        setLoadingDataFromApi(true)
         event.preventDefault()
-        console.log(values)
-        // const url = 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/signup'
-        // // create user data object 
-        // const userData = {
-        //     name: nameValue,
-        //     email: emailValue,
-        //     password: passwordValue,
-        // }
+        const url = 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/signup'
+
+        axios.post(url, values)
+            .then(res => {
+                setCooki('token', res.data.authToken, 7)
+                setCooki('username', values.name, 7)
+                setCooki('email', values.email, 7)
+                setLoadingDataFromApi(false)
+                alert('حساب شما با موفقیت ایجاد شد.!')
+                navigateTo('/panel/dashbord')
+            })
+            .catch(err => {
+                if (err.response) {
+                    if (err.response.status === 403) {
+                        setLoadingDataFromApi(false)
+                        alert('این ایمیل قبلا در سایت ثبت شده است')
+                    }
+                } else if (err.request) {
+                    setLoadingDataFromApi(false)
+                    alert('پاسخی از سرور دریافت نشد. حتما از VPN استفاده کنید.!')
+                } else {
+                    setLoadingDataFromApi(false)
+                    console.log(err)
+                }
+            })
     }
-
-    useEffect(() => { console.log(messages) }, [messages])
-
     return (
         <div id="login-form" className='flex flex-col text-center'>
             {/* Form Header */}
@@ -77,7 +93,7 @@ export default function SignupForm({ showLogin }) {
                     <Input key={input.id} onChangeEvent={onChangeHandler} {...input} />
                 ))}
                 {/* Submit button  */}
-                <SubmitButton value='عضویت' />
+                <SubmitButton value='عضویت' loading={isLoadingDataFromApi} />
                 {/* Login with socials  */}
                 <LoginWithSocials />
                 {/* End of Login with socials  */}
@@ -86,10 +102,7 @@ export default function SignupForm({ showLogin }) {
                     <span onClick={() => showLogin(prevState => !prevState)} className='text-blue mr-3 cursor-pointer hover:text-secondary-1 hover:underline' >ورود به سایت</span>
                 </div>
             </form>
-
-            <button onClick={() => {
-                addNewMessage('پیام من', 5000, messages, setMessages)
-            }}>Add New message</button>
         </div>
     )
 }
+

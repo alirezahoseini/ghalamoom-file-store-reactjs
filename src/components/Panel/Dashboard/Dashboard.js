@@ -3,10 +3,10 @@ import React from 'react'
 // Components 
 import ProductList from './ProductList'
 
-export default function Dashbord() {
+export default function Dashboard() {
 
     return (
-        <div id='panel-dashbord' className='flex flex-col gap-3 p-2'>
+        <div id='panel-dashboard' className='flex flex-col gap-3 p-2'>
             {/* User info  */}
             <div id='user-info' className='flex flex-col gap-4 mt-3'>
                 <div id="alert" className='bg-red-2 text-white p-3 rounded-2xl leading-8 shadow-both'>
