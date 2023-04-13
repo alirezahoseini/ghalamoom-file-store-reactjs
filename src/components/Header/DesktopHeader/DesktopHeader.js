@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 // Files
-import {dynamicLinks} from '../../../dynamicLinks.js'
+import { dynamicLinks } from '../../../dynamicLinks.js'
+import { getCooki } from '../../../utils.js'
 
 // Components
 import DesktopNav from './Nav/DesktopNav'
@@ -26,7 +27,7 @@ export default function DesktopHeader() {
           <div className='md:hidden xl:inline-block'>
             <SearchBox />
           </div>
-          <Button type={'button'} value='ورود | ثبت نام' hover={true} link={true} url={dynamicLinks.panel} />
+          <Button type={'button'} value={`${getCooki('token') !== null ? 'پنل کاربری' : 'ورود | ثبت نام'}`} hover={true} link={true} url={dynamicLinks.panel} />
         </div>
       </div>
     </div>

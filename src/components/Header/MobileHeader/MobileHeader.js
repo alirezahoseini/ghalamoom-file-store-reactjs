@@ -4,6 +4,7 @@ import { FaBars, FaTimes, FaInstagram, FaLinkedin, FaTelegramPlane, FaYoutube } 
 
 // files 
 import { dynamicLinks } from '../../../dynamicLinks.js'
+import {getCooki} from '../../../utils.js'
 
 // Components
 import Logo from '../../Global/Logo'
@@ -28,7 +29,7 @@ export default function MobileHeader() {
             <div id='visable-header' className='flex justify-between w-full items-center pr-2'>
                 <Logo />
                 <div className='flex items-center ml-2'>
-                    <Button type='button' value='ورود | ثبت نام' link={true} url={dynamicLinks.panel} />
+                    <Button type='button' value={`${getCooki('token') !== null ? 'پنل کاربری' : 'ورود | ثبت نام'}`} link={true} url={dynamicLinks.panel} />
                     <button id='hamberger-opener' className=' bg-gray-1  text-2xl p-2 rounded-lg text-secondary-1 shadow-both mr-6' onClick={() => setShowHamberger(prevState => !prevState)}>
                         {showHamberger ? <FaTimes /> : <FaBars />}
                     </button>

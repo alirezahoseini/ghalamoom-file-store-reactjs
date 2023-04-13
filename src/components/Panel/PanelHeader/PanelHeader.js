@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FaBars, FaTimes } from 'react-icons/fa'
-import { FiUser } from 'react-icons/fi'
+import { FiUser, FiLogOut } from 'react-icons/fi'
+import { AiOutlineDashboard } from 'react-icons/ai'
 import { BsBoxSeam, BsMortarboard, BsHouse, BsColumns } from 'react-icons/bs'
-import { NavLink } from 'react-router-dom'
+
+// files 
+import { deleteCooki } from '../../../utils.js'
 
 // Components 
 import UserAvatar from './UserAvatar'
@@ -10,15 +14,24 @@ import HambergerMenu from '../../Global/HambergerMenu'
 import PanelHeaderItem from './PanelHeaderItem'
 
 export default function PanelHeader() {
+    const navigateTo = useNavigate();
+
+    const logoutHandler = () => {
+        deleteCooki('token')
+        deleteCooki('email')
+        deleteCooki('username')
+        navigateTo('/')
+    }
 
     const [showMobileMenu, setShowMobileMenu] = useState(false)
 
     const panelLinks = [
-        { id: 'panelLink-3', title: 'داشبورد', path: 'dashboard', icon: <BsHouse /> },
+        { id: 'panelLink-3', title: 'داشبورد', path: 'dashboard', icon: <AiOutlineDashboard /> },
         { id: 'panelLink-1', title: 'محصولات', path: 'products', icon: <BsBoxSeam /> },
         { id: 'panelLink-2', title: 'دوره ها', path: 'courses', icon: <BsMortarboard /> },
         { id: 'panelLink-5', title: 'نمونه کار ها', path: 'artworks', icon: <BsColumns /> },
         { id: 'panelLink-6', title: 'حساب کاربری', path: 'profile', icon: <FiUser /> },
+        { id: 'panelLink-7', title: 'بازگشت به سایت', path: '/', icon: <BsHouse /> },
     ]
 
     return (
@@ -26,7 +39,7 @@ export default function PanelHeader() {
             {/* // Mobile Header  */}
             <div id='mobile-header' className='rounded-none sm:rounded-xl lg:hidden bg-white flex items-center p-4'>
                 <div className='w-full flex items-center justify-between'>
-                    <button id='menu-opener-btn' className='  text-2xl p-2  mr-1' onClick={() => setShowMobileMenu(prevState => !prevState)}>
+                    <button id='menu-opener-btn' className='  text-2xl p-2 text-text-1 mr-1' onClick={() => setShowMobileMenu(prevState => !prevState)}>
                         {showMobileMenu ? <FaTimes /> : <FaBars />}
                     </button>
                     <UserAvatar />
@@ -39,6 +52,12 @@ export default function PanelHeader() {
                                 <PanelHeaderItem key={`mobile-${link.id}`} {...link} onClose={() => setShowMobileMenu(prevState => !prevState)} />
                             ))
                         }
+                        <li onClick={logoutHandler} className='mobile-menu-item p-2 text-secondary-2 my-2 flex rounded-lg lg:rounded-r-none items-center hover:bg-red-4 hover:text-red-4 hover:bg-opacity-10 transition-all duration-300 cursor-pointer' >
+                            <span className='text-lg ml-2'>
+                                <FiLogOut />
+                            </span>
+                            <span>خروج از حساب</span>
+                        </li>
                     </ul>
                 </HambergerMenu>
                 {/* End of Hamberger menu  */}
@@ -52,6 +71,12 @@ export default function PanelHeader() {
                             <PanelHeaderItem key={`desktop-${link.id}`} {...link} onClose={() => setShowMobileMenu(prevState => !prevState)} />
                         ))
                     }
+                    <li onClick={logoutHandler} className='mobile-menu-item p-2 text-secondary-2 my-2 flex rounded-lg lg:rounded-r-none items-center hover:bg-red-4 hover:text-red-4 hover:bg-opacity-10 transition-all duration-300 cursor-pointer' >
+                        <span className='text-lg ml-2'>
+                            <FiLogOut />
+                        </span>
+                        <span>خروج از حساب</span>
+                    </li>
                 </ul>
             </div>
             {/* // End of Desktop Header  */}
