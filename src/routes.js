@@ -1,12 +1,13 @@
 import { Navigate } from 'react-router-dom';
-// Import Components 
-import Home from './components/Home/Home'
-import Panel from './components/Panel/Panel';
-import Dashboard from './components/Panel/Dashboard/Dashboard';
-import PanelProducts from './components/Panel/PanelProducts/PanelProducts';
-import PanelCourses from './components/Panel/PanelCourses/PanelCourses';
-import LoginPage from './components/Panel/LoginPage/LoginPage';
-import PrivatePage from './components/Panel/PrivatePage';
+// components
+import Home from './pages/Home/Home'
+// panel and subpages
+import Panel from './pages/Panel/Panel';
+import Dashboard from './pages/Panel/subpages/Dashboard/Dashboard';
+import PanelProducts from './pages/Panel/subpages/Products/PanelProducts';
+import PanelCourses from './pages/Panel/subpages/Courses/PanelCourses';
+import LoginPage from './pages/Panel/subpages/LoginPage/LoginPage';
+import PrivatePage from './pages/Panel/PrivatePage';
 
 
 // Website Routes Config

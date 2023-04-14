@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*---------------------------
+        Import Yekan font  
+---------------------------*/
+@import url('./fontface.css');
+
+body {
+  margin: 0;
+  direction: rtl;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+*{
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}

@@ -1,0 +1,28 @@
+
+
+#starter-baner #main-wrapper{
+    background-color: #334155;
+}
+
+
+
+/* Tailwind Breakpoint Md  */
+@media (min-width: 768px) { 
+    
+ }
+
+
+/* Tailwind Breakpoint Lg  */
+@media (min-width: 768px) { 
+    #starter-baner #main-wrapper{
+        background: url('../../../../assets/images/home/starterBaner/starter-bg.png') , #334155;
+        background-position: left top;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-clip: content-box;
+    }
+    #starter-baner #main-wrapper #shape #two{
+       min-width: 80%;
+       max-width: 500px !important;
+    }
+ }

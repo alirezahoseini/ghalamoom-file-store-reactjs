@@ -2,9 +2,8 @@ import { useRoutes } from "react-router-dom";
 import routes from './routes.js';
 
 // Components 
-import Header from "./components/Header/Header.js";
-import Footer from "./components/Footer/Footer.js";
-
+import Header from "./layout/Header/Header.js";
+import Footer from "./layout/Footer/Footer.js";
 
 function App() {
 
