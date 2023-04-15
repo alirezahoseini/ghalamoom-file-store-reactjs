@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { FaBars, FaTimes, FaInstagram, FaLinkedin, FaTelegramPlane, FaYoutube } from 'react-icons/fa'
 
-
 // datas
 import { dynamicLinks } from '../../../data/links'
 // utils

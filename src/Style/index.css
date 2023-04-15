@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 /*---------------------------
-        Import Yekan font  
+    Import persian Fonts
 ---------------------------*/
 @import url('./fontface.css');
+
 
 body {
   margin: 0;
