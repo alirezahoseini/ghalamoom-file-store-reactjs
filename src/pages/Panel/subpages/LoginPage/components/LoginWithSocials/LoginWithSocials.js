@@ -10,9 +10,9 @@ export default function LoginWithSocials() {
         <div id="login-with-socials">
             {/* Separator */}
             <div id='separator' className='flex items-center gap-3 my-10 mx-auto w-full justify-center'>
-                <div className='w-1/3 h-1 rounded-2xl bg-gradient-to-r from-gray-3 to-transparent' ></div>
+                <div className='w-1/3 h-1 rounded-2xl bg-gradient-to-r from-gray-400 to-transparent' ></div>
                 <div className='text-xs font-bold text-secondary-1'>ورود از طریق</div>
-                <div className='w-1/3 h-1 rounded-2xl bg-gradient-to-l from-gray-3 to-transparent' ></div>
+                <div className='w-1/3 h-1 rounded-2xl bg-gradient-to-l from-gray-400 to-transparent' ></div>
             </div>
             {/* End of Separator */}
             {/* Icons  */}

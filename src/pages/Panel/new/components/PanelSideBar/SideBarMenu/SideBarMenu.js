@@ -13,7 +13,7 @@ export default function SideBarMenu({ isOpen }) {
     {id: 5, title: 'بازگشت به سایت', path: '/', icon: <TbPlanet /> },
   ]
   return (
-    <div id='sidebar-menu'className='border-b border-gray-2 pt-5 pr-1' >
+    <div id='sidebar-menu' className='pt-5 pr-2 border-b border-gray-300 transition-all duration-300 dark:border-slate-600' >
       {linksArray.map(link => (
         <SideBarMenuItem key={link.id} {...link} isOpen={isOpen} />
       ))}

@@ -77,8 +77,8 @@ export default function LoginForm({ showLogin }) {
     return (
         <div id="login-form" className='flex flex-col text-center'>
             {/* Form Header */}
-            <h2 className='text-secondary-2 text-xl mt-5' >خوش برگشتی</h2>
-            <h3 className='text-sm text-text-2 mt-2'>دلمون برات تنگ شده بود!</h3>
+            <h2 className='text-gray-700 text-xl mt-5' >خوش برگشتی</h2>
+            <h3 className='text-sm text-gray-400 mt-2'>دلمون برات تنگ شده بود!</h3>
             {/* End of Form Header */}
             <form onSubmit={(event) => onSubmitHandler(event)} className='my-8 px-3 flex flex-col gap-4 text-xs lg:w-9/12 lg:mx-auto '>
                 {/* Inputs */}
@@ -92,7 +92,7 @@ export default function LoginForm({ showLogin }) {
                 {/* End of Login with socials  */}
                 <div className='font-bold my-4' >
                     <span>حساب کاربری ندارید.؟</span>
-                    <span onClick={() => showLogin(prevState => !prevState)} className='text-blue mr-3 cursor-pointer hover:text-secondary-1 hover:underline' > ساخت حساب </span>
+                    <span onClick={() => showLogin(prevState => !prevState)} className='text-blue-600 mr-3 cursor-pointer hover:text-gray-700 hover:underline' > ساخت حساب </span>
                 </div>
             </form>
         </div>

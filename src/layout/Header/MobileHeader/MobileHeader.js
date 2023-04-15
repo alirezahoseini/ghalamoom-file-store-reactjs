@@ -30,7 +30,7 @@ export default function MobileHeader() {
                 <Logo />
                 <div className='flex items-center ml-2'>
                     <Button type='button' value={`${getCooki('token') !== null ? 'پنل کاربری' : 'ورود | ثبت نام'}`} link={true} url={dynamicLinks.panel} />
-                    <button id='hamberger-opener' className=' bg-gray-1  text-2xl p-2 rounded-lg text-secondary-1 shadow-both mr-6' onClick={() => setShowHamberger(prevState => !prevState)}>
+                    <button id='hamberger-opener' className=' bg-gray-1  text-2xl p-2 rounded-lg text-gray-600 shadow-both mr-6' onClick={() => setShowHamberger(prevState => !prevState)}>
                         {showHamberger ? <FaTimes /> : <FaBars />}
                     </button>
 

@@ -1,20 +1,10 @@
 #logout-btn .item-icon{
-    transition: all .2s ease-out ;
-    -webkit-transition: all .2s ease-out ;
-    -moz-transition: all .2s ease-out ;
-    -ms-transition: all .2s ease-out ;
-    -o-transition: all .2s ease-out ;
     position: relative;
 }
 
 
 #logout-btn .item-icon span.icon{
     z-index: 1;
-    transition: all .3s;
-    -webkit-transition: all .3s;
-    -moz-transition: all .3s;
-    -ms-transition: all .3s;
-    -o-transition: all .3s;
 }
 
 #logout-btn .item-icon span.bg{
@@ -48,9 +38,6 @@
 }
 #logout-btn:hover span.icon{
     color: white;
-}
-#logout-btn:hover h4.title{
-    color: rgb(85, 85, 85);
 }
 
 #logout-btn.active span.bg{

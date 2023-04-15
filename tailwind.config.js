@@ -1,49 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
       'rokh': ['rokh'],
       'yekan': ['IRANYekanX'],
       'yekan-bakh': ['yekan-bakh']
-    },
-    colors: {
-      transparent: 'transparent',
-      "primary-1": "#334155",
-      "secondary-2": "#262E39",
-      "secondary-1": "#284258",
-      "text-2": "#2d333b",
-      "text-1": "#64748B",
-      "gold-1": "#FFC400",
-      "gray-5": "#848EB3",
-      "gray-4": "#8F9AAB",
-      "gray-3": "#BAC0CB",
-      "gray-2": "#DADFF0",
-      "gray-1": "#EAEAEA",
-      "gray-0": "#fbfbfb",
-      "pink-3": "#ffcdf4",
-      "pink-2": "#D799F0",
-      "pink-1": "#E1A7FF",
-      "pink": "#DE1A48",
-      "blue-7": "#0508c2",
-      "blue-6": "#1360db",
-      "blue-5": "#f5f5ff",
-      "blue-4": "#6fa6ff",
-      "blue-3": "#90bbff",
-      "blue-2": "#bed7ff",
-      "blue": "#3B82F6",
-      "orange-1": "#ff9900",
-      "red-4": "#ff0000",
-      "red-3": "#ff3434",
-      "red-2": "#ff5c5c",
-      "red-1": "#ff7c7c",
-      "green-3": "#009e00 ",
-      "green-2": "#00bd00 ",
-      "green-1": "#00e200 ",
-      "green": "#00ff00 ",
-      "golbehi": "#F86A68 ",
-      "white": "#fff",
-      "black": "#000",
     },
     boxShadow: {
       'both-0': '0px 5px 15px rgba(0, 0, 0, 0.1)',
@@ -79,10 +42,43 @@ module.exports = {
         '12': '5rem',
         '13': '6rem',
       },
+      colors: {
+        "custom-blue": {
+          "100": "#DADFF0",
+          "200": "#BAC0CB",
+          "300": "#8F9AAB",
+          "400": "#848EB3",
+          "500": "#64748B",
+          "600": "#284258",
+          "700": "#3B82F6",
+        },
+        "custom-pink": {
+          "100": "#E1A6FF",
+          "200": "#d991fd",
+        },
+        "custom-red": {
+          "100": "#ff0000",
+        },
+        "custom-golbehi": {
+          "100": "#F86A68",
+        },
+        "custom-gold": {
+          "100": "#FFC400",
+        },
+        "custom-primary": {
+          "100": "#334155",
+          "200": "#262E39",
+        },
+        "custom-gray": {
+          "100": "#EAEAEA",
+        },
+      }
     },
+
   },
   plugins: [],
 }
+
 
 
 

@@ -85,7 +85,7 @@ export default function SignupForm({ showLogin }) {
     return (
         <div id="login-form" className='flex flex-col text-center'>
             {/* Form Header */}
-            <h2 className='text-secondary-2 text-xl mt-5' >خوش اومدی.!</h2>
+            <h2 className='text-gray-700 text-xl mt-5' >خوش اومدی.!</h2>
             {/* End of Form Header */}
             <form onSubmit={(event) => submitHandler(event)} className='my-8 px-3 flex flex-col gap-4 text-xs lg:w-9/12 lg:mx-auto transition-all duration-700 '>
                 {/* Inputs */}
@@ -99,7 +99,7 @@ export default function SignupForm({ showLogin }) {
                 {/* End of Login with socials  */}
                 <div className='font-bold my-4' >
                     <span>حساب کاربری دارید.؟</span>
-                    <span onClick={() => showLogin(prevState => !prevState)} className='text-blue mr-3 cursor-pointer hover:text-secondary-1 hover:underline' >ورود به سایت</span>
+                    <span onClick={() => showLogin(prevState => !prevState)} className='text-blue-600 mr-3 cursor-pointer hover:text-gray-700 hover:underline' >ورود به سایت</span>
                 </div>
             </form>
         </div>

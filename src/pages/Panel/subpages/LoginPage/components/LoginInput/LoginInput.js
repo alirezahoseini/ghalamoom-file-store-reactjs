@@ -14,14 +14,14 @@ export default function LoginInput(props) {
       {
         type !== 'password' ? (
           <div>
-            <input onChange={(event) => onChangeEvent(event)} {...otherProps} focused={focused.toString()} onBlur={onFocusHandler} tyoe={type} className={`text-xs p-4 rounded-xl w-full outline-none focus:shadow-both-2 transition-all duration-300 lg:text-md border-2  focus:border-pink-2 form-input`} />
-            <span className='text-red-4 my-3 text-right leading-5 font-bold'>{errorMessage}</span>
+            <input onChange={(event) => onChangeEvent(event)} {...otherProps} focused={focused.toString()} onBlur={onFocusHandler} tyoe={type} className={`text-xs p-4 rounded-xl w-full outline-none focus:shadow-both-2 transition-all duration-300 lg:text-md border-2  focus:border-custom-pink-200 form-input`} />
+            <span className='text-custom-red-100 my-3 text-right leading-5 font-bold'>{errorMessage}</span>
           </div>
         ) : (
           <div className='relative'>
-            <input onChange={(event) => onChangeEvent(event)} {...otherProps} focused={focused.toString()} onBlur={onFocusHandler} type={`${showPassword ? 'text' : 'password'}`} className={`text-xs p-4 rounded-xl w-full outline-none focus:shadow-both-2 transition-all duration-300 lg:text-md border-2  focus:border-pink-2 form-input`} />
+            <input onChange={(event) => onChangeEvent(event)} {...otherProps} focused={focused.toString()} onBlur={onFocusHandler} type={`${showPassword ? 'text' : 'password'}`} className={`text-xs p-4 rounded-xl w-full outline-none focus:shadow-both-2 transition-all duration-300 lg:text-md border-2  focus:border-custom-pink-200 form-input`} />
             {/* Eye button  */}
-            <button className='absolute top-4 left-4 text-base text-gray-5 ' type='button' onClick={() => setShowPassword(prevState => !prevState)}>
+            <button className='absolute top-4 left-4 text-base text-gray-600 ' type='button' onClick={() => setShowPassword(prevState => !prevState)}>
               {!showPassword ? (
 
                 <BsEyeSlash />
@@ -30,7 +30,7 @@ export default function LoginInput(props) {
               )
               }
             </button>
-            <span className='text-red-4 my-3 text-right leading-5 font-bold'>{errorMessage}</span>
+            <span className='text-custom-red-100 my-3 text-right leading-5 font-bold'>{errorMessage}</span>
           </div>
         )
       }

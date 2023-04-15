@@ -10,7 +10,7 @@ function App() {
   const location = useLocation();
 
   return (
-    <div className="App bg-gray-1 text-sm font-yekan">
+    <div className="App bg-gray-100 text-sm font-yekan">
       {!location.pathname.includes('/panel') && (
         <>
           <Header />

@@ -51,18 +51,18 @@ export default function Footer() {
 
     return (
         <>
-            <footer className='bg-primary-1 lg:px-5 lg:pt-10 lg:pb-5 lg:rounded-t-3xl'>
+            <footer className='bg-custom-blue-600 lg:px-5 lg:pt-10 lg:pb-5 lg:rounded-t-3xl'>
                 <div id="footer-wrapper" className='flex flex-col lg:flex-row lg:items-start justify-evenly'>
                     {/* Section 1 - about */}
                     <section id='about' className='p-6 lg:w-5/12'>
                         <Logo width={120} />
-                        <h2 className='font-yekan text-gray-3 mt-7 mb-3 text-sm break-words leading-7'>
+                        <h2 className='font-yekan text-gray-300 mt-7 mb-3 text-sm break-words leading-7'>
                             قلموم یکی از فعالیت ترین و پرتلاش ترین تولیدکنندگان محتوای گرافیک در ایران است و همیشه تلاش کرده تا با انتشار بروزترین و جدیدترین مقالات و دوره های آموزشی گرافیک دیزاین، قدمی در ارتقای سطح طراحان جوان ایرانی برداشته باشد.
                         </h2>
                         <form id='newslater' onSubmit={event => event.preventDefault()} className='w-full'>
-                            <label htmlFor="emali" className='block font-yekan-bakh text-gray-1 font-bold text-lg my-2'>عضویت در خبر نامه</label>
+                            <label htmlFor="emali" className='block font-yekan-bakh text-gray-100 font-bold text-lg my-2'>عضویت در خبر نامه</label>
                             <div className='w-full flex justify-around items-center'>
-                                <input type="email" name='emali' placeholder='آدرس ایمیل' className='bg-gray-1 bg-opacity-20 p-2 rounded-lg outline-none text-sm placeholder:text-sm text-gray-1 w-8/12 ml-2' />
+                                <input type="email" name='emali' placeholder='آدرس ایمیل' className='bg-gray-100 bg-opacity-20 p-2 rounded-lg outline-none text-sm placeholder:text-sm text-gray-200 w-8/12 ml-2' />
                                 <Button type={'submit'} value='ارسال' hover='true' size='w-4/12' />
                             </div>
                         </form>
@@ -99,7 +99,7 @@ export default function Footer() {
                 </div>
             </footer>
             {/* Section 4 - copyright  */}
-            <section id='copyright' className='bg-gold-1 p-5 text-center text-primary-1' >
+            <section id='copyright' className='bg-custom-gold-100 p-5 text-center text-gray-800' >
                 <p>
                     <span>Powerd by <strong>React js</strong> | Made with ❤️  </span>
                     <a href="https://a-hosseini.ir" target="_blank" rel="noopener noreferrer" className='font-bold text-black'>A-Hosseini</a>

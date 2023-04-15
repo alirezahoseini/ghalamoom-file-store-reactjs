@@ -9,7 +9,7 @@
     border-color: white;
 }
 input:invalid[focused=true] ~ span{
-    border-color: red;
+    border-color: #ff0000;
     display: inline-block;
     opacity: 1;
 }

@@ -1,20 +1,11 @@
 .sidebar-menu-item .item-icon{
-    transition: all .2s ease-out ;
-    -webkit-transition: all .2s ease-out ;
-    -moz-transition: all .2s ease-out ;
-    -ms-transition: all .2s ease-out ;
-    -o-transition: all .2s ease-out ;
     position: relative;
 }
 
 
 .sidebar-menu-item .item-icon span.icon{
     z-index: 1;
-    transition: all .3s;
-    -webkit-transition: all .3s;
-    -moz-transition: all .3s;
-    -ms-transition: all .3s;
-    -o-transition: all .3s;
+
 }
 
 .sidebar-menu-item .item-icon span.bg{
@@ -29,11 +20,11 @@
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
     -o-border-radius: 100%;
-    transition: all .3s;
-    -webkit-transition: all .3s;
-    -moz-transition: all .3s;
-    -ms-transition: all .3s;
-    -o-transition: all .3s;
+    transition: all .2s;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
     opacity: 0;
 }
 .sidebar-menu-item h4.title{
@@ -48,9 +39,6 @@
 }
 .sidebar-menu-item:hover span.icon{
     color: white;
-}
-.sidebar-menu-item:hover h4.title{
-    color: rgb(85, 85, 85);
 }
 
 .sidebar-menu-item.active span.bg{

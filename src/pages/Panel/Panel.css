@@ -1,6 +1,9 @@
-#admin-panel .mobile-menu-item.active{
-    background-color: #3B82F6;
-    color: white;
+*{
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+    -moz-transition: all 0.1s;
+    -ms-transition: all 0.1s;
+    -o-transition: all 0.1s;
 }
 
 /* Tailwind Breakpoint Lg  */

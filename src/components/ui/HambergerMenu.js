@@ -32,7 +32,7 @@ export default function HambergerMenu({ isShow, onClose, position = 'left', widt
                     ${isShow ? `translate-x-0` : `-translate-x-full`}`}>
                     {/* Close Button  */}
                     {
-                        closeBtn && <button onClick={() => onClose()} className='text-2xl text-left w-full flex justify-end text-secondary-1'>
+                        closeBtn && <button onClick={() => onClose()} className='text-2xl text-left w-full flex justify-end text-gray-600'>
                             <FaTimes />
                         </button>
                     }
