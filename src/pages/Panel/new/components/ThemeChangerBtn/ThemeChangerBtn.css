@@ -3,29 +3,29 @@
     height: 80%;
     position: absolute;
     top: 10%;
-    left: 5px;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
     z-index: 0;
-    transform: translateX(0);
-    -webkit-transform: translateX(0);
-    -moz-transform: translateX(0);
-    -ms-transform: translateX(0);
-    -o-transform: translateX(0);
     transition: all .3s;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     -ms-transition: all .3s;
     -o-transition: all .3s;
-}
-.right{
     left: calc(50% - 3px) ;
+    pointer-events: none;
 }
 .buttons{
     z-index: 1;
 }
-
+html.dark .bg-shape{
+    left: 5px;
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+}
 

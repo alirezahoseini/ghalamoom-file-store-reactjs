@@ -2,7 +2,7 @@ import React from 'react'
 import {HiPlusSm} from 'react-icons/hi'
 
 // assets
-import userAvatar from '../../../../../../assets/images/panel/avatars/Avatar-9.png'
+import userAvatar from '../../../../../assets/images/panel/avatars/Avatar-9.png'
 
 export default function UserInfo({userName, isOpen}) {
   return (

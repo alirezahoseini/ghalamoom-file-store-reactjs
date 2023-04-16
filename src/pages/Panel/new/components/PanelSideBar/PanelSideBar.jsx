@@ -3,10 +3,10 @@ import { FiChevronsRight } from 'react-icons/fi'
 import { TbMenu2, TbX } from 'react-icons/tb'
 
 // components 
-import UserInfo from './UserInfo/UserInfo'
-import SideBarMenu from './SideBarMenu/SideBarMenu'
-import LogoutBtn from './LogoutBtn/LogoutBtn'
-import ThemeChangerBtn from './ThemeChangerBtn/ThemeChangerBtn'
+import UserInfo from '../UserInfo/UserInfo'
+import SideBarMenu from '../SideBarMenu/SideBarMenu'
+import LogoutBtn from '../LogoutBtn/LogoutBtn'
+import ThemeChangerBtn from '../ThemeChangerBtn/ThemeChangerBtn'
 
 export default function PanelSideBar() {
     const [isSidebarOpen, setIsSidebarOpen ] = useState(true)

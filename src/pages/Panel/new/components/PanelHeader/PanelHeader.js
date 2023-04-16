@@ -1,6 +1,7 @@
 
 // components
 import SearchBox from './SearchBox/SearchBox'
+import MobileMenu from './MobileMenu/MobileMenu'
 
 export default function PanelHeaderTest() {
   return (
@@ -9,6 +10,7 @@ export default function PanelHeaderTest() {
         <div className='bg-white p-3 lg:rounded-xl shadow-both-2 lg:shadow-both-1 backdrop-blur-md bg-opacity-80 dark:bg-slate-800 dark:bg-opacity-80'>
           {/*  */}
           <div className="right-items flex">
+            <MobileMenu/>
             <SearchBox/>
           </div>
           {/*  */}

@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BiMoon } from 'react-icons/bi'
 import { FiSun } from 'react-icons/fi'
 import './ThemeChangerBtn.css'
 
 // hooks
-import useThemeChanger from '../../../../../../hooks/useThemeChanger'
-import useLocalStorage from '../../../../../../hooks/useLocalStorage'
+import useThemeChanger from '../../../../../hooks/useThemeChanger'
+import useLocalStorage from '../../../../../hooks/useLocalStorage'
 
 export default function ThemeChangerBtn() {
     const [theme, setTheme] = useThemeChanger()
+   
     return (
         <div id='theme-changer-btn' className='bg-slate-300 mt-2 rounded-xl shadow-both-0  text-blue-900  overflow-hidden p-1 text-sm relative dark:text-slate-100 dark:bg-slate-800'>
             <div className={`bg-shape bg-gray-50 dark:bg-slate-700 ${theme !== 'dark' ? 'right' : ''}`}></div>

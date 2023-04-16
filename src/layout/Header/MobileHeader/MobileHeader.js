@@ -38,17 +38,23 @@ export default function MobileHeader() {
             </div>
             {/* Start Hamberger menu  */}
             <HambergerMenu isShow={showHamberger} onClose={() => setShowHamberger(prevState => !prevState)}>
-                {/* Navigation  */}
-                <MobileNav onClose={() => setShowHamberger(prevState => !prevState)} />
-                {/* Social icons  */}
-                <div className='flex justify-center items-center gap-2 my-4'>
-                    {
-                        socialIcons.map(icon => (
-                            <SocialIcon key={icon.id} {...icon} پ >
-                                {icon.iconName}
-                            </SocialIcon>
-                        ))
-                    }
+                <div className='px-4'>
+                    {/* Close Button  */}
+                    {<button onClick={() => setShowHamberger(prevState => !prevState)} className='text-2xl text-left w-full flex justify-end text-gray-500 mt-6 pl-4'>
+                        <FaTimes />
+                    </button>}
+                    {/* Navigation  */}
+                    <MobileNav onClose={() => setShowHamberger(prevState => !prevState)} />
+                    {/* Social icons  */}
+                    <div className='flex justify-center items-center gap-2 my-4'>
+                        {
+                            socialIcons.map(icon => (
+                                <SocialIcon key={icon.id} {...icon} پ >
+                                    {icon.iconName}
+                                </SocialIcon>
+                            ))
+                        }
+                    </div>
                 </div>
             </HambergerMenu>
             {/* End of Hamberger menu  */}

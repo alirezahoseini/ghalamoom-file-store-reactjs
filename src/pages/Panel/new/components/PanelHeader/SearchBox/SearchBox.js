@@ -19,7 +19,7 @@ export default function SearchBox() {
             </div>
             {/* End of Desktop Search box  */}
             <div id='search-box-mobile' className='lg:hidden'>
-                <button className="search-btn  text-lg p-3 rounded-lg bg-gray-100 text-gray-500 cursor-pointer hover:bg-gray-200 dark:text-slate-300 dark:bg-slate-700 " onClick={() => setIsOpenMobileSearchModal(true)}>
+                <button className="search-btn  text-lg p-3 rounded-lg  text-gray-500 cursor-pointer  dark:text-slate-300  " onClick={() => setIsOpenMobileSearchModal(true)}>
                     <RiSearchLine />
                 </button>
                 <Modal isShow={isOpenMobileSearchModal} onClose={() => setIsOpenMobileSearchModal(false)}>
@@ -34,16 +34,16 @@ export default function SearchBox() {
                     </div>
                     <div className="recent-searches w-full flex flex-col items-start text-xs px-2">
                         <h3 className='text-gray-600 dark:text-slate-300'>جستجو های اخیر</h3>
-                        <ul className='w-full flex flex-wrap gap-2 my-2'>
-                            <li className='flex gap-2 items-center my-1 p-2 bg-slate-100 dark:bg-slate-900 w-fit rounded-md '>
+                        <ul className={'w-full flex flex-wrap gap-2 my-2'}>
+                            <li className='flex gap-2 items-center p-2 bg-slate-100 dark:bg-slate-900 w-fit rounded-md '>
                                 <span className='text-slate-600 dark:text-slate-400'>دوره مستر گرافیک</span>
                                 <TbX className='text-slate-500'/>
                             </li>
-                            <li className='flex gap-2 items-center my-1 p-2 bg-slate-100 dark:bg-slate-900 w-fit rounded-md '>
+                            <li className='flex gap-2 items-center p-2 bg-slate-100 dark:bg-slate-900 w-fit rounded-md '>
                                 <span className='text-slate-600 dark:text-slate-400'>اعضای سایت</span>
                                 <TbX className='text-slate-500'/>
                             </li>
-                            <li className='flex gap-2 items-center my-1 p-2 bg-slate-100 dark:bg-slate-900 w-fit rounded-md '>
+                            <li className='flex gap-2 items-center p-2 bg-slate-100 dark:bg-slate-900 w-fit rounded-md '>
                                 <span className='text-slate-600 dark:text-slate-400'>تغییر تصویر</span>
                                 <TbX className='text-slate-500'/>
                             </li>
