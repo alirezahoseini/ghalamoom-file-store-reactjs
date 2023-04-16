@@ -19,21 +19,21 @@ export default function SearchBox() {
             </div>
             {/* End of Desktop Search box  */}
             <div id='search-box-mobile' className='lg:hidden'>
-                <button className="search-btn  text-lg p-3 rounded-lg  text-gray-500 cursor-pointer  dark:text-slate-300  " onClick={() => setIsOpenMobileSearchModal(true)}>
+                <button className="search-btn  text-xl p-3 rounded-lg  text-gray-500 cursor-pointer  dark:text-slate-300  " onClick={() => setIsOpenMobileSearchModal(true)}>
                     <RiSearchLine />
                 </button>
-                <Modal isShow={isOpenMobileSearchModal} onClose={() => setIsOpenMobileSearchModal(false)}>
-                    <div className='w-full flex p-1 gap-2 text-xs'>
+                <Modal isShow={isOpenMobileSearchModal} onClose={() => setIsOpenMobileSearchModal(false)} size='w-10/12' >
+                    <div className='w-full flex p-2 gap-2 text-xs'>
                         <div className='w-full flex bg-gray-100 justify-between py-3 px-4 items-center rounded-md dark:bg-slate-700'>
-                            <input type="text" className='bg-transparent outline-none border-none dark:text-slate-100' placeholder='جستجو...' />
-                            <RiSearchLine className='text-slate-700 dark:text-slate-200' />
+                            <input type="text" className='bg-transparent outline-none border-none dark:text-slate-100 w-10/12' placeholder='جستجو...' />
+                            <RiSearchLine className='text-slate-700 dark:text-slate-200 text-lg' />
                         </div>
-                        <button className="close-btn px-3 rounded-lg bg-gray-100 dark:text-slate-400 dark:bg-slate-700 " onClick={() => setIsOpenMobileSearchModal(false)}>
-                            <TbX/>
+                        <button className="close-btn px-3 rounded-lg bg-gray-100 dark:text-slate-400 dark:bg-slate-700 text-lg " onClick={() => setIsOpenMobileSearchModal(false)}>
+                            <TbX />
                         </button>
                     </div>
                     <div className="recent-searches w-full flex flex-col items-start text-xs px-2">
-                        <h3 className='text-gray-600 dark:text-slate-300'>جستجو های اخیر</h3>
+                        <h3 className='text-gray-600 dark:text-slate-300 font-bold mb-2'>جستجو های اخیر</h3>
                         <ul className={'w-full flex flex-wrap gap-2 my-2'}>
                             <li className='flex gap-2 items-center p-2 bg-slate-100 dark:bg-slate-900 w-fit rounded-md '>
                                 <span className='text-slate-600 dark:text-slate-400'>دوره مستر گرافیک</span>

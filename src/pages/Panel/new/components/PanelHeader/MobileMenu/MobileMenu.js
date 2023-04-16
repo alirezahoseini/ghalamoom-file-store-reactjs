@@ -17,13 +17,13 @@ export default function MobileMenu() {
       </button>
       <div id="side-menu">
         <HambergerMenu isShow={isOpenMenu} onClose={() => setIsOpenMenu(prev => !prev)} position='right' width='w-8/12' bgColor={'dark:bg-slate-800 bg-white'} >
-          <div className='p-4'>
+          <div className='p-4 pt-8'>
             {/* close button  */}
-            <button className='w-full text-2xl flex justify-end pl-3 text-gray-600 dark:text-slate-300' onClick={() => setIsOpenMenu(prev => !prev)}>
+            <button className='w-fit text-2xl text-gray-600 absolute left-4 top-4 dark:text-slate-300' onClick={() => setIsOpenMenu(prev => !prev)}>
               <TbX />
             </button>
             {/* content  */}
-            <UserInfo userName={'مهدی'} isOpen={isOpenMenu} />
+            <UserInfo isOpen={isOpenMenu} />
             <SideBarMenu isOpen={isOpenMenu} withEvent={true} onClickEvent={() => setIsOpenMenu(false)} />
             <LogoutBtn isOpen={isOpenMenu} />
             <div className='mt-4'>

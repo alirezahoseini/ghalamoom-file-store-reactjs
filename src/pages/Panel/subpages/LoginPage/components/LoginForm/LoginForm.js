@@ -51,7 +51,7 @@ export default function LoginForm({ showLogin }) {
         axios.post(url, values)
             .then(res => {
                 setCooki('token', res.data.authToken, 7)
-                setCooki('email', values.email, 7)
+                setCooki('email', values.email, 3)
                 setLoadingDataFromApi(false)
                 alert('با موفقیت وارد شدید')
                 navigateTo('/panel/dashbord')

@@ -60,7 +60,7 @@ export default function SignupForm({ showLogin }) {
 
         axios.post(url, values)
             .then(res => {
-                setCooki('token', res.data.authToken, 7)
+                setCooki('token', res.data.authToken, 3)
                 setCooki('username', values.name, 7)
                 setCooki('email', values.email, 7)
                 setLoadingDataFromApi(false)

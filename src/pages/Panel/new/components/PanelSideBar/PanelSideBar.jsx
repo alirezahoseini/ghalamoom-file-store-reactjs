@@ -9,7 +9,7 @@ import LogoutBtn from '../LogoutBtn/LogoutBtn'
 import ThemeChangerBtn from '../ThemeChangerBtn/ThemeChangerBtn'
 
 export default function PanelSideBar() {
-    const [isSidebarOpen, setIsSidebarOpen ] = useState(true)
+    const [isSidebarOpen, setIsSidebarOpen ] = useState(true);
   return (
     <div id='sidebar' className='w-fit text-xs'>
         {/* THIS SIDEBAR SHOWING ONLY ON DESKTOP ---- NOT MOBILE MENU */}
@@ -21,7 +21,7 @@ export default function PanelSideBar() {
                     </button>
                 {/* open and closer button  */}
                 <div id='side-menu' className='pr-1'>
-                    <UserInfo userName={'علیرضا'} isOpen={isSidebarOpen}/>
+                    <UserInfo isOpen={isSidebarOpen}/>
                     <SideBarMenu isOpen={isSidebarOpen} />
                     <LogoutBtn isOpen={isSidebarOpen} />
                 </div>
