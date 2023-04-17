@@ -7,7 +7,7 @@ import HeaderIcon from './HeaderIcon/HeaderIcon'
 
 export default function PanelHeaderTest() {
   return (
-    <div id='panel-header' className='w-full lg:pt-3 sticky top-0 right-0' >
+    <div id='panel-header' className='w-full lg:pt-3 sticky top-0 right-0 z-50' >
       <div className="wrapper">
         <div className='flex justify-between bg-white p-3 lg:rounded-xl shadow-both-2 lg:shadow-both-1 backdrop-blur-md bg-opacity-80 dark:bg-slate-800 dark:bg-opacity-80'>
           {/* right elements */}

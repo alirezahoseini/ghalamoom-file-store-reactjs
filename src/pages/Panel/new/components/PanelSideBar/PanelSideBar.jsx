@@ -11,7 +11,7 @@ import ThemeChangerBtn from '../ThemeChangerBtn/ThemeChangerBtn'
 export default function PanelSideBar() {
     const [isSidebarOpen, setIsSidebarOpen ] = useState(true);
   return (
-    <div id='sidebar' className='w-fit text-xs'>
+    <div id='sidebar' className='w-fit text-xs z-50'>
         {/* THIS SIDEBAR SHOWING ONLY ON DESKTOP ---- NOT MOBILE MENU */}
         <div id='sidebar' className="hidden wrapper  py-3 lg:flex flex-col">
             <div id='wrapper' className={`bg-slate-50 shadow-both-2 rounded-2xl h-full px-2 py-4 transition-all duration-500 relative overflow-hidden dark:bg-slate-800 dark:shadow-slate-900 ${isSidebarOpen ? 'w-56' : 'w-20'} `}>
