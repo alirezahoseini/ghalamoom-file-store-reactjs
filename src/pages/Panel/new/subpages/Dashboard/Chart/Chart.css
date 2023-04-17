@@ -1,0 +1,26 @@
+
+html.dark tspan{
+    fill: #f7f7f7;
+}
+
+tspan{
+    font-size: 10px;
+}
+
+.recharts-responsive-container{
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+@media screen and (min-width: 1023px) {
+    .recharts-responsive-container{
+        max-width: 70vw !important;
+        margin: 0 auto !important;
+    }
+}
+@media screen and (min-width: 1440px) {
+    .recharts-responsive-container{
+        max-width: 75vw !important;
+        margin: 0 auto !important;
+    }
+}
