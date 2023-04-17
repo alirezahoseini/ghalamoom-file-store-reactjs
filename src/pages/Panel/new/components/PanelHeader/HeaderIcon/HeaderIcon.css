@@ -1,0 +1,46 @@
+
+.header-icon .background-blur::before{
+    content: '';
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+    z-index: -1;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+.header-icon .background-blur::after{
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+}
+.header-icon::before{
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 3px;
+    right: 2px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+    z-index: 2;
+}
