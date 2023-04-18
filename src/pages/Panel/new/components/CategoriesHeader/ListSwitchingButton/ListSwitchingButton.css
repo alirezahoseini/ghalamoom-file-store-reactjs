@@ -1,0 +1,36 @@
+#list-switching .bg-shape-list-switch{
+    width: 50%;
+    height: 80%;
+    transition: .3s all;
+    -webkit-transition: .3s all;
+    -moz-transition: .3s all;
+    -ms-transition: .3s all;
+    -o-transition: .3s all;
+    position: absolute;
+    right: 4px;
+    background: #ffffff;
+    border-radius: 555px;
+    -webkit-border-radius: 555px;
+    -moz-border-radius: 555px;
+    -ms-border-radius: 555px;
+    -o-border-radius: 555px;
+}
+
+#list-switching .bg-shape-list-switch.left{
+    right: calc(50% - 4px);
+}
+#list-switching button {
+    padding: 5px 15px;
+    z-index: 1;
+    color: gray;
+}
+#list-switching button.active {
+    color: rgb(175, 2, 255);
+    z-index: 1;
+}
+html.dark #list-switching button.active {
+    color: #e5fd0c;
+}
+html.dark #list-switching .bg-shape-list-switch{
+    background-color: #334155;
+}

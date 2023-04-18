@@ -1,0 +1,68 @@
+import { TbCategory, TbPencil, TbEye } from 'react-icons/tb'
+import { Link } from 'react-router-dom'
+
+// assets 
+import tomanLogo from '../../../../../assets/icons/toman.svg'
+import { type } from '@testing-library/user-event/dist/type'
+
+
+export default function DataGridItem({ title, category, inStock, salesCount, price, image, id, type }) {
+    return (
+        <div className='data-grid-item md:w-6/12 lg:w-4/12 xl:w-3/12 p-3'>
+            <div className="wrapper bg-white p-3 rounded-4xl lg:rounded-3xl dark:bg-slate-800 ">
+                {/* Item image  */}
+                <div className="rounded-3xl overflow-hidden h-52 flex items-center justify-center filte">
+                    <img src={image} alt={title} className='w-full' />
+                </div>
+                {/* End of Item image  */}
+                <div className='p-3 flex flex-col gap-4'>
+                    {/* Item info */}
+                    <div className="mt-2">
+                        <div className='flex flex-col gap-2 '>
+                            <h2 className='font-bold text-slate-800 dark:text-slate-200 '>{title}</h2>
+                        </div>
+                    </div>
+                    {/* End of Item info */}
+                    <div className='flex items-center justify-between' >
+                        {/* Start Item Status */}
+                        <span className='text-slate-500 flex gap-1 items-center dark:text-slate-400'>
+                            <TbCategory className='text-sm' />
+                            <span>{category}</span>
+                        </span>
+                        {/* End of Item Status */}
+                        {/* Category */}
+                        <span className={`item-stock-status px-2 py-1 rounded-md ${!inStock && 'not'}`}>{inStock ? 'موجود' : "ناموجود"}</span>
+                        {/* End of Category */}
+                    </div>
+                    <div className='w-full flex items-center justify-between'>
+                        {/* Item Price  */}
+                        <div className='flex items-center' >
+                            <span className='text-xl font-bold font-yekan-bakh ml-2 text-slate-700 dark:text-slate-300'>{price}</span>
+                            <img src={tomanLogo} alt="toman" className='w-4' />
+                        </div>
+                        {/* End of Item Price  */}
+                        {/* Sales Count  */}
+                        <div className='flex justify-start items-center gap-2 font-yekan-bakh text-slate-600 dark:text-slate-300' >
+                            <span>فروش:</span>
+                            <span className='text-xl  font-bold '>{salesCount}</span>
+                        </div>
+                        {/* End ofSales Count  */}
+                    </div>
+                    {/* Buttos */}
+                    <div className='flex items-center justify-evenly'>
+                        <Link to={`edite${type}/${id}`} className='w-5/12 flex items-center justify-center gap-1 rounded-2xl py-2 px-2 text-slate-700 bg-slate-50 font-bold hover:bg-yellow-300 transition-all duration-300 hover:shadow-both dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-yellow-300 dark:hover:text-slate-800'>
+                            <TbPencil className='text-sm' />
+                            <span>ویرایش</span>
+                        </Link>
+                        <Link to={`/${type}s/${id}`} className='w-5/12 flex items-center justify-center gap-1 rounded-2xl py-2 px-2 text-slate-700 bg-slate-50 font-bold hover:bg-violet-300 transition-all duration-300 hover:shadow-both dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-violet-300 dark:hover:text-slate-800' >
+                            <TbEye className='text-sm' />
+                            <span>نمایش</span>
+                        </Link>
+                    </div>
+                    {/* End of Buttos */}
+                </div>
+
+            </div>
+        </div>
+    )
+}

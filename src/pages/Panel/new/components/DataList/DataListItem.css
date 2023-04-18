@@ -1,0 +1,16 @@
+.item-stock-status{
+    background: #12ff121a;
+    color: green;
+}
+.item-stock-status.not{
+    background: #ff12121a;
+    color: rgb(128, 0, 0);
+}
+html.dark .item-stock-status{
+    background: #00ff0023;
+    color: rgb(43, 255, 0);
+}
+html.dark .item-stock-status.not{
+    background: #ff00002f;
+    color: rgb(255, 36, 36);
+}

@@ -5,27 +5,27 @@ const dashboardChart = [
     },
     {
         month: 'اردیبهشت',
-        income: 5,
+        income: 25,
     },
     {
         month: 'خرداد',
-        income: 15,
+        income: 13,
     },
     {
         month: 'تیر',
-        income: 5,
+        income: 15,
     },
     {
         month: 'مرداد',
-        income: 9,
+        income: 7,
     },
     {
         month: 'شهریور',
-        income: 12,
+        income: 14,
     },
     {
         month: 'مهر',
-        income: 19,
+        income: 18,
     },
 ];
 
