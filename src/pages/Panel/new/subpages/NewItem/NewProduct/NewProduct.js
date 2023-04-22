@@ -18,7 +18,7 @@ import ImageInput from "../components/Inputs/ImageInput";
 import SubmitFormButton from "../components/Inputs/SubmitFormButton";
 
 export default function NewProduct() {
-  const {axiosPostResult, axiosPostIspending, axiosPostError, setAxiosPostUrl, setAxiosPostData} = useAxiosPost()
+  const {axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData} = useAxiosPost();
   const [formData, setFormData] = useState({
     title: '',                             /// max length 70 
     inStock: 'true',                      /// default true 
@@ -30,8 +30,8 @@ export default function NewProduct() {
     saleCount: 0,                         /// default 0 not change here
     likes: 0,                             /// default 0 not change here
     downloadCount: 0,                     /// default 0 not change here
-    category: "[{ name: 'بدون دسته', id: 'null' }]",     /// chooseing from select box
-    format: "[{ name: 'فایل zip', id: 'zip' }]",          /// chooseing from select box
+    category: { "name":"بدون دسته", "id": "null" },     /// chooseing from select box
+    format: { "name":" فایل zip", "id": "zip" },          /// chooseing from select box
   });
   const navigateTo = useNavigate()
   const inputsData = {
@@ -122,7 +122,6 @@ export default function NewProduct() {
       inputId: 'new-product-image'
     }
   }
-
   const changeHandler = (event) => {
     // Image 
     if (event.image) {
@@ -132,7 +131,7 @@ export default function NewProduct() {
       const inputName = event.target.name;
       const inputItems = inputsData[inputName].items;
       const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-      setFormData({ ...formData, [event.target.name]: JSON.stringify([selectedItem]) })
+      setFormData({ ...formData, [event.target.name]: JSON.stringify(selectedItem) })
     } else {
       // Normal inputs
       setFormData({ ...formData, [event.target.name]: event.target.value })
@@ -190,10 +189,10 @@ export default function NewProduct() {
           </section>
           <div className="buttons w-full flex items-center gap-3">
             <div className="w-6/12 lg:w-3/12" >
-              <SubmitFormButton isPending={axiosPostIspending} title={'ایجاد محصول'} />
+              <SubmitFormButton isPending={axiosPostIsPending} title={'ایجاد محصول'} />
             </div>
             <div className="w-6/12 lg:w-3/12" >
-              <Link to={-1} className={`text-orange-950 font-bold w-full py-3 px-4 rounded-lg shadow-both-0 bg-orange-200 hover:bg-orange-300 transition-all duration-300 mt-6 flex justify-center items-center dark:bg-orange-900 dark:text-violet-100 dark:hover:bg-orange-950 ${axiosPostIspending && 'opacity-50 pointer-events-none'}`} >
+              <Link to={-1} className={`text-orange-950 font-bold w-full py-3 px-4 rounded-lg shadow-both-0 bg-orange-200 hover:bg-orange-300 transition-all duration-300 mt-6 flex justify-center items-center dark:bg-orange-900 dark:text-violet-100 dark:hover:bg-orange-950 ${axiosPostIsPending && 'opacity-50 pointer-events-none'}`} >
                 لغو
               </Link>
             </div>

@@ -6,7 +6,7 @@ import tomanLogo from '../../../../../assets/icons/toman.svg'
 
 
 
-export default function DataListItem({ title, category, inStock, salesCount, price, image, type, id }) {
+export default function DataListItem({ title, category, inStock, saleCount, price, image, type, id }) {
 
     return (
         <div className="item-list-item bg-white my-2 p-2 rounded-xl w-full flex items-center dark:bg-slate-800">
@@ -22,7 +22,7 @@ export default function DataListItem({ title, category, inStock, salesCount, pri
                     <h2 className='font-bold text-slate-800 dark:text-slate-200 overflow-hidden whitespace-nowrap text-ellipsis w-40 sm:w-fit'>{title}</h2>
                     <span className='text-slate-500 flex gap-1 items-center dark:text-slate-400'>
                         <TbCategory className='text-sm' />
-                        <span>{category}</span>
+                        <span>{category.name}</span>
                     </span>
                 </div>
                 {/* End of Item info  */}
@@ -40,7 +40,7 @@ export default function DataListItem({ title, category, inStock, salesCount, pri
             </div>
             {/* End of Item Price  */}
             {/* Sales Count  */}
-            <div className='hidden md:w-2/12 md:flex text-xl font-yekan-bakh font-bold justify-start text-slate-600 dark:text-slate-300' >{salesCount}</div>
+            <div className='hidden md:w-2/12 md:flex text-xl font-yekan-bakh font-bold justify-start text-slate-600 dark:text-slate-300' >{saleCount}</div>
             {/* End ofSales Count  */}
             {/* More */}
             <div className='w-4/12 sm:w-2/12 text-xl text-slate-700 flex items-center justify-evenly' >

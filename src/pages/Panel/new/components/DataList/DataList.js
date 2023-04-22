@@ -1,18 +1,42 @@
-import './DataListItem.css'
+/************ This syntax requared to run Data list **********
 
-import productImage0 from '../../../../../assets/images/products/1.jpg'
-import productImage1 from '../../../../../assets/images/products/Clash.jpg'
-import productImage2 from '../../../../../assets/images/products/DAKAR.jpg'
-import productImage3 from '../../../../../assets/images/products/Enrique.jpg'
-import productImage4 from '../../../../../assets/images/products/Kelium.jpg'
-import productImage5 from '../../../../../assets/images/products/Magistic.jpg'
+-- calling Copmonent ==>  
+<DataList 
+    isList={isList}        ===> Boolean
+    data={productsArray}   ===> Data array
+    title="محصول"          ===> List title 
+    type='product'         ===> To determine the links 
+   />
+    
+
+-- sending this object in data array child ==> 
+
+     {
+        "id": 104,
+        "created_at": 1682001809021,
+        "title": "",
+        "largeDes": "",
+        "likes": 0,
+        "fileSize": "10",
+        "format": { "name":"بدون دسته", "id": "null" },
+        "category": { "name":" فایل zip", "id": "zip" },
+        "miniDes": "",
+        "image": "data:image...",
+        "downloadCount": 0,
+        "saleCount": 0,
+        "inStock": "true",
+        "price": "10"
+    } , ...
+
+  ********************************/
+
+import './DataListItem.css'
 
 // components
 import DataListItem from './DataListItem'
 import DataGridItem from './DataGridItem'
 
-export default function DataList({ isList, data = [], title , type = 'product'}) {
-
+export default function DataList({ isList, data = [], title, type = 'product' }) {
 
   return (
     <div id='data-list'>
