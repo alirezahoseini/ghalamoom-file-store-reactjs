@@ -1,6 +1,6 @@
 /************ This syntax requared to run Normal input **********
 
--- calling Copmonent ==>   <NormalInput onChangeEvent={changeHandler} {...inputsData.title} />
+-- calling Copmonent ==>   <NormalInput  value={formData.title} onChangeEvent={changeHandler} {...inputsData.title} />
 
 -- sending this object ==> 
 

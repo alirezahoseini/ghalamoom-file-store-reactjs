@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 
+// datas
+import {apiLinks} from '../../../data/links'
+
 // utils
 import { setCooki, getCooki } from '../../../utils/cookis'
 import axios from 'axios';
@@ -7,7 +10,7 @@ import axios from 'axios';
 export default function useUserName() {
     const [userName, setUserName] = useState(null)
     const [isPending, setIsPending] = useState(true)
-    const url = 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/me';
+    const url = apiLinks.userInfo;
     const accessUserName = async () => {
         // first cheking cookis
         const isExistInCookis = getCooki('username');

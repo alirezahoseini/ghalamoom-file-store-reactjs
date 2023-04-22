@@ -1,37 +1,37 @@
 import { useEffect, useState } from "react"
-import { Link , useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-// assets
-import imageDefault from '../../../../../../assets/images/panel/imageDefault'
+// datas
+import { apiLinks } from '../../../../../../data/links';
 
 // hooks
 import useAxiosPost from "../../../../../../hooks/axios/useAxiosPost";
 
 // components
-import NormalInput from "../components/Inputs/NormalInput";
-import Textarea from "../components/Inputs/Textarea";
-import InStockRadio from "../components/Inputs/InStockRadio";
-import SelectCategory from "../components/Inputs/SelectBox";
-import SelectBox from "../components/Inputs/SelectBox";
-import PriceInput from "../components/Inputs/PriceInput";
-import ImageInput from "../components/Inputs/ImageInput";
-import SubmitFormButton from "../components/Inputs/SubmitFormButton";
+import NormalInput from "../../../components/Inputs/NormalInput";
+import Textarea from "../../../components/Inputs/Textarea";
+import InStockRadio from "../../../components/Inputs/InStockRadio";
+import SelectBox from "../../../components/Inputs/SelectBox";
+import PriceInput from "../../../components/Inputs/PriceInput";
+import ImageInput from "../../../components/Inputs/ImageInput";
+import SubmitFormButton from "../../../components/Buttons/SubmitFormButton";
+import CancelButton from "../../../components/Buttons/CancelButton";
 
 export default function NewProduct() {
-  const {axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData} = useAxiosPost();
+  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
   const [formData, setFormData] = useState({
-    title: '',                             /// max length 70 
-    inStock: 'true',                      /// default true 
-    image: imageDefault[0],               /// dataurl image
-    price: 0,                             /// the price is in thousand tomans, like 20 
-    fileSize: 0,                          /// file size in megabytes
+    title: '',                            /// max length 70 
+    inStock: true,                        /// default true 
+    image: '',                            /// dataurl image
+    price: '',                            /// the price is in thousand tomans, like 20 
+    fileSize: '',                         /// file size in megabytes
     miniDes: '',                          /// max length 180
     largeDes: '',                         /// max length 400
     saleCount: 0,                         /// default 0 not change here
     likes: 0,                             /// default 0 not change here
     downloadCount: 0,                     /// default 0 not change here
-    category: { "name":"بدون دسته", "id": "null" },     /// chooseing from select box
-    format: { "name":" فایل zip", "id": "zip" },          /// chooseing from select box
+    category: { "name": "بدون دسته", "id": "null" },     /// chooseing from select box
+    format: { "name": "ZIP", "id": "zip" },          /// chooseing from select box
   });
   const navigateTo = useNavigate()
   const inputsData = {
@@ -138,17 +138,17 @@ export default function NewProduct() {
     }
   }
   const submitHandler = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     setAxiosPostData(formData)
-    setAxiosPostUrl('https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/products')
+    setAxiosPostUrl(apiLinks.products)
   }
-  useEffect(()=> {
-    if(axiosPostResult !== null){
+  useEffect(() => {
+    if (axiosPostResult !== null) {
       alert('محصول با موفقیت ایجاد شد');
       navigateTo('/panel/products')
     }
-    if(axiosPostError !== null){
-      console.log()
+    if (axiosPostError !== null) {
+      console.log(axiosPostError)
     }
   }, [axiosPostError, axiosPostResult])
 
@@ -159,31 +159,31 @@ export default function NewProduct() {
           <section className="flex flex-col xl:flex-row">
             {/* Right Side - Text form  */}
             <div className="right-side xl:w-8/12">
-              <NormalInput onChangeEvent={changeHandler} {...inputsData.title} />
-              <Textarea onChangeEvent={changeHandler} {...inputsData.miniDes} />
+              <NormalInput value={formData.title} onChangeEvent={changeHandler} {...inputsData.title} />
+              <Textarea value={formData.miniDes} onChangeEvent={changeHandler} {...inputsData.miniDes} />
               <div className="w-full flex-col xl:flex-row flex justify-start relative mb-5 mt-3">
                 <div className="w-full xl:w-6/12">
-                  <SelectBox onChangeEvent={changeHandler} {...inputsData.category} />
+                  <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} />
                 </div>
                 <div className="w-full xl:w-6/12">
-                  <InStockRadio onChangeEvent={changeHandler} {...inputsData.inStock} />
+                  <InStockRadio value={formData.inStock} onChangeEvent={changeHandler} {...inputsData.inStock} />
                 </div>
               </div>
               <div className="w-full flex-col xl:flex-row flex justify-start items-center relative mb-5 mt-3">
                 <div className="w-full xl:w-6/12">
-                  <SelectBox onChangeEvent={changeHandler} {...inputsData.format} />
+                  <SelectBox value={formData.format} onChangeEvent={changeHandler} {...inputsData.format} />
                 </div>
                 <div className="w-full xl:w-6/12">
-                  <PriceInput onChangeEvent={changeHandler} {...inputsData.price} />
+                  <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} />
                 </div>
               </div>
-              <NormalInput onChangeEvent={changeHandler} {...inputsData.fileSize} />
-              <Textarea onChangeEvent={changeHandler} {...inputsData.largeDes} />
+              <NormalInput value={formData.fileSize} onChangeEvent={changeHandler} {...inputsData.fileSize} />
+              <Textarea value={formData.largeDes} onChangeEvent={changeHandler} {...inputsData.largeDes} />
             </div>
             {/* End of Right Side - Text form  */}
             {/* Left side - select Image */}
             <div className="left-side xl:w-4/12">
-              <ImageInput onChnageHandler={changeHandler} {...inputsData.image} />
+              <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
             </div>
             {/* End of Left side - select Image */}
           </section>
@@ -191,10 +191,8 @@ export default function NewProduct() {
             <div className="w-6/12 lg:w-3/12" >
               <SubmitFormButton isPending={axiosPostIsPending} title={'ایجاد محصول'} />
             </div>
-            <div className="w-6/12 lg:w-3/12" >
-              <Link to={-1} className={`text-orange-950 font-bold w-full py-3 px-4 rounded-lg shadow-both-0 bg-orange-200 hover:bg-orange-300 transition-all duration-300 mt-6 flex justify-center items-center dark:bg-orange-900 dark:text-violet-100 dark:hover:bg-orange-950 ${axiosPostIsPending && 'opacity-50 pointer-events-none'}`} >
-                لغو
-              </Link>
+            <div className={`w-4/12 xl:4/12 ${axiosPostIsPending && 'pointer-events-none'}`} >
+              <CancelButton  title={'لغو'}/>
             </div>
           </div>
         </form>

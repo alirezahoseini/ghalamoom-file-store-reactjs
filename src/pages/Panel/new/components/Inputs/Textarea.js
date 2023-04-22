@@ -1,6 +1,6 @@
 /************ This syntax requared to run Textarea **********
 
--- calling Copmonent ==>  <Textarea onChangeEvent={changeHandler} {...inputsData.largeDes} />
+-- calling Copmonent ==>  <Textarea  value={formData.largeDes} onChangeEvent={changeHandler} {...inputsData.largeDes} />
 
 
 -- sending this object ==> 

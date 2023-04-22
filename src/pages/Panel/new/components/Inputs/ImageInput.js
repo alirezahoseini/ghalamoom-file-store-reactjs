@@ -1,11 +1,10 @@
 /************ This syntax requared to run image input **********
 
--- calling Copmonent ==>   <ImageInput onChnageHandler={changeHandler} {...inputsData.image} />
+-- calling Copmonent ==>   <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
 
 -- sending this object ==> 
 
       image: {
-      imageValue: '',
       inputId: 'new-product-image'
     }
 
@@ -14,13 +13,13 @@
   ********************************/
 
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TbPhotoPlus, TbPhotoEdit } from 'react-icons/tb'
 
-export default function ImageInput({ imageValue = '', onChnageHandler, inputId = 'null' }) {
+export default function ImageInput({ defaultImage, onChnageHandler, inputId = 'null' }) {
     const [selectedImage, setSelectedImage] = useState('')
 
-
+    useEffect(()=>{setSelectedImage(defaultImage)},[])
     /// selected image file
     const selectedFile = (event) => {
         const file = event.target.files[0]
@@ -50,7 +49,7 @@ export default function ImageInput({ imageValue = '', onChnageHandler, inputId =
                     <label htmlFor={inputId} className='flex flex-col cursor-pointer items-center justify-center p-4 gap-3 rounded-2xl border-2 border-dashed xl:w-11/12 mx-auto border-slate-200 text-slate-500 dark:border-slate-700 font-yekan-bakh font-bold'>
                         <TbPhotoPlus className='text-3xl'/>
                         <h4>افزودن تصویر</h4>
-                        <span className='text-slate-400 dark:text-slate-600'>سایز مناسب 500*500</span>
+                        <span className='text-slate-400 dark:text-slate-600'>سایز مناسب 600*600</span>
                     </label>
                 ) : (
                     /// If selected image show this

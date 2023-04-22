@@ -1,6 +1,6 @@
 /************ This syntax requared to run Price input **********
 
--- calling Copmonent ==>    <PriceInput onChangeEvent={changeHandler} {...inputsData.price} />
+-- calling Copmonent ==>    <PriceInput  value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} />
 
 -- sending this object ==> 
 
@@ -19,7 +19,7 @@
 
 import { useState } from 'react';
 import './Inputs.css'
-import tomanIcon from '../../../../../../../assets/icons/toman.svg'
+import tomanIcon from '../../../../../assets/icons/toman.svg'
 
 export default function PriceInput(props) {
   const [onFocused, setOnFocused] = useState(false)

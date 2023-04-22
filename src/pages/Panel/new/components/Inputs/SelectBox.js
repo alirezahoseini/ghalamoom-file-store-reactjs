@@ -1,6 +1,6 @@
 /************ This syntax requared to run select box **********
 
--- calling Copmonent ==>  <SelectBox onChangeEvent={changeHandler} {...inputsData.format} />
+-- calling Copmonent ==>  <SelectBox value={formData.format} onChangeEvent={changeHandler} {...inputsData.format} />
 
 ------ You must give ( Position: relative ) to the parent tag
 
@@ -24,11 +24,11 @@
 
 
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TbChevronDown } from 'react-icons/tb'
 
 export default function SelectBox(props) {
-    const { label, onChangeEvent, selectBoxName, items } = props;
+    const { label, onChangeEvent, selectBoxName, value, items } = props;
     const [selectedItem , setSelectedItem] = useState('');
     const [isOpenSelectBox, setIsOpenSelectBox] = useState(false)
 
@@ -37,6 +37,8 @@ export default function SelectBox(props) {
         setSelectedItem(event.target.id)
         setIsOpenSelectBox(false)
     }
+
+    useEffect(()=>{setSelectedItem(value.name)},[])
 
     return (
         <div className='custom-select input-group flex flex-col xl:flex-row gap-3 text-xs p-0 justify-start my-5 xl:items-center'>
@@ -57,7 +59,7 @@ export default function SelectBox(props) {
                     {items.map(item => (
                         <div key={item.name} className="custom-select-box-item">
                             <input type="radio" name={selectBoxName} id={item.name} value={item.id} className='custom-select-box-input hidden' onChange={(event) => changeHandler(event)}/>
-                            <label htmlFor={item.name} className={`py-2 px-3 bg-slate-100 text-slate-700 font-bold rounded-lg cursor-pointer my-1 inline-block border-4 border-transparent dark:bg-slate-800 dark:text-slate-300 ${selectedItem === item.name ? ' border-blue-500 border-opacity-40' : ''}`}>{item.name}</label>
+                            <label htmlFor={item.name} className={`py-2 px-3 bg-slate-100 text-slate-700 font-bold rounded-lg cursor-pointer my-1 inline-block border-4  dark:bg-slate-800 dark:text-slate-300 ${selectedItem === item.name ? ' border-blue-500 border-opacity-40' : 'border-transparent'}`}>{item.name}</label>
                         </div>
                     ))}
                 </div>

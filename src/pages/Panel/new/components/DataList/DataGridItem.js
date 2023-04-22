@@ -4,15 +4,18 @@ import { Link } from 'react-router-dom'
 // assets 
 import tomanLogo from '../../../../../assets/icons/toman.svg'
 import { type } from '@testing-library/user-event/dist/type'
+// assets
+import defaultImage from '../../../../../assets/images/panel/imageDefault.json'
 
 
-export default function DataGridItem({ title, category, inStock, saleCount, price, image, id, type }) {
+
+export default function DataGridItem({ title, category, inStock, saleCount, price, image , id, type }) {
     return (
         <div className='data-grid-item md:w-6/12 lg:w-4/12 xl:w-3/12 p-3'>
             <div className="wrapper bg-white p-3 rounded-4xl lg:rounded-3xl dark:bg-slate-800 ">
                 {/* Item image  */}
                 <div className="rounded-3xl overflow-hidden h-52 flex items-center justify-center filte">
-                    <img src={image} alt={title} className='w-full' />
+                    <img src={(image === '' ? defaultImage[0].toString(): image)} alt={title} className='w-full' />
                 </div>
                 {/* End of Item image  */}
                 <div className='p-3 flex flex-col gap-4'>
@@ -50,7 +53,7 @@ export default function DataGridItem({ title, category, inStock, saleCount, pric
                     </div>
                     {/* Buttos */}
                     <div className='flex items-center justify-evenly'>
-                        <Link to={`edite${type}/${id}`} className='w-5/12 flex items-center justify-center gap-1 rounded-2xl py-2 px-2 text-slate-700 bg-slate-50 font-bold hover:bg-yellow-300 transition-all duration-300 hover:shadow-both dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-yellow-300 dark:hover:text-slate-800'>
+                        <Link to={`/panel/edit${type}/${id}`} className='w-5/12 flex items-center justify-center gap-1 rounded-2xl py-2 px-2 text-slate-700 bg-slate-50 font-bold hover:bg-yellow-300 transition-all duration-300 hover:shadow-both dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-yellow-300 dark:hover:text-slate-800'>
                             <TbPencil className='text-sm' />
                             <span>ویرایش</span>
                         </Link>

@@ -1,6 +1,8 @@
 import { TbCategory, TbPencil, TbEye } from 'react-icons/tb'
 import { Link } from 'react-router-dom'
 
+// assets 
+import defaultImage from '../../../../../assets/images/panel/imageDefault.json'
 import tomanLogo from '../../../../../assets/icons/toman.svg'
 
 
@@ -14,7 +16,7 @@ export default function DataListItem({ title, category, inStock, saleCount, pric
             <div className='w-8/12 sm:w-5/12 flex items-center' >
                 {/* Item Image  */}
                 <div className='w-fit rounded-lg overflow-hidden'>
-                    <img src={image} alt="a and b" style={{ width: '56px', minWidth: '56px' }} />
+                    <img src={(image === '' ? defaultImage[0].toString(): image)} alt="a and b" style={{ width: '56px', minWidth: '56px' }} />
                 </div>
                 {/* End of Item Image  */}
                 {/* Start Item info  */}
@@ -44,7 +46,7 @@ export default function DataListItem({ title, category, inStock, saleCount, pric
             {/* End ofSales Count  */}
             {/* More */}
             <div className='w-4/12 sm:w-2/12 text-xl text-slate-700 flex items-center justify-evenly' >
-                <Link to={`edite${type}/${id}`} className='p-2 rounded-full hover:bg-slate-100 transition-all duration-200 dark:text-slate-300 dark:hover:bg-slate-700'>
+                <Link to={`/panel/edit${type}/${id}`} className='p-2 rounded-full hover:bg-slate-100 transition-all duration-200 dark:text-slate-300 dark:hover:bg-slate-700'>
                     <TbPencil />
                 </Link>
                 <Link to={`/${type}s/${id}`} className='p-2 rounded-full hover:bg-slate-100 transition-all duration-200 dark:text-slate-300 dark:hover:bg-slate-700'>

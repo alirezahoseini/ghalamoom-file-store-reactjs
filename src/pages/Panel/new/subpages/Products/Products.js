@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react'
 // back up data for offline test
 import {productsBackup} from '../../../../../data/productsBackupArray'
 
+// datas 
+import {apiLinks} from '../../../../../data/links'
+
 // hooks
 import useAxiosGet from '../../../../../hooks/axios/useAxiosGet'
 
@@ -18,15 +21,14 @@ export default function Products() {
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
   const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
   const [productsArray, setProductsArray] = useState([]);
-
+  console.log(productsArray)
   useEffect(()=>{
-    setAxiosGetUrl('https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/products')
+    setAxiosGetUrl(apiLinks.products)
   },[]);
 
   useEffect(()=>{
     if(axiosGetResult !== null){
       setProductsArray(axiosGetResult)
-      console.log(axiosGetResult)
       setSimpleDataLoaderStatus('hidde')
     }else if(axiosGetError !== null){
       setSimpleDataLoaderStatus('error')

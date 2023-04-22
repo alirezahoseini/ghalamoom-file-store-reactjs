@@ -1,6 +1,6 @@
 /************ This syntax requared to run inStock radio input **********
 
--- calling Copmonent ==>   <InStockRadio onChangeEvent={changeHandler} {...inputsData.inStock} />
+-- calling Copmonent ==>   <InStockRadio value={formData.inStock} onChangeEvent={changeHandler} {...inputsData.inStock} />
 
 -- sending this object ==> 
 
@@ -11,18 +11,20 @@
 
   ********************************/
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {TbCheck, TbX} from 'react-icons/tb'
 import './Inputs.css'
 
 export default function InStockRadio(props) {
     const [isTrue, setIsTrue] = useState(true)
-    const { label, onChangeEvent, name } = props;
+    const { label, onChangeEvent, name, value } = props;
 
     const changeHandler = (event) => {
         setIsTrue(prev => !prev)
         onChangeEvent(event)
     }
+
+    useEffect(()=> { setIsTrue(value) }, [])
 
     return (
         <div className='instock-input input-group flex gap-3 text-xs p-0 justify-start mt-5 items-center'>
