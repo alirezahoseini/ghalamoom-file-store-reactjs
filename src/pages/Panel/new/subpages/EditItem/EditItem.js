@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom"
 // components
 import FormHeader from "../../components/FormHeader/FormHeader";
 import EditProduct from "./EditProduct/EditProduct";
+import EditCourse from "./EditeCourse/EditeCourse";
 
 export default function EditItem() {
     const userLocation = useLocation();
@@ -27,6 +28,9 @@ export default function EditItem() {
                 <FormHeader title={formTitle} />
                 {formName === 'editproduct' && (
                     <EditProduct/>
+                )}
+                {formName === 'editcourse' && (
+                    <EditCourse/>
                 )}
             </div>
         </div>

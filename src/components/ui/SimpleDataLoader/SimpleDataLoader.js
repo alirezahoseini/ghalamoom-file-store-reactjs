@@ -25,7 +25,7 @@ export default function SimpleDataLoader({status}) {
                     <span className='text-3xl text-white bg-blue-600 rounded-2xl w-16 h-16 flex items-center justify-center shadow-lg'>
                     <TbPlugConnectedX/>
                     </span>
-                    <span className='font-bold mt-3 text-slate-600 dark:text-slate-400'>بارگزاری نشد.!</span>
+                    <span className='font-bold mt-3 text-slate-600 dark:text-slate-400'>بارگذاری نشد.!</span>
                 </div>
             )}
         </div>

@@ -14,6 +14,7 @@ import EditItem from './pages/Panel/new/subpages/EditItem/EditItem';
 import Courses from './pages/Panel/new/subpages/Courses/Courses';
 
 
+
 // Website Routes Config
 const routes = [
     { path: '/', element: <Home /> },
@@ -23,8 +24,9 @@ const routes = [
             { path: 'products', element: <PrivatePage ><Products /></PrivatePage> },
             { path: 'newproduct', element: <PrivatePage ><NewItem /></PrivatePage> },
             { path: 'editproduct/:productId', element: <PrivatePage ><EditItem /></PrivatePage> },
-            { path: 'newcourse', element: <PrivatePage ><NewItem /></PrivatePage> },
             { path: 'courses', element: <PrivatePage ><Courses /></PrivatePage> },
+            { path: 'newcourse', element: <PrivatePage ><NewItem /></PrivatePage> },
+            { path: 'editcourse/:courseId', element: <PrivatePage ><EditItem /></PrivatePage> },
             { path: '', element:<Navigate to="dashboard" replace={ true} />},
             { path: '*', element:<Navigate to="dashboard" replace={ true} />},
 ]
