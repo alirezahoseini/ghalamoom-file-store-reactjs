@@ -2,21 +2,22 @@ import { TbCategory, TbPencil, TbEye } from 'react-icons/tb'
 import { Link } from 'react-router-dom'
 
 // assets 
-import defaultImage from '../../../../../assets/images/panel/imageDefault.json'
-import tomanLogo from '../../../../../assets/icons/toman.svg'
+import defaultImage from '../../../../../../assets/images/panel/imageDefault.json'
+import tomanLogo from '../../../../../../assets/icons/toman.svg'
 
 
 
 
-export default function DataListItem({ title, category, inStock, saleCount, price, image, type, id }) {
+export default function ProductListItem({ title, category, studentCount, level
+    , price, image, type, id }) {
 
     return (
-        <div className="item-list-item bg-white my-2 p-2 rounded-xl w-full flex items-center dark:bg-slate-800">
+        <div className="product-list-item bg-white my-2 p-2 rounded-xl w-full flex items-center dark:bg-slate-800">
             {/* Item info  */}
             <div className='w-8/12 sm:w-5/12 flex items-center' >
                 {/* Item Image  */}
                 <div className='w-fit rounded-lg overflow-hidden'>
-                    <img src={(image === '' ? defaultImage[0].toString(): image)} alt="a and b" style={{ width: '56px', minWidth: '56px' }} />
+                    <img src={(image === '' ? defaultImage[0].toString() : image)} alt="a and b" style={{ width: '56px', minWidth: '56px' }} />
                 </div>
                 {/* End of Item Image  */}
                 {/* Start Item info  */}
@@ -30,9 +31,9 @@ export default function DataListItem({ title, category, inStock, saleCount, pric
                 {/* End of Item info  */}
             </div>
             {/* Item info  */}
-            {/* Start Item Status */}
-            <div className='hidden sm:w-2/12 sm:flex' >
-                <span className={`item-stock-status px-2 py-1 rounded-md ${!inStock && 'not'}`}>{inStock ? 'موجود' : "ناموجود"}</span>
+            {/* Start course support */}
+            <div className='hidden sm:w-2/12 sm:flex text-xs font-bold text-slate-600 dark:text-slate-400' >
+                { level.name }
             </div>
             {/* End of Item Status */}
             {/* Item Price  */}
@@ -42,7 +43,7 @@ export default function DataListItem({ title, category, inStock, saleCount, pric
             </div>
             {/* End of Item Price  */}
             {/* Sales Count  */}
-            <div className='hidden md:w-2/12 md:flex text-xl font-yekan-bakh font-bold justify-start text-slate-600 dark:text-slate-300' >{saleCount}</div>
+            <div className='hidden md:w-2/12 md:flex text-xl font-yekan-bakh font-bold justify-start text-slate-600 dark:text-slate-300' >{studentCount}</div>
             {/* End ofSales Count  */}
             {/* More */}
             <div className='w-4/12 sm:w-2/12 text-xl text-slate-700 flex items-center justify-evenly' >

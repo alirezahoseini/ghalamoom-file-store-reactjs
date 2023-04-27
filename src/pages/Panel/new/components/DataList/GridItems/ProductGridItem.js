@@ -2,19 +2,19 @@ import { TbCategory, TbPencil, TbEye } from 'react-icons/tb'
 import { Link } from 'react-router-dom'
 
 // assets 
-import tomanLogo from '../../../../../assets/icons/toman.svg'
-import { type } from '@testing-library/user-event/dist/type'
+import tomanLogo from '../../../../../../assets/icons/toman.svg'
+
 // assets
-import defaultImage from '../../../../../assets/images/panel/imageDefault.json'
+import defaultImage from '../../../../../../assets/images/panel/imageDefault.json'
 
 
 
-export default function DataGridItem({ title, category, inStock, saleCount, price, image , id, type }) {
+export default function ProductGridItem({ title, category, inStock, saleCount, price, image , id, type }) {
     return (
-        <div className='data-grid-item md:w-6/12 lg:w-4/12 xl:w-3/12 p-3'>
+        <div className='product-grid-item md:w-6/12 lg:w-4/12 xl:w-3/12 p-3'>
             <div className="wrapper bg-white p-3 rounded-4xl lg:rounded-3xl dark:bg-slate-800 ">
                 {/* Item image  */}
-                <div className="rounded-3xl overflow-hidden h-52 flex items-center justify-center filte">
+                <div className="rounded-3xl overflow-hidden h-52 flex items-center justify-center">
                     <img src={(image === '' ? defaultImage[0].toString(): image)} alt={title} className='w-full' />
                 </div>
                 {/* End of Item image  */}

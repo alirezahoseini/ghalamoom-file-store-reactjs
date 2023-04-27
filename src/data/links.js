@@ -35,6 +35,7 @@ const apiLinks = {
     login: 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/login',
     signup: 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/signup',
     userInfo: 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/me',
+    courses: 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/courses'
 }
 
 

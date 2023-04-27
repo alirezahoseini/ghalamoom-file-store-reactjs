@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './style/index.css';
 import App from './App';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    // basename='projects/react/ss/'
+    // basename='/projects/react/qhalamoom'
     <BrowserRouter >
         <App />
     </BrowserRouter>

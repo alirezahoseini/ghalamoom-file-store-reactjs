@@ -9,7 +9,7 @@
    />
     
 
--- sending this object in data array child ==> 
+-- sending this object for PRODUCTS in data array child ==> 
 
      {
         "id": 104,
@@ -30,11 +30,13 @@
 
   ********************************/
 
-import './DataListItem.css'
+import './DataList.css'
 
 // components
-import DataListItem from './DataListItem'
-import DataGridItem from './DataGridItem'
+import ProductListItem from './ListItems/ProductListItem'
+import ProductGridItem from './GridItems/ProductGridItem'
+import CourseListItem from './ListItems/CourseListItem'
+import CourseGridItem from './GridItems/CourseGridItem'
 
 export default function DataList({ isList, data = [], title, type = 'product' }) {
 
@@ -45,9 +47,9 @@ export default function DataList({ isList, data = [], title, type = 'product' })
           /* Start Data list header  */
           <div className='data-list-header flex items-center bg-white w-full rounded-xl px-4 py-4 text-slate-600 dark:bg-slate-700 dark:text-slate-400'>
             <div className='w-8/12 sm:w-5/12 flex items-center' >{title}</div>
-            <div className='hidden sm:w-2/12 sm:flex' >وضعیت</div>
+            <div className='hidden sm:w-2/12 sm:flex' >{type === 'product' ? 'وضعیت' : 'سطح'}</div>
             <div className='hidden sm:w-2/12 sm:flex items-center' >قیمت</div>
-            <div className='hidden md:w-2/12 md:flex' >تعداد فروش</div>
+            <div className='hidden md:w-2/12 md:flex' >{type === 'product' ? 'تعداد فروش' : 'تعداد دانشجو'}</div>
             <div className='w-4/12 sm:w-2/12 flex items-center justify-evenly' >سایر</div>
           </div>
           /* End of Data list header  */
@@ -55,13 +57,14 @@ export default function DataList({ isList, data = [], title, type = 'product' })
         {isList ? (
           // List Rendering 
           data.map((item => (
-            <DataListItem key={item.id} {...item} type={type} />
+            type === 'product' ? (<ProductListItem key={item.id} {...item} type={type} />) : (<CourseListItem key={item.id} {...item} type={type} />)
           )))
         ) : (
           // Grid Rendering 
           <div className='flex flex-wrap'>
             {data.map((item => (
-              <DataGridItem key={item.id} {...item} type={type} />
+              type === 'product' ? (<ProductGridItem key={item.id} {...item} type={type} />) : (<CourseGridItem key={item.id} {...item} type={type} />)
+              
             )))}
           </div>
         )}
