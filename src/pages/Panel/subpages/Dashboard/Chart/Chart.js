@@ -1,7 +1,7 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import './Chart.css'
 // datas
-import { dashboardChart } from '../../../../../../data/chartsData'
+import { dashboardChart } from '../../../../../data/chartsData'
 
 // components
 import CustomTooltip from './CustomTooltip';

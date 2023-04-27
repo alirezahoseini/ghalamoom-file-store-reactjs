@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 
 // components
-import FormHeader from '../../components/FormHeader/FormHeader';
+import FormHeader from '../components/FormHeader/FormHeader';
 import NewProduct from "./NewProduct/NewProduct";
 import NewCourse from "./NewCourse/NewCourse";
 

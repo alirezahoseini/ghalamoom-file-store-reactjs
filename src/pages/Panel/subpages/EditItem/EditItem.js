@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 
 // components
-import FormHeader from "../../components/FormHeader/FormHeader";
+import FormHeader from "../components/FormHeader/FormHeader";
 import EditProduct from "./EditProduct/EditProduct";
 import EditCourse from "./EditeCourse/EditeCourse";
 

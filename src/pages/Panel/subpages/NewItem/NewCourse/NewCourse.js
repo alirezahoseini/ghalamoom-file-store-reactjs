@@ -2,53 +2,54 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 // datas
-import { apiLinks } from '../../../../../../data/links';
+import { apiLinks } from '../../../../../data/links';
 
 // hooks
-import useAxiosPost from "../../../../../../hooks/axios/useAxiosPost";
+import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
 
 // components
-import NormalInput from "../../../components/Inputs/NormalInput";
-import Textarea from "../../../components/Inputs/Textarea";
-import InStockRadio from "../../../components/Inputs/InStockRadio";
-import SelectBox from "../../../components/Inputs/SelectBox";
-import PriceInput from "../../../components/Inputs/PriceInput";
-import ImageInput from "../../../components/Inputs/ImageInput";
-import SubmitFormButton from "../../../components/Buttons/SubmitFormButton";
-import CancelButton from "../../../components/Buttons/CancelButton";
+import NormalInput from "../../components/Inputs/NormalInput";
+import Textarea from "../../components/Inputs/Textarea";
+import SelectBox from "../../components/Inputs/SelectBox";
+import PriceInput from "../../components/Inputs/PriceInput";
+import ImageInput from "../../components/Inputs/ImageInput";
+import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
+import CancelButton from "../../components/Buttons/CancelButton";
 
-export default function NewProduct() {
+export default function NewCourse() {
   const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
   const [formData, setFormData] = useState({
     title: '',                            /// max length 70 
-    inStock: true,                        /// default true 
     image: '',                            /// dataurl image
     price: '',                            /// the price is in thousand tomans, like 20 
     fileSize: '',                         /// file size in megabytes
     miniDes: '',                          /// max length 180
     largeDes: '',                         /// max length 400
-    saleCount: 0,                         /// default 0 not change here
+    time: '',                              /// course time
     likes: 0,                             /// default 0 not change here
-    downloadCount: 0,                     /// default 0 not change here
-    category: { "name": "بدون دسته", "id": "null" },     /// chooseing from select box
-    format: { "name": "ZIP", "id": "zip" },          /// chooseing from select box
+    studentCount: 0,                      /// default 0 not change here
+    wayReceive: { "name": "دانلودی", "id": "download" },             /// chooseing from select box
+    support: { "name": "تیکت", "id": "ticket" },                     /// chooseing from select box
+    category: { "name": "بدون دسته", "id": "null" },                 /// chooseing from select box
+    prerequisite: { "name": "بدون پیش نیاز", "id": "null" },         /// chooseing from select box
+    level: { "name": "مبتدی", "id": "beginner" },                          /// chooseing from select box
   });
   const navigateTo = useNavigate()
   const inputsData = {
     title: {
       name: 'title',
-      label: 'عنوان محصول',
-      placeholder: 'عنوان محصول را وارد کنید',
+      label: 'عنوان دوره',
+      placeholder: 'عنوان دوره را وارد کنید',
       type: 'text',
       required: true,
-      errorMessage: 'عنوان محصول باید بین 5 الی 15 کلمه باشد',
+      errorMessage: 'عنوان دوره باید بین 5 الی 15 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{5,50}',
       maxLength: 50,
     },
     miniDes: {
       name: 'miniDes',
       label: 'توضیح کوتاه',
-      placeholder: 'محصول را در حد یک خط توصیف کنید',
+      placeholder: 'دوره را در حد یک خط توصیف کنید',
       required: true,
       errorMessage: 'توضیح کوتاه باید بین 30 الی 150 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{30,150}',
@@ -59,7 +60,7 @@ export default function NewProduct() {
     largeDes: {
       name: 'largeDes',
       label: 'توضیح بلند',
-      placeholder: 'توضیحات محصول',
+      placeholder: 'توضیحات دوره',
       required: true,
       errorMessage: 'توضیحات باید بین 40 الی 400 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{40,400}',
@@ -67,46 +68,72 @@ export default function NewProduct() {
       minLength: 50,
       rows: '5'
     },
+    prerequisite: {
+      selectBoxName: 'prerequisite',
+      label: 'پیشنیاز',
+      items: [
+        { name: "بدون پیش نیاز", id: 'null' },
+        { name: 'دوره ایلوستریتور مقدماتی', id: 'illu-base' },
+        { name: 'دوره ایلوستریتور متوسط', id: 'illu-midd' },
+        { name: 'دوره ایلوستریتور پیشرفته', id: 'illu-advance' },
+        { name: 'دوره فوتوشاپ مقدماتی', id: 'photo-base' },
+        { name: 'دوره فوتوشاپ متوسط', id: 'photo-midd' },
+        { name: 'دوره فوتوشاپ پیشرفته', id: 'photo-advance' },
+      ]
+    },
     category: {
       selectBoxName: 'category',
       label: 'دسته بندی',
       items: [
         { name: 'بدون دسته', id: 'null' },
-        { name: 'فونت', id: 'font' },
-        { name: 'پک آیکن', id: 'icon-pack' },
-        { name: 'فایل ایلوستریتور', id: 'illustrator-file' },
-        { name: 'لایه باز فوتوشاپ', id: 'open-layer-psd' },
-        { name: 'پوستر', id: 'poster' },
-        { name: 'موکاپ', id: 'mockup' },
-        { name: 'پک استیکر', id: 'sticker-pack' },
-        { name: 'کاور پست', id: 'post-cover' },
+        { name: 'گرافیک', id: 'graphic' },
+        { name: 'طراحی', id: 'art' },
       ]
     },
-    inStock: {
-      name: 'inStock',
-      label: 'وضعیت موجودی انبار',
-    },
-    format: {
-      selectBoxName: 'format',
-      label: 'فرمت فایل',
+    wayReceive: {
+      selectBoxName: 'wayReceive',
+      label: 'شیوه دریافت',
       items: [
-        { name: 'ZIP', id: 'zip' },
-        { name: 'PNG', id: 'png' },
-        { name: 'JPG', id: 'jpg' },
-        { name: 'AI', id: 'ai' },
-        { name: 'PSD', id: 'psd' },
-        { name: 'TTF', id: 'TTF' },
-        { name: 'MP4', id: 'mp4' },
+        { name: 'دانلودی', id: 'download' },
+        { name: 'اسپات پلیر', id: 'spotplayer' },
+        { name: 'تماشای آنلاین', id: 'online' },
+      ]
+    },
+    level: {
+      selectBoxName: 'level',
+      label: 'سطح دوره',
+      items: [
+        { name: 'مبتدی', id: 'beginner' },
+        { name: 'متوسط', id: 'middle' },
+        { name: 'پیشرفته', id: 'advanced' },
+      ]
+    },
+    support: {
+      selectBoxName: 'support',
+      label: 'پشتیبانی',
+      items: [
+        { name: 'تیکت', id: 'ticket' },
+        { name: 'تلفنی + تیکت', id: 'call-ticket' },
+        { name: 'تلفنی + تیکت + واتساپ', id: 'call-ticket-whatsapp' },
       ]
     },
     price: {
       name: 'price',
       label: 'قیمت',
-      placeholder: "قیمت محصول",
+      placeholder: "قیمت دوره",
       pattern: "\\d*",
       required: true,
       maxLength: "6",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
+    },
+    time: {
+      name: 'time',
+      label: 'مدت زمان دوره',
+      placeholder: "زمان دوره به ساعت",
+      pattern: "^([1-9]{1,3})$",
+      required: true,
+      maxLength: "3",
+      errorMessage: 'مدت زمان دوره باید بین 1 الی 999 ساعت باشد ',
     },
     fileSize: {
       name: 'fileSize',
@@ -119,7 +146,7 @@ export default function NewProduct() {
     },
     image: {
       imageValue: '',
-      inputId: 'new-product-image'
+      inputId: 'new-course-image'
     }
   }
   const changeHandler = (event) => {
@@ -140,12 +167,12 @@ export default function NewProduct() {
   const submitHandler = (event) => {
     event.preventDefault();
     setAxiosPostData(formData)
-    setAxiosPostUrl(apiLinks.products)
+    setAxiosPostUrl(apiLinks.courses)
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
-      alert('محصول با موفقیت ایجاد شد');
-      navigateTo('/panel/products')
+      alert('دوره با موفقیت منتشر شد');
+      navigateTo('/panel/courses')
     }
     if (axiosPostError !== null) {
       console.log(axiosPostError)
@@ -161,22 +188,31 @@ export default function NewProduct() {
             <div className="right-side xl:w-8/12">
               <NormalInput value={formData.title} onChangeEvent={changeHandler} {...inputsData.title} />
               <Textarea value={formData.miniDes} onChangeEvent={changeHandler} {...inputsData.miniDes} />
-              <div className="w-full flex-col xl:flex-row flex justify-start relative mb-5 mt-3">
+              <div className="w-full flex-col xl:flex-row xl:items-center flex justify-start relative mb-5 mt-3">
                 <div className="w-full xl:w-6/12">
                   <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} />
                 </div>
                 <div className="w-full xl:w-6/12">
-                  <InStockRadio value={formData.inStock} onChangeEvent={changeHandler} {...inputsData.inStock} />
+                <SelectBox value={formData.level} onChangeEvent={changeHandler} {...inputsData.level} />
+                </div>
+              </div>
+              <div className="w-full flex-col xl:flex-row xl:items-center flex justify-start relative mb-5 mt-3">
+                <div className="w-full xl:w-6/12">
+                  <SelectBox value={formData.wayReceive} onChangeEvent={changeHandler} {...inputsData.wayReceive} />
+                </div>
+                <div className="w-full xl:w-6/12">
+                <SelectBox value={formData.prerequisite} onChangeEvent={changeHandler} {...inputsData.prerequisite} />
                 </div>
               </div>
               <div className="w-full flex-col xl:flex-row flex justify-start items-center relative mb-5 mt-3">
                 <div className="w-full xl:w-6/12">
-                  <SelectBox value={formData.format} onChangeEvent={changeHandler} {...inputsData.format} />
+                  <SelectBox value={formData.support} onChangeEvent={changeHandler} {...inputsData.support} />
                 </div>
                 <div className="w-full xl:w-6/12">
                   <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} />
                 </div>
               </div>
+              <NormalInput value={formData.time} onChangeEvent={changeHandler} {...inputsData.time} />
               <NormalInput value={formData.fileSize} onChangeEvent={changeHandler} {...inputsData.fileSize} />
               <Textarea value={formData.largeDes} onChangeEvent={changeHandler} {...inputsData.largeDes} />
             </div>
@@ -189,10 +225,10 @@ export default function NewProduct() {
           </section>
           <div className="buttons w-full flex items-center gap-3">
             <div className="w-8/12 xl:w-5/12" >
-              <SubmitFormButton isPending={axiosPostIsPending} title={'ایجاد محصول'} />
+              <SubmitFormButton isPending={axiosPostIsPending} title={'انتشار دوره'} />
             </div>
             <div className={`w-4/12 xl:w-3/12 ${axiosPostIsPending && 'pointer-events-none'}`} >
-              <CancelButton  title={'لغو'}/>
+              <CancelButton title={'لغو'} />
             </div>
           </div>
         </form>

@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom'
-//// test
-import PanelSideBar from './new/components/PanelSideBar/PanelSideBar';
-import PanelHeaderTest from './new/components/PanelHeader/PanelHeader'
 
-// Files 
+// components
+import PanelSideBar from './subpages/components/PanelSideBar/PanelSideBar';
+import PanelHeaderTest from './subpages/components/PanelHeader/PanelHeader'
+
+// styles
 import './Panel.css'
-import { useState } from 'react';
+
 
 export default function Panel() {
   return (

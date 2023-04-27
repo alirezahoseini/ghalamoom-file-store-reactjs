@@ -1,27 +1,25 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-// // offline text data 
-// import { productsBackup } from '../../../../../../data/productsBackupArray'
 // datas
-import { apiLinks } from '../../../../../../data/links'
+import { apiLinks } from '../../../../../data/links'
 // hooks
-import useAxiosPost from "../../../../../../hooks/axios/useAxiosPost";
-import useAxiosGet from "../../../../../../hooks/axios/useAxiosGet";
-import useAxiosDelete from "../../../../../../hooks/axios/useAxiosDelete";
+import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
+import useAxiosGet from "../../../../../hooks/axios/useAxiosGet";
+import useAxiosDelete from "../../../../../hooks/axios/useAxiosDelete";
 
 // components
-import NormalInput from "../../../components/Inputs/NormalInput";
-import Textarea from "../../../components/Inputs/Textarea";
-import InStockRadio from "../../../components/Inputs/InStockRadio";
-import SelectBox from "../../../components/Inputs/SelectBox";
-import PriceInput from "../../../components/Inputs/PriceInput";
-import ImageInput from "../../../components/Inputs/ImageInput";
-import SubmitFormButton from "../../../components/Buttons/SubmitFormButton";
-import CancelButton from "../../../components/Buttons/CancelButton";
-import DeleteButton from "../../../components/Buttons/DeleteButton";
-import SimpleDataLoader from '../../../../../../components/ui/SimpleDataLoader/SimpleDataLoader'
-import Modal from '../../../../../../components/ui/Modal'
+import NormalInput from "../../components/Inputs/NormalInput";
+import Textarea from "../../components/Inputs/Textarea";
+import InStockRadio from "../../components/Inputs/InStockRadio";
+import SelectBox from "../../components/Inputs/SelectBox";
+import PriceInput from "../../components/Inputs/PriceInput";
+import ImageInput from "../../components/Inputs/ImageInput";
+import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
+import CancelButton from "../../components/Buttons/CancelButton";
+import DeleteButton from "../../components/Buttons/DeleteButton";
+import SimpleDataLoader from '../../../../../components/ui/SimpleDataLoader/SimpleDataLoader'
+import Modal from '../../../../../components/ui/Modal'
 
 export default function EditCourse() {
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
