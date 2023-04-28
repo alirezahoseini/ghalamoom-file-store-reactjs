@@ -1,0 +1,29 @@
+/* Normal input  */
+.input-group input{
+    border: 2px solid rgba(255, 0, 0, 0);
+}
+.input-group input:focus{
+    border-color:  rgba(0, 110, 255, 0.582);
+}
+.input-group input ~ span{
+    display: none;
+}
+.input-group input[focused=true]:invalid ~ span{
+    display: block;
+}
+/* Textarea  */
+.input-group textarea{
+    border: 2px solid rgba(255, 0, 0, 0);
+}
+.input-group textarea:focus{
+    border-color:  rgba(0, 110, 255, 0.582);
+}
+.input-group textarea ~ span{
+    display: none;
+}
+.input-group textarea[focused=true]:invalid ~ span{
+    display: block;
+}
+.input-group textarea[focused=true]:invalid{
+    border-color: red;
+}

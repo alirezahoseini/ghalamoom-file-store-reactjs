@@ -1,17 +1,17 @@
 import { Navigate } from 'react-router-dom';
-// components
+// اHome
 import Home from './pages/Home/Home'
 // panel and subpages
 import Panel from './pages/Panel/Panel';
 import LoginPage from './pages/Panel/subpages/LoginPage/LoginPage';
-import PrivatePage from './pages/Panel/PrivatePage';
-
-//// Test 
+import PrivatePage from './pages/Panel/PrivatePage'; 
 import DashboardTest from './pages/Panel/subpages/Dashboard/Dashboard';
 import Products from './pages/Panel/subpages/Products/Products';
 import NewItem from './pages/Panel/subpages/NewItem/NewItem'
 import EditItem from './pages/Panel/subpages/EditItem/EditItem';
 import Courses from './pages/Panel/subpages/Courses/Courses';
+// Products
+import SingleProduct from './pages/SinglePages/SingleProduct/SingleProduct';
 
 
 
@@ -32,6 +32,7 @@ const routes = [
 ]
     },
 { path: '/login', element: <LoginPage /> },
+{ path: '/products/:productId', element: <SingleProduct /> },
 
 ];
 

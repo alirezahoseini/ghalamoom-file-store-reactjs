@@ -1,0 +1,61 @@
+.like-counter-btn{
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+.like-counter-btn:hover{
+    background-color: #dc2626 ;
+    color: #fee2e2;
+}
+.like-counter-btn:hover svg {
+    animation-name: taptap;
+    animation-duration: .6s;
+    animation-iteration-count: infinite;
+}
+.like-counter-btn.liked:hover svg {
+    animation:none;
+    -webkit-animation:none;
+}
+.like-counter-btn:disabled{
+    background-color: #7a7a7a ;
+    color: #fee2e2;
+
+}
+.like-counter-btn:disabled svg{
+    animation-name: spin;
+    animation-duration: .8s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes taptap {
+    0% {
+        transform:scale(1);
+        -webkit-transform:scale(1);
+        -moz-transform:scale(1);
+        -ms-transform:scale(1);
+        -o-transform:scale(1);
+}
+    100% {
+        transform:scale(1.2);
+        -webkit-transform:scale(1.2);
+        -moz-transform:scale(1.2);
+        -ms-transform:scale(1.2);
+        -o-transform:scale(1.2);
+}
+}
+@keyframes spin {
+    0% {
+        transform:rotate(0deg);
+        -webkit-transform:rotate(0deg);
+        -moz-transform:rotate(0deg);
+        -ms-transform:rotate(0deg);
+        -o-transform:rotate(0deg);
+}
+    100% {
+        transform:rotate(360deg);
+        -webkit-transform:rotate(360deg);
+        -moz-transform:rotate(360deg);
+        -ms-transform:rotate(360deg);
+        -o-transform:rotate(360deg);
+}
+}

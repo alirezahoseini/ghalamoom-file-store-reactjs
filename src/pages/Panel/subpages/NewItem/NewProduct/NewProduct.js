@@ -8,12 +8,12 @@ import { apiLinks } from '../../../../../data/links';
 import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
 
 // components
-import NormalInput from "../../components/Inputs/NormalInput";
-import Textarea from "../../components/Inputs/Textarea";
-import InStockRadio from "../../components/Inputs/InStockRadio";
-import SelectBox from "../../components/Inputs/SelectBox";
-import PriceInput from "../../components/Inputs/PriceInput";
-import ImageInput from "../../components/Inputs/ImageInput";
+import NormalInput from "../../../../../components/forms/Inputs/NormalInput";
+import Textarea from "../../../../../components/forms/Inputs/Textarea";
+import InStockRadio from "../../../../../components/forms/Inputs/InStockRadio";
+import SelectBox from "../../../../../components/forms/Inputs/SelectBox";
+import PriceInput from "../../../../../components/forms/Inputs/PriceInput";
+import ImageInput from "../../../../../components/forms/Inputs/ImageInput";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
 
@@ -32,6 +32,7 @@ export default function NewProduct() {
     downloadCount: 0,                     /// default 0 not change here
     category: { "name": "بدون دسته", "id": "null" },     /// chooseing from select box
     format: { "name": "ZIP", "id": "zip" },          /// chooseing from select box
+    comments: []                          /// default [] not change here
   });
   const navigateTo = useNavigate()
   const inputsData = {
@@ -192,7 +193,7 @@ export default function NewProduct() {
               <SubmitFormButton isPending={axiosPostIsPending} title={'ایجاد محصول'} />
             </div>
             <div className={`w-4/12 xl:w-3/12 ${axiosPostIsPending && 'pointer-events-none'}`} >
-              <CancelButton  title={'لغو'}/>
+              <CancelButton title={'لغو'} />
             </div>
           </div>
         </form>
