@@ -19,7 +19,7 @@
 
 import { useState } from 'react';
 import './Inputs.css'
-import tomanIcon from '../../../assets/icons/toman.svg'
+import tomanIcon from '../../../../assets/icons/toman.svg'
 
 export default function PriceInput(props) {
   const [onFocused, setOnFocused] = useState(false)

@@ -8,12 +8,12 @@ import { apiLinks } from '../../../../../data/links';
 import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
 
 // components
-import NormalInput from "../../../../../components/forms/Inputs/NormalInput";
-import Textarea from "../../../../../components/forms/Inputs/Textarea";
-import InStockRadio from "../../../../../components/forms/Inputs/InStockRadio";
-import SelectBox from "../../../../../components/forms/Inputs/SelectBox";
-import PriceInput from "../../../../../components/forms/Inputs/PriceInput";
-import ImageInput from "../../../../../components/forms/Inputs/ImageInput";
+import NormalInput from "../../../components/Inputs/NormalInput";
+import Textarea from "../../../components/Inputs/Textarea";
+import InStockRadio from "../../../components/Inputs/InStockRadio";
+import SelectBox from "../../../components/Inputs/SelectBox";
+import PriceInput from "../../../components/Inputs/PriceInput";
+import ImageInput from "../../../components/Inputs/ImageInput";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
 
