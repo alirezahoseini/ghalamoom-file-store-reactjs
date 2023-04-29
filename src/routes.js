@@ -12,6 +12,7 @@ import EditItem from './pages/Panel/subpages/EditItem/EditItem';
 import Courses from './pages/Panel/subpages/Courses/Courses';
 // Products
 import SingleProduct from './pages/SinglePages/SingleProduct/SingleProduct';
+import SingleCourse from './pages/SinglePages/SingleCourse/SingleCourse';
 
 
 
@@ -33,6 +34,7 @@ const routes = [
     },
 { path: '/login', element: <LoginPage /> },
 { path: '/products/:productId', element: <SingleProduct /> },
+{ path: '/courses/:courseId', element: <SingleCourse /> },
 
 ];
 

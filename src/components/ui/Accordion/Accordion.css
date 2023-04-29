@@ -1,0 +1,33 @@
+.accordion {
+    overflow: hidden;
+}
+.accordion input[type='radio']{
+    display: none;
+}
+.accordion p.accordion-body{
+    max-height: 0;
+    overflow: hidden;
+    transition:all 0.6s ;
+    -webkit-transition:all 0.6s ;
+    -moz-transition:all 0.6s ;
+    -ms-transition:all 0.6s ;
+    -o-transition:all 0.6s ;
+    
+}
+.accordion input[type='radio']:checked ~ p.accordion-body{
+    max-height: 100vh;
+}
+.accordion label svg {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+}
+.accordion input[type='radio']:checked ~ label svg {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+}
