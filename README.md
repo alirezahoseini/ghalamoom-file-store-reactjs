@@ -7,7 +7,7 @@ I will complete this project with everything I learn.
 
 ## Online Demo
 
-https://a-hosseini.ir/projects/react/qhalamoom
+https://a-hosseini.ir/projects/react/ghalamoom
 
 
 ## Developing sectors
