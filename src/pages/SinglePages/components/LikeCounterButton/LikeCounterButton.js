@@ -3,13 +3,13 @@ import './LikeCounterButton.css'
 import { useEffect, useState } from "react"
 
 // hooks
-import useAxiosPost from "../../../../hooks/axios/useAxiosPost";
+import useAxiosPut from "../../../../hooks/axios/useAxiosPut";
 
 // datas 
 import { apiLinks } from "../../../../data/links";
 
 export default function LikeCounterButton({ type = 'product', ...otherProps }) {
-    const { axiosPostResult, axiosPostError, axiosPostIsPending, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
+    const { axiosPutResult, axiosPutError, axiosPutIsPending, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
     const [isLiked, setIsLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(otherProps.likes)
     const likeHandler = () => {
@@ -19,27 +19,27 @@ export default function LikeCounterButton({ type = 'product', ...otherProps }) {
         } else {
             newProductObject = { ...otherProps };
         }
-        setAxiosPostUrl(`${apiLinks[`${type}s`]}/${otherProps.id}`)
-        setAxiosPostData(newProductObject)
+        setAxiosPutUrl(`${apiLinks[`${type}s`]}/${otherProps.id}`)
+        setAxiosPutData(newProductObject)
 
     }
     useEffect(() => {
-        if (axiosPostResult !== null) {
+        if (axiosPutResult !== null) {
             setIsLiked(prev => !prev);
             if (!isLiked) {
                 setLikeCount(prevLikes => prevLikes + 1)
             } else {
                 setLikeCount(prevLikes => prevLikes - 1)
             }
-        } else if (axiosPostError !== null) {
-            console.log(axiosPostError)
+        } else if (axiosPutError !== null) {
+            console.log(axiosPutError)
         }
-    }, [axiosPostError, axiosPostResult])
+    }, [axiosPutError, axiosPutResult])
     return (
         <button type="button" onClick={likeHandler}
-            className={`like-counter-btn flex items-center justify-center px-3 font-bold py-2 gap-2 rounded-md text-xs font-yekan-bakh ${isLiked && 'liked'}`} disabled={axiosPostIsPending}
+            className={`like-counter-btn flex items-center justify-center px-3 font-bold py-2 gap-2 rounded-md text-xs font-yekan-bakh ${isLiked && 'liked'}`} disabled={axiosPutIsPending}
         >
-            {!axiosPostIsPending ? (
+            {!axiosPutIsPending ? (
                 <>
                     {isLiked ? (
                         <TbHeartFilled className="text-base" />

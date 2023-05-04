@@ -4,14 +4,13 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 // datas
 import { apiLinks } from '../../../../../data/links'
 // hooks
-import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
+import useAxiosPut from "../../../../../hooks/axios/useAxiosPut";
 import useAxiosGet from "../../../../../hooks/axios/useAxiosGet";
 import useAxiosDelete from "../../../../../hooks/axios/useAxiosDelete";
 
 // components
 import NormalInput from "../../../components/Inputs/NormalInput";
 import Textarea from "../../../components/Inputs/Textarea";
-import InStockRadio from "../../../components/Inputs/InStockRadio";
 import SelectBox from "../../../components/Inputs/SelectBox";
 import PriceInput from "../../../components/Inputs/PriceInput";
 import ImageInput from "../../../components/Inputs/ImageInput";
@@ -23,7 +22,7 @@ import Modal from '../../../../../components/ui/Modal'
 
 export default function EditCourse() {
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
-  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
+  const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
   const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
   const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
   const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
@@ -126,7 +125,7 @@ export default function EditCourse() {
       name: 'time',
       label: 'مدت زمان دوره',
       placeholder: "زمان دوره به ساعت",
-      pattern: "^([1-9]{1,3})$",
+      pattern: "^([1-9][0-9]{0,2})$",
       required: true,
       maxLength: "3",
       errorMessage: 'مدت زمان دوره باید بین 1 الی 999 ساعت باشد ',
@@ -154,7 +153,7 @@ export default function EditCourse() {
       const inputName = event.target.name;
       const inputItems = inputsData[inputName].items;
       const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-      setFormData({ ...formData, [event.target.name]: JSON.stringify(selectedItem) })
+      setFormData({ ...formData, [event.target.name]: selectedItem })
     } else {
       // Normal inputs
       setFormData({ ...formData, [event.target.name]: event.target.value })
@@ -162,8 +161,8 @@ export default function EditCourse() {
   }
   const submitHandler = (event) => {
     event.preventDefault()
-    setAxiosPostData(formData)
-    setAxiosPostUrl(`${apiLinks.courses}/${urlParams.courseId}`)
+    setAxiosPutData(formData)
+    setAxiosPutUrl(`${apiLinks.courses}/${urlParams.courseId}`)
   }
   const deleteHandler = () => {
     setIsShowDeleteModal(prev => !prev)
@@ -191,13 +190,13 @@ export default function EditCourse() {
   //////// save changes results
   useEffect(() => {
     // show update results
-    if (axiosPostResult !== null) {
+    if (axiosPutResult !== null) {
       alert('تغییرات با موفقیت ذخیره شدند');
     }
-    if (axiosPostError !== null) {
+    if (axiosPutError !== null) {
       console.log()
     }
-  }, [axiosPostError, axiosPostResult]);
+  }, [axiosPutError, axiosPutResult]);
   ///////  Delete results
   useEffect(() => {
     if (axiosDeleteResult !== null) {
@@ -257,12 +256,12 @@ export default function EditCourse() {
             {/* Buttons  */}
             <div className="buttons w-full xl:w-8/12 flex items-center gap-3">
               <div className={`w-4/12 xl:4/12 ${axiosDeleteIsPending && 'pointer-events-none'}`} >
-                <SubmitFormButton isPending={axiosPostIsPending} title={'ذخیره تغییرات'} />
+                <SubmitFormButton isPending={axiosPutIsPending} title={'ذخیره تغییرات'} />
               </div>
-              <div className={`w-4/12 xl:4/12 ${axiosPostIsPending || axiosDeleteIsPending ? 'pointer-events-none' : ''}`} >
+              <div className={`w-4/12 xl:4/12 ${axiosPutIsPending || axiosDeleteIsPending ? 'pointer-events-none' : ''}`} >
                 <CancelButton title='انصراف' />
               </div>
-              <div className={`w-4/12 xl:4/12 ${axiosPostIsPending && 'pointer-events-none'}`} >
+              <div className={`w-4/12 xl:4/12 ${axiosPutIsPending && 'pointer-events-none'}`} >
                 <DeleteButton onClickEvent={() => setIsShowDeleteModal(prev => !prev)} isPending={axiosDeleteIsPending} title='حذف دوره' />
               </div>
             </div>

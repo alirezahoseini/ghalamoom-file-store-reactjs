@@ -32,7 +32,7 @@ export default function ProductListItem({ title, category, inStock, saleCount, p
             {/* Item info  */}
             {/* Start Item Status */}
             <div className='hidden sm:w-2/12 sm:flex' >
-                <span className={`item-stock-status px-2 py-1 rounded-md ${!inStock && 'not'}`}>{inStock ? 'موجود' : "ناموجود"}</span>
+                <span className={`item-stock-status px-2 py-1 rounded-md ${inStock !== "true" && 'not'}`}>{inStock === "true" ? 'موجود' : "ناموجود"}</span>
             </div>
             {/* End of Item Status */}
             {/* Item Price  */}

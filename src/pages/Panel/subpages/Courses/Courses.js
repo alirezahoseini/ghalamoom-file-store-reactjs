@@ -17,29 +17,28 @@ import SimpleDataLoader from '../../../../components/ui/SimpleDataLoader/SimpleD
 export default function Courses() {
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
-    const [productsArray, setProductsArray] = useState([]);
+    const [coursesArray, setCoursesArray] = useState([]);
     useEffect(() => {
         setAxiosGetUrl(apiLinks.courses)
     }, []);
     
     useEffect(() => {
         if (axiosGetResult !== null) {
-            setProductsArray(axiosGetResult)
+            setCoursesArray(axiosGetResult)
             setSimpleDataLoaderStatus('hidde')
         } else if (axiosGetError !== null) {
             setSimpleDataLoaderStatus('error')
         }
     }, [axiosGetResult, axiosGetError]);
-    
-    console.log(productsArray)
+  
     const [isList, setIsList] = useState(true)
     return (
 
-        <div id='products'>
+        <div id='courses'>
             <div className="wrapper px-2 my-3">
                 <CategoriesHeader isList={isList} setIsList={setIsList} title="دوره" type='course' />
-                {productsArray.length > 0 && (
-                    <DataList isList={isList} data={productsArray} title="دوره" type='course' />
+                {simpleDataLoaderStatus === 'hidde' && (
+                    <DataList isList={isList} data={coursesArray} title="دوره" type='course' />
                 )}
                 <SimpleDataLoader status={simpleDataLoaderStatus} />
             </div>

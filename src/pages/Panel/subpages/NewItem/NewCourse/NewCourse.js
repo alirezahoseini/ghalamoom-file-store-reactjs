@@ -34,6 +34,7 @@ export default function NewCourse() {
     category: { "name": "بدون دسته", "id": "null" },                 /// chooseing from select box
     prerequisite: { "name": "بدون پیش نیاز", "id": "null" },         /// chooseing from select box
     level: { "name": "مبتدی", "id": "beginner" },                          /// chooseing from select box
+    created_at: new Date().getTime()
   });
   const navigateTo = useNavigate()
   const inputsData = {
@@ -131,7 +132,7 @@ export default function NewCourse() {
       name: 'time',
       label: 'مدت زمان دوره',
       placeholder: "زمان دوره به ساعت",
-      pattern: "^([1-9]{1,3})$",
+      pattern: "^([1-9][0-9]{0,2})$",
       required: true,
       maxLength: "3",
       errorMessage: 'مدت زمان دوره باید بین 1 الی 999 ساعت باشد ',
@@ -159,7 +160,7 @@ export default function NewCourse() {
       const inputName = event.target.name;
       const inputItems = inputsData[inputName].items;
       const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-      setFormData({ ...formData, [event.target.name]: JSON.stringify(selectedItem) })
+      setFormData({ ...formData, [event.target.name]: selectedItem })
     } else {
       // Normal inputs
       setFormData({ ...formData, [event.target.name]: event.target.value })

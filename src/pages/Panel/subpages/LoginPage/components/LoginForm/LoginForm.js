@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
+// links
+import { apiLinks } from '../../../../../../data/links'
+
 // utils
 import { setCooki } from '../../../../../../utils/cookis'
 
@@ -46,11 +49,12 @@ export default function LoginForm({ showLogin }) {
     const onSubmitHandler = async (event) => {
         setLoadingDataFromApi(true)
         event.preventDefault()
-        const url = 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/login'
+        const url = apiLinks.login
 
         axios.post(url, values)
             .then(res => {
-                setCooki('token', res.data.authToken, 7)
+                setCooki('token', res.data.accessToken, 3)
+                setCooki('userid', res.data.user.id, 3)
                 setCooki('email', values.email, 3)
                 setLoadingDataFromApi(false)
                 alert('با موفقیت وارد شدید')
@@ -58,9 +62,12 @@ export default function LoginForm({ showLogin }) {
             })
             .catch(err => {
                 if (err.response) {
-                    if (err.response.status === 403) {
+                    if (err.response.data === 'Cannot find user') {
                         setLoadingDataFromApi(false)
-                        alert('ایمیل یا رمز عبور اشتباه است.!')
+                        alert("کاربری با این ایمیل در سایت وجود ندارد.!")
+                    } else if (err.response.data === 'Incorrect password') {
+                        setLoadingDataFromApi(false)
+                        alert('پسورد اشتباه است.!')
                     } else {
                         console.log(err.response)
                     }

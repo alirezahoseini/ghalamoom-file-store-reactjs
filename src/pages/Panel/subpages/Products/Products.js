@@ -22,6 +22,7 @@ export default function Products() {
     setAxiosGetUrl(apiLinks.products)
   }, []);
 
+
   useEffect(() => {
     if (axiosGetResult !== null) {
       setProductsArray(axiosGetResult)
@@ -37,7 +38,7 @@ export default function Products() {
     <div id='products'>
       <div className="wrapper px-2 my-3">
         <CategoriesHeader isList={isList} setIsList={setIsList} title="محصول" type='product' />
-        {productsArray.length > 0 && (
+        {simpleDataLoaderStatus === 'hidde' && (
           <DataList isList={isList} data={productsArray} title="محصول" type='product' />
         )}
         <SimpleDataLoader status={simpleDataLoaderStatus} />

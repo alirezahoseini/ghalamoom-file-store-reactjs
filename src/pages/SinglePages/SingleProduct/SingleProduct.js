@@ -75,7 +75,7 @@ export default function SingleProduct() {
                       <Breadcrumb crumb={crumb} />
                     </div>
                     <div className="mini-description">
-                      <p className='text-xs lg:text-sm font-semibold text-slate-500 my-4 ' style={{ lineHeight: '36px' }} >
+                      <p className='text-xs lg:text-sm font-semibold text-slate-500 my-4 mx-w-full break-words' style={{ lineHeight: '36px' }} >
                         {product.miniDes}
                       </p>
                     </div>
@@ -90,7 +90,7 @@ export default function SingleProduct() {
                   {/* Seconde section --- Description */}
                   <section className="bg-white p-8 rounded-3xl mb-4">
                     <SecondeTitle title='توضیحات' />
-                    <p className='text-xs lg:text-sm font-semibold text-slate-500 my-4 ' style={{ lineHeight: '36px' }} >
+                    <p className='text-xs lg:text-sm font-semibold text-slate-500 my-4 mx-w-full break-words' style={{ lineHeight: '36px' }} >
                       {product.largeDes}
                     </p>
                   </section>

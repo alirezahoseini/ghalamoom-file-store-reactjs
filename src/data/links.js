@@ -31,11 +31,11 @@ const navigaitionLinks = [
 ];
 
 const apiLinks = {
-    products: 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/products',
-    login: 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/login',
-    signup: 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/signup',
-    userInfo: 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/me',
-    courses: 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/courses'
+    products: 'http://localhost:5000/products',
+    login: 'http://localhost:5000/login',
+    signup: 'http://localhost:5000/register',
+    userInfo: 'http://localhost:5000/users',
+    courses: 'http://localhost:5000/courses'
 }
 
 

@@ -12,6 +12,7 @@ export default function LogoutBtn({ isOpen }) {
         deleteCooki('username')
         deleteCooki('email')
         deleteCooki('token')
+        deleteCooki('userid')
         navigateTo('/')
     }
     return (

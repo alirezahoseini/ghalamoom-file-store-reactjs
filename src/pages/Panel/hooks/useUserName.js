@@ -10,14 +10,15 @@ import axios from 'axios';
 export default function useUserName() {
     const [userName, setUserName] = useState(null)
     const [isPending, setIsPending] = useState(true)
-    const url = apiLinks.userInfo;
+    const userId = getCooki('userid');
+    const url = `${apiLinks.userInfo}/${userId}`;
     const accessUserName = async () => {
         // first cheking cookis
         const isExistInCookis = getCooki('username');
         if(isExistInCookis){
             setUserName(isExistInCookis)
             setIsPending(false)
-        }else if (isExistInCookis === null) {
+        }else if (isExistInCookis === null && userId) {
             // get data from server
             const accessToken = getCooki('token')
             axios.get(url, {
@@ -25,6 +26,7 @@ export default function useUserName() {
                     Authorization: `Bearer ${accessToken}`
                 }
             }).then(res => {
+                console.log(res.data)
                 const username = res.data.name;
                 setCooki('username', username, 3);
                 setUserName(username)

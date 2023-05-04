@@ -30,11 +30,11 @@ export default function CommentItem({ id, name, rate, comment, created_at }) {
     }, [])
     return (
         <div className='comment-item'>
-            <div className="wrapper flex items-start gap-3">
-                <div className="image rounded-full overflow-hidden w-fit border-4 border-slate-200">
-                    <img src={noneUserImage} alt="userimage" style={{ width: '25px' }} />
+            <div className="wrapper flex items-start gap-3 w-full">
+                <div className="image rounded-full overflow-hidden border-4 border-slate-200" style={{width: 42}}>
+                    <img src={noneUserImage} alt="userimage" className='w-full' />
                 </div>
-                <div className="body w-full border border-slate-300 p-2 rounded-md">
+                <div className="body border border-slate-300 p-2 rounded-md" style={{width: 'calc(100% - 55px)'}}>
                     <div className="head flex items-center justify-between text-xs">
                         <div className='flex items-center gap-2'>
                             <span className='font-bold text-slate-600' style={{fontSize: '11px'}}>{name}</span>
@@ -48,7 +48,7 @@ export default function CommentItem({ id, name, rate, comment, created_at }) {
                             )))}
                         </div>
                     </div>
-                    <p className='my-3 text-xs text-slate-600 leading-6'>
+                    <p className='my-3 text-xs text-slate-600 leading-6 break-words'>
                         {comment}
                     </p>
                 </div>

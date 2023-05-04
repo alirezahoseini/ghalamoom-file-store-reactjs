@@ -16,7 +16,8 @@ export default function Form({ addNewComment, isPending, isResetForm }) {
         name: '',
         email: '',
         comment: '',
-        rate: 0
+        rate: 0,
+        created_at: new Date().getTime()
     });
     const [isValidRate, setIsValidRate] = useState(true);
     const inputsObj = {
@@ -80,7 +81,8 @@ export default function Form({ addNewComment, isPending, isResetForm }) {
                 name: '',
                 email: '',
                 comment: '',
-                rate: 0
+                rate: 0,
+                created_at: new Date().getTime()
             })
         }
     })

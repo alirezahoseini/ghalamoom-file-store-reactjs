@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
+// Links
+import { apiLinks } from '../../../../../../data/links'
+
 // Import functions
 import { setCooki } from '../../../../../../utils/cookis'
 
@@ -56,20 +59,22 @@ export default function SignupForm({ showLogin }) {
     const submitHandler = async (event) => {
         setLoadingDataFromApi(true)
         event.preventDefault()
-        const url = 'https://x8ki-letl-twmt.n7.xano.io/api:hq-tx9uX/auth/signup'
+        const url = apiLinks.signup
 
         axios.post(url, values)
             .then(res => {
-                setCooki('token', res.data.authToken, 3)
-                setCooki('username', values.name, 7)
-                setCooki('email', values.email, 7)
+                console.log(res)
+                setCooki('token', res.data.accessToken, 3)
+                setCooki('userid', res.data.user.id, 3)
+                setCooki('email', values.email, 3)
                 setLoadingDataFromApi(false)
                 alert('حساب شما با موفقیت ایجاد شد.!')
                 navigateTo('/panel/dashbord')
             })
             .catch(err => {
+                console.log(err)
                 if (err.response) {
-                    if (err.response.status === 403) {
+                    if (err.response.data === 'Email already exists') {
                         setLoadingDataFromApi(false)
                         alert('این ایمیل قبلا در سایت ثبت شده است')
                     }

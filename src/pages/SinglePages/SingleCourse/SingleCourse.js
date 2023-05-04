@@ -23,6 +23,7 @@ import CommentsForm from '../components/CommentsForm/CommentsForm'
 import Accordion from '../../../components/ui/Accordion/Accordion'
 import AuthorBox from '../components/AuthorBox/AuthorBox'
 import ShareBox from '../components/ShareBox/ShareBox';
+import Paragraph from '../components/Paragraph/Paragraph'
 import TrustBadgesBox from '../components/TrustBadgesBox/TrustBadgesBox'
 import TelegramSupportBanner from '../components/TelegramSupportBanner/TelegramSupportBanner'
 
@@ -61,8 +62,6 @@ export default function SingleCourse() {
         }
     }, [course])
 
-    console.log(course)
-
     return (
         <>
             <div id='single-product'>
@@ -83,9 +82,7 @@ export default function SingleCourse() {
                                             <Breadcrumb crumb={crumb} />
                                         </div>
                                         <div className="mini-description">
-                                            <p className='text-xs lg:text-sm font-semibold text-slate-500 my-4 ' style={{ lineHeight: '36px' }} >
-                                                {course.miniDes}
-                                            </p>
+                                            <Paragraph content={course.miniDes}/>
                                         </div>
                                         <div className="badges flex gap-2 flex-wrap items-center">
                                             <LikeCounterButton type='course' {...course} />
@@ -103,9 +100,7 @@ export default function SingleCourse() {
                                     {/* Seconde section --- Description */}
                                     <section className="bg-white p-8 rounded-3xl mb-4">
                                         <SecondeTitle title='توضیحات' />
-                                        <p className='text-xs lg:text-sm font-semibold text-slate-500 my-4 ' style={{ lineHeight: '36px' }} >
-                                            {course.largeDes}
-                                        </p>
+                                        <Paragraph content={course.largeDes}/>
                                     </section>
                                     {/* End of Seconde section --- Description */}
                                     {/* Third section --- Description */}

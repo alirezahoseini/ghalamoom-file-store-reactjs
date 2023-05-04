@@ -32,8 +32,10 @@ export default function NewProduct() {
     downloadCount: 0,                     /// default 0 not change here
     category: { "name": "بدون دسته", "id": "null" },     /// chooseing from select box
     format: { "name": "ZIP", "id": "zip" },          /// chooseing from select box
-    comments: []                          /// default [] not change here
+    comments: [],                          /// default [] not change here
+    created_at: new Date().getTime()
   });
+
   const navigateTo = useNavigate()
   const inputsData = {
     title: {
@@ -132,7 +134,7 @@ export default function NewProduct() {
       const inputName = event.target.name;
       const inputItems = inputsData[inputName].items;
       const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-      setFormData({ ...formData, [event.target.name]: JSON.stringify(selectedItem) })
+      setFormData({ ...formData, [event.target.name]: selectedItem })
     } else {
       // Normal inputs
       setFormData({ ...formData, [event.target.name]: event.target.value })

@@ -4,36 +4,41 @@ import { useState, useEffect } from "react"
 import { apiLinks } from '../../../../data/links'
 
 // hooks
-import useAxiosPost from "../../../../hooks/axios/useAxiosPost";
+import useAxiosPut from "../../../../hooks/axios/useAxiosPut";
 
 // components
 import Form from "./Form"
 import CommentItem from "./CommentItem/CommentItem";
 
 export default function CommentsForm({ type, ...otherProps }) {
-  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost()
-  const [comments, setComments] = useState(otherProps.comments);
+  const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut()
+  const [comments, setComments] = useState([]);
   const [resetingForm, setResetingForm] = useState(false);
 
   const addNewComment = (newComment) => {
     const newCommentsArray = [...comments, newComment];
     const newItemObject = { ...otherProps, comments: JSON.stringify(newCommentsArray) };
-    setAxiosPostUrl(`${apiLinks[`${type}s`]}/${otherProps.id}`)
-    setAxiosPostData(newItemObject)
+    setAxiosPutUrl(`${apiLinks[`${type}s`]}/${otherProps.id}`)
+    setAxiosPutData(newItemObject)
   }
   useEffect(() => {
-    if (axiosPostResult !== null) {
-      setComments(axiosPostResult.comments)
+    if (otherProps.comments.length) {
+      setComments(JSON.parse(otherProps.comments))
+    }
+  } , [])
+  useEffect(() => {
+    if (axiosPutResult !== null) {
+      setComments(JSON.parse(axiosPutResult.comments))
       alert('دیدگاه شما با موفقیت ثبت شد')
       setResetingForm(true);
       setTimeout(() => {
         setResetingForm(false);
       }, 1);
-    } else if (axiosPostError !== null) {
+    } else if (axiosPutError !== null) {
       alert('دیدگاه ثبت نشد.!!!')
-      console.log(axiosPostError)
+      console.log(axiosPutError)
     }
-  }, [axiosPostResult, axiosPostError])
+  }, [axiosPutResult, axiosPutError])
   return (
     <div className='comments-form flex flex-col'>
       <h4 className='font-rokh text-slate-600 font-bold text-xl'>نقد و بررسی ها</h4>
@@ -51,7 +56,7 @@ export default function CommentsForm({ type, ...otherProps }) {
       {/*  */}
       {/*  */}
       <div className="">
-        <Form addNewComment={addNewComment} isPending={axiosPostIsPending} isResetForm={resetingForm} />
+        <Form addNewComment={addNewComment} isPending={axiosPutIsPending} isResetForm={resetingForm} />
       </div>
       {/*  */}
     </div>

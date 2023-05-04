@@ -22,7 +22,6 @@ export default function UserInfo({ isOpen }) {
         {isPending ? (<div className='w-24 h-3 bg-slate-300 dark:bg-slate-600 rounded-md animate-pulse'></div>) : (
           <h4 className='font-bold text-gray-600 dark:text-slate-300 whitespace-nowrap' >{ userName ? (userName) : ("بارگزاری نشد.!") }</h4>
         )}
-
       </div>
     </div>
   )

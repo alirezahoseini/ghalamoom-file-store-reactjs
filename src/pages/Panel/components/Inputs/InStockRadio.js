@@ -23,8 +23,11 @@ export default function InStockRadio(props) {
         setIsTrue(prev => !prev)
         onChangeEvent(event)
     }
-
-    useEffect(()=> { setIsTrue(value) }, [])
+  
+    useEffect(()=> { 
+        let hasTrue = value === 'true'
+        setIsTrue(hasTrue) 
+    }, [])
 
     return (
         <div className='instock-input input-group flex gap-3 text-xs p-0 justify-start mt-5 items-center'>

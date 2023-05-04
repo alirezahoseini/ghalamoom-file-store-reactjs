@@ -1,6 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-
 // datas
 import { dynamicLinks } from '../../../data/links'
 //utils
@@ -14,6 +12,7 @@ import SearchBox from './SearchBox/SearchBox'
 import Button from './../../../components/ui/Button'
 
 export default function DesktopHeader() {
+
   return (
     <div id='desktop-header' className='hidden lg:flex w-full'>
       <div className='bg-white items-center justify-between m-5 px-7 py-5 w-full rounded-2xl shadow-both-2 bg-opacity-95 flex'>
