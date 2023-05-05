@@ -31,6 +31,11 @@ const navigaitionLinks = [
 ];
 
 const apiLinks = {
+    // products: 'https://ghalamoom-backend-jsonserver.onrender.com/products',
+    // login: 'https://ghalamoom-backend-jsonserver.onrender.com/login',
+    // signup: 'https://ghalamoom-backend-jsonserver.onrender.com/register',
+    // userInfo: 'https://ghalamoom-backend-jsonserver.onrender.com/users',
+    // courses: 'https://ghalamoom-backend-jsonserver.onrender.com/courses'
     products: 'http://localhost:5000/products',
     login: 'http://localhost:5000/login',
     signup: 'http://localhost:5000/register',

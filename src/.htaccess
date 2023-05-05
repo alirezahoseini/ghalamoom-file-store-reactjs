@@ -1,0 +1,17 @@
+
+<!-- 
+  This file for fixed 404 error real host.
+  You can change Url in line 12 , 16 
+-->
+
+
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteRule ^projects/react/ghalamoom/$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+    RewriteRule . /projects/react/ghalamoom/ [L]
+  </IfModule>
