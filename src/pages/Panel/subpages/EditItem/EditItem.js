@@ -16,10 +16,11 @@ export default function EditItem() {
         path = path.split('/');
         setFormName(path[2]);
     }, [])
-
     useEffect(() => {
         if (formName === 'editproduct') {
             setFormTitle('ویرایش محصول');
+        } else if(formName === 'editcourse'){
+            setFormTitle('ویرایش دوره');
         }
     }, [formName])
     return (

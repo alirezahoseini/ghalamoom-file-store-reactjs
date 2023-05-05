@@ -45,7 +45,6 @@ export default function SingleCourse() {
     useEffect(() => {
         if (axiosGetResult !== null) {
             setCourse(axiosGetResult)
-            console.log(axiosGetResult)
         } else if (axiosGetError !== null) {
             if (axiosGetError.status === 404) {
                 alert(`دوره ای با آیدی ${urlParams.productId} وجود ندارد `)

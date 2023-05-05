@@ -32,21 +32,25 @@
 
 import './DataList.css'
 
+// HOCs
+import whithPaginate from '../../../components/HOCs/withPaginate/withPaginate'
+
 // components
 import ProductListItem from './ListItems/ProductListItem'
 import ProductGridItem from './GridItems/ProductGridItem'
 import CourseListItem from './ListItems/CourseListItem'
 import CourseGridItem from './GridItems/CourseGridItem'
+import Pagination from '../../../components/Pagination/Pagination'
 
-export default function DataList({ isList, data = [], title, type = 'product' }) {
- 
+function DataList({ isList, title, type = 'product', paginatedItems, paginationCurrentPage, paginationSize, changePaginationHandler, totalPaginateItems }) {
+
   return (
     <div id='data-list'>
       <div className="wrraper w-full p-2 flex flex-col items-center text-xs">
-        {data.length === 0 ? (
+        {paginatedItems.length === 0 ? (
           <h2 className='text-lg font-bold mt-10 text-slate-400 dark:text-slate-500 '>
-        {title}
-        <span> برای نمایش وجود ندارد</span>
+            {title}
+            <span> برای نمایش وجود ندارد</span>
           </h2>
         ) : (
           <>
@@ -63,13 +67,13 @@ export default function DataList({ isList, data = [], title, type = 'product' })
             )}
             {isList ? (
               // List Rendering 
-              data.map((item => (
+              paginatedItems.map((item => (
                 type === 'product' ? (<ProductListItem key={item.id} {...item} type={type} />) : (<CourseListItem key={item.id} {...item} type={type} />)
               )))
             ) : (
               // Grid Rendering 
               <div className='flex flex-wrap w-full'>
-                {data.map((item => (
+                {paginatedItems.map((item => (
                   type === 'product' ? (<ProductGridItem key={item.id} {...item} type={type} />) : (<CourseGridItem key={item.id} {...item} type={type} />)
                 )))}
               </div>
@@ -77,7 +81,17 @@ export default function DataList({ isList, data = [], title, type = 'product' })
           </>
         )}
       </div>
+      {
+        // Pagination 
+        paginationSize <= totalPaginateItems && (
+          <Pagination totalItems={totalPaginateItems}
+            currentPage={paginationCurrentPage}
+            pageSize={paginationSize}
+            setCurrentPage={changePaginationHandler} />
+        )
+      }
     </div >
   )
 }
 
+export default whithPaginate(DataList)
