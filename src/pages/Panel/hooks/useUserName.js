@@ -11,7 +11,7 @@ export default function useUserName() {
     const [userName, setUserName] = useState(null)
     const [isPending, setIsPending] = useState(true)
     const userId = getCooki('userid');
-    const url = `${apiLinks.userInfo}/${userId}`;
+    const url = `${apiLinks.users}/${userId}`;
     const accessUserName = async () => {
         // first cheking cookis
         const isExistInCookis = getCooki('username');

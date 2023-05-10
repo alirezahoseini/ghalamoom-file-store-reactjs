@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .ltr {
+    direction: ltr
+  }
+}
+
 /*---------------------------
     Import persian Fonts
 ---------------------------*/

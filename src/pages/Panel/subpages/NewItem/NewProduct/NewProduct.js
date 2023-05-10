@@ -20,20 +20,20 @@ import CancelButton from "../../components/Buttons/CancelButton";
 export default function NewProduct() {
   const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
   const [formData, setFormData] = useState({
-    title: '',                            /// max length 70 
-    inStock: true,                        /// default true 
-    image: '',                            /// dataurl image
-    price: '',                            /// the price is in thousand tomans, like 20 
-    fileSize: '',                         /// file size in megabytes
-    miniDes: '',                          /// max length 180
-    largeDes: '',                         /// max length 400
-    saleCount: 0,                         /// default 0 not change here
-    likes: 0,                             /// default 0 not change here
-    downloadCount: 0,                     /// default 0 not change here
-    category: { "name": "بدون دسته", "id": "null" },     /// chooseing from select box
-    format: { "name": "ZIP", "id": "zip" },          /// chooseing from select box
-    comments: [],                          /// default [] not change here
-    created_at: new Date().getTime()
+    title: '',                                                  /// max length 70 
+    inStock: true,                                              /// default true 
+    image: '',                                                  /// dataurl image
+    price: '',                                                  /// the price is in thousand tomans, like 20 
+    fileSize: '',                                               /// file size in megabytes
+    miniDes: '',                                                /// max length 180
+    largeDes: '',                                               /// max length 400
+    saleCount: 0,                                               /// default 0 not change here
+    likes: 0,                                                   /// default 0 not change here
+    downloadCount: 0,                                           /// default 0 not change here
+    category: { "name": "بدون دسته", "id": "null" },           /// chooseing from select box
+    format: { "name": "ZIP", "id": "zip" },                     /// chooseing from select box
+    comments: [],                                               /// default [] not change here
+    created_at: new Date().getTime()                            ///
   });
 
   const navigateTo = useNavigate()
@@ -147,6 +147,7 @@ export default function NewProduct() {
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
+      console.log(axiosPostResult)
       alert('محصول با موفقیت ایجاد شد');
       navigateTo('/panel/products')
     }

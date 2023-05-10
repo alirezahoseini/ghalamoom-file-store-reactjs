@@ -18,7 +18,7 @@ function Products() {
   const [isList, setIsList] = useState(true)
 
   useEffect(() => {
-    setAxiosGetUrl(apiLinks.products)
+    setAxiosGetUrl(`${apiLinks.products}?_sort=id&_order=desc`)
   }, []);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function Products() {
         {simpleDataLoaderStatus === 'hidde' && (
           <DataList isList={isList} data={productsArray} title="محصول" type='product' />
         )}
-        { axiosGetIsPending && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
+        { simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
       </div>
     </div>
   )

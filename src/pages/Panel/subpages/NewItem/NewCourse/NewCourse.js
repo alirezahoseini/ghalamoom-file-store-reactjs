@@ -19,21 +19,21 @@ import CancelButton from "../../components/Buttons/CancelButton";
 export default function NewCourse() {
   const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
   const [formData, setFormData] = useState({
-    title: '',                            /// max length 70 
-    image: '',                            /// dataurl image
-    price: '',                            /// the price is in thousand tomans, like 20 
-    fileSize: '',                         /// file size in megabytes
-    miniDes: '',                          /// max length 180
-    largeDes: '',                         /// max length 400
-    time: '',                             /// course time
-    likes: 0,                             /// default [] not change here
-    comments: [],                         /// default 0 not change here
-    studentCount: 0,                      /// default 0 not change here
+    title: '',                                                        /// max length 70 
+    image: '',                                                        /// dataurl image
+    price: '',                                                        /// the price is in thousand tomans, like 20 
+    fileSize: '',                                                     /// file size in megabytes
+    miniDes: '',                                                      /// max length 180
+    largeDes: '',                                                     /// max length 400
+    time: '',                                                         /// course time
+    likes: 0,                                                         /// default [] not change here
+    comments: [],                                                     /// default 0 not change here
+    studentCount: 0,                                                  /// default 0 not change here
     wayReceive: { "name": "دانلودی", "id": "download" },             /// chooseing from select box
-    support: { "name": "تیکت", "id": "ticket" },                     /// chooseing from select box
+    support: { "name": "تیکت", "id": "ticket" },                      /// chooseing from select box
     category: { "name": "بدون دسته", "id": "null" },                 /// chooseing from select box
     prerequisite: { "name": "بدون پیش نیاز", "id": "null" },         /// chooseing from select box
-    level: { "name": "مبتدی", "id": "beginner" },                          /// chooseing from select box
+    level: { "name": "مبتدی", "id": "beginner" },                     /// chooseing from select box
     created_at: new Date().getTime()
   });
   const navigateTo = useNavigate()

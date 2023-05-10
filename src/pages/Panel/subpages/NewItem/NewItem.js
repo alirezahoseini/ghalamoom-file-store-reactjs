@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom"
 import FormHeader from '../components/FormHeader/FormHeader';
 import NewProduct from "./NewProduct/NewProduct";
 import NewCourse from "./NewCourse/NewCourse";
+import NewArtwork from './NewArtwork/NewArtwork'
 
 export default function NewItem() {
     const userLocation = useLocation();
@@ -22,6 +23,8 @@ export default function NewItem() {
             setFormTitle('افزودن محصول جدید');
         }else if(formName === 'newcourse'){
             setFormTitle('افزودن دوره جدید');
+        }else if(formName === 'newartwork'){
+            setFormTitle('افزودن نمونه کار جدید');
         }
     }, [formName])
     return (
@@ -33,6 +36,9 @@ export default function NewItem() {
                 )}
                 {formName === 'newcourse' && (
                     <NewCourse/>
+                )}
+                {formName === 'newartwork' && (
+                    <NewArtwork/>
                 )}
             </div>
         </div>

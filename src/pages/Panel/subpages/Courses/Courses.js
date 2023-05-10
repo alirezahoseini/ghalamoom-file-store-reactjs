@@ -19,7 +19,7 @@ export default function Courses() {
     const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
     const [coursesArray, setCoursesArray] = useState([]);
     useEffect(() => {
-        setAxiosGetUrl(apiLinks.courses)
+        setAxiosGetUrl(`${apiLinks.courses}?_sort=id&_order=desc`)
     }, []);
     
     useEffect(() => {
@@ -40,7 +40,7 @@ export default function Courses() {
                 {simpleDataLoaderStatus === 'hidde' && (
                     <DataList isList={isList} data={coursesArray} title="دوره" type='course' />
                 )}
-                <SimpleDataLoader status={simpleDataLoaderStatus} />
+                { simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
             </div>
         </div>
     )

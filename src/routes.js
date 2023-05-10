@@ -10,7 +10,7 @@ import Products from './pages/Panel/subpages/Products/Products';
 import NewItem from './pages/Panel/subpages/NewItem/NewItem'
 import EditItem from './pages/Panel/subpages/EditItem/EditItem';
 import Courses from './pages/Panel/subpages/Courses/Courses';
-// Products
+// Single Pages
 import SingleProduct from './pages/SinglePages/SingleProduct/SingleProduct';
 import SingleCourse from './pages/SinglePages/SingleCourse/SingleCourse';
 
@@ -28,6 +28,7 @@ const routes = [
             { path: 'courses', element: <PrivatePage ><Courses /></PrivatePage> },
             { path: 'newcourse', element: <PrivatePage ><NewItem /></PrivatePage> },
             { path: 'editcourse/:courseId', element: <PrivatePage ><EditItem /></PrivatePage> },
+            { path: 'newartwork', element: <PrivatePage ><NewItem /></PrivatePage> },
             { path: '', element:<Navigate to="dashboard" replace={ true} />},
             { path: '*', element:<Navigate to="dashboard" replace={ true} />},
 ]
