@@ -1,6 +1,6 @@
 import { TbHeart, TbHeartFilled, TbLoader2 } from "react-icons/tb"
 import './LikeCounterButton.css'
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 
 // hooks
 import useAxiosPut from "../../../../hooks/axios/useAxiosPut";
@@ -8,10 +8,11 @@ import useAxiosPut from "../../../../hooks/axios/useAxiosPut";
 // datas 
 import { apiLinks } from "../../../../data/links";
 
-export default function LikeCounterButton({ type = 'product', ...otherProps }) {
+const LikeCounterButton = memo(({ type = 'product', ...otherProps }) => {
     const { axiosPutResult, axiosPutError, axiosPutIsPending, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
     const [isLiked, setIsLiked] = useState(false);
-    const [likeCount, setLikeCount] = useState(otherProps.likes)
+    const [likeCount, setLikeCount] = useState(otherProps.likes);
+    const [itemId, setItemId] = useState(otherProps.id)
     const likeHandler = () => {
         let newProductObject;
         if (!isLiked) {
@@ -21,7 +22,6 @@ export default function LikeCounterButton({ type = 'product', ...otherProps }) {
         }
         setAxiosPutUrl(`${apiLinks[`${type}s`]}/${otherProps.id}`)
         setAxiosPutData(newProductObject)
-
     }
     useEffect(() => {
         if (axiosPutResult !== null) {
@@ -34,7 +34,17 @@ export default function LikeCounterButton({ type = 'product', ...otherProps }) {
         } else if (axiosPutError !== null) {
             console.log(axiosPutError)
         }
-    }, [axiosPutError, axiosPutResult])
+    }, [axiosPutError, axiosPutResult,])
+
+    useEffect(()=>{
+        if(itemId !== otherProps.id){
+            setItemId(otherProps.id)
+            setLikeCount(otherProps.likes)
+            setIsLiked(false)
+        }
+    })
+
+    
     return (
         <button type="button" onClick={likeHandler}
             className={`like-counter-btn flex items-center justify-center px-3 font-bold py-2 gap-2 rounded-md text-xs font-yekan-bakh ${isLiked && 'liked'}`} disabled={axiosPutIsPending}
@@ -53,4 +63,6 @@ export default function LikeCounterButton({ type = 'product', ...otherProps }) {
             }
         </button >
     )
-}
+})
+
+export default LikeCounterButton

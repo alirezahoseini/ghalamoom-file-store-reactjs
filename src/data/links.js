@@ -3,8 +3,8 @@
 // Global links
 const dynamicLinks = {
     home: '/',
-    course: '/course',
-    shop: '/shop',
+    courses: '/courses',
+    products: '/products',
     artworks: '/artworks',
     about: '/about',
     blog: '/blog',
@@ -17,8 +17,8 @@ const dynamicLinks = {
 // Header Links 
 const navigaitionLinks = [
     { id: 'navigaitionLinks-1', name: 'خانه', url: dynamicLinks.home, subMenu: false },
-    { id: 'navigaitionLinks-2', name: 'دوره های آموزشی', url: dynamicLinks.course, subMenu: false },
-    { id: 'navigaitionLinks-3', name: 'فروشگاه', url: dynamicLinks.shop, subMenu: false },
+    { id: 'navigaitionLinks-2', name: 'دوره های آموزشی', url: dynamicLinks.courses, subMenu: false },
+    { id: 'navigaitionLinks-3', name: 'فروشگاه', url: dynamicLinks.products, subMenu: false },
     { id: 'navigaitionLinks-4', name: 'نمونه کارها', url: dynamicLinks.artworks, subMenu: false },
     { id: 'navigaitionLinks-5', name: 'درباره من', url: dynamicLinks.about, subMenu: false },
     {

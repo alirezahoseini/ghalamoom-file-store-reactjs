@@ -37,9 +37,9 @@ export default function EditArtwork() {
       placeholder: 'عنوان نمونه کار را وارد کنید',
       type: 'text',
       required: true,
-      errorMessage: 'عنوان نمونه کار باید بین 5 الی 15 کلمه باشد',
-      pattern: '^[\\w\u0600-\u06FF\\s]{5,50}',
-      maxLength: 50,
+      errorMessage: 'عنوان نمونه کار باید بین 5 الی 20 کلمه باشد',
+      pattern: '^[\\w\u0600-\u06FF\\s–]{5,20}',
+      maxLength: 20,
     },
     runTime: {
       name: 'runTime',
@@ -47,9 +47,9 @@ export default function EditArtwork() {
       placeholder: 'برای مثال : اسفند 1400 تا فروردین 1401',
       type: 'text',
       required: true,
-      errorMessage: 'زمان اجرا باید بین 5 الی 35 کلمه باشد',
-      pattern: '^[\\w\u0600-\u06FF\\s]{5,35}',
-      maxLength: 35,
+      errorMessage: 'زمان اجرا باید بین 5 الی 20 کلمه باشد',
+      pattern: '^[\\w\u0600-\u06FF\\s]{5,20}',
+      maxLength: 20,
     },
     description: {
       name: 'description',
@@ -59,7 +59,7 @@ export default function EditArtwork() {
       errorMessage: 'توضیحات باید بین 40 الی 800 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{40,800}',
       maxLength: 800,
-      minLength: 50,
+      minLength: 40,
       rows: '8'
     },
     image: {

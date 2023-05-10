@@ -47,7 +47,7 @@ export default function SingleCourse() {
             setCourse(axiosGetResult)
         } else if (axiosGetError !== null) {
             if (axiosGetError.status === 404) {
-                alert(`دوره ای با آیدی ${urlParams.productId} وجود ندارد `)
+                alert(`دوره ای با آیدی ${urlParams.courseId} وجود ندارد `)
             }
             setSimpleLoadierStatus('error')
         }
