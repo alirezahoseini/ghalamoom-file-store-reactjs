@@ -53,7 +53,7 @@ export default function MultipleImageInput({ defaultImages, onChnageHandler, inp
   return (
     <div className='multiple-image-input my-4'>
       <div className="wrapper flex flex-col gap-4">
-        <h2 className='font-bold text-slate-700 dark:text-slate-50 mr-1'>گالری تصاویر</h2>
+        <h2 className='font-bold text-slate-700 dark:text-slate-50 mr-3'>گالری تصاویر</h2>
         {/* Add image input  */}
         <div className='add-image-input'>
           <input id={inputId} type="file" accept='image/jpeg, image/png , image/jpg' onChange={(event => addImageHandler(event))} className='hidden' />

@@ -71,7 +71,9 @@ export default function NewArtwork() {
     }
     const changeHandler = (event) => {
         // Image 
-        if (event.target.className.includes('custom-select-box-input')) {
+        if (event.image) {
+            setFormData({ ...formData, image: event.image })
+          } else if (event.target.className.includes('custom-select-box-input')) {
             // Select boxes
             const inputName = event.target.name;
             const inputItems = inputsData[inputName].items;
@@ -93,7 +95,7 @@ export default function NewArtwork() {
     useEffect(() => {
         if (axiosPostResult !== null) {
             alert('نمونه کار شما با موفقیت منتشر شد');
-            navigateTo('/panel/courses')
+            navigateTo('/panel/artworks')
         }
         if (axiosPostError !== null) {
             console.log(axiosPostError)
@@ -114,6 +116,7 @@ export default function NewArtwork() {
                         {/* End of Right Side - Text form  */}
                         {/* Left side - select Image */}
                         <div className="left-side xl:w-4/12">
+                            <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} />
                             <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
                         </div>
                         {/* End of Left side - select Image */}

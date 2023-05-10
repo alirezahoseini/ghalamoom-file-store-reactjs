@@ -40,7 +40,11 @@ import ProductListItem from './ListItems/ProductListItem'
 import ProductGridItem from './GridItems/ProductGridItem'
 import CourseListItem from './ListItems/CourseListItem'
 import CourseGridItem from './GridItems/CourseGridItem'
+import ArtworkListItem from './ListItems/ArtworkListItem'
+import ArtworkGridItem from './GridItems/ArtworkGridItem'
 import Pagination from '../../../components/Pagination/Pagination'
+import DataListHeader from './DataListHeader'
+
 
 function DataList({ isList, title, type = 'product', paginatedItems, paginationCurrentPage, paginationSize, changePaginationHandler, totalPaginateItems }) {
 
@@ -56,25 +60,27 @@ function DataList({ isList, title, type = 'product', paginatedItems, paginationC
           <>
             {isList && (
               /* Start Data list header  */
-              <div className='data-list-header flex items-center bg-white w-full rounded-xl px-4 py-4 text-slate-600 dark:bg-slate-700 dark:text-slate-400'>
-                <div className='w-8/12 sm:w-5/12 flex items-center' >{title}</div>
-                <div className='hidden sm:w-2/12 sm:flex' >{type === 'product' ? 'وضعیت' : 'سطح'}</div>
-                <div className='hidden sm:w-2/12 sm:flex items-center' >قیمت</div>
-                <div className='hidden md:w-2/12 md:flex' >{type === 'product' ? 'تعداد فروش' : 'تعداد دانشجو'}</div>
-                <div className='w-4/12 sm:w-2/12 flex items-center justify-evenly' >سایر</div>
-              </div>
+              <DataListHeader title={title} type={type} />
               /* End of Data list header  */
             )}
             {isList ? (
               // List Rendering 
-              paginatedItems.map((item => (
-                type === 'product' ? (<ProductListItem key={item.id} {...item} type={type} />) : (<CourseListItem key={item.id} {...item} type={type} />)
+              paginatedItems.map((item =>
+              (
+                type === 'product' ? (<ProductListItem key={item.id} {...item} type={type} />) :  
+                (type === 'course' ? (<CourseListItem key={item.id} {...item} type={type} />) :
+                  (<ArtworkListItem key={item.id} {...item} type={type} />)
+                )  
+                
               )))
             ) : (
               // Grid Rendering 
               <div className='flex flex-wrap w-full'>
-                {paginatedItems.map((item => (
-                  type === 'product' ? (<ProductGridItem key={item.id} {...item} type={type} />) : (<CourseGridItem key={item.id} {...item} type={type} />)
+                {paginatedItems.map((item =>
+                (
+                  type === 'product' ? (<ProductGridItem key={item.id} {...item} type={type} />)
+                  : (type === 'course' ? (<CourseGridItem key={item.id} {...item} type={type} />)
+                    : (<ArtworkGridItem key={item.id} {...item} type={type} />))
                 )))}
               </div>
             )}
