@@ -1,13 +1,8 @@
-import { TbHeart, TbPencil, TbEye } from 'react-icons/tb'
+import { TbPencil, TbEye } from 'react-icons/tb'
 import { Link } from 'react-router-dom'
-
-// assets 
-import tomanLogo from '../../../../../../assets/icons/toman.svg'
 
 // assets
 import defaultImage from '../../../../../../assets/images/panel/imageDefault.json'
-
-
 
 export default function ArtworkGridItem({ title, image, type, id, runTime, likes }) {
     return (
@@ -42,7 +37,6 @@ export default function ArtworkGridItem({ title, image, type, id, runTime, likes
                     </div>
                     {/* End of Buttos */}
                 </div>
-
             </div>
         </div>
     )

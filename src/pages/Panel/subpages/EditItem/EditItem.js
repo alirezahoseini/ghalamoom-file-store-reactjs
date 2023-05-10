@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom"
 import FormHeader from "../components/FormHeader/FormHeader";
 import EditProduct from "./EditProduct/EditProduct";
 import EditCourse from "./EditeCourse/EditeCourse";
+import EditArtwork from "./EditArtwork/EditArtwork";
 
 export default function EditItem() {
     const userLocation = useLocation();
@@ -21,6 +22,8 @@ export default function EditItem() {
             setFormTitle('ویرایش محصول');
         } else if(formName === 'editcourse'){
             setFormTitle('ویرایش دوره');
+        } else if(formName === 'editartwork'){
+            setFormTitle('ویرایش نمونه کار')
         }
     }, [formName])
     return (
@@ -32,6 +35,9 @@ export default function EditItem() {
                 )}
                 {formName === 'editcourse' && (
                     <EditCourse/>
+                )}
+                {formName === 'editartwork' && (
+                    <EditArtwork/>
                 )}
             </div>
         </div>

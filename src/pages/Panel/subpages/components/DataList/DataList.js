@@ -67,11 +67,10 @@ function DataList({ isList, title, type = 'product', paginatedItems, paginationC
               // List Rendering 
               paginatedItems.map((item =>
               (
-                type === 'product' ? (<ProductListItem key={item.id} {...item} type={type} />) :  
-                (type === 'course' ? (<CourseListItem key={item.id} {...item} type={type} />) :
-                  (<ArtworkListItem key={item.id} {...item} type={type} />)
-                )  
-                
+                type === 'product' ? (<ProductListItem key={item.id} {...item} type={type} />) :
+                  (type === 'course' ? (<CourseListItem key={item.id} {...item} type={type} />) :
+                    (<ArtworkListItem key={item.id} {...item} type={type} />)
+                  )
               )))
             ) : (
               // Grid Rendering 
@@ -79,8 +78,8 @@ function DataList({ isList, title, type = 'product', paginatedItems, paginationC
                 {paginatedItems.map((item =>
                 (
                   type === 'product' ? (<ProductGridItem key={item.id} {...item} type={type} />)
-                  : (type === 'course' ? (<CourseGridItem key={item.id} {...item} type={type} />)
-                    : (<ArtworkGridItem key={item.id} {...item} type={type} />))
+                    : (type === 'course' ? (<CourseGridItem key={item.id} {...item} type={type} />)
+                      : (<ArtworkGridItem key={item.id} {...item} type={type} />))
                 )))}
               </div>
             )}

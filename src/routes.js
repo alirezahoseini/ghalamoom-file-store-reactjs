@@ -31,6 +31,7 @@ const routes = [
             { path: 'editcourse/:courseId', element: <PrivatePage ><EditItem /></PrivatePage> },
             { path: 'artworks', element: <PrivatePage ><Artworks /></PrivatePage> },
             { path: 'newartwork', element: <PrivatePage ><NewItem /></PrivatePage> },
+            { path: 'editartwork/:artworkId', element: <PrivatePage ><EditItem /></PrivatePage> },
             { path: '', element:<Navigate to="dashboard" replace={ true} />},
             { path: '*', element:<Navigate to="dashboard" replace={ true} />},
 ]
