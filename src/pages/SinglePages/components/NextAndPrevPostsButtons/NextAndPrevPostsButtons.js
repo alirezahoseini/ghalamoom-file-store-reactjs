@@ -12,6 +12,7 @@ const NextAndPrevPostsButtons = memo(({ title, type, itemId }) => {
     const [itemsArray, setItemsArray] = useState()
     const [nextItem, setNextItem] = useState()
     const [prevItem, setPrevItem] = useState()
+    const [isLoading, setIsLoading] = useState(true)
 
     const findPrevAndNextItems = () => {
         const currentIndex = itemsArray.findIndex(item => item.id === currentItemId);
@@ -29,8 +30,10 @@ const NextAndPrevPostsButtons = memo(({ title, type, itemId }) => {
     useEffect(() => {
         if (axiosGetResult !== null) {
             setItemsArray(axiosGetResult)
+            setIsLoading(false)
         } else if (axiosGetError !== null) {
             console.log(axiosGetError)
+            setIsLoading(false)
         }
     }, [axiosGetResult, axiosGetError])
 
@@ -44,8 +47,8 @@ const NextAndPrevPostsButtons = memo(({ title, type, itemId }) => {
         }
     }, [currentItemId, itemsArray])
     return (
-        <div id='next-prev-buttons' className='flex items-center justify-between p-2 my-3 w-full'>
-            <div className="prev-button">
+        <div id='next-prev-buttons' className='flex items-center justify-between py-2 my-8 w-full gap-2 '>
+            <div className={`prev-button ${isLoading ? 'w-6/12 h-20 loading' : ''}`}>
                 {prevItem && (
                     <Link to={`/${type}s/${prevItem.id}`}>
                         <div className='flex items-center gap-2 hover:translate-x-1'>
@@ -54,7 +57,7 @@ const NextAndPrevPostsButtons = memo(({ title, type, itemId }) => {
                                 <span className='text-xs text-slate-400'>
                                     {title + " قبلی"}
                                 </span>
-                                <span className='font-bold text-slate-800 text-sm lg:text-base'>
+                                <span className='font-bold text-slate-800 text-xs md:text-base mt-1 lg:mt-0'>
                                     {prevItem.title}
                                 </span>
                             </div>
@@ -63,7 +66,7 @@ const NextAndPrevPostsButtons = memo(({ title, type, itemId }) => {
                 )}
             </div>
             <div className='h-10  bg-custom-gold-100 inline-block' style={{ width: '2px' }}> </div>
-            <div className="next-button py-5">
+            <div className={`prev-button ${isLoading ? 'w-6/12 h-20 loading' : ''}`}>
                 {nextItem && (
                     <Link to={`/${type}s/${nextItem.id}`}>
                         <div className='flex items-center gap-2 hover:-translate-x-1'>
@@ -71,7 +74,7 @@ const NextAndPrevPostsButtons = memo(({ title, type, itemId }) => {
                                 <span className='text-xs text-slate-400'>
                                     {title + " بعدی"}
                                 </span>
-                                <span className='font-bold text-slate-800 text-sm lg:text-base'>
+                                <span className='font-bold text-slate-800 text-xs md:text-base mt-1 lg:mt-0'>
                                     {nextItem.title}
                                 </span>
                             </div>

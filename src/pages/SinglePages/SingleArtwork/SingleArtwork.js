@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { TbUser, TbCalendarMinus } from 'react-icons/tb'
+import './SingleArtwork.css'
 
 // datas
 import { apiLinks } from '../../../data/links'
