@@ -30,8 +30,6 @@ export default function Artworks() {
             setSimpleDataLoaderStatus('error')
         }
     }, [axiosGetResult, axiosGetError]);
-
-    console.log(artworksArray)
   
     const [isList, setIsList] = useState(true)
     return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 // datas
-import {apiLinks} from '../../../data/links'
+import { apiLinks } from '../../../data/links'
 
 // utils
 import { setCooki, getCooki } from '../../../utils/cookis'
@@ -15,10 +15,10 @@ export default function useUserName() {
     const accessUserName = async () => {
         // first cheking cookis
         const isExistInCookis = getCooki('username');
-        if(isExistInCookis){
+        if (isExistInCookis) {
             setUserName(isExistInCookis)
             setIsPending(false)
-        }else if (isExistInCookis === null && userId) {
+        } else if (isExistInCookis === null && userId) {
             // get data from server
             const accessToken = getCooki('token')
             axios.get(url, {
@@ -26,11 +26,16 @@ export default function useUserName() {
                     Authorization: `Bearer ${accessToken}`
                 }
             }).then(res => {
-                console.log(res.data)
                 const username = res.data.name;
-                setCooki('username', username, 3);
-                setUserName(username)
-                setIsPending(false)
+                if (username) {
+                    setCooki('username', username, 3);
+                    setUserName(username)
+                    setIsPending(false)
+                }else{
+                    setUserName('بارگزاری نشد')
+                    setIsPending(false)
+                    console.log(res.data)
+                }
             }).catch((error) => {
                 if (error.response) {
                     setIsPending(false)
@@ -47,5 +52,5 @@ export default function useUserName() {
         accessUserName()
     }, [])
 
-    return {isPending, userName}
+    return { isPending, userName }
 }
