@@ -1,0 +1,17 @@
+.mobile-nav-item.submenu {
+    /*background: #000;
+    */padding-bottom: 38px;
+    max-height: 30px;
+    overflow: hidden;
+    transition: max-height .2s ease-in;
+    -webkit-transition: max-height .2s ease-in;
+    -moz-transition: max-height .2s ease-in;
+    -ms-transition: max-height .2s ease-in;
+    -o-transition: max-height .2s ease-in;
+}
+
+.mobile-nav-item.submenu.active{
+    padding-bottom: 38px;
+    max-height: 400px;
+    overflow: visible;
+}

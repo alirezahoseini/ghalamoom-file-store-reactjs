@@ -31,6 +31,8 @@ export default function Carousel(props) {
   const [carouselBreakPoints, setcarouselBreakPoints] = useState();
   const [pageinationStatus, setPaginationStatus] = useState('start')
 
+  console.log(axiosGetIsPending)
+
   useEffect(() => {
     // send request to api for get datas
     setAxiosGetUrl(apiUrl)
@@ -99,7 +101,10 @@ export default function Carousel(props) {
           </div>
         }
         <div className={`${sideBar ? 'w-full lg:w-9/12' : 'w-full'}`}>
-          {carouselBreakPoints && (
+          {axiosGetIsPending && (
+            'loading'
+          )}
+          {carouselBreakPoints && axiosGetIsPending === false && (
             <Swiper
               wrapperTag='div'
               modules={[Navigation, Pagination, A11y]}
@@ -111,7 +116,7 @@ export default function Carousel(props) {
                 dataArray !== undefined && (
                   dataArray.map(item => (
                     <SwiperSlide key={item.id}  >
-                      <CarouselCourseItem {...item}/>
+                      <CarouselCourseItem {...item} />
                     </SwiperSlide>
                   )))
               }

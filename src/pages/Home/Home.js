@@ -30,7 +30,7 @@ export default function Home() {
         </section>
         {/* End of Starter Baner  */}
         {/* Courses Carousel  */}
-        <section>
+        <section className='mb-8'>
           <Carousel {...carouselsData.courses} />
         </section>
         {/* End of Courses Carousel  */}
