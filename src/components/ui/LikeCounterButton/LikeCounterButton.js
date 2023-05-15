@@ -3,10 +3,10 @@ import './LikeCounterButton.css'
 import { memo, useEffect, useState } from "react"
 
 // hooks
-import useAxiosPut from "../../../../hooks/axios/useAxiosPut";
+import useAxiosPut from "../../../hooks/axios/useAxiosPut";
 
 // datas 
-import { apiLinks } from "../../../../data/links";
+import { apiLinks } from '../../../data/links'
 
 const LikeCounterButton = memo(({ type = 'product', ...otherProps }) => {
     const { axiosPutResult, axiosPutError, axiosPutIsPending, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();

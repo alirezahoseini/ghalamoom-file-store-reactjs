@@ -32,16 +32,16 @@ const navigaitionLinks = [
 
 const apiLinks = {
     // products: 'https://ghalamoom-backend-jsonserver.onrender.com/products',
-    login: 'https://ghalamoom-backend-jsonserver.onrender.com/login',
-    signup: 'https://ghalamoom-backend-jsonserver.onrender.com/register',
-    users: 'https://ghalamoom-backend-jsonserver.onrender.com/users',
+    // login: 'https://ghalamoom-backend-jsonserver.onrender.com/login',
+    // signup: 'https://ghalamoom-backend-jsonserver.onrender.com/register',
+    // users: 'https://ghalamoom-backend-jsonserver.onrender.com/users',
     // courses: 'https://ghalamoom-backend-jsonserver.onrender.com/courses',
     // artworks: 'https://ghalamoom-backend-jsonserver.onrender.com/artworks',
 
     products: 'http://localhost:5000/products',
-    // login: 'http://localhost:5000/login',
-    // signup: 'http://localhost:5000/register',
-    // users: 'http://localhost:5000/users',
+    login: 'http://localhost:5000/login',
+    signup: 'http://localhost:5000/register',
+    users: 'http://localhost:5000/users',
     courses: 'http://localhost:5000/courses',
     artworks: 'http://localhost:5000/artworks'
 }

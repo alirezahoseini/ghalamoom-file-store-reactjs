@@ -1,0 +1,5 @@
+.carousel-sidebar .bg-logo{
+    filter:  brightness( 95% ) contrast( 100% ) saturate( 0% ) blur( 0px ) hue-rotate( 0deg );
+    -webkit-filter:  brightness( 95% ) contrast( 100% ) saturate( 0% ) blur( 0px ) hue-rotate( 0deg );
+    opacity: 0.12;
+}
