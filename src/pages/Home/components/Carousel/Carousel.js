@@ -11,8 +11,10 @@ import useAxiosGet from '../../../../hooks/axios/useAxiosGet';
 
 // components
 import CarouselSidebar from './CarouselSidebar/CarouselSidebar'
-import CarouselCourseItem from './CarouselItems/CourseItem/CarouselCourseItem';
+import CarouselCourseItem from './CarouselItems/CarouselCourseItem/CarouselCourseItem';
 import SwiperNavButtons from './SwiperNavButtons/SwiperNavButtons';
+import CarouselLoaderCard from './CarouselItems/components/CarouselLoaderCard/CarouselLoaderCard'
+import LoadDataError from './CarouselItems/components/LoadDataError/LoadDataError';
 
 export default function Carousel(props) {
   const {
@@ -29,7 +31,8 @@ export default function Carousel(props) {
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
   const [dataArray, setDataArray] = useState();
   const [carouselBreakPoints, setcarouselBreakPoints] = useState();
-  const [pageinationStatus, setPaginationStatus] = useState('start')
+  const [pageinationStatus, setPaginationStatus] = useState('start');
+  const [loadDataIsFailed , setLoadDataIsFailed] = useState(false)
 
   console.log(axiosGetIsPending)
 
@@ -85,6 +88,7 @@ export default function Carousel(props) {
       console.log(axiosGetResult)
     } else if (axiosGetError !== null) {
       console.log(axiosGetError)
+      setLoadDataIsFailed(true)
     }
   }, [axiosGetResult, axiosGetError])
 
@@ -101,9 +105,11 @@ export default function Carousel(props) {
           </div>
         }
         <div className={`${sideBar ? 'w-full lg:w-9/12' : 'w-full'}`}>
-          {axiosGetIsPending && (
-            'loading'
-          )}
+          {/* Start loader card  */}
+          {axiosGetIsPending && <CarouselLoaderCard isSidebar={sideBar} />}
+          {loadDataIsFailed &&
+             <LoadDataError />}
+          {/* End of loader card  */}
           {carouselBreakPoints && axiosGetIsPending === false && (
             <Swiper
               wrapperTag='div'
