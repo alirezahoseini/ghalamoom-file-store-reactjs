@@ -1,28 +1,28 @@
-.mobile-nav-item i {
+.desktop-nav-item i {
     transform: scale(0);
     -webkit-transform: scale(0);
     -moz-transform: scale(0);
     -ms-transform: scale(0);
     -o-transform: scale(0);
 }
-.mobile-nav-item:hover i {
+.desktop-nav-item:hover i {
     transform: scale(1);
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
     -o-transform: scale(1);
 }
-.mobile-nav-item a.active{
+.desktop-nav-item a.active{
     background: #FFC400;
 }
-.mobile-nav-item a.active:hover i {
+.desktop-nav-item a.active:hover i {
     transform: scale(0);
     -webkit-transform: scale(0);
     -moz-transform: scale(0);
     -ms-transform: scale(0);
     -o-transform: scale(0);
 }
-.mobile-nav-item.submenu .sublinks{
+.desktop-nav-item.submenu .sublinks{
     transition: all .2s ease-in;
     -webkit-transition: all .2s ease-in;
     -moz-transition: all .2s ease-in;
@@ -37,7 +37,7 @@
     -ms-transform: translateY(30px);
     -o-transform: translateY(30px);
 }
-.mobile-nav-item.submenu:hover .sublinks{
+.desktop-nav-item.submenu:hover .sublinks{
     visibility: visible;
     pointer-events: all;
     opacity: 1;

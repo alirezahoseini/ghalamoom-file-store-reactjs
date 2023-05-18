@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Navigation, Pagination } from "swiper";
+import { A11y, Navigation, Pagination, Autoplay } from "swiper";
 
 // styles
 import "swiper/css";
@@ -19,13 +19,13 @@ import LoadDataError from './CarouselItems/components/LoadDataError/LoadDataErro
 export default function Carousel(props) {
   const {
     id,
-    sideBar = true,
-    header = false,
+    isSidebar = true,
     bgColor = '',
     title,
     desc,
     customClass = '',
     moreOptionsTitle = '',
+    autoPlay = false,
     apiUrl
   } = props;
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
@@ -40,7 +40,7 @@ export default function Carousel(props) {
     // send request to api for get datas
     setAxiosGetUrl(apiUrl)
     // access and Set showing slides count
-    if (sideBar) {
+    if (isSidebar) {
       setcarouselBreakPoints(
         {
           0: {
@@ -68,12 +68,12 @@ export default function Carousel(props) {
             // sm,
             slidesPerView: 2,
           },
-          780: {
-            // md,
+          1024: {
+            // lg
             slidesPerView: 3,
           },
           1280: {
-            // lg
+            // Xl
             slidesPerView: 4,
           },
         }
@@ -94,28 +94,29 @@ export default function Carousel(props) {
 
   return (
     <div className='carousel' id={id}>
-      <div className={`wrpper w-full relative rounded-4xl flex flex-col lg:flex-row items-center justify-center gap-2 p-5 ${bgColor} ${customClass}`}>
-        {sideBar &&
-          <div className='w-full lg:w-3/12'>
+      <div className={`wrpper w-full relative rounded-4xl flex flex-col  items-center justify-center gap-2 p-5 ${isSidebar && 'lg:flex-row'} ${bgColor} ${customClass}`}>
+         <div className={`w-full ${isSidebar ? 'lg:w-3/12' : ''}`}>
             <CarouselSidebar
               title={title}
               description={desc}
               moreOptionsTitle={moreOptionsTitle}
+              isSidebar={isSidebar}
             />
           </div>
-        }
-        <div className={`${sideBar ? 'w-full lg:w-9/12' : 'w-full'}`}>
+        <div className={`${isSidebar ? 'w-full lg:w-9/12' : 'w-full'}`}>
           {/* Start loader card  */}
-          {axiosGetIsPending && <CarouselLoaderCard isSidebar={sideBar} />}
+          {axiosGetIsPending && <CarouselLoaderCard isSidebar={isSidebar} />}
           {loadDataIsFailed &&
              <LoadDataError />}
           {/* End of loader card  */}
           {carouselBreakPoints && axiosGetIsPending === false && (
             <Swiper
               wrapperTag='div'
-              modules={[Navigation, Pagination, A11y]}
+              modules={[Navigation, Pagination, A11y, Autoplay]}
               slidesPerView={4}
               breakpoints={carouselBreakPoints}
+              autoplay={autoPlay && {delay: 4000,
+              disableOnInteraction: true}}
               className="carousel">
               {/* Carousel Items  */}
               {

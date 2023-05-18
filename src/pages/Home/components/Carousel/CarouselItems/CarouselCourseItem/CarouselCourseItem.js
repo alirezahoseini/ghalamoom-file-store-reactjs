@@ -33,7 +33,7 @@ export default function CarouselCourseItem(props) {
         />
         <div className="flex flex-col px-5 mb-3 gap-3">
           <Title title={title} />
-          <Paragraph content={miniDes} />
+          <Paragraph content={miniDes} maxLength={120} />
           <div className='flex items-center gap-3 justify-between my-3'>
             <div className='flex items-center gap-3'>
               <LikeCounterButton {...props} type='course' />

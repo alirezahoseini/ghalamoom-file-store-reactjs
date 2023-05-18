@@ -6,14 +6,14 @@ import { FaChevronDown } from 'react-icons/fa'
 import './DesktopNavItem.css'
 
 
-export default function DesktopNavItem({ name, url, subMenu, subLinks = null }) {
+export default function DesktopNavItem({ name, url, subMenu, subLinks = null}) {
 
   return (
     <>
       {
         !subMenu ? (
           // Single -------------------------------------------------------
-          <li className={`mobile-nav-item font-yekan-bakh font-bold text-lg flex items-center text-gray-700 relative`}>
+          <li className={`desktop-nav-item font-yekan-bakh font-bold text-lg flex items-center text-gray-700 relative`}>
             <NavLink to={url} className={` relative px-3 pt-1 rounded-lg  ${isActive =>
               isActive ? "active" : ""
               }}`}>
@@ -26,7 +26,7 @@ export default function DesktopNavItem({ name, url, subMenu, subLinks = null }) 
           </li >
         ) : (
           // With subMenu -----------------------------------------------
-          <li className={`mobile-nav-item submenu font-yekan-bakh font-bold text-lg text-gray-700  relative`}
+          <li className={`desktop-nav-item submenu font-yekan-bakh font-bold text-lg text-gray-700  relative`}
           >
             <div className={`relative px-3 pt-1 rounded-lg w-fit h-full flex items-center ${(isActive =>
               isActive ? "active" : "")

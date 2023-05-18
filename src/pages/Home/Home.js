@@ -15,9 +15,9 @@ export default function Home() {
       title: 'پکیج های آموزشی قلموم',
       desc: 'قلموم کلی دوره گرافیک دیزاین براتون داره که با تهیه هر کدوم پشتیبانی همیشگی و کلی آپدیت دائمی رو دریافت میکنین',
       moreOptionsTitle: 'مشاهده همه دوره ها',
-      sideBar: true,
-      header: false, 
-      apiUrl: apiLinks.courses
+      sideBar: false,
+      apiUrl: apiLinks.courses,
+      autoPlay: true
     }
   }
 
