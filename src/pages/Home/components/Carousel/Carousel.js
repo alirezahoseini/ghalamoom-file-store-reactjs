@@ -31,10 +31,8 @@ export default function Carousel(props) {
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
   const [dataArray, setDataArray] = useState();
   const [carouselBreakPoints, setcarouselBreakPoints] = useState();
-  const [pageinationStatus, setPaginationStatus] = useState('start');
   const [loadDataIsFailed , setLoadDataIsFailed] = useState(false)
 
-  console.log(axiosGetIsPending)
 
   useEffect(() => {
     // send request to api for get datas
@@ -85,7 +83,6 @@ export default function Carousel(props) {
   useEffect(() => {
     if (axiosGetResult !== null) {
       setDataArray(axiosGetResult)
-      console.log(axiosGetResult)
     } else if (axiosGetError !== null) {
       console.log(axiosGetError)
       setLoadDataIsFailed(true)
@@ -128,7 +125,7 @@ export default function Carousel(props) {
                   )))
               }
               {/* Pagination buttons  */}
-              <SwiperNavButtons status={pageinationStatus} />
+              <SwiperNavButtons />
             </Swiper>
           )}
         </div>

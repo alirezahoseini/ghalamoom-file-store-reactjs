@@ -6,9 +6,10 @@ import { apiLinks } from '../../data/links';
 // Components
 import StarterBaner from './components/StarterBaner/StarterBaner'
 import Carousel from './components/Carousel/Carousel'
+import ProductsGrid from './components/ProductsGrid/ProductsGrid';
 
 export default function Home() {
-  const carouselsData = {
+  const sectionsData = {
     courses: {
       id: 'courses-carousel',
       bgColor: 'bg-slate-200',
@@ -18,6 +19,15 @@ export default function Home() {
       sideBar: false,
       apiUrl: apiLinks.courses,
       autoPlay: true
+    },
+    products : {
+      id: 'products-grid',
+      title: 'فروشگاه فایل قلموم',
+      desc: 'اینجا کلی فایل مثل فونت های جذاب، آیکون های سه بعدی، موکاپ های کاربردی و ... رو میتونین تهیه کنین. کلی ازشون هم رایگانن. حتما یه چرخی بینشون بزن ببین چیزی برای طرح بعدیت نیاز نداری.',
+      moreOptionsTitle: 'مشاهده همه فایل ها',
+      apiUrl: apiLinks.products,
+      limit: 6, 
+      type: 'product'
     }
   }
 
@@ -31,9 +41,15 @@ export default function Home() {
         {/* End of Starter Baner  */}
         {/* Courses Carousel  */}
         <section className='mb-8'>
-          <Carousel {...carouselsData.courses} />
+          <Carousel {...sectionsData.courses} />
         </section>
         {/* End of Courses Carousel  */}
+        {/* Products grid */}
+        <section className='mb-8'>
+          <ProductsGrid {...sectionsData.products} />
+        </section>
+        {/* End of Products grid */}
+
       </div>
     </>
   )

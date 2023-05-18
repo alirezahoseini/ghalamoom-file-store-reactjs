@@ -1,8 +1,8 @@
 import React from 'react'
 // components
 import CourseImageBox from './CourseImageBox';
-import Title from '../components/Title/Title';
-import Paragraph from '../components/Paragraph/Paragraph';
+import Title from '../../../Title/Title';
+import Paragraph from '../../../Paragraph/Paragraph';
 import Badge from '../../../../../../components/ui/Badge/Badge'
 import LikeCounterButton from '../../../../../../components/ui/LikeCounterButton/LikeCounterButton'
 import PriceBadge from '../../../../../../components/ui/PriceBadge/PriceBadge';
@@ -11,7 +11,6 @@ import { TbChevronLeft } from 'react-icons/tb';
 
 
 export default function CarouselCourseItem(props) {
-  console.log(props)
   const {
     image,
     title,
