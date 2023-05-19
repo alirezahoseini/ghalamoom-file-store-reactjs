@@ -18,16 +18,15 @@ export default function ProductGridItem(props) {
         image,
         miniDes,
         price,
-        likes,
         customClass,
         type
     } = props;
     return (
         <div className={`product-grid-item w-full md:w-6/12 xl:w-4/12 flex p-3 my-5 ${customClass}`}>
-            <div className="wrapper w-full border rounded-xl p-3 hover:bg-white hover:border-white transition-all duration-500">
+            <div className="wrapper w-full border rounded-xl p-3 hover:bg-white hover:border-white transition-all duration-500 relative">
                 {/* item header  */}
                 <div className="product-grid-item_header flex items-start justify-between">
-                    <picture className='w-36 bg-white rounded-lg -mt-14 shadow-both-0'>
+                    <picture className='w-36 rounded-lg -mt-14 shadow-both-0'>
                         <Link to={`/${type}s/${id}`} >
                             <img src={image} alt={title} className='w-full rounded-lg' />
                         </Link>
@@ -36,12 +35,12 @@ export default function ProductGridItem(props) {
                 </div>
                 {/* end of item header  */}
                 {/*  */}
-                <div className="product-grid-item_body mt-6 flex flex-col gap-2">
+                <div className="product-grid-item_body mt-6 flex flex-col gap-2 pb-16">
                     <Link to={`/${type}s/${id}`} >
                         <Title title={title} />
                     </Link>
                     <Paragraph content={miniDes} />
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 absolute bottom-3" style={{width: '94%'}}>
                         <LikeCounterButton {...props} />
                         <Badge title={downloadCount} icon={<TbDownload />} customClass='bg-slate-200' />
                         <div className="mr-auto flex items-center gap-3">

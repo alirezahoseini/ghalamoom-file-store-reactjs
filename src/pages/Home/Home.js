@@ -18,7 +18,8 @@ export default function Home() {
       moreOptionsTitle: 'مشاهده همه دوره ها',
       sideBar: false,
       apiUrl: apiLinks.courses,
-      autoPlay: true
+      autoPlay: true,
+      limit: 6
     },
     products : {
       id: 'products-grid',

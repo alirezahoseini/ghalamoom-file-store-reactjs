@@ -26,17 +26,18 @@ export default function Carousel(props) {
     customClass = '',
     moreOptionsTitle = '',
     autoPlay = false,
-    apiUrl
+    apiUrl,
+    limit = 6
   } = props;
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
   const [dataArray, setDataArray] = useState();
   const [carouselBreakPoints, setcarouselBreakPoints] = useState();
-  const [loadDataIsFailed , setLoadDataIsFailed] = useState(false)
+  const [loadDataIsFailed, setLoadDataIsFailed] = useState(false)
 
 
   useEffect(() => {
     // send request to api for get datas
-    setAxiosGetUrl(apiUrl)
+    setAxiosGetUrl(`${apiUrl}?_sort=id&_order=desc&_page=1&_limit=${limit}`)
     // access and Set showing slides count
     if (isSidebar) {
       setcarouselBreakPoints(
@@ -92,19 +93,19 @@ export default function Carousel(props) {
   return (
     <div className='carousel' id={id}>
       <div className={`wrpper w-full relative rounded-4xl flex flex-col  items-center justify-center gap-2 p-5 ${isSidebar && 'lg:flex-row'} ${bgColor} ${customClass}`}>
-         <div className={`w-full ${isSidebar ? 'lg:w-3/12' : ''}`}>
-            <CarouselSidebar
-              title={title}
-              description={desc}
-              moreOptionsTitle={moreOptionsTitle}
-              isSidebar={isSidebar}
-            />
-          </div>
+        <div className={`w-full ${isSidebar ? 'lg:w-3/12' : ''}`}>
+          <CarouselSidebar
+            title={title}
+            description={desc}
+            moreOptionsTitle={moreOptionsTitle}
+            isSidebar={isSidebar}
+          />
+        </div>
         <div className={`${isSidebar ? 'w-full lg:w-9/12' : 'w-full'}`}>
           {/* Start loader card  */}
           {axiosGetIsPending && <CarouselLoaderCard isSidebar={isSidebar} />}
           {loadDataIsFailed &&
-             <LoadDataError />}
+            <LoadDataError />}
           {/* End of loader card  */}
           {carouselBreakPoints && axiosGetIsPending === false && (
             <Swiper
@@ -112,8 +113,10 @@ export default function Carousel(props) {
               modules={[Navigation, Pagination, A11y, Autoplay]}
               slidesPerView={4}
               breakpoints={carouselBreakPoints}
-              autoplay={autoPlay && {delay: 4000,
-              disableOnInteraction: true}}
+              autoplay={autoPlay && {
+                delay: 4000,
+                disableOnInteraction: true
+              }}
               className="carousel">
               {/* Carousel Items  */}
               {
