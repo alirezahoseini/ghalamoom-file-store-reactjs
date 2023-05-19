@@ -9,7 +9,7 @@ import FirstTitle from '../../FirstTitle/FirstTitle'
 import NormalParagraph from '../../NormalParagraph/NormalParagraph'
 import MoreButton from '../../MoreButton/MoreButton'
 
-export default function CarouselSidebar({ title, description, moreOptionsTitle, isSidebar }) {
+export default function CarouselSidebar({ title, description, moreOptionsTitle, isSidebar, type }) {
     return (
         <div className={`carousel-sidebar flex p-3`}>
             {isSidebar && <img src={logo} alt="logo" className='bg-logo w-20 lg:w-48 absolute top-5 right-1/3 lg:right-3 z-0' />}
@@ -28,11 +28,13 @@ export default function CarouselSidebar({ title, description, moreOptionsTitle, 
                     <MoreButton
                         title={moreOptionsTitle}
                         customClass={`mx-auto lg:mx-0 ${isSidebar ? 'flex' : 'xl:hidden'}`}
+                        path={`/${type}s`}
                     />
                 </div>
                 {!isSidebar && <MoreButton
                     title={moreOptionsTitle}
                     customClass={'mx-auto lg:mx-0 hidden xl:flex'}
+                    path={`/${type}`}
                 />}
             </div>
         </div>

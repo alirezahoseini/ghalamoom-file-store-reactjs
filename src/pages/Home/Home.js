@@ -19,7 +19,8 @@ export default function Home() {
       sideBar: false,
       apiUrl: apiLinks.courses,
       autoPlay: true,
-      limit: 6
+      limit: 6,
+      type: 'course'
     },
     products : {
       id: 'products-grid',

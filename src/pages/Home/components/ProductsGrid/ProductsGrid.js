@@ -8,6 +8,9 @@ import useAxiosGet from '../../../../hooks/axios/useAxiosGet';
 import FirstTitle from '../FirstTitle/FirstTitle';
 import NormalParagraph from '../NormalParagraph/NormalParagraph';
 import ProductGridItem from './ProductGridItem/ProductGridItem';
+import ProductGridLoader from './ProductGridLoader/ProductGridLoader';
+import LoadDataError from '../Carousel/CarouselItems/components/LoadDataError/LoadDataError';
+
 export default function ProductsGrid(props) {
     const {
         id,
@@ -20,11 +23,9 @@ export default function ProductsGrid(props) {
         type
     } = props;
 
-    const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
+    const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [dataArray, setDataArray] = useState([]);
     const [loadDataIsFailed, setLoadDataIsFailed] = useState(false);
-
-
 
     useEffect(() => {
         // send request to api for get datas
@@ -53,8 +54,18 @@ export default function ProductsGrid(props) {
                     <ProductGridItem key={item.id} {...item} type={type} />
                 ))}
             </div>
+
+            {/* Start loader card  */}
+            {axiosGetIsPending && (
+                <div className=' w-full p-5'>
+                    <ProductGridLoader />
+                </div>
+            )}
+            {loadDataIsFailed &&
+                <LoadDataError />}
+            {/* End of loader card  */}
             <button type='button'
-                className='bg-custom-gold-100 px-3 py-2 rounded-lg font-bold text-slate-700 hover:bg-slate-300 text-sm lg:text-base flex mx-auto my-3'>
+                className='bg-custom-gold-100 px-4 py-3 rounded-2xl font-bold text-slate-700 hover:bg-slate-300 text-sm lg:text-base flex mx-auto my-3'>
                 <Link to={`${type}s`} className='flex items-center gap-2'>
                     {moreOptionsTitle}
                     <TbSquareRoundedChevronLeft className='text-xl' />

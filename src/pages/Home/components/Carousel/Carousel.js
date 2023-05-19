@@ -27,9 +27,10 @@ export default function Carousel(props) {
     moreOptionsTitle = '',
     autoPlay = false,
     apiUrl,
-    limit = 6
+    limit = 6,
+    type
   } = props;
-  const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
+  const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const [dataArray, setDataArray] = useState();
   const [carouselBreakPoints, setcarouselBreakPoints] = useState();
   const [loadDataIsFailed, setLoadDataIsFailed] = useState(false)
@@ -99,6 +100,7 @@ export default function Carousel(props) {
             description={desc}
             moreOptionsTitle={moreOptionsTitle}
             isSidebar={isSidebar}
+            type={type}
           />
         </div>
         <div className={`${isSidebar ? 'w-full lg:w-9/12' : 'w-full'}`}>
@@ -123,7 +125,7 @@ export default function Carousel(props) {
                 dataArray !== undefined && (
                   dataArray.map(item => (
                     <SwiperSlide key={item.id}  >
-                      <CarouselCourseItem {...item} />
+                      <CarouselCourseItem {...item} type={type}/>
                     </SwiperSlide>
                   )))
               }
