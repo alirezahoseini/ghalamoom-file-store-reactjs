@@ -1,0 +1,21 @@
+.swiper-pagination-bullet{
+    transition: .2s ease-in;
+    -webkit-transition: .2s ease-in;
+    -moz-transition: .2s ease-in;
+    -ms-transition: .2s ease-in;
+    -o-transition: .2s ease-in;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    width: 10px;
+}
+.swiper-pagination-bullet-active{
+    width: 20px; 
+}
+
+.logo-ghalamoom{
+    filter: brightness( 95% ) contrast( 100% ) saturate( 0% ) blur( 0px ) hue-rotate( 0deg );
+    opacity: 0.24;
+}

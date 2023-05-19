@@ -120,7 +120,7 @@ export default function Carousel(props) {
                 delay: 4000,
                 disableOnInteraction: true
               }}
-              className="carousel">
+              className="carousel ">
               {/* Carousel Items  */}
               {
                 dataArray !== undefined && (

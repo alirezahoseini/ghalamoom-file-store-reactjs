@@ -4,6 +4,7 @@
 }
 .carousel .swiper-wrapper{
   width: 100%;
+  align-items: flex-start;
 }
 .carousel .swiper-nav-btns {
   display: flex;

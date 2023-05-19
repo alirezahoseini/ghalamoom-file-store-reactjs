@@ -9,6 +9,7 @@ import Carousel from './components/Carousel/Carousel'
 import ProductsGrid from './components/ProductsGrid/ProductsGrid';
 import NewslaterForm from './components/NewslaterForm/NewslaterForm';
 import InstagramBanner from '../../components/ui/InstagramBanner/InstagramBanner';
+import StudentsComments from './components/StudentsComments/StudentsComments';
 
 export default function Home() {
   const sectionsData = {
@@ -76,6 +77,11 @@ export default function Home() {
         {/* Instagram banner  */}
         <section className='mb-8'>
           <InstagramBanner />
+        </section>
+        {/* End of Instagram banner  */}
+        {/* Instagram banner  */}
+        <section className='mb-8'>
+          <StudentsComments />
         </section>
         {/* End of Instagram banner  */}
       </div>
