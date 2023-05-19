@@ -7,6 +7,7 @@ import { apiLinks } from '../../data/links';
 import StarterBaner from './components/StarterBaner/StarterBaner'
 import Carousel from './components/Carousel/Carousel'
 import ProductsGrid from './components/ProductsGrid/ProductsGrid';
+import NewslaterForm from './components/NewslaterForm/NewslaterForm';
 
 export default function Home() {
   const sectionsData = {
@@ -51,7 +52,9 @@ export default function Home() {
           <ProductsGrid {...sectionsData.products} />
         </section>
         {/* End of Products grid */}
-
+        {/* Newslater form  */}
+        <NewslaterForm />
+        {/* End of Newslater form  */}
       </div>
     </>
   )
