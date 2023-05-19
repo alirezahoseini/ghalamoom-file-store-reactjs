@@ -8,6 +8,7 @@ import StarterBaner from './components/StarterBaner/StarterBaner'
 import Carousel from './components/Carousel/Carousel'
 import ProductsGrid from './components/ProductsGrid/ProductsGrid';
 import NewslaterForm from './components/NewslaterForm/NewslaterForm';
+import InstagramBanner from '../../components/ui/InstagramBanner/InstagramBanner';
 
 export default function Home() {
   const sectionsData = {
@@ -72,6 +73,11 @@ export default function Home() {
           <Carousel {...sectionsData.artworks} />
         </section>
         {/* End of Courses Carousel  */}
+        {/* Instagram banner  */}
+        <section className='mb-8'>
+          <InstagramBanner />
+        </section>
+        {/* End of Instagram banner  */}
       </div>
     </>
   )

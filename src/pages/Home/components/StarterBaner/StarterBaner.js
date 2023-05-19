@@ -17,10 +17,10 @@ export default function StarterBaner() {
     useEffect(() => {
         const a = setInterval(() => {
             setUserCount(prev => prev + 1)
-        }, 50);
+        }, 20);
         setTimeout(() => {
             clearInterval(a)
-        }, 3400)
+        }, 5000)
     }, [])
 
     return (
@@ -50,10 +50,10 @@ export default function StarterBaner() {
                         {/* Bakground  */}
                         <div className='w-full bg-custom-primary-200 border-4 pt-3 border-custom-primary-100  rounded-t-fifty rounded-b-5xl lg:rounded-b-none lg:border-b-0 '>
                             {/* This image show in Mobile */}
-                            <img id='one' src={gBoyImage} alt="bg" className='lg:opacity-0' />
+                            <img id='one' src={gBoyImage} alt="bg" className='lg:opacity-0' width='500px'height='500px' />
                         </div>
                         {/* This image show in Desktop */}
-                        <img id='two' src={gBoyImage} alt="bg" className='absolute bottom-0 opacity-0 hidden lg:opacity-100 lg:block ' />
+                        <img id='two' src={gBoyImage} alt="bg" className='absolute bottom-0 opacity-0 hidden lg:opacity-100 lg:block ' width='500px'height='500px' />
                         {/* Users Counter  */}
                         <div id='users-counter' className='absolute bottom-5 left-0 flex items-center px-5 py-3 lg:py-3 lg:px-6 rounded-2xl bg-white backdrop-blur-md bg-opacity-10 text-white lg:-left-1/3 '>
                             <span className='text-lg lg:text-3xl font-black ml-5 mt-2' >
