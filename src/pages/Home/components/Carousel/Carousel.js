@@ -15,6 +15,7 @@ import CarouselCourseItem from './CarouselItems/CarouselCourseItem/CarouselCours
 import SwiperNavButtons from './SwiperNavButtons/SwiperNavButtons';
 import CarouselLoaderCard from './CarouselItems/components/CarouselLoaderCard/CarouselLoaderCard'
 import LoadDataError from './CarouselItems/components/LoadDataError/LoadDataError';
+import CarouselArtworkItem from './CarouselItems/CarouselArtworkItem/CarouselArtworkItem';
 
 export default function Carousel(props) {
   const {
@@ -125,7 +126,8 @@ export default function Carousel(props) {
                 dataArray !== undefined && (
                   dataArray.map(item => (
                     <SwiperSlide key={item.id}  >
-                      <CarouselCourseItem {...item} type={type}/>
+                      {type === 'course' && <CarouselCourseItem {...item} type={type}/>}
+                      {type === 'artwork' && <CarouselArtworkItem {...item} type={type}/>}
                     </SwiperSlide>
                   )))
               }

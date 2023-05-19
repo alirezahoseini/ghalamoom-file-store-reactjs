@@ -23,14 +23,26 @@ export default function Home() {
       limit: 6,
       type: 'course'
     },
-    products : {
+    products: {
       id: 'products-grid',
       title: 'فروشگاه فایل قلموم',
       desc: 'اینجا کلی فایل مثل فونت های جذاب، آیکون های سه بعدی، موکاپ های کاربردی و ... رو میتونین تهیه کنین. کلی ازشون هم رایگانن. حتما یه چرخی بینشون بزن ببین چیزی برای طرح بعدیت نیاز نداری.',
       moreOptionsTitle: 'مشاهده همه فایل ها',
       apiUrl: apiLinks.products,
-      limit: 6, 
+      limit: 6,
       type: 'product'
+    },
+    artworks: {
+      id: 'artworks-carousel',
+      bgColor: 'bg-slate-100',
+      title: 'نمونه کارهای قلموم',
+      desc: 'تو این بخش میتونین آخرین نمونه کارهای من رو ببینین. منتظر نظراتتون در بخش دیدگاه ها هستم.',
+      moreOptionsTitle: 'مشاهده همه نمونه کارها',
+      sideBar: false,
+      apiUrl: apiLinks.artworks,
+      autoPlay: true,
+      limit: 6,
+      type: 'artwork'
     }
   }
 
@@ -55,6 +67,11 @@ export default function Home() {
         {/* Newslater form  */}
         <NewslaterForm />
         {/* End of Newslater form  */}
+        {/* Courses Carousel  */}
+        <section className='mb-8'>
+          <Carousel {...sectionsData.artworks} />
+        </section>
+        {/* End of Courses Carousel  */}
       </div>
     </>
   )

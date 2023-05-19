@@ -40,7 +40,7 @@ export default function CarouselCourseItem(props) {
           <Paragraph content={miniDes} maxLength={120} />
           <div className='flex items-center gap-3 justify-between my-3'>
             <div className='flex items-center gap-3'>
-              <LikeCounterButton {...props} type='course' />
+              <LikeCounterButton {...props} type={type} />
               <Badge title={time} value={'ساعت'} />
             </div>
             <PriceBadge price={price} />
