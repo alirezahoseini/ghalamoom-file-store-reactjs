@@ -20,6 +20,7 @@ import CancelButton from "../../components/Buttons/CancelButton";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import SimpleDataLoader from '../../../../../components/ui/SimpleDataLoader/SimpleDataLoader'
 import Modal from '../../../../../components/ui/Modal'
+import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function EditProduct() {
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
@@ -117,6 +118,10 @@ export default function EditProduct() {
     image: {
       imageValue: '',
       inputId: 'new-product-image'
+    },
+    gallery: {
+      imageValue: [],
+      inputId: 'edit-product-gallery'
     }
   }
   const changeHandler = (event) => {
@@ -133,6 +138,9 @@ export default function EditProduct() {
       // Normal inputs
       setFormData({ ...formData, [event.target.name]: event.target.value })
     }
+  }
+  const galleryChangeHandler = (images) => {
+    setFormData({ ...formData, gallery: images })
   }
   const submitHandler = (event) => {
     event.preventDefault()
@@ -155,7 +163,7 @@ export default function EditProduct() {
       setIsLoadedDataFromApi(true)
     }
     if (axiosGetError !== null) {
-      if(axiosGetError.status == 404){
+      if (axiosGetError.status == 404) {
         alert(`محصولی با آیدی ${urlParams.productId} پیدا نشد.!`)
         navigateTo('/panel/products')
       }
@@ -182,7 +190,9 @@ export default function EditProduct() {
       console.log(console.log(axiosDeleteError))
     }
   }, [axiosDeleteError, axiosDeleteResult]);
+  if (isLoadedDataFromApi) {
 
+  }
   return (
     isLoadedDataFromApi ? (
       <div id="edit-product-form">
@@ -216,30 +226,31 @@ export default function EditProduct() {
               {/* Left side - select Image */}
               <div className="left-side xl:w-4/12">
                 <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
+                <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
               </div>
               {/* End of Left side - select Image */}
             </section>
             {/* Buttons  */}
             <div className="buttons w-full xl:w-8/12 flex items-center gap-3">
-              <div className={`w-4/12 xl:4/12 ${ axiosDeleteIsPending && 'pointer-events-none'}`} >
+              <div className={`w-4/12 xl:4/12 ${axiosDeleteIsPending && 'pointer-events-none'}`} >
                 <SubmitFormButton isPending={axiosPutIsPending} title={'ذخیره تغییرات'} />
               </div>
               <div className={`w-4/12 xl:4/12 ${axiosPutIsPending || axiosDeleteIsPending ? 'pointer-events-none' : ''}`} >
                 <CancelButton title='انصراف' />
               </div>
               <div className={`w-4/12 xl:4/12 ${axiosPutIsPending && 'pointer-events-none'}`} >
-                <DeleteButton onClickEvent={()=> setIsShowDeleteModal(prev => !prev)} isPending={axiosDeleteIsPending} title='حذف محصول' />
+                <DeleteButton onClickEvent={() => setIsShowDeleteModal(prev => !prev)} isPending={axiosDeleteIsPending} title='حذف محصول' />
               </div>
             </div>
             {/* End of Buttons  */}
           </form>
         </div>
-        <Modal isShow={isShowDeleteModal} onClose={()=> setIsShowDeleteModal(prev => !prev)}>
+        <Modal isShow={isShowDeleteModal} onClose={() => setIsShowDeleteModal(prev => !prev)}>
           <div className="w-full p-3 text-center font-bold">
             <h2 className="text-slate-800 mb-5 dark:text-slate-100">آیا محصول مورد نظر پاک شود؟</h2>
             <div className="flex items-center justify-around gap-3 w-full">
               <button onClick={() => deleteHandler()} className="bg-slate-200 text-slate-800 px-4 py-2 rounded-md w-6/12 dark:bg-slate-600 dark:text-slate-200">بله</button>
-              <button onClick={()=> setIsShowDeleteModal(prev => !prev)} className="bg-blue-600 text-white px-4 py-2 rounded-md w-6/12">لغو</button>
+              <button onClick={() => setIsShowDeleteModal(prev => !prev)} className="bg-blue-600 text-white px-4 py-2 rounded-md w-6/12">لغو</button>
             </div>
           </div>
         </Modal>

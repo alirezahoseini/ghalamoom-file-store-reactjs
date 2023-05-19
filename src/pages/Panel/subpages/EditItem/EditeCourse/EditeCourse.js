@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // datas
 import { apiLinks } from '../../../../../data/links'
@@ -19,6 +19,7 @@ import CancelButton from "../../components/Buttons/CancelButton";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import SimpleDataLoader from '../../../../../components/ui/SimpleDataLoader/SimpleDataLoader'
 import Modal from '../../../../../components/ui/Modal'
+import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function EditCourse() {
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
@@ -142,6 +143,10 @@ export default function EditCourse() {
     image: {
       imageValue: '',
       inputId: 'new-course-image'
+    },
+    gallery: {
+      imageValue: [],
+      inputId: 'edit-course-gallery'
     }
   }
   const changeHandler = (event) => {
@@ -158,6 +163,9 @@ export default function EditCourse() {
       // Normal inputs
       setFormData({ ...formData, [event.target.name]: event.target.value })
     }
+  }
+  const galleryChangeHandler = (images) => {
+    setFormData({ ...formData, gallery: images })
   }
   const submitHandler = (event) => {
     event.preventDefault()
@@ -207,7 +215,7 @@ export default function EditCourse() {
       console.log(console.log(axiosDeleteError))
     }
   }, [axiosDeleteError, axiosDeleteResult]);
-
+ 
   return (
     isLoadedDataFromApi ? (
       <div id="edit-product-form">
@@ -250,6 +258,7 @@ export default function EditCourse() {
               {/* Left side - select Image */}
               <div className="left-side xl:w-4/12">
                 <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
+                <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
               </div>
               {/* End of Left side - select Image */}
             </section>

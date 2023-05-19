@@ -16,6 +16,7 @@ import PriceInput from "../../../components/Inputs/PriceInput";
 import ImageInput from "../../../components/Inputs/ImageInput";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
+import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function NewProduct() {
   const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
@@ -33,6 +34,7 @@ export default function NewProduct() {
     category: { "name": "بدون دسته", "id": "null" },           /// chooseing from select box
     format: { "name": "ZIP", "id": "zip" },                     /// chooseing from select box
     comments: [],                                               /// default [] not change here
+    gallery: [],
     created_at: new Date().getTime()                            ///
   });
 
@@ -123,6 +125,10 @@ export default function NewProduct() {
     image: {
       imageValue: '',
       inputId: 'new-product-image'
+    },
+    gallery: {
+      imageValue: [],
+      inputId: 'new-product-gallery'
     }
   }
   const changeHandler = (event) => {
@@ -139,6 +145,9 @@ export default function NewProduct() {
       // Normal inputs
       setFormData({ ...formData, [event.target.name]: event.target.value })
     }
+  }
+  const galleryChangeHandler = (images) => {
+    setFormData({ ...formData, gallery: images })
   }
   const submitHandler = (event) => {
     event.preventDefault();
@@ -188,6 +197,7 @@ export default function NewProduct() {
             {/* Left side - select Image */}
             <div className="left-side xl:w-4/12">
               <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
+              <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
             </div>
             {/* End of Left side - select Image */}
           </section>

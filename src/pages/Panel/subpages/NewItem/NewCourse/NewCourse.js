@@ -15,6 +15,7 @@ import PriceInput from "../../../components/Inputs/PriceInput";
 import ImageInput from "../../../components/Inputs/ImageInput";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
+import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function NewCourse() {
   const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
@@ -34,6 +35,7 @@ export default function NewCourse() {
     category: { "name": "بدون دسته", "id": "null" },                 /// chooseing from select box
     prerequisite: { "name": "بدون پیش نیاز", "id": "null" },         /// chooseing from select box
     level: { "name": "مبتدی", "id": "beginner" },                     /// chooseing from select box
+    gallery: [],
     created_at: new Date().getTime()
   });
   const navigateTo = useNavigate()
@@ -149,6 +151,10 @@ export default function NewCourse() {
     image: {
       imageValue: '',
       inputId: 'new-course-image'
+    },
+    gallery: {
+      imageValue: [],
+      inputId: 'new-course-gallery'
     }
   }
   const changeHandler = (event) => {
@@ -165,6 +171,9 @@ export default function NewCourse() {
       // Normal inputs
       setFormData({ ...formData, [event.target.name]: event.target.value })
     }
+  }
+  const galleryChangeHandler = (images) => {
+    setFormData({ ...formData, gallery: images })
   }
   const submitHandler = (event) => {
     event.preventDefault();
@@ -195,7 +204,7 @@ export default function NewCourse() {
                   <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} />
                 </div>
                 <div className="w-full xl:w-6/12">
-                <SelectBox value={formData.level} onChangeEvent={changeHandler} {...inputsData.level} />
+                  <SelectBox value={formData.level} onChangeEvent={changeHandler} {...inputsData.level} />
                 </div>
               </div>
               <div className="w-full flex-col xl:flex-row xl:items-center flex justify-start relative mb-5 mt-3">
@@ -203,7 +212,7 @@ export default function NewCourse() {
                   <SelectBox value={formData.wayReceive} onChangeEvent={changeHandler} {...inputsData.wayReceive} />
                 </div>
                 <div className="w-full xl:w-6/12">
-                <SelectBox value={formData.prerequisite} onChangeEvent={changeHandler} {...inputsData.prerequisite} />
+                  <SelectBox value={formData.prerequisite} onChangeEvent={changeHandler} {...inputsData.prerequisite} />
                 </div>
               </div>
               <div className="w-full flex-col xl:flex-row flex justify-start items-center relative mb-5 mt-3">
@@ -222,6 +231,7 @@ export default function NewCourse() {
             {/* Left side - select Image */}
             <div className="left-side xl:w-4/12">
               <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
+              <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
             </div>
             {/* End of Left side - select Image */}
           </section>

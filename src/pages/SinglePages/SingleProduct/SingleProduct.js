@@ -20,6 +20,7 @@ import LikeCounterButton from '../../../components/ui/LikeCounterButton/LikeCoun
 import SecondeTitle from '../components/SecondeTitle/SecondeTitle'
 import CommentsForm from '../components/CommentsForm/CommentsForm'
 import ShareBox from '../components/ShareBox/ShareBox'
+import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 
 export default function SingleProduct() {
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
@@ -98,8 +99,8 @@ export default function SingleProduct() {
                   {/* Third section --- Description */}
                   <section className="bg-white p-8 rounded-3xl mb-4">
                     <SecondeTitle title='تصاویر بیشتر' />
-                    <div className='w-6/12 lg:w-4/12 mt-6'>
-                      <SingleImage image={product.image} alt={product.title} />
+                    <div className='w-full'>
+                      <ImagesGallery images={product.gallery} imagePadding={'p-3 lg:p-4'} />
                     </div>
                   </section>
                   {/* End of Third section --- Description */}

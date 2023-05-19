@@ -26,6 +26,7 @@ import ShareBox from '../components/ShareBox/ShareBox';
 import Paragraph from '../components/Paragraph/Paragraph'
 import TrustBadgesBox from '../components/TrustBadgesBox/TrustBadgesBox'
 import TelegramSupportBanner from '../components/TelegramSupportBanner/TelegramSupportBanner'
+import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 
 export default function SingleCourse() {
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
@@ -110,10 +111,10 @@ export default function SingleCourse() {
                                     </section>
                                     {/* End of Third section --- Description */}
                                     {/* Fourth section --- Description */}
-                                    <section className="bg-white p-8 rounded-3xl mb-4">
+                                    <section className="bg-white p-3 rounded-3xl mb-4">
                                         <SecondeTitle title='تصاویر بیشتر' />
-                                        <div className='w-6/12 lg:w-4/12 mt-6'>
-                                            <SingleImage image={course.image} alt={course.title} />
+                                        <div className='w-full'>
+                                            <ImagesGallery images={course.gallery} imagePadding={'p-3 lg:p-4'}  />
                                         </div>
                                     </section>
                                     {/* End of Fourth section --- Description */}

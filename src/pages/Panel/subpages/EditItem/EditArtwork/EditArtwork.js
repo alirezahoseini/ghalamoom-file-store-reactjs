@@ -68,7 +68,7 @@ export default function EditArtwork() {
     },
     gallery: {
       imageValue: [],
-      inputId: 'new-artwork-gallery'
+      inputId: 'edit-artwork-gallery'
     }
   }
   const changeHandler = (event) => {
