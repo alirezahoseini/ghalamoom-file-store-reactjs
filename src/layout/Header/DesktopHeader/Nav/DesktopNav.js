@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 
 
 // datas
@@ -8,10 +8,8 @@ import { navigaitionLinks } from '../../../../data/links'
 import DesktopNavItem from './DesktopNavItem.js'
 
 
-export default function Nav() {
+const Nav = memo(() =>{
   const [navLinks, setNavLinks] = useState(navigaitionLinks)
-
-
   return (
     <>
       <ul id='desktop-nav' className='flex lg:mr-10 xl:mr-20 gap-2 items-center'>
@@ -24,3 +22,6 @@ export default function Nav() {
     </>
   )
 }
+)
+
+export default Nav

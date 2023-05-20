@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 // components
 import CourseImageBox from './CourseImageBox';
 import Title from '../../../Title/Title';
@@ -9,8 +9,7 @@ import PriceBadge from '../../../../../../components/ui/PriceBadge/PriceBadge';
 import { Link } from 'react-router-dom';
 import { TbChevronLeft } from 'react-icons/tb';
 
-
-export default function CarouselCourseItem(props) {
+const CarouselCourseItem = memo((props) => {
   const {
     image,
     title,
@@ -57,4 +56,6 @@ export default function CarouselCourseItem(props) {
       </div>
     </div>
   )
-}
+})
+
+export default CarouselCourseItem
