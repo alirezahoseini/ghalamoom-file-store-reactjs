@@ -19,7 +19,7 @@ export default function MobileHeader() {
     
     window.addEventListener('scroll', () => {
         if (window.scrollY > 0) {
-            setHeaderBg('bg-white')
+            setHeaderBg('bg-white shadow-both-2 ')
         } else if (window.scrollY < 5) {
             setHeaderBg('bg-transparent')
         }

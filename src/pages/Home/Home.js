@@ -75,7 +75,7 @@ export default function Home() {
         </section>
         {/* End of Courses Carousel  */}
         {/* Instagram banner  */}
-        <section className='mb-8'>
+        <section className='mb-8 mt-24'>
           <InstagramBanner />
         </section>
         {/* End of Instagram banner  */}

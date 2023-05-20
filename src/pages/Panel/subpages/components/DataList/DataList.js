@@ -33,7 +33,7 @@
 import './DataList.css'
 
 // HOCs
-import whithPaginate from '../../../components/HOCs/withPaginate/withPaginate'
+import whithPaginate from '../../../../../components/HOCs/withPaginate/withPaginate'
 
 // components
 import ProductListItem from './ListItems/ProductListItem'

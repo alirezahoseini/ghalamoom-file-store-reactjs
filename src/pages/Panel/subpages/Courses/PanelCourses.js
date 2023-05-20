@@ -14,17 +14,17 @@ import SimpleDataLoader from '../../../../components/ui/SimpleDataLoader/SimpleD
 
 
 
-export default function Artworks() {
+export default function PanelCourses() {
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
-    const [artworksArray, setArtworksArray] = useState([]);
+    const [coursesArray, setCoursesArray] = useState([]);
     useEffect(() => {
-        setAxiosGetUrl(`${apiLinks.artworks}?_sort=id&_order=desc`)
+        setAxiosGetUrl(`${apiLinks.courses}?_sort=id&_order=desc`)
     }, []);
     
     useEffect(() => {
         if (axiosGetResult !== null) {
-            setArtworksArray(axiosGetResult)
+            setCoursesArray(axiosGetResult)
             setSimpleDataLoaderStatus('hidde')
         } else if (axiosGetError !== null) {
             setSimpleDataLoaderStatus('error')
@@ -36,9 +36,9 @@ export default function Artworks() {
 
         <div id='courses'>
             <div className="wrapper px-2 my-3">
-                <CategoriesHeader isList={isList} setIsList={setIsList} title="نمونه کار" type='artwork' />
+                <CategoriesHeader isList={isList} setIsList={setIsList} title="دوره" type='course' />
                 {simpleDataLoaderStatus === 'hidde' && (
-                    <DataList isList={isList} data={artworksArray} title="نمونه کار" type='artwork' />
+                    <DataList isList={isList} data={coursesArray} title="دوره" type='course' />
                 )}
                 { simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
             </div>

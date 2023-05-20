@@ -32,6 +32,7 @@ export default function StudentsComments() {
                 {/* Slider */}
                 <Swiper modules={[Pagination]}
                     spaceBetween={30}
+                    grabCursor={true}
                     pagination={{ clickable: true, }}
                     breakpoints={{
                         0: {

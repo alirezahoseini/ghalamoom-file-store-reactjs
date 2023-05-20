@@ -11,7 +11,7 @@ import CategoriesHeader from "../components/CategoriesHeader/CategoriesHeader"
 import DataList from '../components/DataList/DataList'
 import SimpleDataLoader from '../../../../components/ui/SimpleDataLoader/SimpleDataLoader'
 
-function Products() {
+function PanelProducts() {
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
   const [productsArray, setProductsArray] = useState([]);
@@ -44,4 +44,4 @@ function Products() {
 }
 
 
-export default Products
+export default PanelProducts
