@@ -28,7 +28,7 @@ const CategoryHeader = memo(({ type , title = 'عنوان تست', description =
           <strong>{title} </strong>
           <span className='text-slate-600'>قلموم</span>
         </h2>
-        <p className='text-slate-400 font-semibold leading-9 text-base'>
+        <p className='text-slate-400 font-semibold leading-9 text-base lg:w-8/12'>
           {description}
         </p>
         <div className='w-28 h-2 bg-custom-gold-100 mb-5'></div>

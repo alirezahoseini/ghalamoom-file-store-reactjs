@@ -17,6 +17,7 @@ import SingleCourse from './pages/SinglePages/SingleCourse/SingleCourse';
 import SingleArtwork from './pages/SinglePages/SingleArtwork/SingleArtwork';
 // Categories
 import Courses from './pages/Categories/Courses/Courses';
+import Products from './pages/Categories/Products/Products';
 
 
 
@@ -40,6 +41,7 @@ const routes = [
 ]
     },
 { path: '/login', element: <LoginPage /> },
+{ path: '/products', element: <Products /> },
 { path: '/products/:productId', element: <SingleProduct /> },
 { path: '/courses', element: <Courses/> },
 { path: '/courses/:courseId', element: <SingleCourse /> },

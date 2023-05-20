@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 
 // hooks
 import useAxiosGet from '../../../hooks/axios/useAxiosGet';
-import withPaginate from '../../../components/HOCs/withPaginate/withPaginate';
 
 // links
 import { apiLinks } from '../../../data/links';
@@ -53,9 +52,9 @@ export default function Courses() {
             {
               dataArray && axiosGetIsPending === false && (
                 dataArray.map(item => (
-                    <div key={item.id} className='w-full md:w-6/12 lg:w-4/12'>
-                      <CarouselCourseItem {...item} />
-                    </div>
+                  <div key={item.id} className='w-full md:w-6/12 lg:w-4/12'>
+                    <CarouselCourseItem {...item} type='course' />
+                  </div>
                 )))
             }
           </div>

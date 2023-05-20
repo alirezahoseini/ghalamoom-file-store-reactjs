@@ -46,7 +46,7 @@ import Pagination from '../../../components/Pagination/Pagination'
 import DataListHeader from './DataListHeader'
 
 
-function DataList({ isList, title, type = 'product', paginatedItems, paginationCurrentPage, paginationSize, changePaginationHandler, totalPaginateItems }) {
+function DataList({ pageSize= 8, isList, title, type = 'product', paginatedItems, paginationCurrentPage, paginationSize, changePaginationHandler, totalPaginateItems }) {
 
   return (
     <div id='data-list'>

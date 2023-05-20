@@ -5,7 +5,7 @@ function withPaginate(OrginalComponent) {
     const NewComponent = (props) => {
         const [paginationCurrentPage, setPaginationCurrentPage] = useState(1);
         const [paginatedItems, setPaginatedItems] = useState([]);
-        const paginationSize = 8;
+        const paginationSize = props.pageSize;
         const changePaginationHandler = (newCurrent) => {
             setPaginationCurrentPage(newCurrent)
         }
