@@ -4,6 +4,7 @@ import whithPaginate from '../../../../components/HOCs/withPaginate/withPaginate
 // components
 import ProductGridItem from '../../../Home/components/ProductsGrid/ProductGridItem/ProductGridItem'
 import GlobalPagination from '../../../../components/ui/GlobalPagination/GlobalPagination'
+import CarouselArtworkItem from '../../../Home/components/Carousel/CarouselItems/CarouselArtworkItem/CarouselArtworkItem'
 
 
 
@@ -22,7 +23,17 @@ function ListRender({ pageSize = 8, title, type = 'product', paginatedItems, pag
                     <div className='flex flex-wrap w-full'>
                         {paginatedItems.map((item =>
                         (
-                            type === 'product' && (<ProductGridItem key={item.id} type={type} {...item} />)
+                            type === 'product' ? (
+                                (<ProductGridItem key={item.id} type={type} {...item} />)
+                            ) : (
+                                type === 'artwork' && (
+                                    (<div key={item.id} className='w-full md:w-6/12 lg:w-4/12'>
+                                        <CarouselArtworkItem {...item} type={type} />
+                                    </div>)
+
+                                )
+                            )
+
                         )))}
                     </div>
                 )}

@@ -18,6 +18,7 @@ import SingleArtwork from './pages/SinglePages/SingleArtwork/SingleArtwork';
 // Categories
 import Courses from './pages/Categories/Courses/Courses';
 import Products from './pages/Categories/Products/Products';
+import Artworks from './pages/Categories/Artworks/Artworks';
 
 
 
@@ -45,6 +46,7 @@ const routes = [
 { path: '/products/:productId', element: <SingleProduct /> },
 { path: '/courses', element: <Courses/> },
 { path: '/courses/:courseId', element: <SingleCourse /> },
+{ path: '/artworks', element: <Artworks/> },
 { path: '/artworks/:artworkId', element: <SingleArtwork /> },
 
 ];
