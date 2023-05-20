@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { FaTimes, } from 'react-icons/fa'
 
 
-export default function HambergerMenu({ isShow, onClose, position = 'left', width = 'w-10/12', bgColor = 'bg-white', children }) {
+const HambergerMenu = memo(({ isShow, onClose, position = 'left', width = 'w-10/12', bgColor = 'bg-white', children }) => {
 
     return (
         <div id='hamberger-menu' className={`w-full h-screen p-0 m-0 fixed top-0 right-0 transition-all bg-black duration-700 z-50
@@ -24,7 +24,7 @@ export default function HambergerMenu({ isShow, onClose, position = 'left', widt
                 <div id="mainMenu"
                     className={`${width} h-screen bg-white absolute top-0  transition-all duration-500 overflow-y-scroll -left-0 
                     ${isShow ? `translate-x-0` : `-translate-x-full`}`}>
-                 
+
                     {/* Content  */}
                     {children}
                 </div>
@@ -33,6 +33,7 @@ export default function HambergerMenu({ isShow, onClose, position = 'left', widt
 
         </div>
     )
-}
+})
 
+export default HambergerMenu
 

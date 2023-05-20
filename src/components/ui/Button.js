@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Button({ type, value, hover = false, link = false, url = '#', size = '', bgColor = 'bg-custom-blue-700', textColor = 'text-white', clickEvent = null }) {
+const Button = memo(({ type, value, hover = false, link = false, url = '#', size = '', bgColor = 'bg-custom-blue-700', textColor = 'text-white', clickEvent = null }) => {
   return (
     <>
       {
@@ -17,4 +17,6 @@ export default function Button({ type, value, hover = false, link = false, url =
       }
     </>
   )
-}
+})
+
+export default Button

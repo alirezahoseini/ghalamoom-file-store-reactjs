@@ -56,7 +56,7 @@ export default function StudentsComments() {
                                         <span className="text-xs">{item.instaId}</span>
                                     </div>
                                 </div>
-                                <div className=" mt-8 mb-16 bg-white p-5 rounded-xl relative before:w-5 before:h-5 before:bg-white before:block before:rotate-45 before:absolute before:-top-2  ">
+                                <div className=" mt-8 mb-16 bg-white p-5 rounded-xl relative before:w-5 before:h-5 before:bg-white before:block before:rotate-45 before:absolute before:-top-2 leading-7 text-slate-800 ">
                                     {item.comment}
                                 </div>
                             </div>

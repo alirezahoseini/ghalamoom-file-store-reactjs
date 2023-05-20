@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 
 // datas 
 import { navigaitionLinks } from '../../../../data/links'
@@ -6,7 +6,7 @@ import { navigaitionLinks } from '../../../../data/links'
 // components
 import MobileNavItem from './MobileNavItem'
 
-export default function MobileNav({onClose}) {
+const  MobileNav = memo(({onClose}) => {
     const [navLinks, setNavLinks] = useState(navigaitionLinks)
     return (
         <ul id='mobile-nav'>
@@ -17,4 +17,6 @@ export default function MobileNav({onClose}) {
             }
         </ul>
     )
-}
+})
+
+export default MobileNav
