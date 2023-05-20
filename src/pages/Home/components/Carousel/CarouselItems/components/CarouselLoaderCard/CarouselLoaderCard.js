@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-export default function CarouselLoaderCard({ isSidebar = true}) {
+const CarouselLoaderCard = memo(({ isSidebar = true }) => {
   return (
     <div className='carousel-loader-card'>
       <div className="wrapper flex items-center w-full gap-5">
@@ -13,10 +13,12 @@ export default function CarouselLoaderCard({ isSidebar = true}) {
       </div>
     </div>
   )
-}
+})
+
+export default CarouselLoaderCard
 
 
-const Card = ({ customClass }) => {
+const Card = memo(({ customClass }) => {
   return (
     <div className={`bg-white rounded-3xl p-3 w-full ${customClass}`}>
       <div className="simple-image w-full h-64 bg-slate-200 rounded-3xl animate-pulse"></div>
@@ -33,4 +35,4 @@ const Card = ({ customClass }) => {
       <div className='w-full h-10 bg-slate-200 mt-5 mb-3 rounded-lg animate-pulse '></div>
     </div>
   )
-}
+})
