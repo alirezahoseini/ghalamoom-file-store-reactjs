@@ -15,8 +15,13 @@ function PanelProducts() {
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
   const [productsArray, setProductsArray] = useState([]);
-  const [isList, setIsList] = useState(true)
-
+  const [isList, setIsList] = useState(true);
+  const dataObj = {
+    data: productsArray,
+     title: "محصول",
+     type: 'product',
+     pageSize: 8 
+  }
   useEffect(() => {
     setAxiosGetUrl(`${apiLinks.products}?_sort=id&_order=desc`)
   }, []);
@@ -35,7 +40,7 @@ function PanelProducts() {
       <div className="wrapper px-2 my-3">
         <CategoriesHeader isList={isList} setIsList={setIsList} title="محصول" type='product' />
         {simpleDataLoaderStatus === 'hidde' && (
-          <DataList isList={isList} data={productsArray} title="محصول" type='product' />
+          <DataList isList={isList} {...dataObj} />
         )}
         { simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
       </div>

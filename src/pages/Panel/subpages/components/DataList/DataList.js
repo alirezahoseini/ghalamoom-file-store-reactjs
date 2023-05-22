@@ -46,8 +46,7 @@ import Pagination from '../../../components/Pagination/Pagination'
 import DataListHeader from './DataListHeader'
 
 
-function DataList({ pageSize= 8, isList, title, type = 'product', paginatedItems, paginationCurrentPage, paginationSize, changePaginationHandler, totalPaginateItems }) {
-
+function DataList({ isList, title, type = 'product', pageSize = 6, paginatedItems, paginationCurrentPage, paginationSize, changePaginationHandler, totalPaginateItems }) {
   return (
     <div id='data-list'>
       <div className="wrraper w-full p-2 flex flex-col items-center text-xs">

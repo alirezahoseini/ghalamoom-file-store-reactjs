@@ -18,6 +18,13 @@ export default function PanelCourses() {
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
     const [coursesArray, setCoursesArray] = useState([]);
+    const dataObj = {
+        data: coursesArray,
+         title: "دوره",
+         type: 'course',
+         pageSize: 8 
+      }
+
     useEffect(() => {
         setAxiosGetUrl(`${apiLinks.courses}?_sort=id&_order=desc`)
     }, []);
@@ -38,7 +45,7 @@ export default function PanelCourses() {
             <div className="wrapper px-2 my-3">
                 <CategoriesHeader isList={isList} setIsList={setIsList} title="دوره" type='course' />
                 {simpleDataLoaderStatus === 'hidde' && (
-                    <DataList isList={isList} data={coursesArray} title="دوره" type='course' />
+                    <DataList isList={isList} {...dataObj} />
                 )}
                 { simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
             </div>

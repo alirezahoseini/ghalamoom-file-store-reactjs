@@ -18,6 +18,13 @@ export default function PanelArtworks() {
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
     const [artworksArray, setArtworksArray] = useState([]);
+    const dataObj = {
+        data: artworksArray,
+         title: "نمونه کار",
+         type: 'artwork',
+         pageSize: 8 
+      }
+
     useEffect(() => {
         setAxiosGetUrl(`${apiLinks.artworks}?_sort=id&_order=desc`)
     }, []);
@@ -38,7 +45,7 @@ export default function PanelArtworks() {
             <div className="wrapper px-2 my-3">
                 <CategoriesHeader isList={isList} setIsList={setIsList} title="نمونه کار" type='artwork' />
                 {simpleDataLoaderStatus === 'hidde' && (
-                    <DataList isList={isList} data={artworksArray} title="نمونه کار" type='artwork' />
+                    <DataList isList={isList} {...dataObj} />
                 )}
                 { simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
             </div>
