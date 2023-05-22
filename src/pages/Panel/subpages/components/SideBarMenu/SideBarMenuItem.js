@@ -2,10 +2,10 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import './SideBarMenuItem.css'
 
-export default function SideBarMenuItem({ title, path, icon, isOpen, onClickEvent = null }) {
+export default function SideBarMenuItem({ title, path, icon, isOpen, desc = '', onClickEvent = null }) {
     return (
         onClickEvent === null ? (
-            <NavLink to={path} className={`sidebar-menu-item flex w-full items-center gap-3 my-4 ${() => 'active'}`}  >
+            <NavLink to={path} className={`sidebar-menu-item flex w-full items-center gap-3 my-3 ${() => 'active'}`} title={desc} >
                 <div className='item-icon p-3 rounded-full  flex items-center justify-center text-xl text-gray-700 text-1 dark:text-slate-200'>
                     <span className='icon'>
                         {icon}
@@ -17,7 +17,7 @@ export default function SideBarMenuItem({ title, path, icon, isOpen, onClickEven
                 </div>
             </NavLink>
         ) : (
-            <NavLink onClick={() => onClickEvent()} to={path} className={`sidebar-menu-item flex w-full items-center gap-3 my-4 ${() => 'active'}`}  >
+            <NavLink  onClick={() => onClickEvent()} to={path} className={`sidebar-menu-item flex w-full items-center gap-3 my-3 ${() => 'active'}`} title={desc} >
                 <div className='item-icon p-3 rounded-full  flex items-center justify-center text-xl text-gray-700 text-1 dark:text-slate-200'>
                     <span className='icon'>
                         {icon}

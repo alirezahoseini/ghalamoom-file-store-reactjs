@@ -16,7 +16,7 @@ export default function LogoutBtn({ isOpen }) {
         navigateTo('/')
     }
     return (
-        <button type='button' id='logout-btn' className={`flex w-full items-center gap-3 mt-4 mb-1 mr-2 ${() => 'active'}`} onClick={logOut} >
+        <button type='button' id='logout-btn' className={`flex w-full items-center gap-3 mt-2 mb-1 mr-2 ${() => 'active'}`} onClick={logOut} title='خروج از حساب کاربری' >
             <div className='item-icon p-3 rounded-full  flex items-center justify-center text-xl text-gray-800 dark:text-gray-300'>
                 <span className='icon'>
                     <TbLogout />

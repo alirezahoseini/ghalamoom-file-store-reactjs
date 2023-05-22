@@ -1,4 +1,5 @@
 import { HiPlusSm } from 'react-icons/hi'
+import { Link } from 'react-router-dom'
 
 // assets
 import userAvatar from '../../../../../assets/images/panel/avatars/Avatar-9.png'
@@ -10,7 +11,7 @@ export default function UserInfo({ isOpen }) {
   const { isPending, userName } = useUserName()
 
   return (
-    <div id='user-info' className={`flex w-full items-center gap-6 border-b border-gray-300 pb-5 transition-colors duration-300 dark:border-slate-600`} >
+    <Link to={'/panel/profile'} id='user-info' className={`flex w-full items-center gap-6 border-b border-gray-300 pb-5 transition-colors duration-300 dark:border-slate-600`} title='حساب کاربری من' >
       <div className={`user-img bg-pink-300 w-fit flex items-center justify-center rounded-full min-w-fit relative `} style={{ outline: '1px solid #d8d8d8', outlineOffset: '2px' }}>
         <img src={userAvatar} alt="user avatar" style={{ minWidth: '54px', maxWidth: '54px' }} />
         <div className="plus-btn absolute -left-2 -bottom-1 bg-gray-50 rounded-full p-1 transition-colors duration-300 dark:bg-slate-800 ">
@@ -23,6 +24,6 @@ export default function UserInfo({ isOpen }) {
           <h4 className='font-bold text-gray-600 dark:text-slate-300 whitespace-nowrap' >{ userName ? (userName) : ("بارگزاری نشد.!") }</h4>
         )}
       </div>
-    </div>
+    </Link>
   )
 }

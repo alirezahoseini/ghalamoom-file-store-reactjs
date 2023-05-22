@@ -1,6 +1,5 @@
 import {useState } from 'react'
 import { FiChevronsRight } from 'react-icons/fi'
-import { TbMenu2, TbX } from 'react-icons/tb'
 
 // components 
 import UserInfo from '../UserInfo/UserInfo'
@@ -13,7 +12,7 @@ export default function PanelSideBar() {
   return (
     <div id='sidebar' className='w-fit text-xs z-50'>
         {/* THIS SIDEBAR SHOWING ONLY ON DESKTOP ---- NOT MOBILE MENU */}
-        <div id='sidebar' className="hidden wrapper  py-3 lg:flex flex-col">
+        <div id='sidebar' className="hidden wrapper  py-2 lg:flex flex-col">
             <div id='wrapper' className={`bg-slate-50 shadow-both-2 rounded-2xl h-full px-2 py-4 transition-all duration-500 relative overflow-hidden dark:bg-slate-800 dark:shadow-slate-900 ${isSidebarOpen ? 'w-56' : 'w-20'} `}>
                 {/* open and closer button  */}
                     <button id='oppener-btn' onClick={()=> setIsSidebarOpen(prevState => !prevState)} type="button" className={`absolute left-0 top-24 bg-slate-200 py-1 pr-1 text-lg text-slate-600 rounded-r-3xl cursor-pointer transition-all duration-100 z-10 dark:bg-slate-600 dark:text-slate-300 ${isSidebarOpen ? 'pl-3' : 'pl-1'} `}>

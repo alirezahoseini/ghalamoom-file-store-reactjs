@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 
 // components
 import PanelSideBar from './subpages/components/PanelSideBar/PanelSideBar';
-import PanelHeaderTest from './subpages/components/PanelHeader/PanelHeader'
+import PanelHeader from './subpages/components/PanelHeader/PanelHeader'
 
 // styles
 import './Panel.css'
@@ -17,7 +17,7 @@ export default function Panel() {
             <PanelSideBar/>
           </div>
           <div className='flex flex-col w-full'>
-            <PanelHeaderTest/>
+            <PanelHeader/>
             <Outlet/>
           </div>
         </div>

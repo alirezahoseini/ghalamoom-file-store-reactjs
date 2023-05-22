@@ -5,7 +5,7 @@ import SearchBox from './SearchBox/SearchBox'
 import MobileMenu from './MobileMenu/MobileMenu'
 import HeaderIcon from './HeaderIcon/HeaderIcon'
 
-export default function PanelHeaderTest() {
+export default function PanelHeader() {
   return (
     <div id='panel-header' className='w-full lg:pt-3 sticky top-0 right-0 z-50' >
       <div className="wrapper">
