@@ -6,7 +6,7 @@ export default function Accordion({title, content}) {
     const accordionId = v4();
     return (
         <div className='accordion bg-slate-50 p-3 rounded-md my-3'>
-            <input id={accordionId} name='accordion' value={accordionId} type="radio" />
+            <input id={accordionId} name='accordion' value={accordionId} type="checkbox" />
             <label htmlFor={accordionId} className="accordion-header flex justify-between items-center font-bold text-custom-blue-700 cursor-pointer py-2 max-w-full break-words">
                 <h4 className='max-w-full break-words'>
                     {title}

@@ -1,7 +1,7 @@
 .accordion {
     overflow: hidden;
 }
-.accordion input[type='radio']{
+.accordion input[type='checkbox']{
     display: none;
 }
 .accordion p.accordion-body{
@@ -14,7 +14,7 @@
     -o-transition:all 0.6s ;
     
 }
-.accordion input[type='radio']:checked ~ p.accordion-body{
+.accordion input[type='checkbox']:checked ~ p.accordion-body{
     max-height: 100vh;
 }
 .accordion label svg {
@@ -24,7 +24,7 @@
     -ms-transform: rotate(90deg);
     -o-transform: rotate(90deg);
 }
-.accordion input[type='radio']:checked ~ label svg {
+.accordion input[type='checkbox']:checked ~ label svg {
     transform: rotate(0deg);
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
