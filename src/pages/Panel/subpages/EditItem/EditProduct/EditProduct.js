@@ -177,7 +177,7 @@ export default function EditProduct() {
       alert('تغییرات با موفقیت ذخیره شدند');
     }
     if (axiosPutError !== null) {
-      console.log()
+      console.log(axiosPutError)
     }
   }, [axiosPutError, axiosPutResult]);
   ///////  Delete results

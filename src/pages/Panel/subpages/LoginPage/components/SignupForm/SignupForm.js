@@ -17,7 +17,11 @@ export default function SignupForm({ showLogin }) {
     const [values, setValues] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        userRoles: "admin",
+        bio: "",
+        age: "", 
+        avatar: 1,
     })
     const [isLoadingDataFromApi, setLoadingDataFromApi] = useState(false);
     const navigateTo = useNavigate();
@@ -67,6 +71,8 @@ export default function SignupForm({ showLogin }) {
                 setCooki('token', res.data.accessToken, 3)
                 setCooki('userid', res.data.user.id, 3)
                 setCooki('email', values.email, 3)
+                setCooki('userRoles', values.userRoles, 3)
+                setCooki('avatar', values.avatar, 3)
                 setLoadingDataFromApi(false)
                 alert('حساب شما با موفقیت ایجاد شد.!')
                 navigateTo('/panel/dashbord')

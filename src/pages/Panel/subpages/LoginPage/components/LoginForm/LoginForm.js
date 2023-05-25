@@ -56,6 +56,8 @@ export default function LoginForm({ showLogin }) {
                 setCooki('token', res.data.accessToken, 3)
                 setCooki('userid', res.data.user.id, 3)
                 setCooki('email', values.email, 3)
+                setCooki('role', res.data.user.role, 3)
+                setCooki('image', res.data.user.image, 3)
                 setLoadingDataFromApi(false)
                 alert('با موفقیت وارد شدید')
                 navigateTo('/panel/dashbord')

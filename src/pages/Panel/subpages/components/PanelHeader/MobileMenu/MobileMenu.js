@@ -23,7 +23,7 @@ export default function MobileMenu() {
               <TbX />
             </button>
             {/* content  */}
-            <UserInfo isOpen={isOpenMenu} />
+            <UserInfo isOpen={isOpenMenu} withEvent={true} onClickEvent={() => setIsOpenMenu(false)}  />
             <SideBarMenu isOpen={isOpenMenu} withEvent={true} onClickEvent={() => setIsOpenMenu(false)} />
             <LogoutBtn isOpen={isOpenMenu} />
             <div className='mt-4'>

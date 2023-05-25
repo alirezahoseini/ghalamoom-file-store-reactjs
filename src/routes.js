@@ -11,6 +11,7 @@ import NewItem from './pages/Panel/subpages/NewItem/NewItem'
 import EditItem from './pages/Panel/subpages/EditItem/EditItem';
 import PanelCourses from './pages/Panel/subpages/Courses/PanelCourses';
 import PanelArtworks from './pages/Panel/subpages/Artworks/PanelArtworks';
+import EditProfile from './pages/Panel/subpages/EditProfile/EditProfile';
 // Single Pages
 import SingleProduct from './pages/SinglePages/SingleProduct/SingleProduct';
 import SingleCourse from './pages/SinglePages/SingleCourse/SingleCourse';
@@ -37,6 +38,7 @@ const routes = [
             { path: 'artworks', element: <PrivatePage ><PanelArtworks /></PrivatePage> },
             { path: 'newartwork', element: <PrivatePage ><NewItem /></PrivatePage> },
             { path: 'editartwork/:artworkId', element: <PrivatePage ><EditItem /></PrivatePage> },
+            { path: 'editprofile', element: <PrivatePage ><EditProfile /></PrivatePage> },
             { path: '', element:<Navigate to="dashboard" replace={ true} />},
             { path: '*', element:<Navigate to="dashboard" replace={ true} />},
 ]

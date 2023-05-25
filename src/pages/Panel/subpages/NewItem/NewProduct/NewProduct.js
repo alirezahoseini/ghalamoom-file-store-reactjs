@@ -37,7 +37,6 @@ export default function NewProduct() {
     gallery: [],
     created_at: new Date().getTime()                            ///
   });
-
   const navigateTo = useNavigate()
   const inputsData = {
     title: {
