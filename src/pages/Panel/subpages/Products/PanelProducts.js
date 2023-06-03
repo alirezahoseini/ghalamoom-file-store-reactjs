@@ -12,15 +12,16 @@ import DataList from '../components/DataList/DataList'
 import SimpleDataLoader from '../../../../components/ui/SimpleDataLoader/SimpleDataLoader'
 
 function PanelProducts() {
-  const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl } = useAxiosGet();
+  const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
   const [productsArray, setProductsArray] = useState([]);
   const [isList, setIsList] = useState(true);
+  const [mm, setMm] = useState(null)
   const dataObj = {
     data: productsArray,
-     title: "محصول",
-     type: 'product',
-     pageSize: 8 
+    title: "محصول",
+    type: 'product',
+    pageSize: 8
   }
   useEffect(() => {
     setAxiosGetUrl(`${apiLinks.products}?_sort=id&_order=desc`)
@@ -42,7 +43,9 @@ function PanelProducts() {
         {simpleDataLoaderStatus === 'hidde' && (
           <DataList isList={isList} {...dataObj} />
         )}
-        { simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
+        {simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} />}
+
+
       </div>
     </div>
   )

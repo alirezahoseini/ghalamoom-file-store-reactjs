@@ -1,0 +1,129 @@
+.notificationsWrapper{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 999999;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    padding: 10px;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.notificationItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 2px 2px 15px rgba(87, 87, 87, 0.164);
+    padding: 0;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    width: 300px;
+    max-width: 300px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    position: relative;
+    pointer-events: all;
+    background-color: white;
+    border: 1px solid;
+    animation: SlideIn .4s;
+    -webkit-animation: SlideIn .4s;
+    animation-fill-mode: backwards;
+}
+.notificationItem.exit{
+    animation: SlideIn .4s;
+    -webkit-animation: SlideOut .4s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes SlideIn {
+    0%{
+        margin-right: -120%;
+    }
+    100%{
+        margin-right: 0;
+    }
+}
+@keyframes SlideOut {
+    0%{
+        margin-right: 0%;
+    }
+    100%{
+        margin-right: -120%;
+    }
+}
+
+.notificationItem .closeBtn{
+    margin-left: 10px;
+    cursor: pointer !important;
+    z-index: 2;
+    position: relative;
+}
+.notificationItem p {
+    padding: 10px;
+    z-index: 3;
+    position: relative;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: IRANYekanX;
+}
+
+.notificationItem .bar{
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+ /* success */
+.notificationItem.success .bar{
+    background-color: rgba(0, 255, 85, 0.096);
+}
+.notificationItem.success p{
+    color: rgb(3, 100, 3);
+}
+
+.notificationItem.success {
+    border-color: rgb(23, 247, 23);
+}
+
+ /* error */
+.notificationItem.error .bar{
+    background-color: rgba(255, 38, 0, 0.103);
+}
+.notificationItem.error p{
+    color: rgb(100, 22, 3);
+}
+
+.notificationItem.error {
+    border-color: rgba(247, 57, 23, 0.479);
+}
+
+ /* warning */
+.notificationItem.warning .bar{
+    background-color: rgba(255, 238, 0, 0.103);
+}
+.notificationItem.warning p{
+    color: rgb(100, 93, 3);
+}
+
+.notificationItem.warning {
+    border-color: rgba(247, 195, 23, 0.479);
+}
+
+ /* info */
+.notificationItem.info .bar{
+    background-color: rgba(0, 132, 255, 0.103);
+}
+.notificationItem.info p{
+    color: rgb(3, 61, 100);
+}
+
+.notificationItem.info {
+    border-color: rgba(23, 120, 247, 0.479);
+}

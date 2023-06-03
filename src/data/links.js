@@ -37,7 +37,6 @@ const apiLinks = {
     // users: 'https://ghalamoom-backend-jsonserver.onrender.com/users',
     // courses: 'https://ghalamoom-backend-jsonserver.onrender.com/courses',
     // artworks: 'https://ghalamoom-backend-jsonserver.onrender.com/artworks',
-
     products: 'http://localhost:5000/products',
     login: 'http://localhost:5000/login',
     signup: 'http://localhost:5000/register',

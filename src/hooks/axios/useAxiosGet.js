@@ -32,12 +32,13 @@ export default function useAxiosGet() {
                         setAxiosGetIsPending(false)
                         setAxiosGetError(err.request)
                         console.log('request error : ', err.request)
-                        alert("ارتباط با سرور برقرار نشد. لطفا از VPN استفاده کنید")
                     }
                 })
         } else {
             console.log('with token')
         }
+
+
     }
     useEffect(() => {
         if (axiosGetUrl !== null) {
