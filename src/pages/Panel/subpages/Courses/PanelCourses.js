@@ -11,24 +11,21 @@ import CategoriesHeader from "../components/CategoriesHeader/CategoriesHeader"
 import DataList from '../components/DataList/DataList'
 import SimpleDataLoader from '../../../../components/ui/SimpleDataLoader/SimpleDataLoader'
 
-
-
-
 export default function PanelCourses() {
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
     const [coursesArray, setCoursesArray] = useState([]);
     const dataObj = {
         data: coursesArray,
-         title: "دوره",
-         type: 'course',
-         pageSize: 8 
-      }
+        title: "دوره",
+        type: 'course',
+        pageSize: 8
+    }
 
     useEffect(() => {
         setAxiosGetUrl(`${apiLinks.courses}?_sort=id&_order=desc`)
     }, []);
-    
+
     useEffect(() => {
         if (axiosGetResult !== null) {
             setCoursesArray(axiosGetResult)
@@ -37,7 +34,7 @@ export default function PanelCourses() {
             setSimpleDataLoaderStatus('error')
         }
     }, [axiosGetResult, axiosGetError]);
-  
+
     const [isList, setIsList] = useState(true)
     return (
 
@@ -47,7 +44,7 @@ export default function PanelCourses() {
                 {simpleDataLoaderStatus === 'hidde' && (
                     <DataList isList={isList} {...dataObj} />
                 )}
-                { simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
+                {simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} />}
             </div>
         </div>
     )

@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { TbDatabase, TbClockHour7, TbUserCheck, TbArrowMoveUp, TbHeadset, TbAlbum, TbBookDownload } from 'react-icons/tb'
+import {v4} from 'uuid'
+
+// contexts
+import {NotificationContext} from '../../../components/ui/Notifications/NotificationProvider'
+
 //assetes
 import authorImage from '../../../assets/images/panel/avatars/author.jpg'
 // datas
@@ -29,6 +34,7 @@ import TelegramSupportBanner from '../components/TelegramSupportBanner/TelegramS
 import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 
 export default function SingleCourse() {
+    const despatch = useContext(NotificationContext)
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [course, setCourse] = useState(null)
     const [crumb, setCrumb] = useState([
@@ -48,7 +54,14 @@ export default function SingleCourse() {
             setCourse(axiosGetResult)
         } else if (axiosGetError !== null) {
             if (axiosGetError.status === 404) {
-                alert(`دوره ای با آیدی ${urlParams.courseId} وجود ندارد `)
+                despatch({
+                    type: 'ADD_NOTE',
+                    payload: {
+                      id: v4(),
+                      message: `دوره ای با آیدی ${urlParams.productId} وجود ندارد `,
+                      status: 'error'
+                    }
+                  })
             }
             setSimpleLoadierStatus('error')
         }

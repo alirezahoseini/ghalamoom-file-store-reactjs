@@ -16,7 +16,6 @@ function PanelProducts() {
   const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
   const [productsArray, setProductsArray] = useState([]);
   const [isList, setIsList] = useState(true);
-  const [mm, setMm] = useState(null)
   const dataObj = {
     data: productsArray,
     title: "محصول",

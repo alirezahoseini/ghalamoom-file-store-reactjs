@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import {v4} from 'uuid'
 
+// contexts 
+import { NotificationContext } from '../../../../../../components/ui/Notifications/NotificationProvider'
 // links
 import { apiLinks } from '../../../../../../data/links'
 
@@ -14,6 +17,7 @@ import LoginWithSocials from '../LoginWithSocials/LoginWithSocials'
 import LoginInput from '../LoginInput/LoginInput'
 
 export default function LoginForm({ showLogin }) {
+    const despatch = useContext(NotificationContext)
     const [values, setValues] = useState({
         email: '',
         password: ''
@@ -59,23 +63,51 @@ export default function LoginForm({ showLogin }) {
                 setCooki('role', res.data.user.role, 3)
                 setCooki('image', res.data.user.image, 3)
                 setLoadingDataFromApi(false)
-                alert('با موفقیت وارد شدید')
+                despatch({
+                    type: 'ADD_NOTE',
+                    payload: {
+                        id: v4(),
+                        message: 'با موفقیت وارد شدید',
+                        status: 'success'
+                    }
+                })
                 navigateTo('/panel/dashbord')
             })
             .catch(err => {
                 if (err.response) {
                     if (err.response.data === 'Cannot find user') {
                         setLoadingDataFromApi(false)
-                        alert("کاربری با این ایمیل در سایت وجود ندارد.!")
+                        despatch({
+                            type: 'ADD_NOTE',
+                            payload: {
+                                id: v4(),
+                                message: "کاربری با این ایمیل در سایت وجود ندارد.!",
+                                status: 'error'
+                            }
+                        })
                     } else if (err.response.data === 'Incorrect password') {
                         setLoadingDataFromApi(false)
-                        alert('پسورد اشتباه است.!')
+                        despatch({
+                            type: 'ADD_NOTE',
+                            payload: {
+                                id: v4(),
+                                message: 'پسورد اشتباه است.!',
+                                status: 'warning'
+                            }
+                        })
                     } else {
                         console.log(err.response)
                     }
                 } else if (err.request) {
                     setLoadingDataFromApi(false)
-                    alert('پاسخی از سرور دریافت نشد. حتما از VPN استفاده کنید.!')
+                    despatch({
+                        type: 'ADD_NOTE',
+                        payload: {
+                            id: v4(),
+                            message: 'پاسخی از سرور دریافت نشد. حتما از VPN استفاده کنید.!',
+                            status: 'error'
+                        }
+                    })
                 } else {
                     setLoadingDataFromApi(false)
                     console.log(err)

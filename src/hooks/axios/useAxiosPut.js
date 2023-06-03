@@ -1,7 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from 'react'
+import { v4 } from 'uuid'
+import { useEffect, useState, useContext } from 'react'
+import { NotificationContext } from "../../components/ui/Notifications/NotificationProvider";
 
 export default function useAxiosPut() {
+    const despatch = useContext(NotificationContext)
     const [axiosPutResult, setAxiosPutResult] = useState(null);               // ok result output 
     const [axiosPutUrl, setAxiosPutUrl] = useState(null);                     // request url
     const [axiosPutIsPending, setAxiosPutIsPending] = useState(false);        // request is loading?
@@ -32,7 +35,14 @@ export default function useAxiosPut() {
                     setAxiosPutIsPending(false)
                     setAxiosPutError(err.request)
                     console.log('request error : ', err.request)
-                    alert("ارتباط با سرور برقرار نشد. لطفا از VPN استفاده کنید")
+                    despatch({
+                        type: 'ADD_NOTE',
+                        payload: {
+                            id: v4(),
+                            message: 'اتصال به سرور ناموفق بود ، لطفا با vpn امتحان کنید',
+                            status: 'error'
+                        }
+                    })
                 }
             })
     }

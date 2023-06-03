@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom";
+import { v4 } from 'uuid'
+
+// contexts 
+import { NotificationContext } from '../../../../../components/ui/Notifications/NotificationProvider'
 
 // datas
 import { apiLinks } from '../../../../../data/links'
@@ -22,6 +26,7 @@ import Modal from '../../../../../components/ui/Modal'
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function EditCourse() {
+  const despatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
   const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
@@ -189,7 +194,15 @@ export default function EditCourse() {
     }
     if (axiosGetError !== null) {
       if (axiosGetError.status == 404) {
-        alert(`دوره ای با آیدی ${urlParams.courseId} پیدا نشد.!`)
+        despatch({
+          type: 'ADD_NOTE',
+          payload: {
+              id: v4(),
+              message: `دوره ای با آیدی ${urlParams.courseId} پیدا نشد.!`,
+              status: 'error'
+          }
+      })
+        alert()
         navigateTo('/panel/products')
       }
       setSimpleLoaderStatus('error')
@@ -199,16 +212,30 @@ export default function EditCourse() {
   useEffect(() => {
     // show update results
     if (axiosPutResult !== null) {
-      alert('تغییرات با موفقیت ذخیره شدند');
+      despatch({
+        type: 'ADD_NOTE',
+        payload: {
+            id: v4(),
+            message: 'تغییرات با موفقیت ذخیره شدند',
+            status: 'success'
+        }
+    })
     }
     if (axiosPutError !== null) {
-      console.log()
+      console.log(axiosPutError)
     }
   }, [axiosPutError, axiosPutResult]);
   ///////  Delete results
   useEffect(() => {
     if (axiosDeleteResult !== null) {
-      alert('دوره با موفقیت پاک شد');
+      despatch({
+        type: 'ADD_NOTE',
+        payload: {
+            id: v4(),
+            message: 'دوره با موفقیت پاک شد',
+            status: 'success'
+        }
+    })
       navigateTo(-1)
     }
     if (axiosDeleteError !== null) {

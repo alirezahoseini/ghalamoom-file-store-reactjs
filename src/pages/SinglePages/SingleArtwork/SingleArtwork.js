@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { TbUser, TbCalendarMinus } from 'react-icons/tb'
 import './SingleArtwork.css'
+import { v4 } from 'uuid'
+
+// contexts
+import { NotificationContext } from '../../../components/ui/Notifications/NotificationProvider'
 
 // datas
 import { apiLinks } from '../../../data/links'
@@ -22,6 +26,7 @@ import Paragraph from '../components/Paragraph/Paragraph'
 import NextAndPrevPostsButtons from '../components/NextAndPrevPostsButtons/NextAndPrevPostsButtons'
 
 export default function SingleArtwork() {
+    const despatch = useContext(NotificationContext)
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [artwork, setArtwork] = useState(null)
     const [simpleloadierStatus, setSimpleLoadierStatus] = useState('load');
@@ -41,7 +46,14 @@ export default function SingleArtwork() {
             accessTime(axiosGetResult.created_at)
         } else if (axiosGetError !== null) {
             if (axiosGetError.status === 404) {
-                alert(`نمونه کاری با آیدی ${urlParams.artworkId} وجود ندارد `)
+                despatch({
+                    type: 'ADD_NOTE',
+                    payload: {
+                        id: v4(),
+                        message: `نمونه کاری با آیدی ${urlParams.productId} وجود ندارد `,
+                        status: 'error'
+                    }
+                })
             }
             setSimpleLoadierStatus('error')
         }

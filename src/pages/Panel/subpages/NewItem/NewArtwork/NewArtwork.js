@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
+import { v4 } from 'uuid'
+
+// contexts 
+import { NotificationContext } from '../../../../../components/ui/Notifications/NotificationProvider'
 
 // datas
 import { apiLinks } from '../../../../../data/links';
@@ -16,6 +20,7 @@ import CancelButton from "../../components/Buttons/CancelButton";
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function NewArtwork() {
+    const despatch = useContext(NotificationContext)
     const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
     const [formData, setFormData] = useState({
         title: '',                             /// max length 70 
@@ -73,7 +78,7 @@ export default function NewArtwork() {
         // Image 
         if (event.image) {
             setFormData({ ...formData, image: event.image })
-          } else if (event.target.className.includes('custom-select-box-input')) {
+        } else if (event.target.className.includes('custom-select-box-input')) {
             // Select boxes
             const inputName = event.target.name;
             const inputItems = inputsData[inputName].items;
@@ -94,7 +99,14 @@ export default function NewArtwork() {
     }
     useEffect(() => {
         if (axiosPostResult !== null) {
-            alert('نمونه کار شما با موفقیت منتشر شد');
+            despatch({
+                type: 'ADD_NOTE',
+                payload: {
+                    id: v4(),
+                    message: 'نمونه کار شما با موفقیت منتشر شد',
+                    status: 'success'
+                }
+            })
             navigateTo('/panel/artworks')
         }
         if (axiosPostError !== null) {

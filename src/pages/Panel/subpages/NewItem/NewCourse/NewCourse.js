@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
+import {v4} from 'uuid'
+
+// contexts 
+import { NotificationContext } from '../../../../../components/ui/Notifications/NotificationProvider'
 
 // datas
 import { apiLinks } from '../../../../../data/links';
@@ -18,6 +22,7 @@ import CancelButton from "../../components/Buttons/CancelButton";
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function NewCourse() {
+  const despatch = useContext(NotificationContext)
   const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
   const [formData, setFormData] = useState({
     title: '',                                                        /// max length 70 
@@ -182,7 +187,14 @@ export default function NewCourse() {
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
-      alert('دوره با موفقیت منتشر شد');
+      despatch({
+        type: 'ADD_NOTE',
+        payload: {
+            id: v4(),
+            message: 'دوره با موفقیت منتشر شد',
+            status: 'success'
+        }
+    })
       navigateTo('/panel/courses')
     }
     if (axiosPostError !== null) {

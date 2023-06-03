@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import {v4} from 'uuid'
+
+// contexts 
+import { NotificationContext } from '../../../../../../components/ui/Notifications/NotificationProvider'
 
 // Links
 import { apiLinks } from '../../../../../../data/links'
@@ -14,6 +18,7 @@ import SubmitButton from '../SubmitButton/SubmitButton'
 import LoginWithSocials from '../LoginWithSocials/LoginWithSocials'
 
 export default function SignupForm({ showLogin }) {
+    const despatch = useContext(NotificationContext)
     const [values, setValues] = useState({
         name: "",
         email: "",
@@ -82,11 +87,27 @@ export default function SignupForm({ showLogin }) {
                 if (err.response) {
                     if (err.response.data === 'Email already exists') {
                         setLoadingDataFromApi(false)
-                        alert('این ایمیل قبلا در سایت ثبت شده است')
+                        despatch({
+                            type: 'ADD_NOTE',
+                            payload: {
+                                id: v4(),
+                                message: 'این ایمیل قبلا در سایت ثبت شده است',
+                                status: 'warning'
+                            }
+                        })
+   
                     }
                 } else if (err.request) {
                     setLoadingDataFromApi(false)
-                    alert('پاسخی از سرور دریافت نشد. حتما از VPN استفاده کنید.!')
+                    despatch({
+                        type: 'ADD_NOTE',
+                        payload: {
+                            id: v4(),
+                            message: 'پاسخی از سرور دریافت نشد. حتما از VPN استفاده کنید.!',
+                            status: 'error'
+                        }
+                    })
+                    alert()
                 } else {
                     setLoadingDataFromApi(false)
                     console.log(err)

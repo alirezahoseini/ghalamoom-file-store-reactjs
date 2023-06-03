@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
+import {v4} from 'uuid'
+
+// contexts 
+import { NotificationContext } from '../../../../../components/ui/Notifications/NotificationProvider'
 
 // datas
 import { apiLinks } from '../../../../../data/links';
@@ -19,6 +23,7 @@ import CancelButton from "../../components/Buttons/CancelButton";
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function NewProduct() {
+  const despatch = useContext(NotificationContext)
   const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
   const [formData, setFormData] = useState({
     title: '',                                                  /// max length 70 
@@ -155,8 +160,14 @@ export default function NewProduct() {
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
-      console.log(axiosPostResult)
-      alert('محصول با موفقیت ایجاد شد');
+      despatch({
+        type: 'ADD_NOTE',
+        payload: {
+            id: v4(),
+            message: 'محصول با موفقیت ایجاد شد',
+            status: 'success'
+        }
+    })
       navigateTo('/panel/products')
     }
     if (axiosPostError !== null) {

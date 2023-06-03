@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { TbFile, TbDatabase } from 'react-icons/tb'
+import { v4 } from 'uuid'
 
 // datas
 import { apiLinks } from '../../../data/links'
+
+// contexts
+import { NotificationContext } from '../../../components/ui/Notifications/NotificationProvider'
 
 // hooks
 import useAxiosGet from '../../../hooks/axios/useAxiosGet'
@@ -23,6 +27,7 @@ import ShareBox from '../components/ShareBox/ShareBox'
 import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 
 export default function SingleProduct() {
+  const despatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const [product, setProduct] = useState(null)
   const [crumb, setCrumb] = useState([
@@ -42,7 +47,14 @@ export default function SingleProduct() {
       setProduct(axiosGetResult)
     } else if (axiosGetError !== null) {
       if (axiosGetError.status === 404) {
-        alert(`محصولی با آیدی ${urlParams.productId} وجود ندارد `)
+        despatch({
+          type: 'ADD_NOTE',
+          payload: {
+            id: v4(),
+            message: `محصولی با آیدی ${urlParams.productId} وجود ندارد `,
+            status: 'error'
+          }
+        })
       }
       setSimpleLoadierStatus('error')
     }

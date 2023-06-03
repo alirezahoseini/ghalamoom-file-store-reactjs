@@ -12,23 +12,21 @@ import DataList from '../components/DataList/DataList'
 import SimpleDataLoader from '../../../../components/ui/SimpleDataLoader/SimpleDataLoader'
 
 
-
-
 export default function PanelArtworks() {
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
     const [artworksArray, setArtworksArray] = useState([]);
     const dataObj = {
         data: artworksArray,
-         title: "نمونه کار",
-         type: 'artwork',
-         pageSize: 8 
-      }
+        title: "نمونه کار",
+        type: 'artwork',
+        pageSize: 8
+    }
 
     useEffect(() => {
         setAxiosGetUrl(`${apiLinks.artworks}?_sort=id&_order=desc`)
     }, []);
-    
+
     useEffect(() => {
         if (axiosGetResult !== null) {
             setArtworksArray(axiosGetResult)
@@ -37,7 +35,7 @@ export default function PanelArtworks() {
             setSimpleDataLoaderStatus('error')
         }
     }, [axiosGetResult, axiosGetError]);
-  
+
     const [isList, setIsList] = useState(true)
     return (
 
@@ -47,7 +45,7 @@ export default function PanelArtworks() {
                 {simpleDataLoaderStatus === 'hidde' && (
                     <DataList isList={isList} {...dataObj} />
                 )}
-                { simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} /> }
+                {simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} />}
             </div>
         </div>
     )

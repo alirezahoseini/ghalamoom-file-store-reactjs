@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react"
+import { useNavigate, useParams } from "react-router-dom";
+import { v4 } from 'uuid'
+
+// contexts 
+import { NotificationContext } from '../../../../../components/ui/Notifications/NotificationProvider'
 
 // datas
 import { apiLinks } from '../../../../../data/links'
@@ -21,6 +25,7 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 
 
 export default function EditArtwork() {
+  const despatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
   const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
@@ -111,7 +116,14 @@ export default function EditArtwork() {
     }
     if (axiosGetError !== null) {
       if (axiosGetError.status == 404) {
-        alert(`نمونه کاری با آیدی ${urlParams.artworkId} پیدا نشد.!`)
+        despatch({
+          type: 'ADD_NOTE',
+          payload: {
+            id: v4(),
+            message: `نمونه کاری با آیدی ${urlParams.artworkId} پیدا نشد.!`,
+            status: 'error'
+          }
+        })
         navigateTo(-1)
       }
       setSimpleLoaderStatus('error')
@@ -121,7 +133,14 @@ export default function EditArtwork() {
   useEffect(() => {
     // show update results
     if (axiosPutResult !== null) {
-      alert('تغییرات با موفقیت ذخیره شدند');
+      despatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'تغییرات با موفقیت ذخیره شدند',
+          status: 'success'
+        }
+      })
     }
     if (axiosPutError !== null) {
       console.log(axiosPutError)
@@ -130,11 +149,18 @@ export default function EditArtwork() {
   ///////  Delete results
   useEffect(() => {
     if (axiosDeleteResult !== null) {
-      alert('نمونه کار با موفقیت پاک شد');
+      despatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'نمونه کار با موفقیت پاک شد',
+          status: 'success'
+        }
+      })
       navigateTo(-1)
     }
     if (axiosDeleteError !== null) {
-      console.log(console.log(axiosDeleteError))
+      console.log(axiosDeleteError)
     }
   }, [axiosDeleteError, axiosDeleteResult]);
 
