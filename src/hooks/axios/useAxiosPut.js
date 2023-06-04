@@ -4,7 +4,7 @@ import { useEffect, useState, useContext } from 'react'
 import { NotificationContext } from "../../components/ui/Notifications/NotificationProvider";
 
 export default function useAxiosPut() {
-    const despatch = useContext(NotificationContext)
+    const notificationDispatch = useContext(NotificationContext)
     const [axiosPutResult, setAxiosPutResult] = useState(null);               // ok result output 
     const [axiosPutUrl, setAxiosPutUrl] = useState(null);                     // request url
     const [axiosPutIsPending, setAxiosPutIsPending] = useState(false);        // request is loading?
@@ -35,7 +35,7 @@ export default function useAxiosPut() {
                     setAxiosPutIsPending(false)
                     setAxiosPutError(err.request)
                     console.log('request error : ', err.request)
-                    despatch({
+                    notificationDispatch({
                         type: 'ADD_NOTE',
                         payload: {
                             id: v4(),

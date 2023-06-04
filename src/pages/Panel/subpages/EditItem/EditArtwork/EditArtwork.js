@@ -25,7 +25,7 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 
 
 export default function EditArtwork() {
-  const despatch = useContext(NotificationContext)
+  const notificationDispatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
   const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
@@ -116,7 +116,7 @@ export default function EditArtwork() {
     }
     if (axiosGetError !== null) {
       if (axiosGetError.status == 404) {
-        despatch({
+        notificationDispatch({
           type: 'ADD_NOTE',
           payload: {
             id: v4(),
@@ -133,7 +133,7 @@ export default function EditArtwork() {
   useEffect(() => {
     // show update results
     if (axiosPutResult !== null) {
-      despatch({
+      notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
           id: v4(),
@@ -149,7 +149,7 @@ export default function EditArtwork() {
   ///////  Delete results
   useEffect(() => {
     if (axiosDeleteResult !== null) {
-      despatch({
+      notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
           id: v4(),

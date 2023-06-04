@@ -34,7 +34,7 @@ import TelegramSupportBanner from '../components/TelegramSupportBanner/TelegramS
 import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 
 export default function SingleCourse() {
-    const despatch = useContext(NotificationContext)
+    const notificationDispatch = useContext(NotificationContext)
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [course, setCourse] = useState(null)
     const [crumb, setCrumb] = useState([
@@ -54,7 +54,7 @@ export default function SingleCourse() {
             setCourse(axiosGetResult)
         } else if (axiosGetError !== null) {
             if (axiosGetError.status === 404) {
-                despatch({
+                notificationDispatch({
                     type: 'ADD_NOTE',
                     payload: {
                       id: v4(),

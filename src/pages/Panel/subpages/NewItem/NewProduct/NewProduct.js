@@ -23,7 +23,7 @@ import CancelButton from "../../components/Buttons/CancelButton";
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function NewProduct() {
-  const despatch = useContext(NotificationContext)
+  const notificationDispatch = useContext(NotificationContext)
   const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
   const [formData, setFormData] = useState({
     title: '',                                                  /// max length 70 
@@ -160,7 +160,7 @@ export default function NewProduct() {
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
-      despatch({
+      notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
             id: v4(),

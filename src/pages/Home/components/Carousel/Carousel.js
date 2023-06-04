@@ -22,7 +22,7 @@ import LoadDataError from './CarouselItems/components/LoadDataError/LoadDataErro
 import CarouselArtworkItem from './CarouselItems/CarouselArtworkItem/CarouselArtworkItem';
 
 export default function Carousel(props) {
-  const despatch = useContext(NotificationContext)
+  const notificationDispatch = useContext(NotificationContext)
   const {
     id,
     isSidebar = true,
@@ -91,7 +91,7 @@ export default function Carousel(props) {
     if (axiosGetResult !== null) {
       setDataArray(axiosGetResult)
 } else if (axiosGetError !== null) {
-  despatch({
+  notificationDispatch({
     type: 'ADD_NOTE',
     payload: {
       id: v4(),

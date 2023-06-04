@@ -4,7 +4,7 @@ import { NotificationContext } from "../../components/ui/Notifications/Notificat
 import {v4} from 'uuid'
 
 export default function useAxiosPost() {
-    const despatch = useContext(NotificationContext)
+    const notificationDispatch = useContext(NotificationContext)
     const [axiosPostResult, setAxiosPostResult] = useState(null);               // ok result output 
     const [axiosPostUrl, setAxiosPostUrl] = useState(null);                     // request url
     const [axiosPostIsPending, setAxiosPostIsPending] = useState(false);        // request is loading?
@@ -35,7 +35,7 @@ export default function useAxiosPost() {
                     setAxiosPostIsPending(false)
                     setAxiosPostError(err.request)
                     console.log('request error : ', err.request)
-                    despatch({
+                    notificationDispatch({
                         type: 'ADD_NOTE',
                         payload: {
                           id: v4(),

@@ -26,7 +26,7 @@ import Modal from '../../../../../components/ui/Modal'
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function EditCourse() {
-  const despatch = useContext(NotificationContext)
+  const notificationDispatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
   const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
@@ -194,7 +194,7 @@ export default function EditCourse() {
     }
     if (axiosGetError !== null) {
       if (axiosGetError.status == 404) {
-        despatch({
+        notificationDispatch({
           type: 'ADD_NOTE',
           payload: {
               id: v4(),
@@ -212,7 +212,7 @@ export default function EditCourse() {
   useEffect(() => {
     // show update results
     if (axiosPutResult !== null) {
-      despatch({
+      notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
             id: v4(),
@@ -228,7 +228,7 @@ export default function EditCourse() {
   ///////  Delete results
   useEffect(() => {
     if (axiosDeleteResult !== null) {
-      despatch({
+      notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
             id: v4(),

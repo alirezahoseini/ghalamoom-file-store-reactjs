@@ -17,7 +17,7 @@ import LoginWithSocials from '../LoginWithSocials/LoginWithSocials'
 import LoginInput from '../LoginInput/LoginInput'
 
 export default function LoginForm({ showLogin }) {
-    const despatch = useContext(NotificationContext)
+    const notificationDispatch = useContext(NotificationContext)
     const [values, setValues] = useState({
         email: '',
         password: ''
@@ -63,7 +63,7 @@ export default function LoginForm({ showLogin }) {
                 setCooki('role', res.data.user.role, 3)
                 setCooki('image', res.data.user.image, 3)
                 setLoadingDataFromApi(false)
-                despatch({
+                notificationDispatch({
                     type: 'ADD_NOTE',
                     payload: {
                         id: v4(),
@@ -77,7 +77,7 @@ export default function LoginForm({ showLogin }) {
                 if (err.response) {
                     if (err.response.data === 'Cannot find user') {
                         setLoadingDataFromApi(false)
-                        despatch({
+                        notificationDispatch({
                             type: 'ADD_NOTE',
                             payload: {
                                 id: v4(),
@@ -87,7 +87,7 @@ export default function LoginForm({ showLogin }) {
                         })
                     } else if (err.response.data === 'Incorrect password') {
                         setLoadingDataFromApi(false)
-                        despatch({
+                        notificationDispatch({
                             type: 'ADD_NOTE',
                             payload: {
                                 id: v4(),
@@ -100,7 +100,7 @@ export default function LoginForm({ showLogin }) {
                     }
                 } else if (err.request) {
                     setLoadingDataFromApi(false)
-                    despatch({
+                    notificationDispatch({
                         type: 'ADD_NOTE',
                         payload: {
                             id: v4(),

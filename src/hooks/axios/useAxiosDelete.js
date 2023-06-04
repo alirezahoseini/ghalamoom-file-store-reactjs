@@ -1,7 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from 'react'
+import { v4 } from 'uuid'
+import { useEffect, useState, useContext } from 'react'
+import { NotificationContext } from "../../components/ui/Notifications/NotificationProvider";
 
 export default function useAxiosDelete() {
+    const notificationDispatch = useContext(NotificationContext)
     const [axiosDeleteResult, setAxiosDeleteResult] = useState(null);               // ok result output 
     const [axiosDeleteUrl, setAxiosDeleteUrl] = useState(null);                     // request url
     const [axiosDeleteIsPending, setAxiosDeleteIsPending] = useState(false);        // request is loading ?
@@ -31,7 +34,14 @@ export default function useAxiosDelete() {
                     setAxiosDeleteIsPending(false)
                     setAxiosDeleteError(err.request)
                     console.log('request error : ', err.request)
-                    alert("ارتباط با سرور برقرار نشد. لطفا از VPN استفاده کنید")
+                    notificationDispatch({
+                        type: 'ADD_NOTE',
+                        payload: {
+                            id: v4(),
+                            message: "ارتباط با سرور برقرار نشد. لطفا از VPN استفاده کنید",
+                            status: 'error'
+                        }
+                    })
                 }
             })
 

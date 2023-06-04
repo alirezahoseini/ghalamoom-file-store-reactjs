@@ -18,7 +18,7 @@ import SubmitButton from '../SubmitButton/SubmitButton'
 import LoginWithSocials from '../LoginWithSocials/LoginWithSocials'
 
 export default function SignupForm({ showLogin }) {
-    const despatch = useContext(NotificationContext)
+    const notificationDispatch = useContext(NotificationContext)
     const [values, setValues] = useState({
         name: "",
         email: "",
@@ -87,7 +87,7 @@ export default function SignupForm({ showLogin }) {
                 if (err.response) {
                     if (err.response.data === 'Email already exists') {
                         setLoadingDataFromApi(false)
-                        despatch({
+                        notificationDispatch({
                             type: 'ADD_NOTE',
                             payload: {
                                 id: v4(),
@@ -99,7 +99,7 @@ export default function SignupForm({ showLogin }) {
                     }
                 } else if (err.request) {
                     setLoadingDataFromApi(false)
-                    despatch({
+                    notificationDispatch({
                         type: 'ADD_NOTE',
                         payload: {
                             id: v4(),

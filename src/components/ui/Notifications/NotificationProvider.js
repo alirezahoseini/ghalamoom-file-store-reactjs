@@ -5,7 +5,7 @@ import Notification from "./Notification";
 export const NotificationContext = createContext()
 
 export default function NotificationProvider(props) {
-  const [state, despatch] = useReducer((state, action) => {
+  const [state, notificationDispatch] = useReducer((state, action) => {
     switch (action.type) {
       case 'ADD_NOTE':
         return [...state, action.payload];
@@ -18,7 +18,7 @@ export default function NotificationProvider(props) {
     []
   )
 
-  // despatch({
+  // notificationDispatch({
   //   type: 'ADD_NOTE',
   //   id: v4(),
   //   payload: {
@@ -28,9 +28,9 @@ export default function NotificationProvider(props) {
   // })
 
   return (
-    <NotificationContext.Provider value={despatch}>
+    <NotificationContext.Provider value={notificationDispatch}>
       <div className={styles.notificationsWrapper}>
-        {state.map((note => <Notification despatch={despatch} key={note.id} {...note} />))}
+        {state.map((note => <Notification key={note.id} {...note} />))}
       </div>
       {props.children}
     </NotificationContext.Provider>

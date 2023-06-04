@@ -45,9 +45,9 @@ export default function DesktopShopingCart() {
               ))}
               <div id='cart-footer'>
                 <div className="total-price flex items-center text-lg font-bold text-slate-800 justify-center border border-dashed p-2 gap-2 mt-3">
-                  <span>جمع کل :</span>
+                  <span>جمع کل : </span>
                   <p>
-                  
+                    {shoppingCartState.totalPrices}
                     <span className='mr-1'>
                       تومان
                     </span>

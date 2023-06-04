@@ -26,7 +26,7 @@ import Paragraph from '../components/Paragraph/Paragraph'
 import NextAndPrevPostsButtons from '../components/NextAndPrevPostsButtons/NextAndPrevPostsButtons'
 
 export default function SingleArtwork() {
-    const despatch = useContext(NotificationContext)
+    const notificationDispatch = useContext(NotificationContext)
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const [artwork, setArtwork] = useState(null)
     const [simpleloadierStatus, setSimpleLoadierStatus] = useState('load');
@@ -46,7 +46,7 @@ export default function SingleArtwork() {
             accessTime(axiosGetResult.created_at)
         } else if (axiosGetError !== null) {
             if (axiosGetError.status === 404) {
-                despatch({
+                notificationDispatch({
                     type: 'ADD_NOTE',
                     payload: {
                         id: v4(),

@@ -12,7 +12,7 @@ import defaultImage from '../../../../assets/images/panel/imageDefault.json'
 import {dynamicLinks} from '../../../../data/links'
 
 export default function ShoppingCartItem(props) {
-    const {shoppingCartDespatch} = useContext(ShoppingCartContext)
+    const {shoppingCartDispatch} = useContext(ShoppingCartContext)
     const { 
         uniqId,
         id,
@@ -37,7 +37,7 @@ export default function ShoppingCartItem(props) {
             </Link>
             <div className='w-2/12 mr-auto text-2xl'>
                 <TbX className=' cursor-pointer hover:border border-red-700 hover:text-red-700 rounded-full ' onClick={
-                    () => shoppingCartDespatch ({
+                    () => shoppingCartDispatch ({
                         type: 'REMOVE_PRODUCT',
                         uniqId
                     })

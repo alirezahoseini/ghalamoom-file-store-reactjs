@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TbX } from 'react-icons/tb';
 import styles from './Notification.module.css'
 
+// contexts
+import { NotificationContext } from './NotificationProvider';
+
 export default function Notification(props) {
+    const notificationDispatch = useContext(NotificationContext)
     const [exit, setExit] = useState(false)
     const [width, setWidth] = useState(0);
     const [intervalId, setIntervalId] = useState(null);
@@ -31,7 +35,7 @@ export default function Notification(props) {
         setExit(true)
         setTimeout(() => {
             // remove from state and dom 
-            props.despatch({
+            notificationDispatch({
                 id: props.id,
                 type: 'REMOVE_NOTE'
             })

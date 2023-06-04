@@ -15,7 +15,7 @@ import Form from "./Form"
 import CommentItem from "./CommentItem/CommentItem";
 
 export default function CommentsForm({ type, ...otherProps }) {
-  const despatch = useContext(NotificationContext)
+  const notificationDispatch = useContext(NotificationContext)
   const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut()
   const [comments, setComments] = useState([]);
   const [resetingForm, setResetingForm] = useState(false);
@@ -35,7 +35,7 @@ export default function CommentsForm({ type, ...otherProps }) {
     if (axiosPutResult !== null) {
       setComments(JSON.parse(axiosPutResult.comments))
 
-      despatch({
+      notificationDispatch({
         type: 'ADD_NOTE',
         id: v4(),
         payload: {
@@ -48,7 +48,7 @@ export default function CommentsForm({ type, ...otherProps }) {
         setResetingForm(false);
       }, 1);
     } else if (axiosPutError !== null) {
-      despatch({
+      notificationDispatch({
         type: 'ADD_NOTE',
         id: v4(),
         payload: {

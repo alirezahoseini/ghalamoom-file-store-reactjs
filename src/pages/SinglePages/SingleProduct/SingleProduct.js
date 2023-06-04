@@ -27,7 +27,7 @@ import ShareBox from '../components/ShareBox/ShareBox'
 import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 
 export default function SingleProduct() {
-  const despatch = useContext(NotificationContext)
+  const notificationDispatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const [product, setProduct] = useState(null)
   const [crumb, setCrumb] = useState([
@@ -47,7 +47,7 @@ export default function SingleProduct() {
       setProduct(axiosGetResult)
     } else if (axiosGetError !== null) {
       if (axiosGetError.status === 404) {
-        despatch({
+        notificationDispatch({
           type: 'ADD_NOTE',
           payload: {
             id: v4(),

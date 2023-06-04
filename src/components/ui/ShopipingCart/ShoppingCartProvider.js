@@ -1,26 +1,22 @@
 import React, { createContext, useEffect, useReducer } from 'react'
 import { v4 } from 'uuid'
 
-// hooks
-import useAxiosPost from '../../../hooks/axios/useAxiosPost'
-
 export const ShoppingCartContext = createContext()
 
 const calcTotalPrice = (products) => {
-    console.log(products)
+    let total = 0;
     if (products.length < 1) {
         return 0
     }
     if (products.length === 1) {
         return products[0].price
     }
-    const total = products.reduce((prevVal, currentVal) => {
-        return prevVal.price + currentVal.price
+    products.forEach(element => {
+        total = total + element.price
     });
     return total
 }
 export default function ShoppingCartProvider(props) {
-    const { axiosPostResult, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost()
     const initState = {
         totalPrices: 0,
         itemsCount: 0,
@@ -29,7 +25,12 @@ export default function ShoppingCartProvider(props) {
     const reducer = (state, action) => {
         switch (action.type) {
             case 'ADD_PRODUCT':
-
+                const newProductId = `${action.payload.type}s/${action.payload.id}`;
+                const isExist = state.products.some((product => newProductId === `${product.type}s/${product.id}` ))
+                if(isExist){
+                    alert('این محصول در سبد خرید شما وجود دارد')
+                    return state
+                }
                 return {
                     totalPrices: calcTotalPrice([...state.products, action.payload]),
                     itemsCount: state.products.length + 1,
@@ -102,6 +103,32 @@ export default function ShoppingCartProvider(props) {
                 },
             })
         }, 5000);
+        setTimeout(() => {
+            shoppingCartDispatch({
+                type: 'ADD_PRODUCT',
+                payload: {
+                    uniqId: v4(),
+                    id: 14,
+                    type: 'course',
+                    title: 'دوره ایلوستریتور',
+                    image: '',
+                    price: 1589,
+                },
+            })
+        }, 7000);
+        setTimeout(() => {
+            shoppingCartDispatch({
+                type: 'ADD_PRODUCT',
+                payload: {
+                    uniqId: v4(),
+                    id: 5,
+                    type: 'course',
+                    title: 'دوره ایلوستریتور',
+                    image: '',
+                    price: 1589,
+                },
+            })
+        }, 9000);
     }, [])
 
 
