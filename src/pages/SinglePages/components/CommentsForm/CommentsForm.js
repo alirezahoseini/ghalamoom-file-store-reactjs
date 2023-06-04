@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+import {v4} from 'uuid'
+
+// contexts
+import { NotificationContext } from "../../../../components/ui/Notifications/NotificationProvider";
 
 // datas
 import { apiLinks } from '../../../../data/links'
@@ -11,6 +15,7 @@ import Form from "./Form"
 import CommentItem from "./CommentItem/CommentItem";
 
 export default function CommentsForm({ type, ...otherProps }) {
+  const despatch = useContext(NotificationContext)
   const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut()
   const [comments, setComments] = useState([]);
   const [resetingForm, setResetingForm] = useState(false);
@@ -25,17 +30,32 @@ export default function CommentsForm({ type, ...otherProps }) {
     if (otherProps.comments.length) {
       setComments(JSON.parse(otherProps.comments))
     }
-  } , [])
+  }, [])
   useEffect(() => {
     if (axiosPutResult !== null) {
       setComments(JSON.parse(axiosPutResult.comments))
-      alert('دیدگاه شما با موفقیت ثبت شد')
+
+      despatch({
+        type: 'ADD_NOTE',
+        id: v4(),
+        payload: {
+          message: 'دیدگاه شما با موفقیت ثبت شد',
+          status: 'success'
+        }
+      })
       setResetingForm(true);
       setTimeout(() => {
         setResetingForm(false);
       }, 1);
     } else if (axiosPutError !== null) {
-      alert('دیدگاه ثبت نشد.!!!')
+      despatch({
+        type: 'ADD_NOTE',
+        id: v4(),
+        payload: {
+          message: 'دیدگاه ثبت نشد.!!!',
+          status: 'error'
+        }
+      })
       console.log(axiosPutError)
     }
   }, [axiosPutResult, axiosPutError])
