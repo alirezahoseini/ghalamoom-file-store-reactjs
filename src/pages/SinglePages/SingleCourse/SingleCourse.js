@@ -143,7 +143,7 @@ export default function SingleCourse() {
                                 <div className="sidebar w-full lg:w-4/12 lg:px-4 flex flex-col gap-5">
                                     <SingleImage image={course.image} alt={course.title} />
                                     <AuthorBox name={"مینا آقایی"} image={authorImage}/>
-                                    <AddToCartBox {...course} />
+                                    <AddToCartBox {...course} type='course' />
                                     <ShareBox />
                                 </div>
                                 {/* End of sidebar */}

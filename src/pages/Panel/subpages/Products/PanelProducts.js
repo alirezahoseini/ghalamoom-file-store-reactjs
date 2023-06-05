@@ -43,8 +43,6 @@ function PanelProducts() {
           <DataList isList={isList} {...dataObj} />
         )}
         {simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} />}
-
-
       </div>
     </div>
   )

@@ -41,7 +41,7 @@ export default function DesktopShopingCart() {
           ) : (
             <div id="cart-content" className=' w-full mt-3 font-yekan-bakh text-center font-bold text-gray-700'>
               {shoppingCartState.products.map(item => (
-                <ShoppingCartItem key={item.id} {...item} />
+                <ShoppingCartItem setIsShow={setIsShow} key={item.id} {...item} />
               ))}
               <div id='cart-footer'>
                 <div className="total-price flex items-center text-lg font-bold text-slate-800 justify-center border border-dashed p-2 gap-2 mt-3">

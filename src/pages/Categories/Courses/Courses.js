@@ -32,7 +32,6 @@ export default function Courses() {
     }
   }, [axiosGetResult, axiosGetError]);
 
-  console.log(dataArray)
   return (
     <div className='category-courses container mx-auto'>
       <div className="wrapper">

@@ -1,7 +1,32 @@
-import React, { createContext, useEffect, useReducer } from 'react'
-import { v4 } from 'uuid'
+import React, { createContext, useContext, useEffect, useReducer, useState } from 'react'
 
-export const ShoppingCartContext = createContext()
+// contexts 
+import { NotificationContext } from '../Notifications/NotificationProvider'
+
+
+/*-------------------- How use it ------------------*/
+
+//-------- Add product to cart with dispatch
+// shoppingCartDespatch({
+//     type: 'ADD_PRODUCT',
+//     payload: {
+//         uniqId: v4(),
+//         id: 1,
+//         type: 'course',
+//         title: 'دوره ایلوستریتور',
+//         image: '',
+//         price: 1589,
+//     },
+// })
+
+//-------- Remove product from cart with dispatch
+// shoppingCartDespatch({
+//     type: 'REMOVE_PRODUCT',
+//     id: 2,
+// })
+
+
+export const ShoppingCartContext = createContext();
 
 const calcTotalPrice = (products) => {
     let total = 0;
@@ -12,11 +37,14 @@ const calcTotalPrice = (products) => {
         return products[0].price
     }
     products.forEach(element => {
-        total = total + element.price
+        total = Number(total) + Number(element.price)
     });
     return total
 }
+
 export default function ShoppingCartProvider(props) {
+    const notificationDispatch = useContext(NotificationContext)
+    const [isExistProduct, setIsExistProduct] = useState(null)
     const initState = {
         totalPrices: 0,
         itemsCount: 0,
@@ -26,9 +54,9 @@ export default function ShoppingCartProvider(props) {
         switch (action.type) {
             case 'ADD_PRODUCT':
                 const newProductId = `${action.payload.type}s/${action.payload.id}`;
-                const isExist = state.products.some((product => newProductId === `${product.type}s/${product.id}` ))
-                if(isExist){
-                    alert('این محصول در سبد خرید شما وجود دارد')
+                const isExist = state.products.some((product => newProductId === `${product.type}s/${product.id}`))
+                if (isExist) {
+                    setIsExistProduct(true)
                     return state
                 }
                 return {
@@ -48,94 +76,22 @@ export default function ShoppingCartProvider(props) {
     }
     const [shoppingCartState, shoppingCartDispatch] = useReducer(reducer, initState)
 
-    // {
-    //     totalPrices: 10,
-    //     itemsCount: 0,
-    //     products: [
-    //         {
-    //             uniqId: v4(),
-    //             id: 1,
-    //             type: 'course',
-    //             title: 'دوره ایلوستریتور',
-    //             image: '',
-    //             price: 1589,
-    //         },
-    //         {
-    //             uniqId: v4(),
-    //             id: 2,
-    //             type: 'product',
-    //             title: 'فایل موکاپ',
-    //             image: '',
-    //             price: 15,
-    //         },
-    //     ]
-    // }
-
-    // shoppingCartDespatch({
-    //     type: 'REMOVE_PRODUCT',
-    //     id: 2,
-    // })
-
-    
-    // shoppingCartDespatch({
-    //     type: 'ADD_PRODUCT',
-    //     payload: {
-    //         uniqId: v4(),
-    //         id: 1,
-    //         type: 'course',
-    //         title: 'دوره ایلوستریتور',
-    //         image: '',
-    //         price: 1589,
-    //     },
-    // })
-
-    useEffect(()=> {
-        setTimeout(() => {
-            shoppingCartDispatch({
-                type: 'ADD_PRODUCT',
+    useEffect(() => {
+        if (isExistProduct) {
+            notificationDispatch({
+                type: 'ADD_NOTE',
                 payload: {
-                    uniqId: v4(),
-                    id: 1,
-                    type: 'course',
-                    title: 'دوره ایلوستریتور',
-                    image: '',
-                    price: 1589,
-                },
+                    message: 'این محصول در سبد خرید شما وجود دارد',
+                    status: 'info'
+                }
             })
-        }, 5000);
-        setTimeout(() => {
-            shoppingCartDispatch({
-                type: 'ADD_PRODUCT',
-                payload: {
-                    uniqId: v4(),
-                    id: 14,
-                    type: 'course',
-                    title: 'دوره ایلوستریتور',
-                    image: '',
-                    price: 1589,
-                },
-            })
-        }, 7000);
-        setTimeout(() => {
-            shoppingCartDispatch({
-                type: 'ADD_PRODUCT',
-                payload: {
-                    uniqId: v4(),
-                    id: 5,
-                    type: 'course',
-                    title: 'دوره ایلوستریتور',
-                    image: '',
-                    price: 1589,
-                },
-            })
-        }, 9000);
-    }, [])
-
-
-
-
+            setTimeout(() => {
+                setIsExistProduct(null)
+            }, 300);
+        }
+    }, [isExistProduct])
     return (
-        <ShoppingCartContext.Provider value={{shoppingCartState, shoppingCartDispatch}}>
+        <ShoppingCartContext.Provider value={{ shoppingCartState, shoppingCartDispatch }}>
             {props.children}
         </ShoppingCartContext.Provider>
     )

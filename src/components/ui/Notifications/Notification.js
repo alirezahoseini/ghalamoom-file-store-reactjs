@@ -49,7 +49,6 @@ export default function Notification(props) {
     useEffect(() => {
         if (width === 100) {
             handelCloseNotification()
-            console.log(props)
         }
     }, [width])
     return (

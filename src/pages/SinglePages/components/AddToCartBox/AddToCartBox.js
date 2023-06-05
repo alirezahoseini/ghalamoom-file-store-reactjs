@@ -1,6 +1,25 @@
-import React, { memo } from 'react'
+import React, { memo, useContext } from 'react'
+import { v4 } from 'uuid'
 
-const AddToCartBox = memo(({ inStock = true , price }) => {
+// contexts
+import { ShoppingCartContext } from '../../../../components/ui/ShopipingCart/ShoppingCartProvider'
+
+const AddToCartBox = memo((props) => {
+    const { shoppingCartDispatch } = useContext(ShoppingCartContext);
+    const { inStock = true, price, type, id, title, image } = props;
+    const handelAddToCart = () => {
+        shoppingCartDispatch({
+            type: 'ADD_PRODUCT',
+            payload: {
+                uniqId: v4(),
+                id,
+                type,
+                title,
+                image,
+                price,
+            },
+        })
+    }
     return (
         <div className='add-to-cart-box bg-custom-blue-600 p-6 rounded-2xl flex flex-col gap-4'>
             <div
@@ -9,6 +28,7 @@ const AddToCartBox = memo(({ inStock = true , price }) => {
             </div>
             {inStock !== "false" ? (
                 <button
+                    onClick={handelAddToCart}
                     className='w-full flex justify-center items-center text-custom-blue-700 py-3 text-base border-2 border-custom-blue-700 rounded-xl font-bold transition-all duration-300 hover:bg-blue-400 hover:text-white'
                 >
                     افزودن به سبد خرید

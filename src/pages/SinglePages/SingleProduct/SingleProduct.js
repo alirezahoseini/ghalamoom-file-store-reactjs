@@ -121,7 +121,7 @@ export default function SingleProduct() {
                 {/* Sidebar */}
                 <div className="sidebar w-full lg:w-4/12 lg:px-4 flex flex-col gap-5">
                   <SingleImage image={product.image} alt={product.title} />
-                  <AddToCartBox {...product} />
+                  <AddToCartBox {...product} type='product' />
                   <ShareBox />
                 </div>
                 {/* End of sidebar */}

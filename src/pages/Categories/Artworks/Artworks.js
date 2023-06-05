@@ -33,6 +33,7 @@ export default function Artworks() {
             setLoadDataIsFailed(true)
         }
     }, [axiosGetResult, axiosGetError]);
+
     return (
         <div className='category-products container mx-auto'>
             <div className="wrapper">

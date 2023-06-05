@@ -23,15 +23,20 @@ export default function ShoppingCartItem(props) {
         } = props
     return (
         <div className='flex items-center max-w-full p-2 my-2'>
-            <Link to={`${dynamicLinks[type + 's']}/${id}`} className='flex items-center w-10/12'>
+            <Link onClick={() => props.setIsShow(false)} to={`${dynamicLinks[type + 's']}/${id}`} className='flex items-center w-10/12'>
             <img src={image ? image : defaultImage[0]} alt={title} className='w-2/12 rounded-md' />
             <div className='w-8/12 text-right pr-2 text-base font-bold'>
                 <h4 className=' text-slate-800'>
                     {title}
                 </h4>
                 <p className='text-slate-500 '>
-                    {price}
-                    <span className='mr-2'>تومان</span>
+                    {price === 0 || price === '0' ? (
+                        <span>رایگان</span>
+                        
+                    ) : (<>
+                        <span>{price}</span>
+                        <span className='mr-2'>تومان</span>
+                        </>)}
                 </p>
             </div>
             </Link>
