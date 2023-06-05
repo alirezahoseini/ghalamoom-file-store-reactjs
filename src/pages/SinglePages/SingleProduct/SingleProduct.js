@@ -7,7 +7,7 @@ import { v4 } from 'uuid'
 import { apiLinks } from '../../../data/links'
 
 // contexts
-import { NotificationContext } from '../../../components/ui/Notifications/NotificationProvider'
+import { NotificationContext } from '../../../Contexts/Notifications/NotificationProvider'
 
 // hooks
 import useAxiosGet from '../../../hooks/axios/useAxiosGet'

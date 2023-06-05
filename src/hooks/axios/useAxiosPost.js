@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState , useContext} from 'react'
-import { NotificationContext } from "../../components/ui/Notifications/NotificationProvider";
+import { NotificationContext } from "../../Contexts/Notifications/NotificationProvider";
 import {v4} from 'uuid'
 
 export default function useAxiosPost() {

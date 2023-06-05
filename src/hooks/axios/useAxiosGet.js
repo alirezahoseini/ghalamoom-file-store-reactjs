@@ -1,7 +1,7 @@
 import axios from "axios";
 import { v4 } from 'uuid'
 import { useEffect, useState, useContext } from 'react'
-import { NotificationContext } from "../../components/ui/Notifications/NotificationProvider";
+import { NotificationContext } from "../../Contexts/Notifications/NotificationProvider";
 
 export default function useAxiosGet() {
     const notificationDispatch = useContext(NotificationContext)

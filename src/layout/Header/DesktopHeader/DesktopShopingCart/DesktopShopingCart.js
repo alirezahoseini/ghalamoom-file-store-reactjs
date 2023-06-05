@@ -4,7 +4,7 @@ import { FaTimes } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 // contexts
-import { ShoppingCartContext } from '../../../../components/ui/ShopipingCart/ShoppingCartProvider'
+import { ShoppingCartContext } from '../../../../Contexts/ShopipingCart/ShoppingCartProvider'
 
 // components
 import ShoppingCartItem from './DesktopShopingCartItem'

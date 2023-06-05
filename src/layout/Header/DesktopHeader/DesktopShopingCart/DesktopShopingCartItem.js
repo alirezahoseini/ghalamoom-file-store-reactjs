@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { TbX } from 'react-icons/tb'
 
 // contexts
-import { ShoppingCartContext } from '../../../../components/ui/ShopipingCart/ShoppingCartProvider'
+import { ShoppingCartContext } from '../../../../Contexts/ShopipingCart/ShoppingCartProvider'
 
 // default image
 import defaultImage from '../../../../assets/images/panel/imageDefault.json'

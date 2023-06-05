@@ -2,7 +2,7 @@ import React, { memo, useContext } from 'react'
 import { v4 } from 'uuid'
 
 // contexts
-import { ShoppingCartContext } from '../../../../components/ui/ShopipingCart/ShoppingCartProvider'
+import { ShoppingCartContext } from '../../../../Contexts/ShopipingCart/ShoppingCartProvider'
 
 const AddToCartBox = memo((props) => {
     const { shoppingCartDispatch } = useContext(ShoppingCartContext);

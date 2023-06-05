@@ -5,7 +5,7 @@ import './SingleArtwork.css'
 import { v4 } from 'uuid'
 
 // contexts
-import { NotificationContext } from '../../../components/ui/Notifications/NotificationProvider'
+import { NotificationContext } from '../../../Contexts/Notifications/NotificationProvider'
 
 // datas
 import { apiLinks } from '../../../data/links'

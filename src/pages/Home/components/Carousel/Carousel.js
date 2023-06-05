@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Navigation, Pagination, Autoplay } from "swiper";
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 // styles
 import "swiper/css";
@@ -11,7 +11,7 @@ import "./Carousel.css"
 import useAxiosGet from '../../../../hooks/axios/useAxiosGet';
 
 // contexts 
-import { NotificationContext } from '../../../../components/ui/Notifications/NotificationProvider';
+import { NotificationContext } from '../../../../Contexts/Notifications/NotificationProvider';
 
 // components
 import CarouselSidebar from './CarouselSidebar/CarouselSidebar'
@@ -90,65 +90,65 @@ export default function Carousel(props) {
   useEffect(() => {
     if (axiosGetResult !== null) {
       setDataArray(axiosGetResult)
-} else if (axiosGetError !== null) {
-  notificationDispatch({
-    type: 'ADD_NOTE',
-    payload: {
-      id: v4(),
-      message: 'ارتباط ب vرقرار نشد، رقرار نشد، رقرار نشد، لطفا با vpn امتحان کنید',
-      status: 'error'
+    } else if (axiosGetError !== null) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'ارتباط ب vرقرار نشد، رقرار نشد، رقرار نشد، لطفا با vpn امتحان کنید',
+          status: 'error'
+        }
+      })
+      console.log(axiosGetError)
+      setLoadDataIsFailed(true)
     }
-  })
-  console.log(axiosGetError)
-  setLoadDataIsFailed(true)
-}
   }, [axiosGetResult, axiosGetError])
 
-return (
-  <div className='carousel' id={id}>
-    <div className={`wrpper w-full relative rounded-4xl flex flex-col  items-center justify-center gap-2 p-5 ${isSidebar && 'lg:flex-row'} ${bgColor} ${customClass}`}>
-      <div className={`w-full ${isSidebar ? 'lg:w-3/12' : ''}`}>
-        <CarouselSidebar
-          title={title}
-          description={desc}
-          moreOptionsTitle={moreOptionsTitle}
-          isSidebar={isSidebar}
-          type={type}
-        />
-      </div>
-      <div className={`${isSidebar ? 'w-full lg:w-9/12' : 'w-full'}`}>
-        {/* Start loader card  */}
-        {axiosGetIsPending && <CarouselLoaderCard isSidebar={isSidebar} />}
-        {loadDataIsFailed &&
-          <LoadDataError />}
-        {/* End of loader card  */}
-        {carouselBreakPoints && axiosGetIsPending === false && (
-          <Swiper
-            wrapperTag='div'
-            modules={[Navigation, Pagination, A11y, Autoplay]}
-            slidesPerView={4}
-            breakpoints={carouselBreakPoints}
-            autoplay={autoPlay && {
-              delay: 4000,
-              disableOnInteraction: true
-            }}
-            className="carousel ">
-            {/* Carousel Items  */}
-            {
-              dataArray !== undefined && (
-                dataArray.map(item => (
-                  <SwiperSlide key={item.id}  >
-                    {type === 'course' && <CarouselCourseItem {...item} type={type} />}
-                    {type === 'artwork' && <CarouselArtworkItem {...item} type={type} />}
-                  </SwiperSlide>
-                )))
-            }
-            {/* Pagination buttons  */}
-            <SwiperNavButtons />
-          </Swiper>
-        )}
+  return (
+    <div className='carousel' id={id}>
+      <div className={`wrpper w-full relative rounded-4xl flex flex-col  items-center justify-center gap-2 p-5 ${isSidebar && 'lg:flex-row'} ${bgColor} ${customClass}`}>
+        <div className={`w-full ${isSidebar ? 'lg:w-3/12' : ''}`}>
+          <CarouselSidebar
+            title={title}
+            description={desc}
+            moreOptionsTitle={moreOptionsTitle}
+            isSidebar={isSidebar}
+            type={type}
+          />
+        </div>
+        <div className={`${isSidebar ? 'w-full lg:w-9/12' : 'w-full'}`}>
+          {/* Start loader card  */}
+          {axiosGetIsPending && <CarouselLoaderCard isSidebar={isSidebar} />}
+          {loadDataIsFailed &&
+            <LoadDataError />}
+          {/* End of loader card  */}
+          {carouselBreakPoints && axiosGetIsPending === false && (
+            <Swiper
+              wrapperTag='div'
+              modules={[Navigation, Pagination, A11y, Autoplay]}
+              slidesPerView={4}
+              breakpoints={carouselBreakPoints}
+              autoplay={autoPlay && {
+                delay: 4000,
+                disableOnInteraction: true
+              }}
+              className="carousel ">
+              {/* Carousel Items  */}
+              {
+                dataArray !== undefined && (
+                  dataArray.map(item => (
+                    <SwiperSlide key={item.id}  >
+                      {type === 'course' && <CarouselCourseItem {...item} type={type} />}
+                      {type === 'artwork' && <CarouselArtworkItem {...item} type={type} />}
+                    </SwiperSlide>
+                  )))
+              }
+              {/* Pagination buttons  */}
+              <SwiperNavButtons />
+            </Swiper>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
 }

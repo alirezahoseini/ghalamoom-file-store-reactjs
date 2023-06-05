@@ -4,7 +4,7 @@ import { TbDatabase, TbClockHour7, TbUserCheck, TbArrowMoveUp, TbHeadset, TbAlbu
 import {v4} from 'uuid'
 
 // contexts
-import {NotificationContext} from '../../../components/ui/Notifications/NotificationProvider'
+import {NotificationContext} from '../../../Contexts/Notifications/NotificationProvider'
 
 //assetes
 import authorImage from '../../../assets/images/panel/avatars/author.jpg'
