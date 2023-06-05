@@ -10,9 +10,9 @@ const Button = memo(({ type, value, hover = false, link = false, url = '#', size
             {value}
           </button>
         ) : (
-          <button type={type} className={`px-5 py-2 font-yekan-bakh font-bold ${textColor} ${bgColor} rounded-xl tracking-wide  transition duration-200 text-base ${hover ? 'hover:bg-gray-500' : ''} ${size}`} onClick={clickEvent}>
-            <Link to={url}>{value}</Link>
-          </button>
+          <Link to={url} type={type} className={`px-5 py-2 font-yekan-bakh font-bold ${textColor} ${bgColor} rounded-xl tracking-wide  transition duration-200 text-base ${hover ? 'hover:bg-gray-500' : ''} ${size}`} onClick={clickEvent}>
+            {value}
+          </Link>
         )
       }
     </>

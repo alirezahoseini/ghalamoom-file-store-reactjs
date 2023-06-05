@@ -1,22 +1,25 @@
-import React, { useMemo, useReducer, useRef, useState } from 'react'
+import React, { useMemo, useState, useContext } from 'react'
+import { TbUser } from 'react-icons/tb'
+
 import { FaBars, FaTimes, FaInstagram, FaLinkedin, FaTelegramPlane, FaYoutube } from 'react-icons/fa'
+
+
 
 // datas
 import { dynamicLinks } from '../../../data/links'
-// utils
-import { getCooki } from '../../../utils/cookis'
 
 // Components
 import Logo from '../../../components/ui/Logo'
-import Button from '../../../components/ui/Button'
 import HambergerMenu from '../../../components/ui/HambergerMenu'
 import MobileNav from './Nav/MobileNav'
 import SocialIcon from './Nav/SocialIcon'
+import ShoppingCart from '../ShoppingCart/ShoppingCart'
 
 export default function MobileHeader() {
+
     const [showHamberger, setShowHamberger] = useState(false)
     const [haderBg, setHeaderBg] = useState('bg-transparent');
-    
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 0) {
             setHeaderBg('bg-white shadow-both-2 ')
@@ -36,13 +39,20 @@ export default function MobileHeader() {
     return (
         <div id='mobile-header' className='lg:hidden'>
             {/* Visable Header  */}
-            <div id='visable-header' className={`flex justify-between w-full items-center py-5 px-4 transition-colors duration-500 rounded-b-xl ${haderBg} `}>
-                <Logo />
-                <div className='flex items-center ml-2'>
-                    <Button type='button' value={`${getCooki('token') !== null ? 'پنل کاربری' : 'ورود | ثبت نام'}`} link={true} url={dynamicLinks.panel} />
-                    <button id='hamberger-opener' className=' bg-gray-1  text-2xl p-2 rounded-lg text-gray-500  mr-8' onClick={() => setShowHamberger(prevState => !prevState)}>
+            <div id='visable-header' className={`flex justify-between w-full items-center py-5 px-3 transition-colors duration-500 rounded-b-xl ${haderBg} `}>
+                <Logo width='90' />
+                <div className='flex items-center ml-1'>
+                    {/* Login button  */}
+                    
+                    {/* Login button  */}
+                    {/* Shopping cart */}
+                    <ShoppingCart />
+                    {/* Shopping cart */}
+                    {/* Hamberger toggler */}
+                    <button id='hamberger-opener' className=' bg-gray-1  text-2xl p-2 rounded-lg text-gray-500 mr-2' onClick={() => setShowHamberger(prevState => !prevState)}>
                         {showHamberger ? <FaTimes /> : <FaBars />}
                     </button>
+                    {/* Hamberger toggler */}
 
                 </div>
             </div>
