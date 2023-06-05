@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext } from 'react'
+import React, { useMemo, useState } from 'react'
 import { TbUser } from 'react-icons/tb'
 
 import { FaBars, FaTimes, FaInstagram, FaLinkedin, FaTelegramPlane, FaYoutube } from 'react-icons/fa'

@@ -40,7 +40,7 @@ export default function ShoppingCartItem(props) {
                     </p>
                 </div>
             </Link>
-            <div className='w-2/12 mr-auto text-2xl flex justify-center items-center'>
+            <div className='w-2/12 mr-auto text-xl flex justify-center items-center'>
                 <TbX className=' cursor-pointer hover:border border-red-700 hover:text-red-700 rounded-full ' onClick={
                     () => shoppingCartDispatch({
                         type: 'REMOVE_PRODUCT',

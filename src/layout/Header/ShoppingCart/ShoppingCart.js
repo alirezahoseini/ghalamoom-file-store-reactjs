@@ -1,14 +1,15 @@
 import React, { useState, useContext } from 'react'
-import { TbShoppingBag } from 'react-icons/tb'
-import { FaTimes } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 // contexts
 import { ShoppingCartContext } from '../../../Contexts/ShopipingCart/ShoppingCartProvider'
 
+// assets
+import emptyCart from '../../../assets/images/global/empty-cart.svg'
 // components
 import ShoppingCartItem from './ShoppingCartItem'
 import ShoppingCartTogglerButton from '../ShoppingCartTogglerButton/ShoppingCartTogglerButton'
+import ShoppingCartHeader from './ShoppingCartHeader'
 
 
 export default function ShoppingCart() {
@@ -26,22 +27,20 @@ export default function ShoppingCart() {
         </div>
         {/* Main Content  */}
         <div id="main-content" className={`w-full lg:w-3/12 lg:max-w-lg bg-white absolute top-0 h-full transition-all duration-500 lg:rounded-r-xl overflow-y-auto pb-5 ${isShow ? 'left-0' : '-left-full'}`}>
-          <div id="cart-header" className='flex items-center w-full px-4 pt-4 pb-2'>
-            {/* Close Btn  */}
-            <div id="close-btn" className='text-2xl text-gray-500 cursor-pointer hover:text-text-1' onClick={() => setIsShow(prev => !prev)}>
-              <FaTimes />
-            </div>
-          </div>
+          <ShoppingCartHeader onClickEvent={()=> setIsShow(prev => !prev)} />
           {/* Cart Content  */}
           {!shoppingCartState.itemsCount ? (
-            <h2 className='mt-5 text-center font-bold'>سبد خرید خالیه</h2>
+            <div className='flex flex-col items-center gap-3'>
+              <img src={emptyCart} alt="empty cart" className='w-64' />
+              <h2 className='mt-5 text-center font-black text-slate-600'>سبد خرید خالیه!</h2>
+            </div>
           ) : (
             <div id="cart-content" className=' w-full mt-1 font-yekan-bakh text-center font-bold text-gray-700'>
               {shoppingCartState.products.map(item => (
                 <ShoppingCartItem setIsShow={setIsShow} key={item.id} {...item} />
               ))}
               <div id='cart-footer'>
-                <div className="total-price flex items-center text-lg font-bold text-slate-800 justify-center border border-dashed p-2 gap-2 mt-3">
+                <div className="total-price flex items-center text-lg font-black text-slate-800 justify-center border border-dashed p-2 gap-2 mt-3">
                   <span>جمع کل : </span>
                   <p>
                     {shoppingCartState.totalPrices}
