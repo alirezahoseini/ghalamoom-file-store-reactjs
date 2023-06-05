@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { ShoppingCartContext } from '../../../Contexts/ShopipingCart/ShoppingCartProvider'
 
 // assets
-import emptyCart from '../../../assets/images/global/empty-cart.svg'
+import emptyCart from '../../../assets/images/global/empty-cart.png'
 // components
 import ShoppingCartItem from './ShoppingCartItem'
 import ShoppingCartTogglerButton from '../ShoppingCartTogglerButton/ShoppingCartTogglerButton'
@@ -30,8 +30,8 @@ export default function ShoppingCart() {
           <ShoppingCartHeader onClickEvent={()=> setIsShow(prev => !prev)} />
           {/* Cart Content  */}
           {!shoppingCartState.itemsCount ? (
-            <div className='flex flex-col items-center gap-3'>
-              <img src={emptyCart} alt="empty cart" className='w-64' />
+            <div className='flex flex-col items-center gap-3 mt-20'>
+              <img src={emptyCart} alt="empty cart" className='w-48' />
               <h2 className='mt-5 text-center font-black text-slate-600'>سبد خرید خالیه!</h2>
             </div>
           ) : (

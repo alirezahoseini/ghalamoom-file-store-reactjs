@@ -1,7 +1,9 @@
 import React, { memo, useMemo } from 'react'
+
 // datas
 import { dynamicLinks } from '../../../data/links'
 //utils
+
 import { getCooki } from '../../../utils/cookis'
 
 // Components
