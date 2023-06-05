@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { TbChevronLeft } from 'react-icons/tb';
+
+// accets
+import defaultImage from '../../../../../../assets/images/panel/imageDefault.json'
+
 // components
 import Title from '../../../Title/Title';
 import Paragraph from '../../../Paragraph/Paragraph';
@@ -21,7 +24,7 @@ export default function CarouselArtworkItem(props) {
         <div className={`carousel-artwork-item pt-20 px-3`}>
             <div className="wrapper bg-white rounded-xl relative">
                 <Link to={`/${type}s/${id}`} className='w-full'>
-                    <img src={image} alt={title} className='mx-auto rounded-xl relative -top-10 shadow-both-2' style={{ width: '93%' }} />
+                    <img src={image ? image : defaultImage[0]} alt={title} className='mx-auto rounded-xl relative -top-10 shadow-both-2' style={{ width: '93%' }} />
                 </Link>
                 <div className="flex flex-col px-5 -mt-4">
                     <Link to={`/${type}s/${id}`}>

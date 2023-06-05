@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { TbCategory, TbDownload, TbPlus } from 'react-icons/tb'
 
+// assets
+import defaultImage from '../../../../../assets/images/panel/imageDefault.json'
+
 // components
 import Badge from '../../../../../components/ui/Badge/Badge';
 import Title from '../../Title/Title'
@@ -28,7 +31,7 @@ export default function ProductGridItem(props) {
                 <div className="product-grid-item_header flex items-start justify-between">
                     <picture className='w-36 rounded-lg -mt-14 shadow-both-0'>
                         <Link to={`/${type}s/${id}`} >
-                            <img src={image} alt={title} className='w-full rounded-lg' />
+                            <img src={image ? image : defaultImage[0]} alt={title} className='w-full rounded-lg' />
                         </Link>
                     </picture>
                     <Badge title={category.name} customClass='bg-slate-200' icon={<TbCategory />} />
