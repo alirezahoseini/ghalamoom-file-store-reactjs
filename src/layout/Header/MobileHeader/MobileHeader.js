@@ -1,9 +1,8 @@
 import React, { useMemo, useState } from 'react'
 import { TbUser } from 'react-icons/tb'
+import {Link} from 'react-router-dom'
 
 import { FaBars, FaTimes, FaInstagram, FaLinkedin, FaTelegramPlane, FaYoutube } from 'react-icons/fa'
-
-
 
 // datas
 import { dynamicLinks } from '../../../data/links'
@@ -43,7 +42,9 @@ export default function MobileHeader() {
                 <Logo width='90' />
                 <div className='flex items-center ml-1'>
                     {/* Login button  */}
-                    
+                    <Link to={dynamicLinks.panel} className='shadow-both-0 text-xl bg-blue-600 w-10 h-10 flex items-center justify-center rounded-xl mx-2 text-white hover:bg-slate-600'>
+                        <TbUser />
+                    </Link>
                     {/* Login button  */}
                     {/* Shopping cart */}
                     <ShoppingCart />

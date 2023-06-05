@@ -50,10 +50,10 @@ export default function ShoppingCart() {
                   </p>
                 </div>
                 <div className="buttons mt-4 flex items-center gap-3 pl-6 pr-2 max-w-full">
-                  <Link onClick={() => setIsShow(prev => !prev)} to={''} className='bg-slate-200 py-2 rounded-md hover:bg-slate-500 hover:text-slate-100 w-6/12'>
+                  <Link onClick={() => setIsShow(prev => !prev)} to={'#'} className='bg-slate-200 py-2 rounded-md hover:bg-slate-500 hover:text-slate-100 w-6/12'>
                     مشاهده سبد خرید
                   </Link>
-                  <Link onClick={() => setIsShow(prev => !prev)} to={''} className='bg-custom-gold-100 py-2 rounded-md hover:bg-slate-500 hover:text-slate-100 w-6/12'>
+                  <Link onClick={() => setIsShow(prev => !prev)} to={'#'} className='bg-custom-gold-100 py-2 rounded-md hover:bg-slate-500 hover:text-slate-100 w-6/12'>
                     تسویه حساب
                   </Link>
                 </div>
