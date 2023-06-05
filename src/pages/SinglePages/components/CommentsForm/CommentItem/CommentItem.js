@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { TbStar, TbStarFilled } from 'react-icons/tb'
 
 // assets
-import noneUserImage from '../../../../../assets/images/panel/avatars/none.png'
+import noneUserImage from '../../../../../assets/images/global/none-user.png'
 
-export default function CommentItem({ id, name, rate, comment, created_at }) {
+export default function CommentItem({ name, rate, comment, created_at }) {
     const [createdDate, setCreatedDate] = useState()
     const [rateArray, setRateArray] = useState([
         { id: 'one', value: 1, selected: false },

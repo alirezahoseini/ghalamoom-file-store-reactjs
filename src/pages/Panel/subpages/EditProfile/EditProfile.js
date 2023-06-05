@@ -18,6 +18,7 @@ import Textarea from "../../components/Inputs/Textarea";
 import SubmitFormButton from "../components/Buttons/SubmitFormButton";
 import CancelButton from "../components/Buttons/CancelButton";
 import SimpleDataLoader from "../../../../components/ui/SimpleDataLoader/SimpleDataLoader";
+import Avatar from './Avatar/Avatar'
 
 export default function EditProfile() {
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
@@ -25,6 +26,13 @@ export default function EditProfile() {
     const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
     const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
     const [formData, setFormData] = useState();
+    const [userAvatar, setUserAvatar] = useState({
+        bgColor: '#4ea8de',
+        avatar: {
+            id: 8,
+            image: '/images/avatars/Aavatar-5.webp'
+        }
+    })
     const navigateTo = useNavigate()
     const inputsData = {
         name: {
@@ -127,7 +135,7 @@ export default function EditProfile() {
             <div id='edit-profile' className="my-3 p-2 text-xs">
                 <FormHeader title={'ویرایش حساب کاربری'} />
                 <div className="wrapper w-full flex flex-col xl:flex-row p-4 rounded-2xl bg-white my-3 dark:bg-slate-800 ">
-                    <form onSubmit={submitHandler} className="w-full">
+                    <form onSubmit={submitHandler} className="w-full relative">
                         <section className="flex flex-col xl:flex-row">
                             {/* Right Side - Text form  */}
                             <div className="right-side xl:w-8/12">
@@ -139,7 +147,7 @@ export default function EditProfile() {
                             {/* End of Right Side - Text form  */}
                             {/* Left side - select Image */}
                             <div className="left-side xl:w-4/12">
-
+                                <Avatar value={userAvatar} onChangeEvent={setUserAvatar} />
                             </div>
                             {/* End of Left side - select Image */}
                         </section>

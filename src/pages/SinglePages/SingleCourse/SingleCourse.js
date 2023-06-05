@@ -7,7 +7,7 @@ import {v4} from 'uuid'
 import {NotificationContext} from '../../../Contexts/Notifications/NotificationProvider'
 
 //assetes
-import authorImage from '../../../assets/images/panel/avatars/author.jpg'
+import authorImage from '../../../assets/images/global/author.jpg'
 // datas
 import { apiLinks } from '../../../data/links'
 

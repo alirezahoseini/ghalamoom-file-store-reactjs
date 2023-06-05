@@ -1,0 +1,29 @@
+.imageSelectBox{
+    transform: translateY(10px);
+    -webkit-transform: translateY(10px);
+    -moz-transform: translateY(10px);
+    -ms-transform: translateY(10px);
+    -o-transform: translateY(10px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: .4s all;
+    -webkit-transition: .4s all;
+    -moz-transition: .4s all;
+    -ms-transition: .4s all;
+    -o-transition: .4s all;
+}
+.imageSelectBox.show{
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+.imageSelectBox input:checked ~ label {
+    border-color: rgba(27, 183, 231, 0) !important;
+    background-color: rgb(27, 132, 231) !important;
+}

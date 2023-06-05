@@ -1,15 +1,12 @@
 import { HiPlusSm } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 
-// assets
-import userAvatar from '../../../../../assets/images/panel/avatars/Avatar-9.webp'
-
 // hooks
 import useUserName from '../../../hooks/useUserName'
 
 export default function UserInfo({ isOpen, withEvent, onClickEvent }) {
   const { isPending, userName } = useUserName()
-
+  const userAvatar = process.env.PUBLIC_URL + '/images/avatars/Avatar-1.webp';
   return (
 
     withEvent ? (
