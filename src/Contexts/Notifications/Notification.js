@@ -39,7 +39,7 @@ export default function Notification(props) {
                 id: props.id,
                 type: 'REMOVE_NOTE'
             })
-        }, 400);
+        }, 300);
     }
 
     useEffect(() => {

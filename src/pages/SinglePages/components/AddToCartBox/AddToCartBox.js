@@ -24,7 +24,7 @@ const AddToCartBox = memo((props) => {
         <div className='add-to-cart-box bg-custom-blue-600 p-6 rounded-2xl flex flex-col gap-4'>
             <div
                 className="price py-3 w-full bg-slate-400 flex justify-center rounded-xl bg-opacity-25 font-bold text-slate-200 text-2xl font-yekan-bakh">
-                {price > 0 ? `${price} هزارتوان` : "رایگان"}
+                {price > 0 ? `${price} هزارتومان` : "رایگان"}
             </div>
             {inStock !== "false" ? (
                 <button

@@ -35,7 +35,7 @@ export default function ShoppingCartItem(props) {
 
                         ) : (<>
                             <span>{price}</span>
-                            <span className='mr-2'>تومان</span>
+                            <span className='mr-2'>هزار تومان</span>
                         </>)}
                     </p>
                 </div>

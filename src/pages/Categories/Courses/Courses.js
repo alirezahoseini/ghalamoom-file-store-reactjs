@@ -43,7 +43,11 @@ export default function Courses() {
         {/* End of Page Header  */}
         <div className='my-5'>
           {/* Start loader card  */}
-          {axiosGetIsPending && <CarouselLoaderCard isSidebar={false} />}
+          {axiosGetIsPending && (
+            <div className="p-3">
+              <CarouselLoaderCard isSidebar={false} />
+            </div>
+          )}
           {loadDataIsFailed &&
             <LoadDataError />}
           {/* End of loader card  */}

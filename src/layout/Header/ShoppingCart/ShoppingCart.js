@@ -45,7 +45,7 @@ export default function ShoppingCart() {
                   <p>
                     {shoppingCartState.totalPrices}
                     <span className='mr-1'>
-                      تومان
+                      هزار تومان
                     </span>
                   </p>
                 </div>
