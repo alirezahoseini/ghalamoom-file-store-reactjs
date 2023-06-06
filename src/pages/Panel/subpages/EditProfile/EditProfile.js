@@ -1,5 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
+import {v4} from 'uuid'
+
+// contexts
+import { NotificationContext } from '../../../../Contexts/Notifications/NotificationProvider'
 
 // datas
 import { apiLinks } from "../../../../data/links";
@@ -21,18 +25,12 @@ import SimpleDataLoader from "../../../../components/ui/SimpleDataLoader/SimpleD
 import Avatar from './Avatar/Avatar'
 
 export default function EditProfile() {
+    const notificationDispatch  = useContext(NotificationContext)
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
     const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
     const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
     const [formData, setFormData] = useState();
-    const [userAvatar, setUserAvatar] = useState({
-        bgColor: '#4ea8de',
-        avatar: {
-            id: 8,
-            image: '/images/avatars/Aavatar-5.webp'
-        }
-    })
     const navigateTo = useNavigate()
     const inputsData = {
         name: {
@@ -74,12 +72,19 @@ export default function EditProfile() {
             maxLength: "3",
             errorMessage: 'سن خود را به عدد وارد کنید',
         },
+        userAvatar: {
+            bgColor: '#4ea8de',
+            avatar: {
+                id: 8,
+                image: '/images/avatars/Aavatar-5.webp'
+            }
+        }
     }
     const userId = 1;
     const changeHandler = (event) => {
         // Image 
-        if (event.image) {
-            setFormData({ ...formData, image: event.image })
+        if (event.bgColor) {
+            setFormData({ ...formData, avatar: event })
         } else if (event.target.className.includes('custom-select-box-input')) {
             // Select boxes
             const inputName = event.target.name;
@@ -122,10 +127,24 @@ export default function EditProfile() {
             setCooki('email', formData.email, 3)
             setCooki('avatar', formData.avatar, 3)
             setCooki('username', formData.name, 3)
-            alert('تغییرات با موفقیت ذخیره شدند');
-            
+            notificationDispatch({
+                type: 'ADD_NOTE',
+                id: v4(),
+                payload: {
+                    message: 'تغییرات با موفقیت ذخیره شدند',
+                    status: 'success'
+                }
+            })
         }
         if (axiosPutError !== null) {
+            notificationDispatch({
+                type: 'ADD_NOTE',
+                id: v4(),
+                payload: {
+                    message: "تغییرات ذخیره نشدند.!",
+                    status: 'error'
+                }
+            })
             console.log(axiosPutError)
         }
     }, [axiosPutError, axiosPutResult]);
@@ -147,7 +166,7 @@ export default function EditProfile() {
                             {/* End of Right Side - Text form  */}
                             {/* Left side - select Image */}
                             <div className="left-side xl:w-4/12">
-                                <Avatar value={userAvatar} onChangeEvent={setUserAvatar} />
+                                <Avatar value={formData.avatar} onChangeEvent={changeHandler} />
                             </div>
                             {/* End of Left side - select Image */}
                         </section>
