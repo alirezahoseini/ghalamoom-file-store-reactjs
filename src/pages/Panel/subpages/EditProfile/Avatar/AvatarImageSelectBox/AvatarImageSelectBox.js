@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { TbPhotoEdit, TbX } from 'react-icons/tb'
-import styles from './AvatarImageSelectBox.module.css'
+import React, { useContext, useState } from 'react'
+import { TbPhotoEdit } from 'react-icons/tb'
+import styles from '../AvatarSelectBox.module.css'
 
 //  Contexts
 import {UserAvatarContext} from '../Avatar'
@@ -23,7 +23,7 @@ export default function AvatarImageSelectBox() {
                 <TbPhotoEdit className='text-lg' />
                 <span>تغییر آواتار</span>
             </button>
-            <div className= {`${styles.imageSelectBox} ${isShowSelectBox ? styles.show : ''} absolute bg-slate-100 top-0 right-0 overflow-y-auto max-h-full w-fit  rounded-lg dark:bg-slate-900`} >
+            <div className= {`${styles.selectBox} ${isShowSelectBox ? styles.show : ''} absolute bg-slate-100 top-0 right-0 overflow-y-auto max-h-full w-fit  rounded-lg dark:bg-slate-900`} >
                 <AvatarImageSelectBoxHeader onCloser={() => setIsShowSelectBox(false)} />
                 <div className='p-5 flex flex-wrap'>
                     {avatarsArray.map((avatar) => {

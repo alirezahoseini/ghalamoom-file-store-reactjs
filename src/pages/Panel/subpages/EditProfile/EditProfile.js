@@ -125,8 +125,6 @@ export default function EditProfile() {
         // show update results
         if (axiosPutResult !== null) {
             setCooki('email', formData.email, 3)
-            setCooki('avatar', formData.avatar, 3)
-            setCooki('username', formData.name, 3)
             notificationDispatch({
                 type: 'ADD_NOTE',
                 id: v4(),
@@ -166,7 +164,7 @@ export default function EditProfile() {
                             {/* End of Right Side - Text form  */}
                             {/* Left side - select Image */}
                             <div className="left-side xl:w-4/12">
-                                <Avatar value={formData.avatar} onChangeEvent={changeHandler} />
+                                <Avatar {...formData.avatar} onChangeEvent={changeHandler} />
                             </div>
                             {/* End of Left side - select Image */}
                         </section>

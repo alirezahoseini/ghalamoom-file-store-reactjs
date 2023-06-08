@@ -145,4 +145,48 @@ const avatarsArray = [
     },
 ]
 
+const bgColorsArray = [
+    {
+        id: 1,
+        color: '#FF6900'
+    },
+    {
+        id: 2,
+        color: '#8ED1FC'
+    },
+    {
+        id: 3,
+        color: '#FCB900'
+    },
+    {
+        id: 4,
+        color: '#7BDCB5'
+    },
+    {
+        id: 5,
+        color: '#ABB8C3'
+    },
+    {
+        id: 6,
+        color: '#EB144C'
+    },
+    {
+        id: 7,
+        color: '#F78DA7'
+    },
+    {
+        id: 8,
+        color: '#9900EF'
+    },
+    {
+        id: 9,
+        color: '#DCE775'
+    },
+    {
+        id: 10,
+        color: '#988DFB'
+    },
+];
+
+export {bgColorsArray}
 export default avatarsArray

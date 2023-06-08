@@ -1,4 +1,4 @@
-.imageSelectBox{
+.selectBox{
     transform: translateY(10px);
     -webkit-transform: translateY(10px);
     -moz-transform: translateY(10px);
@@ -13,7 +13,7 @@
     -ms-transition: .4s all;
     -o-transition: .4s all;
 }
-.imageSelectBox.show{
+.selectBox.show{
     transform: translateY(0px);
     -webkit-transform: translateY(0px);
     -moz-transform: translateY(0px);
@@ -23,7 +23,7 @@
     visibility: visible;
     pointer-events: all;
 }
-.imageSelectBox input:checked ~ label {
+.selectBox input:checked ~ label {
     border-color: rgba(27, 183, 231, 0) !important;
     background-color: rgb(27, 132, 231) !important;
 }
