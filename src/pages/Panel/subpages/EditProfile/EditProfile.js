@@ -84,6 +84,7 @@ export default function EditProfile() {
     const changeHandler = (event) => {
         // Image 
         if (event.bgColor) {
+            console.log(event)
             setFormData({ ...formData, avatar: event })
         } else if (event.target.className.includes('custom-select-box-input')) {
             // Select boxes

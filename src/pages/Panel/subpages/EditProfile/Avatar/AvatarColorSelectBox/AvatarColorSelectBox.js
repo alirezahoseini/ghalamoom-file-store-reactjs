@@ -12,17 +12,9 @@ import { bgColorsArray } from '../../../../../../data/avatarsArray'
 import AvatarColorSelectBoxItem from './AvatarColorSelectBoxItem'
 
 export default function AvatarColorSelectBox() {
-    const { userAvaterDetails, setUserAvaterDetails } = useContext(UserAvatarContext);
+    const { userAvaterDetails } = useContext(UserAvatarContext);
     const [isShowSelectBox, setIsShowSelectBox] = useState(false)
 
-    const changeHandler = (event) => {
-        setUserAvaterDetails(prev => {
-            return {
-                bgColor: event.target.value,
-                avatar: prev.avatar
-            }
-        })
-    }
     return (
         <div id='avatar-color-selectbox'>
             <button
@@ -35,7 +27,7 @@ export default function AvatarColorSelectBox() {
 
                 <div className='p-5 flex flex-wrap w-full'>
                     {bgColorsArray.map((color) => {
-                        const selected = color.id === userAvaterDetails.bgColor;
+                        const selected = color.id === userAvaterDetails.bgColor.id;
                         return <AvatarColorSelectBoxItem key={color.id} {...color} setIsShowSelectBox={setIsShowSelectBox} isChecked={selected} />
                     })}
                 </div>

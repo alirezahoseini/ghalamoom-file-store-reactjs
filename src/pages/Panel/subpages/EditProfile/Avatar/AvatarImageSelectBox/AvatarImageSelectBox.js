@@ -16,7 +16,6 @@ import AvatarImageSelectBoxHeader from './AvatarImageSelectBoxHeader'
 export default function AvatarImageSelectBox() {
     const {userAvaterDetails} = useContext(UserAvatarContext)
     const [isShowSelectBox, setIsShowSelectBox] = useState(false)
-
     return (
         <div id='avatar-image-selectbox' className='inline-flex '>
             <button onClick={() => setIsShowSelectBox(prev => !prev)} type='button' className='bg-slate-200 dark:bg-slate-700 dark:text-slate-100 dark:hover:text-slate-700 px-3 py-2 rounded-md flex items-center gap-2 text-slate-700 dark:hover:bg-yellow-400 hover:bg-yellow-400 hover:shadow-both-0' >

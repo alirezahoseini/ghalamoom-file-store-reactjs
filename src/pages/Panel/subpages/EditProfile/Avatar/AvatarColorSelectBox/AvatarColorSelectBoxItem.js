@@ -4,38 +4,34 @@ import React, { useContext } from 'react'
 import { UserAvatarContext } from '../Avatar'
 
 export default function AvatarColorSelectBoxItem(props) {
-    console.log(props)
-    const { setUserAvaterDetails } = useContext(UserAvatarContext);
-    const changeHandler = () => {
-        setUserAvaterDetails(prev => {
-          return {
-            bgColor: prev.bgColor,
-            avatar: {
-              id: props.id,
-              image: props.image
-            }
-          }})
-          props.setIsShowSelectBox(false)
+  const { setUserAvaterDetails } = useContext(UserAvatarContext);
+  const changeHandler = () => {
+    setUserAvaterDetails(prev => {
+      return {
+        bgColor: {
+          id: props.id,
+          color: props.color
+        },
+        avatar: prev.avatar
       }
-    return (
-    // <div>
-    //     <button type='button'
-    //     className='w-20 h-20'
-    //     style={{backgroundColor: props.color}}> l</button>
-    // </div>
+    })
+    props.setIsShowSelectBox(false)
+  }
 
-<div className=' p-2'>
-<input
-  onChange={changeHandler}
-  type="radio"
-  name='avatar-bgColor'
-  id={props.id}
-  value={props.id}
-  className='hidden'
-  checked={props.isChecked} />
-<label htmlFor={props.id} className='cursor-pointer inline-block w-20 h-20 rounded-md hover:border-8 hover:border-blue-200' style={{backgroundColor: props.color}}>
-f
-</label>
-</div>
-    )
+  console.log(props.isChecked)
+  return (
+
+    <div className=' p-2'>
+      <input
+        onChange={changeHandler}
+        type="radio"
+        name='avatar-bgColor'
+        id={`avatar-bg-${props.id}`}
+        value={props.id}
+        className='hidden'
+        checked={props.isChecked} />
+      <label htmlFor={`avatar-bg-${props.id}`} className='cursor-pointer inline-block w-20 h-20 rounded-md hover:outline hover:outline-blue-400 relative' style={{ backgroundColor: props.color }}>
+      </label>
+    </div>
+  )
 }

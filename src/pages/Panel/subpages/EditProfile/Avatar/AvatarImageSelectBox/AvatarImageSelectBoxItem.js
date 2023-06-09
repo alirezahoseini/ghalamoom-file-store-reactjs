@@ -22,11 +22,11 @@ export default function AvatarImageSelectBoxItem(props) {
         onChange={changeHandler}
         type="radio"
         name='avatar-image'
-        id={props.id}
+        id={`avatar-img-${props.id}`}
         value={props.id}
         className='hidden'
         checked={props.isChecked} />
-      <label htmlFor={props.id} className='cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full border border-transparent hover:border-blue-500 w-full h-full inline-block'>
+      <label htmlFor={`avatar-img-${props.id}`} className='cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full border border-transparent hover:border-blue-500 w-full h-full inline-block'>
         <img src={process.env.PUBLIC_URL + props.image} alt="avatar-iamge" className='max-w-full' />
       </label>
     </div>

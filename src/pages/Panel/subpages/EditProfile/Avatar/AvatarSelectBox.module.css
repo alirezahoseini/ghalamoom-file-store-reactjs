@@ -23,7 +23,27 @@
     visibility: visible;
     pointer-events: all;
 }
-.selectBox input:checked ~ label {
+.selectBox input[name='avatar-image']:checked ~ label {
     border-color: rgba(27, 183, 231, 0) !important;
     background-color: rgb(27, 132, 231) !important;
+}
+.selectBox input[name='avatar-bgColor']:checked ~ label::after {
+    content: '\2713';
+    width: 25px;
+    height: 25px;
+    background-color: rgb(243, 243, 243);
+    color: rgb(78, 78, 78);
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 15px rgba(95, 95, 95, 0.212);
+    font-size: 14px;
 }
