@@ -186,6 +186,46 @@ const bgColorsArray = [
         id: 10,
         color: '#988DFB'
     },
+    {
+        id: 11,
+        color: '#ffd6ff'
+    },
+    {
+        id: 12,
+        color: '#e7c6ff'
+    },
+    {
+        id: 13,
+        color: '#c8b6ff'
+    },
+    {
+        id: 14,
+        color: '#bbd0ff'
+    },
+    {
+        id: 15,
+        color: '#7ae582'
+    },
+    {
+        id: 16,
+        color: '#25a18e'
+    },
+    {
+        id: 17,
+        color: '#9fffcb'
+    },
+    {
+        id: 18,
+        color: '#00a5cf'
+    },
+    {
+        id: 19,
+        color: '#004e64'
+    },
+    {
+        id: 20,
+        color: '#f9f9f9'
+    },
 ];
 
 export {bgColorsArray}

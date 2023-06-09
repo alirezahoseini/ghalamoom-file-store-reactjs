@@ -10,6 +10,7 @@ import { bgColorsArray } from '../../../../../../data/avatarsArray'
 
 // components
 import AvatarColorSelectBoxItem from './AvatarColorSelectBoxItem'
+import AvatarSelectBoxHeader from '../AvatarSelectBoxHeader/AvatarSelectBoxHeader'
 
 export default function AvatarColorSelectBox() {
     const { userAvaterDetails } = useContext(UserAvatarContext);
@@ -24,8 +25,8 @@ export default function AvatarColorSelectBox() {
                 <span>تغییر رنگ پس زمینه</span>
             </button>
             <div className={`${styles.selectBox} ${isShowSelectBox ? styles.show : ''} absolute bg-slate-100 bottom-0 left-0 overflow-y-auto max-h-full w-fit rounded-lg dark:bg-slate-900`} >
-
-                <div className='p-5 flex flex-wrap w-full'>
+                <AvatarSelectBoxHeader title='تغییر رنگ پس زمینه' onCloser={() => setIsShowSelectBox(prev => !prev)} />
+                <div className=' flex flex-wrap w-full gap-2 py-5'>
                     {bgColorsArray.map((color) => {
                         const selected = color.id === userAvaterDetails.bgColor.id;
                         return <AvatarColorSelectBoxItem key={color.id} {...color} setIsShowSelectBox={setIsShowSelectBox} isChecked={selected} />

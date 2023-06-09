@@ -10,7 +10,7 @@ import avatarsArray from '../../../../../../data/avatarsArray'
 
 // components
 import AvatarImageSelectBoxItem from './AvatarImageSelectBoxItem'
-import AvatarImageSelectBoxHeader from './AvatarImageSelectBoxHeader'
+import AvatarSelectBoxHeader from '../AvatarSelectBoxHeader/AvatarSelectBoxHeader'
 
 
 export default function AvatarImageSelectBox() {
@@ -23,7 +23,7 @@ export default function AvatarImageSelectBox() {
                 <span>تغییر آواتار</span>
             </button>
             <div className= {`${styles.selectBox} ${isShowSelectBox ? styles.show : ''} absolute bg-slate-100 top-0 right-0 overflow-y-auto max-h-full w-fit  rounded-lg dark:bg-slate-900`} >
-                <AvatarImageSelectBoxHeader onCloser={() => setIsShowSelectBox(false)} />
+                <AvatarSelectBoxHeader title={"تغییر آواتار"} onCloser={() => setIsShowSelectBox(false)} />
                 <div className='p-5 flex flex-wrap'>
                     {avatarsArray.map((avatar) => {
                         const selected = avatar.id === userAvaterDetails.avatar.id;

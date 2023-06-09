@@ -21,7 +21,7 @@ export default function AvatarColorSelectBoxItem(props) {
   console.log(props.isChecked)
   return (
 
-    <div className=' p-2'>
+    <div className='w-20 h-20 p-1'>
       <input
         onChange={changeHandler}
         type="radio"
@@ -30,7 +30,7 @@ export default function AvatarColorSelectBoxItem(props) {
         value={props.id}
         className='hidden'
         checked={props.isChecked} />
-      <label htmlFor={`avatar-bg-${props.id}`} className='cursor-pointer inline-block w-20 h-20 rounded-md hover:outline hover:outline-blue-400 relative' style={{ backgroundColor: props.color }}>
+      <label htmlFor={`avatar-bg-${props.id}`} className='cursor-pointer inline-block w-full h-full rounded-md hover:outline hover:outline-blue-400 relative' style={{ backgroundColor: props.color }}>
       </label>
     </div>
   )
