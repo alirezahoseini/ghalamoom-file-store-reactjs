@@ -18,7 +18,6 @@ export default function AvatarColorSelectBoxItem(props) {
     props.setIsShowSelectBox(false)
   }
 
-  console.log(props.isChecked)
   return (
 
     <div className='w-20 h-20 p-1'>

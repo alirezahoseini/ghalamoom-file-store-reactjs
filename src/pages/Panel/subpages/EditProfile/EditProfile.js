@@ -45,12 +45,14 @@ export default function EditProfile() {
         },
         email: {
             id: 'email',
-            name: 'ایمیل',
+            label: 'ایمیل (غیر قابل تغییر)',
+            name: 'email',
             type: 'email',
             placeholder: 'ایمیل خود را وارد کنید',
             pattern: '^[a-zA-Z0-9_.+-]{3,30}@[a-zA-Z0-9-]{3,15}\\.[a-zA-Z0-9-.]{2,5}$',
             errorMessage: 'ایمیل باید معتبر باشد مثل: myname@gmail.com',
-            required: true
+            required: true,
+            disabled: 'true'
         },
         bio: {
             name: 'bio',
@@ -84,7 +86,6 @@ export default function EditProfile() {
     const changeHandler = (event) => {
         // Image 
         if (event.bgColor) {
-            console.log(event)
             setFormData({ ...formData, avatar: event })
         } else if (event.target.className.includes('custom-select-box-input')) {
             // Select boxes
