@@ -19,10 +19,10 @@
     
   ********************************/
 
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import './Inputs.css'
 
-export default function Textarea(props) {
+const Textarea = memo((props) => {
     const [onFocused, setOnFocused] = useState(false)
     const { label, onChangeEvent, errorMessage, ...otherProps } = props;
 
@@ -36,4 +36,5 @@ export default function Textarea(props) {
             <span className='pr-1 text-custom-red-100 font-bold my-2'>{errorMessage}</span>
         </div>
     )
-}
+})
+export default Textarea

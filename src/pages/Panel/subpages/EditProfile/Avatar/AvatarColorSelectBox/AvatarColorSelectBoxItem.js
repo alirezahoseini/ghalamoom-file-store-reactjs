@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, memo } from 'react'
 
 //  Contexts
 import { UserAvatarContext } from '../Avatar'
 
-export default function AvatarColorSelectBoxItem(props) {
+const AvatarColorSelectBoxItem = memo((props) => {
   const { setUserAvaterDetails } = useContext(UserAvatarContext);
   const changeHandler = () => {
     setUserAvaterDetails(prev => {
@@ -33,4 +33,6 @@ export default function AvatarColorSelectBoxItem(props) {
       </label>
     </div>
   )
-}
+})
+
+export default AvatarColorSelectBoxItem

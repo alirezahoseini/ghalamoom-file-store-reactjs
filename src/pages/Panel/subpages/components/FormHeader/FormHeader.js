@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom"
-import {TbChevronRight} from 'react-icons/tb'
- 
-export default function FormHeader({ title }) {
+import { TbChevronRight } from 'react-icons/tb'
+import { memo } from "react"
+
+const FormHeader = memo(({ title }) => {
     return (
         <div id="new-product-form">
             <div className="wrapper w-full bg-slate-50 p-4 rounded-xl flex items-center justify-between dark:bg-slate-800">
@@ -13,4 +14,6 @@ export default function FormHeader({ title }) {
             </div>
         </div>
     )
-}
+})
+
+export default FormHeader

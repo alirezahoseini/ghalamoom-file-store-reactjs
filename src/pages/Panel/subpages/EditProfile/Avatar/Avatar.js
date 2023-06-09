@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from 'react'
+import React, { useEffect, useState, createContext, memo, useMemo } from 'react'
 
 // datas 
 import avatarsArray from '../../../../../data/avatarsArray'
@@ -10,7 +10,7 @@ import AvatarColorSelectBox from './AvatarColorSelectBox/AvatarColorSelectBox';
 // Contexts
 const UserAvatarContext = createContext()
 
-export default function Avatar(
+const Avatar = memo((
     {
         onChangeEvent,
         bgColor = {
@@ -20,7 +20,8 @@ export default function Avatar(
         avatar = {
             id: 1,
             image: '/images/avatars/Avatar-1.webp'
-        } }) {
+        } }
+) => {
     const [userAvaterDetails, setUserAvaterDetails] = useState({ bgColor, avatar })
     const currentImageUrl = process.env.PUBLIC_URL + avatarsArray[avatar.id - 1].image
 
@@ -36,13 +37,16 @@ export default function Avatar(
                 <img src={currentImageUrl} alt="avatar" className='w-full' width='493px' height='493px' />
             </div>
             <div className='flex items-center justify-evenly gap-2 mt-8'>
-                <UserAvatarContext.Provider value={{ userAvaterDetails, setUserAvaterDetails }} >
-                    <AvatarColorSelectBox />
-                    <AvatarImageSelectBox />
-                </UserAvatarContext.Provider>
+                {useMemo(() => (
+                    <UserAvatarContext.Provider value={{ userAvaterDetails, setUserAvaterDetails }} >
+                        <AvatarColorSelectBox />
+                        <AvatarImageSelectBox />
+                    </UserAvatarContext.Provider>
+                ), [userAvaterDetails])}
             </div>
         </div>
     )
-}
+})
 
+export default Avatar
 export { UserAvatarContext }

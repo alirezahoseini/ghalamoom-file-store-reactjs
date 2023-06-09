@@ -52,7 +52,7 @@ export default function EditProfile() {
             pattern: '^[a-zA-Z0-9_.+-]{3,30}@[a-zA-Z0-9-]{3,15}\\.[a-zA-Z0-9-.]{2,5}$',
             errorMessage: 'ایمیل باید معتبر باشد مثل: myname@gmail.com',
             required: true,
-            disabled: 'true'
+            disabled: '{true}'
         },
         bio: {
             name: 'bio',
