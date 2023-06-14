@@ -9,7 +9,7 @@ import { NotificationContext } from '../../../../Contexts/Notifications/Notifica
 import { apiLinks } from "../../../../data/links";
 
 // utils
-import { setCooki } from '../../../../utils/cookis'
+import { setCooki, getCooki } from '../../../../utils/cookis'
 
 // hooks
 import useAxiosPut from '../../../../hooks/axios/useAxiosPut'
@@ -82,7 +82,7 @@ export default function EditProfile() {
             }
         }
     }
-    const userId = 1;
+    const userId = getCooki('userid')
     const changeHandler = (event) => {
         // Image 
         if (event.bgColor) {
@@ -103,6 +103,8 @@ export default function EditProfile() {
         setAxiosPutData(formData)
         setAxiosPutUrl(`${apiLinks.users}/${userId}`)
     }
+
+    console.log(formData)
 
     /////// loading user info from server
     useEffect(() => {

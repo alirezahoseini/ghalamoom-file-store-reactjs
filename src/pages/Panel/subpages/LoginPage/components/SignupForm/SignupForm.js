@@ -77,7 +77,14 @@ export default function SignupForm({ showLogin }) {
                 setCooki('userid', res.data.user.id, 3)
                 setCooki('email', values.email, 3)
                 setLoadingDataFromApi(false)
-                alert('حساب شما با موفقیت ایجاد شد.!')
+                notificationDispatch({
+                    type: 'ADD_NOTE',
+                    payload: {
+                        id: v4(),
+                        message: 'حساب شما با موفقیت ایجاد شد.!',
+                        status: 'success'
+                    }
+                })
                 navigateTo('/panel/dashbord')
             })
             .catch(err => {
