@@ -1,19 +1,18 @@
 import { useEffect, useState, useContext } from "react"
-import { useNavigate } from "react-router-dom";
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 // contexts
 import { NotificationContext } from '../../../../Contexts/Notifications/NotificationProvider'
+import { UserInformationContext } from '../../../../Contexts/UserInformationContext/UserInformationContextProvider'
 
 // datas
 import { apiLinks } from "../../../../data/links";
 
 // utils
-import { setCooki, getCooki } from '../../../../utils/cookis'
+import { getCooki } from '../../../../utils/cookis'
 
 // hooks
 import useAxiosPatch from '../../../../hooks/axios/useAxiosPatch'
-import useAxiosGet from "../../../../hooks/axios/useAxiosGet";
 
 // components
 import FormHeader from '../components/FormHeader/FormHeader'
@@ -25,13 +24,11 @@ import SimpleDataLoader from "../../../../components/ui/SimpleDataLoader/SimpleD
 import Avatar from './Avatar/Avatar'
 
 export default function EditProfile() {
-    const notificationDispatch  = useContext(NotificationContext)
-    const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
+    const notificationDispatch = useContext(NotificationContext);
+    const { userInfoContext, setUserInfoContext } = useContext(UserInformationContext);
     const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData } = useAxiosPatch();
     const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
     const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
-    const [formData, setFormData] = useState();
-    const navigateTo = useNavigate()
     const inputsData = {
         name: {
             name: 'name',
@@ -82,54 +79,47 @@ export default function EditProfile() {
             }
         }
     }
-    const userId = getCooki('userid')
+    const userId = getCooki('userid');
     const changeHandler = (event) => {
-        // Image 
-        if (event.bgColor) {
-            setFormData({ ...formData, avatar: event })
-        } else if (event.target.className.includes('custom-select-box-input')) {
+        if (event.target.className.includes('custom-select-box-input')) {
             // Select boxes
             const inputName = event.target.name;
             const inputItems = inputsData[inputName].items;
             const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-            setFormData({ ...formData, [event.target.name]: selectedItem })
+            setUserInfoContext((prev) => {
+                return { ...prev, [event.target.name]: selectedItem }
+            })
         } else {
             // Normal inputs
-            setFormData({ ...formData, [event.target.name]: event.target.value })
+            setUserInfoContext((prev) => {
+                return {
+                    ...prev,
+                    userInfo: {
+                        ...prev.userInfo,
+                        [event.target.name]: event.target.value
+                    }
+                }
+            })
         }
     }
+
+    console.log(userInfoContext)
     const submitHandler = (event) => {
         event.preventDefault()
-        setAxiosPatchData(formData)
+        setAxiosPatchData(userInfoContext.userInfo)
         setAxiosPatchUrl(`${apiLinks.users}/${userId}`)
     }
 
-    console.log(formData)
 
-    /////// loading user info from server
     useEffect(() => {
-        setAxiosGetUrl(`${apiLinks.users}/${userId}`)
-    }, [])
-    /////// set prev data to inputs and showing
-    useEffect(() => {
-        if (axiosGetResult !== null) {
-            const {password, ...otherValues} = axiosGetResult;
-            setFormData(otherValues)
+        if (userInfoContext.isLoaded)
             setSimpleLoaderStatus('hidde')
-            setIsLoadedDataFromApi(true)
-        }
-        if (axiosGetError !== null) {
-            if (axiosGetError.status === 404) {
-                navigateTo('/panel/')
-            }
-            setSimpleLoaderStatus('error')
-        }
-    }, [axiosGetError, axiosGetResult]);
+        setIsLoadedDataFromApi(true)
+    }, [userInfoContext])
     /////// update profile
     useEffect(() => {
         // show update results
         if (axiosPatchResult !== null) {
-            setCooki('email', formData.email, 3)
             notificationDispatch({
                 type: 'ADD_NOTE',
                 id: v4(),
@@ -152,6 +142,7 @@ export default function EditProfile() {
         }
     }, [axiosPatchError, axiosPatchResult]);
 
+
     return (
         isLoadedDataFromApi ? (
             <div id='edit-profile' className="my-3 p-2 text-xs">
@@ -161,15 +152,15 @@ export default function EditProfile() {
                         <section className="flex flex-col xl:flex-row">
                             {/* Right Side - Text form  */}
                             <div className="right-side xl:w-8/12">
-                                <NormalInput {...inputsData.name} onChangeEvent={changeHandler} value={formData.name} />
-                                <NormalInput {...inputsData.email} onChangeEvent={changeHandler} value={formData.email} />
-                                <Textarea {...inputsData.bio} onChangeEvent={changeHandler} value={formData.bio} />
-                                <NormalInput {...inputsData.age} onChangeEvent={changeHandler} value={formData.age} />
+                                <NormalInput {...inputsData.name} onChangeEvent={changeHandler} value={userInfoContext.userInfo.name} />
+                                <NormalInput {...inputsData.email} onChangeEvent={changeHandler} value={userInfoContext.userInfo.email} />
+                                <Textarea {...inputsData.bio} onChangeEvent={changeHandler} value={userInfoContext.userInfo.bio} />
+                                <NormalInput {...inputsData.age} onChangeEvent={changeHandler} value={userInfoContext.userInfo.age} />
                             </div>
                             {/* End of Right Side - Text form  */}
                             {/* Left side - select Image */}
                             <div className="left-side xl:w-4/12">
-                                <Avatar {...formData.avatar} onChangeEvent={changeHandler} />
+                                <Avatar />
                             </div>
                             {/* End of Left side - select Image */}
                         </section>
