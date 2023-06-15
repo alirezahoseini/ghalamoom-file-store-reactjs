@@ -12,7 +12,7 @@ import { apiLinks } from "../../../../data/links";
 import { setCooki, getCooki } from '../../../../utils/cookis'
 
 // hooks
-import useAxiosPut from '../../../../hooks/axios/useAxiosPut'
+import useAxiosPatch from '../../../../hooks/axios/useAxiosPatch'
 import useAxiosGet from "../../../../hooks/axios/useAxiosGet";
 
 // components
@@ -27,7 +27,7 @@ import Avatar from './Avatar/Avatar'
 export default function EditProfile() {
     const notificationDispatch  = useContext(NotificationContext)
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
-    const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
+    const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData } = useAxiosPatch();
     const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
     const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
     const [formData, setFormData] = useState();
@@ -100,8 +100,8 @@ export default function EditProfile() {
     }
     const submitHandler = (event) => {
         event.preventDefault()
-        setAxiosPutData(formData)
-        setAxiosPutUrl(`${apiLinks.users}/${userId}`)
+        setAxiosPatchData(formData)
+        setAxiosPatchUrl(`${apiLinks.users}/${userId}`)
     }
 
     console.log(formData)
@@ -113,7 +113,8 @@ export default function EditProfile() {
     /////// set prev data to inputs and showing
     useEffect(() => {
         if (axiosGetResult !== null) {
-            setFormData(axiosGetResult)
+            const {password, ...otherValues} = axiosGetResult;
+            setFormData(otherValues)
             setSimpleLoaderStatus('hidde')
             setIsLoadedDataFromApi(true)
         }
@@ -127,7 +128,7 @@ export default function EditProfile() {
     /////// update profile
     useEffect(() => {
         // show update results
-        if (axiosPutResult !== null) {
+        if (axiosPatchResult !== null) {
             setCooki('email', formData.email, 3)
             notificationDispatch({
                 type: 'ADD_NOTE',
@@ -138,7 +139,7 @@ export default function EditProfile() {
                 }
             })
         }
-        if (axiosPutError !== null) {
+        if (axiosPatchError !== null) {
             notificationDispatch({
                 type: 'ADD_NOTE',
                 id: v4(),
@@ -147,9 +148,9 @@ export default function EditProfile() {
                     status: 'error'
                 }
             })
-            console.log(axiosPutError)
+            console.log(axiosPatchError)
         }
-    }, [axiosPutError, axiosPutResult]);
+    }, [axiosPatchError, axiosPatchResult]);
 
     return (
         isLoadedDataFromApi ? (
@@ -174,9 +175,9 @@ export default function EditProfile() {
                         </section>
                         <div className="buttons w-full flex items-center gap-3">
                             <div className="w-8/12 xl:w-5/12" >
-                                <SubmitFormButton isPending={axiosPutIsPending} title='ذخیره تغییرات' />
+                                <SubmitFormButton isPending={axiosPatchIsPending} title='ذخیره تغییرات' />
                             </div>
-                            <div className={`w-4/12 xl:w-3/12 ${axiosPutIsPending && 'pointer-events-none'}`} >
+                            <div className={`w-4/12 xl:w-3/12 ${axiosPatchIsPending && 'pointer-events-none'}`} >
                                 <CancelButton title={'لغو'} />
                             </div>
                         </div>
