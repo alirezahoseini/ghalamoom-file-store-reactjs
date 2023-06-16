@@ -81,6 +81,7 @@ export default function EditProfile() {
                 image: '/images/avatars/Aavatar-5.webp'
             }
         }
+        
     }
     const userId = getCooki('userid')
     const changeHandler = (event) => {
