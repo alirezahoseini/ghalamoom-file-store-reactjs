@@ -7,8 +7,8 @@ import { apiLinks } from '../../../data/links'
 import { setCooki, getCooki } from '../../../utils/cookis'
 import axios from 'axios';
 
-export default function useUserName() {
-    const [userName, setUserName] = useState(null)
+export default function useUserInfo() {
+    const [userInfoObj, setUserInfoObj] = useState(null)
     const [isPending, setIsPending] = useState(true)
     const userId = getCooki('userid');
     const url = `${apiLinks.users}/${userId}`;
@@ -16,7 +16,11 @@ export default function useUserName() {
         // first cheking cookis
         const isExistInCookis = getCooki('username');
         if (isExistInCookis) {
-            setUserName(isExistInCookis)
+            setUserInfoObj({
+                username: isExistInCookis,
+                avatarImg: getCooki('avatarImg'),
+                bgColorCode: getCooki('bgColorCode'),
+            })
             setIsPending(false)
         } else if (isExistInCookis === null && userId) {
             // get data from server
@@ -26,13 +30,26 @@ export default function useUserName() {
                     Authorization: `Bearer ${accessToken}`
                 }
             }).then(res => {
+                console.log(res.data)
                 const username = res.data.name;
+                const avatarImg = res.data.avatar.avatar.image;
+                const bgColorCode = res.data.avatar.bgColor.color;
                 if (username) {
                     setCooki('username', username, 3);
-                    setUserName(username)
+                    setCooki('avatarImg', avatarImg, 3);
+                    setCooki('bgColorCode', bgColorCode, 3);
+                    setUserInfoObj({
+                        username,
+                        avatarImg,
+                        bgColorCode
+                    })
                     setIsPending(false)
-                }else{
-                    setUserName('بارگزاری نشد')
+                } else {
+                    setUserInfoObj({
+                        username: "بارگزاری نشد",
+                        avatarId: 1,
+                        bgColorId: 1
+                    })
                     setIsPending(false)
                     console.log(res.data)
                 }
@@ -41,7 +58,11 @@ export default function useUserName() {
                     setIsPending(false)
                     console.log('response error in user Name:  ', error.response)
                 } else if (error.request) {
-                    setUserName('بارگزاری نشد')
+                    setUserInfoObj({
+                        username: "بارگزاری نشد",
+                        avatarImg: 1,
+                        bgColorCode: 1
+                    })
                     setIsPending(false)
                     console.log('request error in user Name:  ', error.request)
                 }
@@ -52,5 +73,5 @@ export default function useUserName() {
         accessUserName()
     }, [])
 
-    return { isPending, userName }
+    return { isPending, userInfoObj }
 }

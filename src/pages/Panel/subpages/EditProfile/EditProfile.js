@@ -9,7 +9,7 @@ import { NotificationContext } from '../../../../Contexts/Notifications/Notifica
 import { apiLinks } from "../../../../data/links";
 
 // utils
-import { setCooki, getCooki } from '../../../../utils/cookis'
+import { deleteCooki, getCooki } from '../../../../utils/cookis'
 
 // hooks
 import useAxiosPatch from '../../../../hooks/axios/useAxiosPatch'
@@ -128,7 +128,6 @@ export default function EditProfile() {
     useEffect(() => {
         // show update results
         if (axiosPatchResult !== null) {
-            setCooki('email', formData.email, 3)
             notificationDispatch({
                 type: 'ADD_NOTE',
                 id: v4(),
@@ -141,6 +140,9 @@ export default function EditProfile() {
             // reload window after seved changes
             setTimeout(() => {
                 window.location.reload();
+                deleteCooki('avatarImg')
+                deleteCooki('bgColorCode')
+                deleteCooki('username')
             }, 2000);
         }
         if (axiosPatchError !== null) {
