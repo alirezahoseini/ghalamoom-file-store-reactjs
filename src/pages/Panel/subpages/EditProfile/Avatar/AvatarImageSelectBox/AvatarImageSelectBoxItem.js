@@ -1,24 +1,19 @@
 import React, { memo, useContext } from 'react'
 
-// Contexts
-import { UserInformationContext } from '../../../../../../Contexts/UserInformationContext/UserInformationContextProvider'
-
+//  Contexts
+import { UserAvatarContext } from '../Avatar'
 
 const AvatarImageSelectBoxItem = memo((props) => {
-  const { setUserInfoContext } = useContext(UserInformationContext);
+  const { setUserAvaterDetails } = useContext(UserAvatarContext);
   const changeHandler = () => {
-    setUserInfoContext(prev => {
+    setUserAvaterDetails(prev => {
       return {
-        ...prev,
-        userInfo: {
-          ...prev.userInfo,
-          avatar: {
-            bgColor:  prev.userInfo.avatar.bgColor,
-            avatar: props
-          }
+        bgColor: prev.bgColor,
+        avatar: {
+          id: props.id,
+          image: props.image
         }
-      }
-    })
+      }})
       props.setIsShowSelectBox(false)
   }
   return (

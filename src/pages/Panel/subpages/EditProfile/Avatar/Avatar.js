@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react'
+import React, { useEffect, useState, createContext, memo, useMemo } from 'react'
 
 // datas 
 import avatarsArray from '../../../../../data/avatarsArray'
@@ -8,24 +8,45 @@ import AvatarImageSelectBox from './AvatarImageSelectBox/AvatarImageSelectBox';
 import AvatarColorSelectBox from './AvatarColorSelectBox/AvatarColorSelectBox';
 
 // Contexts
-import { UserInformationContext } from '../../../../../Contexts/UserInformationContext/UserInformationContextProvider'
+const UserAvatarContext = createContext()
 
 const Avatar = memo((
+    {
+        onChangeEvent,
+        bgColor = {
+            id: 1,
+            color: '#FF6900'
+        },
+        avatar = {
+            id: 1,
+            image: '/images/avatars/Avatar-1.webp'
+        } }
 ) => {
-    const { userInfoContext } = useContext(UserInformationContext);
-    const currentImageUrl = process.env.PUBLIC_URL + avatarsArray[userInfoContext.userInfo.avatar.avatar.id - 1].image;
+    const [userAvaterDetails, setUserAvaterDetails] = useState({ bgColor, avatar })
+    const currentImageUrl = process.env.PUBLIC_URL + avatarsArray[avatar.id - 1].image
+
+    const changeHandler = () => { onChangeEvent(userAvaterDetails) }
+
+    useEffect(() => {
+        changeHandler()
+    }, [userAvaterDetails]);
 
     return (
         <div id='user-avatar' className='mt-10'>
-            <div className='rounded-full w-6/12 lg:w-8/12 mx-auto my-5 outline outline-offset-4 outline-slate-300' style={{ backgroundColor: userInfoContext.userInfo.avatar.bgColor.color }}>
+            <div className='rounded-full w-6/12 lg:w-8/12 mx-auto my-5 outline outline-offset-4 outline-slate-300' style={{ backgroundColor: userAvaterDetails.bgColor.color }}>
                 <img src={currentImageUrl} alt="avatar" className='w-full' width='493px' height='493px' />
             </div>
             <div className='flex items-center justify-evenly gap-2 mt-8'>
-                <AvatarColorSelectBox />
-                <AvatarImageSelectBox />
+                {useMemo(() => (
+                    <UserAvatarContext.Provider value={{ userAvaterDetails, setUserAvaterDetails }} >
+                        <AvatarColorSelectBox />
+                        <AvatarImageSelectBox />
+                    </UserAvatarContext.Provider>
+                ), [userAvaterDetails])}
             </div>
         </div>
     )
 })
 
 export default Avatar
+export { UserAvatarContext }

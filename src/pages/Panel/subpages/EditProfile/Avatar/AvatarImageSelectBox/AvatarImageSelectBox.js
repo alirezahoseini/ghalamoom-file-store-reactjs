@@ -2,8 +2,8 @@ import React, { useContext, useState, memo, useMemo } from 'react'
 import { TbPhotoEdit } from 'react-icons/tb'
 import styles from '../AvatarSelectBox.module.css'
 
-// Contexts
-import { UserInformationContext } from '../../../../../../Contexts/UserInformationContext/UserInformationContextProvider'
+//  Contexts
+import {UserAvatarContext} from '../Avatar'
 
 // datas 
 import avatarsArray from '../../../../../../data/avatarsArray'
@@ -14,7 +14,7 @@ import AvatarSelectBoxHeader from '../AvatarSelectBoxHeader/AvatarSelectBoxHeade
 
 
 const AvatarImageSelectBox = memo(() => {
-    const { userInfoContext } = useContext(UserInformationContext);
+    const {userAvaterDetails} = useContext(UserAvatarContext)
     const [isShowSelectBox, setIsShowSelectBox] = useState(false)
     return (
         <div id='avatar-image-selectbox' className='inline-flex '>
@@ -26,7 +26,7 @@ const AvatarImageSelectBox = memo(() => {
                 {useMemo(() => <AvatarSelectBoxHeader title={"تغییر آواتار"} onCloser={() => setIsShowSelectBox(false)} />, [])}
                 <div className='p-5 flex flex-wrap'>
                     {avatarsArray.map((avatar) => {
-                        const selected = avatar.id === userInfoContext.userInfo.avatar.avatar.id;
+                        const selected = avatar.id === userAvaterDetails.avatar.id;
                         return <AvatarImageSelectBoxItem key={avatar.id} {...avatar} setIsShowSelectBox={setIsShowSelectBox} isChecked={selected} />
                     })}
                 </div>
