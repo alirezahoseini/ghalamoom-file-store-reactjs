@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 // contexts
 import { NotificationContext } from '../../../../Contexts/Notifications/NotificationProvider'
@@ -25,7 +25,7 @@ import SimpleDataLoader from "../../../../components/ui/SimpleDataLoader/SimpleD
 import Avatar from './Avatar/Avatar'
 
 export default function EditProfile() {
-    const notificationDispatch  = useContext(NotificationContext)
+    const notificationDispatch = useContext(NotificationContext)
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
     const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData } = useAxiosPatch();
     const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
@@ -104,7 +104,6 @@ export default function EditProfile() {
         setAxiosPatchUrl(`${apiLinks.users}/${userId}`)
     }
 
-    console.log(formData)
 
     /////// loading user info from server
     useEffect(() => {
@@ -113,7 +112,7 @@ export default function EditProfile() {
     /////// set prev data to inputs and showing
     useEffect(() => {
         if (axiosGetResult !== null) {
-            const {password, ...otherValues} = axiosGetResult;
+            const { password, ...otherValues } = axiosGetResult;
             setFormData(otherValues)
             setSimpleLoaderStatus('hidde')
             setIsLoadedDataFromApi(true)
@@ -138,6 +137,10 @@ export default function EditProfile() {
                     status: 'success'
                 }
             })
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         }
         if (axiosPatchError !== null) {
             notificationDispatch({
