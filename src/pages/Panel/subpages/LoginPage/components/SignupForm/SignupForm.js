@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 // contexts 
 import { NotificationContext } from '../../../../../../Contexts/Notifications/NotificationProvider'
@@ -23,10 +23,18 @@ export default function SignupForm({ showLogin }) {
         name: "",
         email: "",
         password: "",
-        userRoles: "admin",
         bio: "",
-        age: "", 
-        avatar: 1,
+        age: "",
+        avatar: {
+            bgColor: {
+                id: 1,
+                color: '#FF6900'
+            },
+            avatar: {
+                id: 1,
+                image: '/images/avatars/Avatar-1.webp'
+            }
+        }
     })
     const [isLoadingDataFromApi, setLoadingDataFromApi] = useState(false);
     const navigateTo = useNavigate();
@@ -100,7 +108,7 @@ export default function SignupForm({ showLogin }) {
                                 status: 'warning'
                             }
                         })
-   
+
                     }
                 } else if (err.request) {
                     setLoadingDataFromApi(false)
@@ -142,4 +150,6 @@ export default function SignupForm({ showLogin }) {
         </div>
     )
 }
+
+
 

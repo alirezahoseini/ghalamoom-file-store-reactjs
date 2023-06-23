@@ -15,14 +15,14 @@ export default function useUserInfo() {
     const accessUserName = async () => {
         // first cheking cookis
         const isExistInCookis = getCooki('username');
-        if (isExistInCookis) {
+        if (isExistInCookis !== null) {
             setUserInfoObj({
                 username: isExistInCookis,
                 avatarImg: getCooki('avatarImg'),
                 bgColorCode: getCooki('bgColorCode'),
             })
             setIsPending(false)
-        } else if (isExistInCookis === null && userId) {
+        } else if (userId !== null) {
             // get data from server
             const accessToken = getCooki('token')
             axios.get(url, {
@@ -30,11 +30,12 @@ export default function useUserInfo() {
                     Authorization: `Bearer ${accessToken}`
                 }
             }).then(res => {
-                console.log(res.data)
                 const username = res.data.name;
                 const avatarImg = res.data.avatar.avatar.image;
                 const bgColorCode = res.data.avatar.bgColor.color;
+
                 if (username) {
+
                     setCooki('username', username, 3);
                     setCooki('avatarImg', avatarImg, 3);
                     setCooki('bgColorCode', bgColorCode, 3);
@@ -54,6 +55,7 @@ export default function useUserInfo() {
                     console.log(res.data)
                 }
             }).catch((error) => {
+                console.log(error)
                 if (error.response) {
                     setIsPending(false)
                     console.log('response error in user Name:  ', error.response)

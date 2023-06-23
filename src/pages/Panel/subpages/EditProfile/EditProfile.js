@@ -103,8 +103,6 @@ export default function EditProfile() {
         setAxiosPatchData(formData)
         setAxiosPatchUrl(`${apiLinks.users}/${userId}`)
     }
-
-
     /////// loading user info from server
     useEffect(() => {
         setAxiosGetUrl(`${apiLinks.users}/${userId}`)
