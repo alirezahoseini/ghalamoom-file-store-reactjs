@@ -20,6 +20,8 @@ import SingleArtwork from './pages/SinglePages/SingleArtwork/SingleArtwork';
 import Courses from './pages/Categories/Courses/Courses';
 import Products from './pages/Categories/Products/Products';
 import Artworks from './pages/Categories/Artworks/Artworks';
+// Landing page
+import LandingPage from './pages/Landing/LandingPage';
 
 
 
@@ -50,6 +52,7 @@ const routes = [
 { path: '/courses/:courseId', element: <SingleCourse /> },
 { path: '/artworks', element: <Artworks/> },
 { path: '/artworks/:artworkId', element: <SingleArtwork /> },
+{ path: '/landing', element: <LandingPage /> },
 
 ];
 
