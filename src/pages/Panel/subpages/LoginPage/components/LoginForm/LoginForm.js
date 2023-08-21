@@ -15,9 +15,11 @@ import { setCooki } from '../../../../../../utils/cookis'
 import SubmitButton from '../SubmitButton/SubmitButton'
 import LoginWithSocials from '../LoginWithSocials/LoginWithSocials'
 import LoginInput from '../LoginInput/LoginInput'
+import DefaultUserInfos from '../LoginInput/DefaultUserInfos/DefaultUserInfos'
 
 export default function LoginForm({ showLogin }) {
-    const notificationDispatch = useContext(NotificationContext)
+    const notificationDispatch = useContext(NotificationContext);
+
     const [values, setValues] = useState({
         email: '',
         password: ''
@@ -126,6 +128,9 @@ export default function LoginForm({ showLogin }) {
                 ))}
                 {/* Submit button  */}
                 <SubmitButton value='ورود' loading={isLoadingDataFromApi} />
+                {/* Default user infos  */}
+                <DefaultUserInfos />
+                {/* End of Default user infos  */}
                 {/* Login with socials  */}
                 <LoginWithSocials />
                 {/* End of Login with socials  */}
