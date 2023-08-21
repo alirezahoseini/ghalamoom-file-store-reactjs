@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 // contexts 
 import { NotificationContext } from '../../../../../../Contexts/Notifications/NotificationProvider'
@@ -129,7 +129,9 @@ export default function LoginForm({ showLogin }) {
                 {/* Submit button  */}
                 <SubmitButton value='ورود' loading={isLoadingDataFromApi} />
                 {/* Default user infos  */}
-                <DefaultUserInfos />
+                <div className='mt-3'>
+                    <DefaultUserInfos />
+                </div>
                 {/* End of Default user infos  */}
                 {/* Login with socials  */}
                 <LoginWithSocials />
