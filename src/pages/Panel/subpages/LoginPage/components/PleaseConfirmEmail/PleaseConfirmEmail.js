@@ -77,6 +77,7 @@ export default function PleaseConfirmEmail() {
             <h1 className='font-rokh text-xl lg:text-2xl font-black text-slate-700 mb-5'>لطفا ایمیل خود را تایید کنید</h1>
             <p className='mt-1 font-medium leading-5'>یک ایمیل احراز هویت برای {userEmail} ارسال شد</p>
             <p className='mt-1 font-medium'>پس از تایید ایمیل وارد حساب کاربری خود شوید</p>
+            <p className='mt-2'>اگر ایمیلی دریافت نکردید ، صندوق هرزنامه ها رو هم چک کنید</p>
           </div>
           <div className='mt-8 pr-5 flex'>
             <p className=''>ایمیلی دریافت نکرده اید؟</p>
