@@ -39,7 +39,7 @@ export default function useAxiosGet() {
                             type: 'ADD_NOTE',
                             payload: {
                                 id: v4(),
-                                message: 'اتصال به سرور ناموفق بود ، لطفا با vpn امتحان کنید',
+                                message: 'پاسخی از سرور دریافت نشد.!',
                                 status: 'error'
                             }
                         })
