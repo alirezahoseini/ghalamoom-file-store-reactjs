@@ -28,6 +28,7 @@ export default function PanelCourses() {
 
     useEffect(() => {
         if (axiosGetResult !== null) {
+            console.log(axiosGetResult)
             setCoursesArray(axiosGetResult)
             setSimpleDataLoaderStatus('hidde')
         } else if (axiosGetError !== null) {
@@ -40,10 +41,10 @@ export default function PanelCourses() {
 
         <div id='courses'>
             <div className="wrapper px-2 my-3">
-                <CategoriesHeader isList={isList} setIsList={setIsList} title="دوره" type='course' />
+                {/* <CategoriesHeader isList={isList} setIsList={setIsList} title="دوره" type='course' />
                 {simpleDataLoaderStatus === 'hidde' && (
                     <DataList isList={isList} {...dataObj} />
-                )}
+                )} */}
                 {simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} />}
             </div>
         </div>

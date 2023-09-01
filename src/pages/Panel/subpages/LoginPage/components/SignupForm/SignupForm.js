@@ -23,18 +23,18 @@ export default function SignupForm({ showLogin }) {
         name: "",
         email: "",
         password: "",
-        bio: "",
-        age: "",
-        avatar: {
-            bgColor: {
-                id: 1,
-                color: '#FF6900'
-            },
-            avatar: {
-                id: 1,
-                image: '/images/avatars/Avatar-1.webp'
-            }
-        }
+        // bio: "",
+        // age: "",
+        // avatar: {
+        //     bgColor: {
+        //         id: 1,
+        //         color: '#FF6900'
+        //     },
+        //     avatar: {
+        //         id: 1,
+        //         image: '/images/avatars/Avatar-1.webp'
+        //     }
+        // }
     })
     const [isLoadingDataFromApi, setLoadingDataFromApi] = useState(false);
     const navigateTo = useNavigate();
@@ -78,11 +78,15 @@ export default function SignupForm({ showLogin }) {
         event.preventDefault()
         const url = apiLinks.signup
 
+        console.log(url)
+        console.log(values)
+
         axios.post(url, values)
             .then(res => {
                 console.log(res)
+                if (res.status === 201) { }
                 setCooki('token', res.data.accessToken, 3)
-                setCooki('userid', res.data.user.id, 3)
+                // setCooki('userid', res.data.user.id, 3)
                 setCooki('email', values.email, 3)
                 setLoadingDataFromApi(false)
                 notificationDispatch({
@@ -93,12 +97,13 @@ export default function SignupForm({ showLogin }) {
                         status: 'success'
                     }
                 })
-                navigateTo('/panel/dashbord')
+                navigateTo('/please-confirm-email')
             })
             .catch(err => {
                 console.log(err)
                 if (err.response) {
-                    if (err.response.data === 'Email already exists') {
+                    // IF exist email
+                    if (err.response.status === 409) {
                         setLoadingDataFromApi(false)
                         notificationDispatch({
                             type: 'ADD_NOTE',
@@ -108,7 +113,18 @@ export default function SignupForm({ showLogin }) {
                                 status: 'warning'
                             }
                         })
-
+                    }
+                    // IF isPending for confirm email
+                    if (err.response.status === 403) {
+                        setLoadingDataFromApi(false)
+                        notificationDispatch({
+                            type: 'ADD_NOTE',
+                            payload: {
+                                id: v4(),
+                                message: 'این ایمیل در انتطار تایید است .!',
+                                status: 'warning'
+                            }
+                        })
                     }
                 } else if (err.request) {
                     setLoadingDataFromApi(false)
@@ -116,11 +132,10 @@ export default function SignupForm({ showLogin }) {
                         type: 'ADD_NOTE',
                         payload: {
                             id: v4(),
-                            message: 'پاسخی از سرور دریافت نشد. حتما از VPN استفاده کنید.!',
+                            message: 'پاسخی از سرور دریافت نشد.!',
                             status: 'error'
                         }
                     })
-                    alert()
                 } else {
                     setLoadingDataFromApi(false)
                     console.log(err)

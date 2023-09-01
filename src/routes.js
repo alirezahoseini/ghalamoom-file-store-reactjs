@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-// اHome
+// Home
 import Home from './pages/Home/Home'
 // panel and subpages
 import Panel from './pages/Panel/Panel';
@@ -12,6 +12,9 @@ import EditItem from './pages/Panel/subpages/EditItem/EditItem';
 import PanelCourses from './pages/Panel/subpages/Courses/PanelCourses';
 import PanelArtworks from './pages/Panel/subpages/Artworks/PanelArtworks';
 import EditProfile from './pages/Panel/subpages/EditProfile/EditProfile';
+// Confirm Email pages
+import ConfirmEmailPage from './pages/Panel/subpages/ConfirmEmailPage/ConfirmEmailPage';
+import PleaseConfirmEmail from './pages/Panel/subpages/LoginPage/components/PleaseConfirmEmail/PleaseConfirmEmail';
 // Single Pages
 import SingleProduct from './pages/SinglePages/SingleProduct/SingleProduct';
 import SingleCourse from './pages/SinglePages/SingleCourse/SingleCourse';
@@ -46,6 +49,8 @@ const routes = [
 ]
     },
 { path: '/login', element: <LoginPage /> },
+{ path: '/please-confirm-email', element: <PleaseConfirmEmail /> },
+{ path: '/confirm-email', element: <ConfirmEmailPage /> },
 { path: '/products', element: <Products /> },
 { path: '/products/:productId', element: <SingleProduct /> },
 { path: '/courses', element: <Courses/> },

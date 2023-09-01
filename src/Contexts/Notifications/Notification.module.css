@@ -82,14 +82,14 @@
 
  /* success */
 .notificationItem.success .bar{
-    background-color: rgba(0, 255, 85, 0.096);
+    background-color: #00ff5518;
 }
 .notificationItem.success p{
-    color: rgb(3, 100, 3);
+    color: #036403;
 }
 
 .notificationItem.success {
-    border-color: rgb(23, 247, 23);
+    border-color: #17f717;
 }
 
  /* error */
@@ -97,11 +97,11 @@
     background-color: rgba(255, 38, 0, 0.103);
 }
 .notificationItem.error p{
-    color: rgb(100, 22, 3);
+    color: #641603;
 }
 
 .notificationItem.error {
-    border-color: rgba(247, 57, 23, 0.479);
+    border-color: #f739177a;
 }
 
  /* warning */
@@ -118,10 +118,10 @@
 
  /* info */
 .notificationItem.info .bar{
-    background-color: rgba(0, 132, 255, 0.103);
+    background-color: #0084ff1a;
 }
 .notificationItem.info p{
-    color: rgb(3, 61, 100);
+    color: #033d64;
 }
 
 .notificationItem.info {

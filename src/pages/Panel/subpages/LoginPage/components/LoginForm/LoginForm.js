@@ -42,9 +42,9 @@ export default function LoginForm({ showLogin }) {
             name: 'password',
             type: 'password',
             placeholder: 'رمزعبور',
-            pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*)[A-Za-z\\d]{8,30}$",
+            // pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*)[A-Za-z\\d]{8,30}$",
             errorMessage: 'رمزعبور باید حداقل 8 کاراکتر که شامل حروف کوچک و بزرگ انگلیسی و یک عدد است باشد',
-            required: true
+            required: false
         },
     ]
 
@@ -59,8 +59,8 @@ export default function LoginForm({ showLogin }) {
 
         axios.post(url, values)
             .then(res => {
-                setCooki('token', res.data.accessToken, 3)
-                setCooki('userid', res.data.user.id, 3)
+                setCooki('token', res.data.token, 3)
+                // setCooki('userid', res.data.user.id, 3)
                 setCooki('email', values.email, 3)
                 setLoadingDataFromApi(false)
                 notificationDispatch({
@@ -74,6 +74,7 @@ export default function LoginForm({ showLogin }) {
                 navigateTo('/panel/dashbord')
             })
             .catch(err => {
+                console.log(err)
                 if (err.response) {
                     if (err.response.data === 'Cannot find user') {
                         setLoadingDataFromApi(false)

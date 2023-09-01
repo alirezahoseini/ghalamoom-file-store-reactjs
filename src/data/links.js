@@ -31,18 +31,30 @@ const navigaitionLinks = [
 ];
 
 const apiLinks = {
+
+    /* Render.com */
     // products: 'https://ghalamoom-backend-jsonserver.onrender.com/products',
     // login: 'https://ghalamoom-backend-jsonserver.onrender.com/login',
     // signup: 'https://ghalamoom-backend-jsonserver.onrender.com/register',
     // users: 'https://ghalamoom-backend-jsonserver.onrender.com/users',
     // courses: 'https://ghalamoom-backend-jsonserver.onrender.com/courses',
     // artworks: 'https://ghalamoom-backend-jsonserver.onrender.com/artworks',
-    products: 'http://localhost:5000/products',
-    login: 'http://localhost:5000/login',
-    signup: 'http://localhost:5000/register',
-    users: 'http://localhost:5000/users',
-    courses: 'http://localhost:5000/courses',
-    artworks: 'http://localhost:5000/artworks'
+
+    /* Localhost */
+    // products: 'http://localhost:5000/products',
+    // login: 'http://localhost:5000/login',
+    // signup: 'http://localhost:5000/register',
+    // users: 'http://localhost:5000/users',
+    // courses: 'http://localhost:5000/courses',
+    // artworks: 'http://localhost:5000/artworks'
+
+    /* New backend from m0x1h0x64i */
+    products: 'http://ghalamoom.m0x61h0x64i.ir/products',
+    login: 'https://ghalamoom.m0x61h0x64i.ir/login',
+    signup: 'https://ghalamoom.m0x61h0x64i.ir/signup',
+    users: 'http://ghalamoom.m0x61h0x64i.ir',
+    courses: 'http://ghalamoom.m0x61h0x64i.ir/courses',
+    artworks: 'http://ghalamoom.m0x61h0x64i.ir/artworks'
 }
 
 
