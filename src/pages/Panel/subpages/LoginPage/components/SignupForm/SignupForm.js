@@ -78,14 +78,11 @@ export default function SignupForm({ showLogin }) {
         event.preventDefault()
         const url = apiLinks.signup
 
-        console.log(url)
-        console.log(values)
-
         axios.post(url, values)
             .then(res => {
                 console.log(res)
                 if (res.status === 201) { }
-                setCooki('token', res.data.accessToken, 3)
+                // setCooki('token', res.data.accessToken, 3)
                 // setCooki('userid', res.data.user.id, 3)
                 setCooki('email', values.email, 3)
                 setLoadingDataFromApi(false)
