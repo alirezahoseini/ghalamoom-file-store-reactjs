@@ -17,7 +17,7 @@ import LoginWithSocials from '../LoginWithSocials/LoginWithSocials'
 import LoginInput from '../LoginInput/LoginInput'
 import DefaultUserInfos from '../LoginInput/DefaultUserInfos/DefaultUserInfos'
 
-export default function LoginForm({ showLogin }) {
+export default function LoginForm({ setShowForm }) {
     const notificationDispatch = useContext(NotificationContext);
 
     const [values, setValues] = useState({
@@ -44,7 +44,7 @@ export default function LoginForm({ showLogin }) {
             placeholder: 'رمزعبور',
             // pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*)[A-Za-z\\d]{8,30}$",
             errorMessage: 'رمزعبور باید حداقل 8 کاراکتر که شامل حروف کوچک و بزرگ انگلیسی و یک عدد است باشد',
-            required: false
+            required: true
         },
     ]
 
@@ -130,6 +130,9 @@ export default function LoginForm({ showLogin }) {
                 {inputsArray.map(input => (
                     <LoginInput key={input.id} onChangeEvent={onChangeHandler} {...input} />
                 ))}
+                {/* Forgot password Button */}
+                <button onClick={() => setShowForm('forgotPass')} type='button' className='text-right font-medium text-xs text-slate-600 hover:text-blue-600 mr-1  hover:underline'>رمزعبور خود را فراموش کرده اید؟</button>
+                {/* Forgot password Button */}
                 {/* Submit button  */}
                 <SubmitButton value='ورود' loading={isLoadingDataFromApi} />
                 {/* Default user infos  */}
@@ -142,7 +145,7 @@ export default function LoginForm({ showLogin }) {
                 {/* End of Login with socials  */}
                 <div className='font-bold my-4' >
                     <span>حساب کاربری ندارید.؟</span>
-                    <span onClick={() => showLogin(prevState => !prevState)} className='text-blue-600 mr-3 cursor-pointer hover:text-gray-700 hover:underline' > ساخت حساب </span>
+                    <span onClick={() => setShowForm('signup')} className='text-blue-600 mr-3 cursor-pointer hover:text-gray-700 hover:underline' > ساخت حساب </span>
                 </div>
             </form>
         </div>

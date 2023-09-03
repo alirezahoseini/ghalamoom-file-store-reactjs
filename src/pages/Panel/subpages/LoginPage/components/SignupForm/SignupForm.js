@@ -17,7 +17,7 @@ import Input from '../LoginInput/LoginInput'
 import SubmitButton from '../SubmitButton/SubmitButton'
 import LoginWithSocials from '../LoginWithSocials/LoginWithSocials'
 
-export default function SignupForm({ showLogin }) {
+export default function SignupForm({ setShowForm }) {
     const notificationDispatch = useContext(NotificationContext)
     const [values, setValues] = useState({
         name: "",
@@ -158,7 +158,7 @@ export default function SignupForm({ showLogin }) {
                 {/* End of Login with socials  */}
                 <div className='font-bold my-4' >
                     <span>حساب کاربری دارید.؟</span>
-                    <span onClick={() => showLogin(prevState => !prevState)} className='text-blue-600 mr-3 cursor-pointer hover:text-gray-700 hover:underline' >ورود به سایت</span>
+                    <span onClick={() => setShowForm('login')} className='text-blue-600 mr-3 cursor-pointer hover:text-gray-700 hover:underline' >ورود به سایت</span>
                 </div>
             </form>
         </div>

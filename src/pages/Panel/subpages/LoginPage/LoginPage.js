@@ -6,10 +6,17 @@ import loginSideImg from '../../../../assets/images/panel/login-image.webp'
 // components
 import LoginForm from "./components/LoginForm/LoginForm"
 import SignupForm from "./components/SignupForm/SignupForm"
+import ForgotPasswordForm from "./components/ForgotPasswordForm/ForgotPasswordForm"
 
 export default function LoginPage() {
 
-  const [showLoginForm, setShowloginForm] = useState(true)
+  /* ***** Show form status  *****
+  
+  1- login ====> show login form
+  2- sign ====> show signup form
+  3- forgotPass ====> show forgot password form
+  */
+  const [showFormStatus, setShowFormStatus] = useState('forgotPass')
 
   return (
     <div className='login-page container mx-auto px-2 lg:px-0 relative'>
@@ -17,13 +24,9 @@ export default function LoginPage() {
       <div className=" bg-white bg-opacity-25 backdrop-blur-3xl flex flex-col justify-between p-3 rounded-2xl border-2 border-white mb-5 lg:flex-row lg:w-9/12 lg:mx-auto lg:bg-gradient-to-r lg:from-white lg:to-transparent lg:bg-opacity-10 ">
         {/* Forms  */}
         <div id='forms' className='lg:w-6/12'>
-          {
-            showLoginForm ? (
-              <LoginForm  showLogin={setShowloginForm}/>
-            ) : (
-              <SignupForm showLogin={setShowloginForm}/>
-            )
-          }
+          {showFormStatus === 'login' && <LoginForm  setShowForm={setShowFormStatus}/>}
+          {showFormStatus === 'signup' && <SignupForm setShowForm={setShowFormStatus}/>}
+          {showFormStatus === 'forgotPass' && <ForgotPasswordForm setShowForm={setShowFormStatus}/>}
         </div>
         {/* End of Forms  */}
         {/* Side image  */}

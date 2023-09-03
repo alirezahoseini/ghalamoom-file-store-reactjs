@@ -12,6 +12,9 @@ export default function useAxiosPost() {
     const [axiosPostData, setAxiosPostData] = useState(null);                   // request data ==> sending to api
 
     const sendRequest = () => {
+        console.log(axiosPostData )
+        console.log('axios post' )
+        
         setAxiosPostIsPending(true);            // is loading === true
         axios.post(axiosPostUrl, axiosPostData)     // checking all dependencies
             .then(res => {

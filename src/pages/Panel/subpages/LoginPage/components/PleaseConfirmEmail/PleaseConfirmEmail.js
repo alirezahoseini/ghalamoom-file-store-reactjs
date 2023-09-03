@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { apiLinks } from '../../../../../../data/links'
 import axios from 'axios';
 import { v4 } from 'uuid'
@@ -14,8 +14,15 @@ import emailIcon from '../../../../../../assets/images/panel/confirm-email-page/
 import { getCooki } from '../../../../../../utils/cookis'
 
 export default function PleaseConfirmEmail() {
-  const notificationDispatch = useContext(NotificationContext)
+  const notificationDispatch = useContext(NotificationContext);
+  const navigateTo = useNavigate()
   const userEmail = getCooki('email');
+
+  useEffect(() => {
+    if(!userEmail){
+      // navigateTo('/panel/dashboard')
+    }
+  }, [])
 
   // Resend confirm email
   const resendConfirmEmail = () => {
@@ -23,9 +30,9 @@ export default function PleaseConfirmEmail() {
     const data = {
       email: userEmail
     }
+
     axios.post(url, data)
       .then(res => {
-        console.log(res)
         // If sending successful
         if (res.status === 200) {
           notificationDispatch({
@@ -63,6 +70,7 @@ export default function PleaseConfirmEmail() {
           })
         }
       })
+
 
   }
   return (
