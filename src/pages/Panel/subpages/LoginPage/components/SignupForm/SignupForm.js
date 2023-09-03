@@ -113,6 +113,7 @@ export default function SignupForm({ showLogin }) {
                     }
                     // IF isPending for confirm email
                     if (err.response.status === 403) {
+                        setCooki('email', values.email, 3)
                         setLoadingDataFromApi(false)
                         notificationDispatch({
                             type: 'ADD_NOTE',
@@ -121,7 +122,8 @@ export default function SignupForm({ showLogin }) {
                                 message: 'این ایمیل در انتطار تایید است .!',
                                 status: 'warning'
                             }
-                        })
+                        });
+                        navigateTo('/please-confirm-email')
                     }
                 } else if (err.request) {
                     setLoadingDataFromApi(false)

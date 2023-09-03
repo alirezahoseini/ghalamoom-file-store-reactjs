@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { apiLinks } from '../../../../../../data/links'
+import axios from 'axios';
 import { v4 } from 'uuid'
 
 // contexts 
@@ -11,7 +12,6 @@ import emailIcon from '../../../../../../assets/images/panel/confirm-email-page/
 
 // Utils
 import { getCooki } from '../../../../../../utils/cookis'
-import axios from 'axios';
 
 export default function PleaseConfirmEmail() {
   const notificationDispatch = useContext(NotificationContext)
@@ -23,7 +23,6 @@ export default function PleaseConfirmEmail() {
     const data = {
       email: userEmail
     }
-    console.log(data)
     axios.post(url, data)
       .then(res => {
         console.log(res)
