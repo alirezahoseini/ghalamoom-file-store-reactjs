@@ -74,38 +74,41 @@ export default function LoginForm({ showLogin }) {
                 navigateTo('/panel/dashbord')
             })
             .catch(err => {
-                console.log(err)
                 if (err.response) {
-                    if (err.response.data === 'Cannot find user') {
+                    // if wrong data
+                    if (err.response.status === 400) {
                         setLoadingDataFromApi(false)
                         notificationDispatch({
                             type: 'ADD_NOTE',
                             payload: {
                                 id: v4(),
-                                message: "کاربری با این ایمیل در سایت وجود ندارد.!",
+                                message: "اطلاعات وارد شده اشتباه است!",
                                 status: 'error'
                             }
                         })
-                    } else if (err.response.data === 'Incorrect password') {
+                        // if pending email
+                    } else if (err.response.status === 403) {
                         setLoadingDataFromApi(false)
                         notificationDispatch({
                             type: 'ADD_NOTE',
                             payload: {
                                 id: v4(),
-                                message: 'پسورد اشتباه است.!',
+                                message: 'ایمیل شما در انتظار تایید است',
                                 status: 'warning'
                             }
                         })
+                        navigateTo('/please-confirm-email')
                     } else {
                         console.log(err.response)
                     }
+                    // if not connect to server
                 } else if (err.request) {
                     setLoadingDataFromApi(false)
                     notificationDispatch({
                         type: 'ADD_NOTE',
                         payload: {
                             id: v4(),
-                            message: 'پاسخی از سرور دریافت نشد. حتما از VPN استفاده کنید.!',
+                            message: 'پاسخی از سرور دریافت نشد.!',
                             status: 'error'
                         }
                     })
