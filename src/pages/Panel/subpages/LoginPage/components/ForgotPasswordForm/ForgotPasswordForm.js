@@ -7,6 +7,8 @@ import { apiLinks } from '../../../../../../data/links';
 // Contexts
 import { NotificationContext } from '../../../../../../Contexts/Notifications/NotificationProvider'
 
+// Utils
+import { setCooki } from '../../../../../../utils/cookis';
 
 // Hooks
 import useAxiosPost from '../../../../../../hooks/axios/useAxiosPost'
@@ -15,11 +17,13 @@ import useAxiosPost from '../../../../../../hooks/axios/useAxiosPost'
 import SubmitButton from '../SubmitButton/SubmitButton'
 import LoginInput from '../LoginInput/LoginInput'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function ForgotPasswordForm({ setShowForm }) {
     const notificationDispatch = useContext(NotificationContext)
     const [isLoadingDataFromApi, setLoadingDataFromApi] = useState(false);
+    const navigateTo = useNavigate()
     const [values, setValues] = useState({
         email: ''
     });
@@ -42,15 +46,13 @@ export default function ForgotPasswordForm({ setShowForm }) {
         setLoadingDataFromApi(true)
         event.preventDefault()
         const url = apiLinks.login + '/reset-password';
-
-        console.log(values)
-        console.log(" up forgot form ")
+        setCooki('email', values.email, 3);
 
         axios.post(url, values)
             .then((res => {
                 console.log(res)
                 if (res.status === 200) {
-                    isLoadingDataFromApi(false)
+                    setLoadingDataFromApi(false)
                     notificationDispatch({
                         type: 'ADD_NOTE',
                         payload: {
@@ -60,6 +62,7 @@ export default function ForgotPasswordForm({ setShowForm }) {
                         }
                     })
                 }
+                navigateTo('/please-check-your-email-forgot-password')
             }))
             .catch(err => {
                 if (err.response.status === 404) {

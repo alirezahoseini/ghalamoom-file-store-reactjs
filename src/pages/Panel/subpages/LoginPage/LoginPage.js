@@ -16,7 +16,7 @@ export default function LoginPage() {
   2- sign ====> show signup form
   3- forgotPass ====> show forgot password form
   */
-  const [showFormStatus, setShowFormStatus] = useState('forgotPass')
+  const [showFormStatus, setShowFormStatus] = useState('login')
 
   return (
     <div className='login-page container mx-auto px-2 lg:px-0 relative'>

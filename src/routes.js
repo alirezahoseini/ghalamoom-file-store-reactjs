@@ -15,6 +15,7 @@ import EditProfile from './pages/Panel/subpages/EditProfile/EditProfile';
 // Confirm Email pages
 import ConfirmEmailPage from './pages/Panel/subpages/ConfirmEmailPage/ConfirmEmailPage';
 import PleaseConfirmEmail from './pages/Panel/subpages/LoginPage/components/PleaseConfirmEmail/PleaseConfirmEmail';
+import PleaseCheckEmailForgotPass from './pages/Panel/subpages/LoginPage/PleaseCheckEmailForgotPass/PleaseCheckEmailForgotPass';
 // Single Pages
 import SingleProduct from './pages/SinglePages/SingleProduct/SingleProduct';
 import SingleCourse from './pages/SinglePages/SingleCourse/SingleCourse';
@@ -50,6 +51,7 @@ const routes = [
     },
 { path: '/login', element: <LoginPage /> },
 { path: '/please-confirm-email', element: <PleaseConfirmEmail /> },
+{ path: '/please-check-your-email-forgot-password', element: <PleaseCheckEmailForgotPass /> },
 { path: '/confirm-email', element: <ConfirmEmailPage /> },
 { path: '/products', element: <Products /> },
 { path: '/products/:productId', element: <SingleProduct /> },

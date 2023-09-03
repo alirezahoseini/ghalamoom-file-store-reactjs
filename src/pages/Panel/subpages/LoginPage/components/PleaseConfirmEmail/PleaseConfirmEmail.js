@@ -20,7 +20,7 @@ export default function PleaseConfirmEmail() {
 
   useEffect(() => {
     if(!userEmail){
-      // navigateTo('/panel/dashboard')
+      navigateTo('/panel/dashboard')
     }
   }, [])
 
