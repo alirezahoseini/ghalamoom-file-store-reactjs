@@ -25,9 +25,9 @@ export default function DefaultUserInfos() {
     return (
         <div className='flex flex-col'>
             <h1 className='font-bold text-gray-700 mb-3'>برای ورود از این اطلاعات استفاده کنید</h1>
-            <div title='کپی شود' onClick={() => clickHandler('admin@gmail.com')} className='bg-gray-100 my-2 rounded-md p-3 cursor-pointer flex items-center justify-between px-5'>
+            <div title='کپی شود' onClick={() => clickHandler('mehdimj0161@gmail.com')} className='bg-gray-100 my-2 rounded-md p-3 cursor-pointer flex items-center justify-between px-5'>
                 <FiCopy className='text-lg text-blue-600' />
-                <span className='font-bold'>admin@gmail.com</span>
+                <span className='font-bold'>mehdimj0161@gmail.com</span>
             </div>
             <div title='کپی شود' onClick={() => clickHandler('Password1')} className='bg-gray-100 my-2 rounded-md p-3 cursor-pointer flex items-center justify-between px-5'>
                 <FiCopy className='text-lg text-blue-600' />
