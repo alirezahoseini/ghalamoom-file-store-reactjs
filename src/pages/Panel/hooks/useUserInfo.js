@@ -11,18 +11,19 @@ export default function useUserInfo() {
     const [userInfoObj, setUserInfoObj] = useState(null)
     const [isPending, setIsPending] = useState(true)
     const userId = getCooki('userid');
-    const url = `${apiLinks.users}/${userId}`;
+    const url = `${apiLinks.users}/profile`;
     const accessUserName = async () => {
         // first cheking cookis
         const isExistInCookis = getCooki('username');
         if (isExistInCookis !== null) {
+            console.log('not null')
             setUserInfoObj({
                 username: isExistInCookis,
                 avatarImg: getCooki('avatarImg'),
                 bgColorCode: getCooki('bgColorCode'),
             })
             setIsPending(false)
-        } else if (userId !== null) {
+        } else{
             // get data from server
             const accessToken = getCooki('token')
             axios.get(url, {
@@ -31,8 +32,8 @@ export default function useUserInfo() {
                 }
             }).then(res => {
                 const username = res.data.name;
-                const avatarImg = res.data.avatar.avatar.image;
-                const bgColorCode = res.data.avatar.bgColor.color;
+                const avatarImg = res.data.avatar;
+                const bgColorCode = res.data.bgColor;
 
                 if (username) {
 
@@ -52,7 +53,6 @@ export default function useUserInfo() {
                         bgColorId: 1
                     })
                     setIsPending(false)
-                    console.log(res.data)
                 }
             }).catch((error) => {
                 console.log(error)

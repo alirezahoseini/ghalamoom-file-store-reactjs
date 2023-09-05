@@ -52,7 +52,7 @@ const apiLinks = {
     products: 'http://ghalamoom.m0x61h0x64i.ir/products',
     login: 'https://ghalamoom.m0x61h0x64i.ir/login',
     signup: 'https://ghalamoom.m0x61h0x64i.ir/signup',
-    users: 'http://ghalamoom.m0x61h0x64i.ir',
+    users: 'https://ghalamoom.m0x61h0x64i.ir/users',
     courses: 'http://ghalamoom.m0x61h0x64i.ir/courses',
     artworks: 'http://ghalamoom.m0x61h0x64i.ir/artworks'
 }
