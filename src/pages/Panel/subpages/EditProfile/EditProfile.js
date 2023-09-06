@@ -26,7 +26,7 @@ import Avatar from './Avatar/Avatar'
 
 export default function EditProfile() {
     const notificationDispatch = useContext(NotificationContext)
-    const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
+    const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
     const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData } = useAxiosPatch();
     const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
     const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
@@ -82,7 +82,8 @@ export default function EditProfile() {
             }
         }
     }
-    const userId = getCooki('userid')
+    const userId = getCooki('userid');
+    const authToken = getCooki('token');
     const changeHandler = (event) => {
         // Image 
         if (event.bgColor) {
@@ -105,17 +106,20 @@ export default function EditProfile() {
     }
     /////// loading user info from server
     useEffect(() => {
-        setAxiosGetUrl(`${apiLinks.users}/${userId}`)
+        setAxiosGetUrl(`${apiLinks.users}/profile`)
+        setAxiosGetToken(authToken)
     }, [])
     /////// set prev data to inputs and showing
     useEffect(() => {
         if (axiosGetResult !== null) {
+            console.log(axiosGetResult)
             const { password, ...otherValues } = axiosGetResult;
             setFormData(otherValues)
             setSimpleLoaderStatus('hidde')
             setIsLoadedDataFromApi(true)
         }
         if (axiosGetError !== null) {
+            console.log(axiosGetError)
             if (axiosGetError.status === 404) {
                 navigateTo('/panel/')
             }

@@ -46,7 +46,41 @@ export default function useAxiosGet() {
                     }
                 })
         } else {
-            console.log('with token')
+            axios.get(axiosGetUrl, {
+                headers: {
+                    Authorization: `Bearer ${axiosGetToken}`
+                }
+            })
+                .then(res => {
+                    // ok response
+                    setAxiosGetResult(res.data)
+                    setAxiosGetUrl(null)
+                    setAxiosGetIsPending(false)
+                    setAxiosGetError(null)
+                })
+                .catch(err => {
+                    // response errors // 400/500
+                    if (err.response) {
+                        setAxiosGetUrl(null)
+                        setAxiosGetIsPending(false)
+                        setAxiosGetError(err.response)
+                        console.log('request error : ', err.response)
+                    } else if (err.request) {
+                        // request errors // not send request 
+                        setAxiosGetUrl(null)
+                        setAxiosGetIsPending(false)
+                        setAxiosGetError(err.request)
+                        console.log('request error : ', err.request)
+                        notificationDispatch({
+                            type: 'ADD_NOTE',
+                            payload: {
+                                id: v4(),
+                                message: 'پاسخی از سرور دریافت نشد.!',
+                                status: 'error'
+                            }
+                        })
+                    }
+                })
         }
 
 

@@ -8,15 +8,13 @@ import { setCooki, getCooki } from '../../../utils/cookis'
 import axios from 'axios';
 
 export default function useUserInfo() {
-    const [userInfoObj, setUserInfoObj] = useState(null)
-    const [isPending, setIsPending] = useState(true)
-    const userId = getCooki('userid');
+    const [userInfoObj, setUserInfoObj] = useState(null);
+    const [isPending, setIsPending] = useState(true);
     const url = `${apiLinks.users}/profile`;
     const accessUserName = async () => {
         // first cheking cookis
         const isExistInCookis = getCooki('username');
         if (isExistInCookis !== null) {
-            console.log('not null')
             setUserInfoObj({
                 username: isExistInCookis,
                 avatarImg: getCooki('avatarImg'),

@@ -228,5 +228,5 @@ const bgColorsArray = [
     },
 ];
 
-export {bgColorsArray}
-export default avatarsArray
+export {bgColorsArray};
+export default  avatarsArray

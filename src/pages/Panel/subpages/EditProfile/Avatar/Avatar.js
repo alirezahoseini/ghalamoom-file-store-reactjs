@@ -1,30 +1,24 @@
 import React, { useEffect, useState, createContext, memo, useMemo } from 'react'
 
 // datas 
-import avatarsArray from '../../../../../data/avatarsArray'
+import avatarsArray, {bgColorsArray}  from '../../../../../data/avatarsArray';
 
 // components
 import AvatarImageSelectBox from './AvatarImageSelectBox/AvatarImageSelectBox';
 import AvatarColorSelectBox from './AvatarColorSelectBox/AvatarColorSelectBox';
 
 // Contexts
-const UserAvatarContext = createContext()
+const UserAvatarContext = createContext();
 
 const Avatar = memo((
     {
         onChangeEvent,
-        bgColor = {
-            id: 1,
-            color: '#FF6900'
-        },
-        avatar = {
-            id: 1,
-            image: '/images/avatars/Avatar-1.webp'
-        } }
+        bgColor = 1,
+        avatar = 1 
+    }
 ) => {
-    const [userAvaterDetails, setUserAvaterDetails] = useState({ bgColor, avatar })
-    const currentImageUrl = process.env.PUBLIC_URL + avatarsArray[avatar.id - 1].image
-
+    const [userAvaterDetails, setUserAvaterDetails] = useState({ bgColor: bgColorsArray[bgColor - 1], avatar })
+    const currentImageUrl = process.env.PUBLIC_URL + avatarsArray[avatar - 1].image
     const changeHandler = () => { onChangeEvent(userAvaterDetails) }
 
     useEffect(() => {

@@ -9,10 +9,7 @@ const AvatarImageSelectBoxItem = memo((props) => {
     setUserAvaterDetails(prev => {
       return {
         bgColor: prev.bgColor,
-        avatar: {
-          id: props.id,
-          image: props.image
-        }
+        avatar: props.id,
       }})
       props.setIsShowSelectBox(false)
   }
