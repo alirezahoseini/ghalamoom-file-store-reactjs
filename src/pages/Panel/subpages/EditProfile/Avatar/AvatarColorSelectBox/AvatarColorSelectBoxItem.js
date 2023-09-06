@@ -8,10 +8,7 @@ const AvatarColorSelectBoxItem = memo((props) => {
   const changeHandler = () => {
     setUserAvaterDetails(prev => {
       return {
-        bgColor: {
-          id: props.id,
-          color: props.color
-        },
+        bgColor: props.id,
         avatar: prev.avatar
       }
     })

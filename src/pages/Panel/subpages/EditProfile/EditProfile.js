@@ -27,8 +27,7 @@ import Avatar from './Avatar/Avatar'
 export default function EditProfile() {
     const notificationDispatch = useContext(NotificationContext)
     const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
-    const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData } = useAxiosPatch();
-    const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
+    const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData, setAxiosPatchToken } = useAxiosPatch();
     const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
     const [formData, setFormData] = useState();
     const navigateTo = useNavigate()
@@ -82,13 +81,15 @@ export default function EditProfile() {
             }
         }
     }
-    const userId = getCooki('userid');
     const authToken = getCooki('token');
+
     const changeHandler = (event) => {
         // Image 
-        if (event.bgColor) {
-            setFormData({ ...formData, avatar: event })
-        } else if (event.target.className.includes('custom-select-box-input')) {
+        if (event.avatar) {
+            setFormData({ ...formData, avatar: event.avatar })
+        } else if (event.bgColor) {
+            setFormData({ ...formData, bgColor: event.bgColor })
+        }else if (event.target.className.includes('custom-select-box-input')) {
             // Select boxes
             const inputName = event.target.name;
             const inputItems = inputsData[inputName].items;
@@ -102,7 +103,8 @@ export default function EditProfile() {
     const submitHandler = (event) => {
         event.preventDefault()
         setAxiosPatchData(formData)
-        setAxiosPatchUrl(`${apiLinks.users}/${userId}`)
+        setAxiosPatchToken(authToken)
+        setAxiosPatchUrl(`${apiLinks.users}/profile`)
     }
     /////// loading user info from server
     useEffect(() => {
@@ -112,11 +114,10 @@ export default function EditProfile() {
     /////// set prev data to inputs and showing
     useEffect(() => {
         if (axiosGetResult !== null) {
-            console.log(axiosGetResult)
+
             const { password, ...otherValues } = axiosGetResult;
             setFormData(otherValues)
             setSimpleLoaderStatus('hidde')
-            setIsLoadedDataFromApi(true)
         }
         if (axiosGetError !== null) {
             console.log(axiosGetError)
@@ -160,8 +161,10 @@ export default function EditProfile() {
         }
     }, [axiosPatchError, axiosPatchResult]);
 
+    console.log(formData)
+
     return (
-        isLoadedDataFromApi ? (
+        formData ? (
             <div id='edit-profile' className="my-3 p-2 text-xs">
                 <FormHeader title={'ویرایش حساب کاربری'} />
                 <div className="wrapper w-full flex flex-col xl:flex-row p-4 rounded-2xl bg-white my-3 dark:bg-slate-800 ">
@@ -171,13 +174,13 @@ export default function EditProfile() {
                             <div className="right-side xl:w-8/12">
                                 <NormalInput {...inputsData.name} onChangeEvent={changeHandler} value={formData.name} />
                                 <NormalInput {...inputsData.email} onChangeEvent={changeHandler} value={formData.email} />
-                                <Textarea {...inputsData.bio} onChangeEvent={changeHandler} value={formData.bio} />
-                                <NormalInput {...inputsData.age} onChangeEvent={changeHandler} value={formData.age} />
+                                <Textarea {...inputsData.bio} onChangeEvent={changeHandler} value={formData.bio ? formData.bio : ''} />
+                                <NormalInput {...inputsData.age} onChangeEvent={changeHandler} value={formData.age? formData.age : ''} />
                             </div>
                             {/* End of Right Side - Text form  */}
                             {/* Left side - select Image */}
                             <div className="left-side xl:w-4/12">
-                                <Avatar {...formData.avatar} onChangeEvent={changeHandler} />
+                                <Avatar {...formData} onChangeEvent={changeHandler} />
                             </div>
                             {/* End of Left side - select Image */}
                         </section>

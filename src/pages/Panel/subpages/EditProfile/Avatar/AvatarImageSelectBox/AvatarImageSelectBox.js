@@ -26,7 +26,7 @@ const AvatarImageSelectBox = memo(() => {
                 {useMemo(() => <AvatarSelectBoxHeader title={"تغییر آواتار"} onCloser={() => setIsShowSelectBox(false)} />, [])}
                 <div className='p-5 flex flex-wrap'>
                     {avatarsArray.map((avatar) => {
-                        const selected = avatar.id === userAvaterDetails.avatar.id;
+                        const selected = avatar.id === userAvaterDetails.avatar;
                         return <AvatarImageSelectBoxItem key={avatar.id} {...avatar} setIsShowSelectBox={setIsShowSelectBox} isChecked={selected} />
                     })}
                 </div>

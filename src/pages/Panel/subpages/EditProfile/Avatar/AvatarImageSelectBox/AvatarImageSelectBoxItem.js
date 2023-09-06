@@ -7,10 +7,11 @@ const AvatarImageSelectBoxItem = memo((props) => {
   const { setUserAvaterDetails } = useContext(UserAvatarContext);
   const changeHandler = () => {
     setUserAvaterDetails(prev => {
-      return {
-        bgColor: prev.bgColor,
+      return  {
         avatar: props.id,
-      }})
+        bgColor: prev.bgColor
+      }
+    })
       props.setIsShowSelectBox(false)
   }
   return (

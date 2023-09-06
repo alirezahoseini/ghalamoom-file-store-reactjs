@@ -14,10 +14,11 @@ const Avatar = memo((
     {
         onChangeEvent,
         bgColor = 1,
-        avatar = 1 
+        avatar = 1
     }
 ) => {
-    const [userAvaterDetails, setUserAvaterDetails] = useState({ bgColor: bgColorsArray[bgColor - 1], avatar })
+ 
+    const [userAvaterDetails, setUserAvaterDetails] = useState({ bgColor: bgColorsArray[bgColor - 1].id , avatar })
     const currentImageUrl = process.env.PUBLIC_URL + avatarsArray[avatar - 1].image
     const changeHandler = () => { onChangeEvent(userAvaterDetails) }
 
@@ -25,9 +26,10 @@ const Avatar = memo((
         changeHandler()
     }, [userAvaterDetails]);
 
+
     return (
         <div id='user-avatar' className='mt-10'>
-            <div className='rounded-full w-6/12 lg:w-8/12 mx-auto my-5 outline outline-offset-4 outline-slate-300' style={{ backgroundColor: userAvaterDetails.bgColor.color }}>
+            <div className='rounded-full w-6/12 lg:w-8/12 mx-auto my-5 outline outline-offset-4 outline-slate-300' style={{ backgroundColor: bgColorsArray[userAvaterDetails.bgColor - 1].color}}>
                 <img src={currentImageUrl} alt="avatar" className='w-full' width='493px' height='493px' />
             </div>
             <div className='flex items-center justify-evenly gap-2 mt-8'>

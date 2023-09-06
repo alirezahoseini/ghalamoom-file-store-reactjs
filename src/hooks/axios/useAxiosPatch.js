@@ -10,49 +10,89 @@ export default function useAxiosPatch() {
     const [axiosPatchIsPending, setAxiosPatchIsPending] = useState(false);        // request is loading?
     const [axiosPatchError, setAxiosPatchError] = useState(null);                 // errors output
     const [axiosPatchData, setAxiosPatchData] = useState(null);                   // request data ==> sending to api
+    const [axiosPatchToken, setAxiosPatchToken] = useState(null);                   // authentication token ==> sending to api
+
 
     const sendRequest = () => {
         setAxiosPatchIsPending(true);            // is loading === true
-        axios.patch(axiosPatchUrl, axiosPatchData)     // checking all dependencies
-            .then(res => {
-                // ok response
-                setAxiosPatchResult(res.data)
-                setAxiosPatchData(null)
-                setAxiosPatchUrl(null)
-                setAxiosPatchIsPending(false)
-                setAxiosPatchData(null)
-            })
-            .catch(err => {
-                // response errors // 400/500
-                if (err.response) {
+        if (axiosPatchToken === null) {               // without Authentication request
+            axios.patch(axiosPatchUrl, axiosPatchData)     // checking all dependencies
+                .then(res => {
+                    // ok response
+                    setAxiosPatchResult(res.data)
+                    setAxiosPatchData(null)
                     setAxiosPatchUrl(null)
                     setAxiosPatchIsPending(false)
-                    setAxiosPatchError(err.response)
-                    console.log('request error : ', err.response)
-                } else if (err.request) {
-                    // request errors // not send request 
-                    setAxiosPatchUrl(null)
-                    setAxiosPatchIsPending(false)
-                    setAxiosPatchError(err.request)
-                    console.log('request error : ', err.request)
-                    notificationDispatch({
-                        type: 'ADD_NOTE',
-                        payload: {
-                            id: v4(),
-                            message: 'اتصال به سرور ناموفق بود ، لطفا با vpn امتحان کنید',
-                            status: 'error'
-                        }
-                    })
+                    setAxiosPatchData(null)
+                })
+                .catch(err => {
+                    // response errors // 400/500
+                    if (err.response) {
+                        setAxiosPatchUrl(null)
+                        setAxiosPatchIsPending(false)
+                        setAxiosPatchError(err.response)
+                        console.log('request error : ', err.response)
+                    } else if (err.request) {
+                        // request errors // not send request 
+                        setAxiosPatchUrl(null)
+                        setAxiosPatchIsPending(false)
+                        setAxiosPatchError(err.request)
+                        console.log('request error : ', err.request)
+                        notificationDispatch({
+                            type: 'ADD_NOTE',
+                            payload: {
+                                id: v4(),
+                                message: 'اتصال به سرور ناموفق بود ، لطفا با vpn امتحان کنید',
+                                status: 'error'
+                            }
+                        })
+                    }
+                })
+        } else {
+            axios.get(axiosPatchUrl, {
+                headers: {
+                    Authorization: `Bearer ${axiosPatchToken}`
                 }
             })
+                .then(res => {
+                    console.log(res)
+                    // ok response
+                    setAxiosPatchResult(res.data)
+                    setAxiosPatchUrl(null)
+                    setAxiosPatchIsPending(false)
+                    setAxiosPatchError(null)
+                })
+                .catch(err => {
+                    console.log(err)
+                    // response errors // 400/500
+                    if (err.response) {
+                        setAxiosPatchUrl(null)
+                        setAxiosPatchIsPending(false)
+                        setAxiosPatchError(err.response)
+                        console.log('request error : ', err.response)
+                    } else if (err.request) {
+                        // request errors // not send request 
+                        setAxiosPatchUrl(null)
+                        setAxiosPatchIsPending(false)
+                        setAxiosPatchError(err.request)
+                        console.log('request error : ', err.request)
+                        notificationDispatch({
+                            type: 'ADD_NOTE',
+                            payload: {
+                                id: v4(),
+                                message: 'پاسخی از سرور دریافت نشد.!',
+                                status: 'error'
+                            }
+                        })
+                    }
+                })
+        }}
+
+        useEffect(() => {
+            if (axiosPatchUrl !== null && axiosPatchData !== null) {
+                sendRequest()
+            }
+        }, [axiosPatchUrl])
+
+        return { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData, setAxiosPatchToken }
     }
-
-
-    useEffect(() => {
-        if (axiosPatchUrl !== null && axiosPatchData !== null) {
-            sendRequest()
-        }
-    }, [axiosPatchUrl])
-
-    return { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData }
-}

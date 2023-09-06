@@ -31,7 +31,7 @@ export default function AvatarColorSelectBox() {
                 {useMemo(() => (
                     <div className=' flex flex-wrap w-full gap-2 py-5'>
                     {bgColorsArray.map((color) => {
-                        const selected = color.id === userAvaterDetails.bgColor.id;
+                        const selected = color.id === userAvaterDetails.bgColor;
                         return <AvatarColorSelectBoxItem key={color.id} {...color} setIsShowSelectBox={setIsShowSelectBox} isChecked={selected} />
                     })}
                 </div>
