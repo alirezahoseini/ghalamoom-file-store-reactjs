@@ -59,7 +59,7 @@ export default function EditProfile() {
             placeholder: 'چند خط در مورد خود بنویسید',
             required: false,
             errorMessage: 'بیوگرافی باید بین 30 الی 150 کلمه باشد',
-            pattern: '^[\\w\u0600-\u06FF\\s]{30,150}',
+            pattern: '^[\\w\u0600-\u06FF\\s]{0,150}',
             maxLength: 150,
             minLength: 30,
             rows: '2'
@@ -72,6 +72,7 @@ export default function EditProfile() {
             required: false,
             maxLength: "3",
             errorMessage: 'سن خود را به عدد وارد کنید',
+            type: "number"
         },
         userAvatar: {
             bgColor: '#4ea8de',
@@ -84,24 +85,36 @@ export default function EditProfile() {
     const authToken = getCooki('token');
 
     const changeHandler = (event) => {
-        // Image 
-        if (event.avatar) {
-            setFormData({ ...formData, avatar: event.avatar })
-        } else if (event.bgColor) {
-            setFormData({ ...formData, bgColor: event.bgColor })
-        }else if (event.target.className.includes('custom-select-box-input')) {
+        console.log(event)
+        // image and profile background color
+        if (event.bgColor) {
+            setFormData({ ...formData, ...event });
+        } else if (event.target.className.includes('custom-select-box-input')) {
             // Select boxes
             const inputName = event.target.name;
             const inputItems = inputsData[inputName].items;
             const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
             setFormData({ ...formData, [event.target.name]: selectedItem })
-        } else {
+        }else if(event.target.type === 'number'){
+            if(event.target.value === '' || event.target.value === null){
+                setFormData({ ...formData, [event.target.name]: null })
+            } else {
+                setFormData({ ...formData, [event.target.name]: +event.target.value })
+            }
+        }else if(event.target.name === 'bio'){
+            if(event.target.value === '' || event.target.value === null){
+                setFormData({ ...formData, [event.target.name]: null })
+            } else {
+                setFormData({ ...formData, [event.target.name]: +event.target.value })
+            }
+        }else {
             // Normal inputs
             setFormData({ ...formData, [event.target.name]: event.target.value })
         }
     }
     const submitHandler = (event) => {
         event.preventDefault()
+        console.log(formData)
         setAxiosPatchData(formData)
         setAxiosPatchToken(authToken)
         setAxiosPatchUrl(`${apiLinks.users}/profile`)
@@ -131,6 +144,7 @@ export default function EditProfile() {
     useEffect(() => {
         // show update results
         if (axiosPatchResult !== null) {
+            console.log(axiosPatchResult)
             notificationDispatch({
                 type: 'ADD_NOTE',
                 id: v4(),
@@ -149,6 +163,7 @@ export default function EditProfile() {
             }, 2000);
         }
         if (axiosPatchError !== null) {
+            console.log(axiosGetError)
             notificationDispatch({
                 type: 'ADD_NOTE',
                 id: v4(),
@@ -161,7 +176,6 @@ export default function EditProfile() {
         }
     }, [axiosPatchError, axiosPatchResult]);
 
-    console.log(formData)
 
     return (
         formData ? (
@@ -175,7 +189,7 @@ export default function EditProfile() {
                                 <NormalInput {...inputsData.name} onChangeEvent={changeHandler} value={formData.name} />
                                 <NormalInput {...inputsData.email} onChangeEvent={changeHandler} value={formData.email} />
                                 <Textarea {...inputsData.bio} onChangeEvent={changeHandler} value={formData.bio ? formData.bio : ''} />
-                                <NormalInput {...inputsData.age} onChangeEvent={changeHandler} value={formData.age? formData.age : ''} />
+                                <NormalInput {...inputsData.age} onChangeEvent={changeHandler} value={formData.age ? formData.age : ''} />
                             </div>
                             {/* End of Right Side - Text form  */}
                             {/* Left side - select Image */}

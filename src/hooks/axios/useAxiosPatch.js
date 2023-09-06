@@ -49,7 +49,7 @@ export default function useAxiosPatch() {
                     }
                 })
         } else {
-            axios.get(axiosPatchUrl, {
+            axios.patch(axiosPatchUrl, axiosPatchData, {
                 headers: {
                     Authorization: `Bearer ${axiosPatchToken}`
                 }
