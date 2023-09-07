@@ -10,7 +10,7 @@ export default function useAxiosPatch() {
     const [axiosPatchIsPending, setAxiosPatchIsPending] = useState(false);        // request is loading?
     const [axiosPatchError, setAxiosPatchError] = useState(null);                 // errors output
     const [axiosPatchData, setAxiosPatchData] = useState(null);                   // request data ==> sending to api
-    const [axiosPatchToken, setAxiosPatchToken] = useState(null);                   // authentication token ==> sending to api
+    const [axiosPatchToken, setAxiosPatchToken] = useState(null);                 // authentication token ==> sending to api
 
 
     const sendRequest = () => {

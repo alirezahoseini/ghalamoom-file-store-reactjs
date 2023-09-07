@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useEffect, useState , useContext} from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { NotificationContext } from "../../Contexts/Notifications/NotificationProvider";
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 export default function useAxiosPost() {
     const notificationDispatch = useContext(NotificationContext)
@@ -9,14 +9,51 @@ export default function useAxiosPost() {
     const [axiosPostUrl, setAxiosPostUrl] = useState(null);                     // request url
     const [axiosPostIsPending, setAxiosPostIsPending] = useState(false);        // request is loading?
     const [axiosPostError, setAxiosPostError] = useState(null);                 // errors output
+    const [axiosPostToken, setAxiosPostToken] = useState(null);                 // authentication token ==> sending to api
     const [axiosPostData, setAxiosPostData] = useState(null);                   // request data ==> sending to api
 
     const sendRequest = () => {
-        console.log(axiosPostData )
-        console.log('axios post' )
-        
+        console.log('sended in useAxios')
         setAxiosPostIsPending(true);            // is loading === true
-        axios.post(axiosPostUrl, axiosPostData)     // checking all dependencies
+        if (axiosPostToken === null) {            // without Authentication request
+            axios.post(axiosPostUrl, axiosPostData)     // checking all dependencies
+                .then(res => {
+                    // ok response
+                    setAxiosPostResult(res.data)
+                    setAxiosPostData(null)
+                    setAxiosPostUrl(null)
+                    setAxiosPostIsPending(false)
+                    setAxiosPostData(null)
+                })
+                .catch(err => {
+                    // response errors // 400/500
+                    if (err.response) {
+                        setAxiosPostUrl(null)
+                        setAxiosPostIsPending(false)
+                        setAxiosPostError(err.response)
+                        console.log('request error : ', err.response)
+                    } else if (err.request) {
+                        // request errors // not send request 
+                        setAxiosPostUrl(null)
+                        setAxiosPostIsPending(false)
+                        setAxiosPostError(err.request)
+                        console.log('request error : ', err.request)
+                        notificationDispatch({
+                            type: 'ADD_NOTE',
+                            payload: {
+                                id: v4(),
+                                message: "اتصال ناموفق بود لطفا دوباره امتحان کنید",
+                                status: 'error'
+                            }
+                        })
+                    }
+                })
+        } else {
+            axios.post(axiosPostUrl, axiosPostData, {
+                headers: {
+                    Authorization: `Bearer ${axiosPostToken}`
+                }
+            })     // checking all dependencies
             .then(res => {
                 // ok response
                 setAxiosPostResult(res.data)
@@ -41,13 +78,14 @@ export default function useAxiosPost() {
                     notificationDispatch({
                         type: 'ADD_NOTE',
                         payload: {
-                          id: v4(),
-                          message: 'اتصال به سرور ناموفق بود ، لطفا با vpn امتحان کنید',
-                          status: 'error'
+                            id: v4(),
+                            message: "اتصال ناموفق بود لطفا دوباره امتحان کنید",
+                            status: 'error'
                         }
-                      })
+                    })
                 }
             })
+        }
     }
 
 
@@ -57,5 +95,5 @@ export default function useAxiosPost() {
         }
     }, [axiosPostUrl])
 
-    return { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData }
+    return { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken, setAxiosPostError }
 }
