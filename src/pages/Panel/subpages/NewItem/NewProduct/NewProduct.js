@@ -1,16 +1,15 @@
 import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
-import {v4} from 'uuid'
+import { v4 } from 'uuid'
 
 // contexts 
 import { NotificationContext } from '../../../../../Contexts/Notifications/NotificationProvider'
-
 // datas
 import { apiLinks } from '../../../../../data/links';
-
+// Utils
+import { getCooki } from '../../../../../utils/cookis'
 // hooks
 import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
-
 // components
 import NormalInput from "../../../components/Inputs/NormalInput";
 import Textarea from "../../../components/Inputs/Textarea";
@@ -24,7 +23,8 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 
 export default function NewProduct() {
   const notificationDispatch = useContext(NotificationContext)
-  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
+  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken, setAxiosPostError } = useAxiosPost();
+  const authToken = getCooki('token')
   const [formData, setFormData] = useState({
     title: '',                                                  /// max length 70 
     inStock: true,                                              /// default true 
@@ -154,23 +154,27 @@ export default function NewProduct() {
     setFormData({ ...formData, gallery: images })
   }
   const submitHandler = (event) => {
+    console.log(formData)
     event.preventDefault();
-    setAxiosPostData(formData)
-    setAxiosPostUrl(apiLinks.products)
+    setAxiosPostToken(authToken);
+    setAxiosPostData(formData);
+    setAxiosPostUrl(apiLinks.products);
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
+      console.log(axiosPostResult)
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
-            id: v4(),
-            message: 'محصول با موفقیت ایجاد شد',
-            status: 'success'
+          id: v4(),
+          message: 'محصول با موفقیت ایجاد شد',
+          status: 'success'
         }
-    })
-      navigateTo('/panel/products')
+      })
+      // navigateTo('/panel/products')
     }
     if (axiosPostError !== null) {
+
       console.log(axiosPostError)
     }
   }, [axiosPostError, axiosPostResult])

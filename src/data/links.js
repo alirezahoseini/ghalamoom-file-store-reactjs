@@ -49,12 +49,12 @@ const apiLinks = {
     // artworks: 'http://localhost:5000/artworks'
 
     /* New backend from m0x1h0x64i */
-    products: 'http://ghalamoom.m0x61h0x64i.ir/products',
+    products: 'https://ghalamoom.m0x61h0x64i.ir/products',
     login: 'https://ghalamoom.m0x61h0x64i.ir/login',
     signup: 'https://ghalamoom.m0x61h0x64i.ir/signup',
     users: 'https://ghalamoom.m0x61h0x64i.ir/users',
-    courses: 'http://ghalamoom.m0x61h0x64i.ir/courses',
-    artworks: 'http://ghalamoom.m0x61h0x64i.ir/artworks'
+    courses: 'https://ghalamoom.m0x61h0x64i.ir/courses',
+    artworks: 'https://ghalamoom.m0x61h0x64i.ir/artworks'
 }
 
 
