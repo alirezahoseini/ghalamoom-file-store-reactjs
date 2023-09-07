@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { v4 } from 'uuid'
 
 // contexts
@@ -30,7 +30,7 @@ export default function EditProfile() {
     const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData, setAxiosPatchToken } = useAxiosPatch();
     const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
     const [formData, setFormData] = useState();
-    const navigateTo = useNavigate()
+    const navigateTo = useNavigate();
     const inputsData = {
         name: {
             name: 'name',
@@ -84,6 +84,7 @@ export default function EditProfile() {
     }
     const authToken = getCooki('token');
 
+    // Change inputs values handler
     const changeHandler = (event) => {
         // image and profile background color
         if (event.bgColor) {
@@ -94,26 +95,26 @@ export default function EditProfile() {
             const inputItems = inputsData[inputName].items;
             const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
             setFormData({ ...formData, [event.target.name]: selectedItem })
-        }else if(event.target.type === 'number'){
-            if(event.target.value === '' || event.target.value === null){
+        } else if (event.target.type === 'number') {
+            if (event.target.value === '' || event.target.value === null) {
                 setFormData({ ...formData, [event.target.name]: null })
             } else {
                 setFormData({ ...formData, [event.target.name]: +event.target.value })
             }
-        }else if(event.target.name === 'bio'){
-            if(event.target.value === '' || event.target.value === null){
+        } else if (event.target.name === 'bio') {
+            if (event.target.value === '' || event.target.value === null) {
                 setFormData({ ...formData, [event.target.name]: null })
             } else {
-                setFormData({ ...formData, [event.target.name]: +event.target.value })
+                setFormData({ ...formData, [event.target.name]: event.target.value })
             }
-        }else {
+        } else {
             // Normal inputs
             setFormData({ ...formData, [event.target.name]: event.target.value })
         }
     }
+    // Submit form handler
     const submitHandler = (event) => {
         event.preventDefault()
-        console.log(formData)
         setAxiosPatchData(formData)
         setAxiosPatchToken(authToken)
         setAxiosPatchUrl(`${apiLinks.users}/profile`)
@@ -143,7 +144,6 @@ export default function EditProfile() {
     useEffect(() => {
         // show update results
         if (axiosPatchResult !== null) {
-            console.log(axiosPatchResult)
             notificationDispatch({
                 type: 'ADD_NOTE',
                 id: v4(),
@@ -162,7 +162,6 @@ export default function EditProfile() {
             }, 2000);
         }
         if (axiosPatchError !== null) {
-            console.log(axiosGetError)
             notificationDispatch({
                 type: 'ADD_NOTE',
                 id: v4(),
@@ -189,6 +188,12 @@ export default function EditProfile() {
                                 <NormalInput {...inputsData.email} onChangeEvent={changeHandler} value={formData.email} />
                                 <Textarea {...inputsData.bio} onChangeEvent={changeHandler} value={formData.bio ? formData.bio : ''} />
                                 <NormalInput {...inputsData.age} onChangeEvent={changeHandler} value={formData.age ? formData.age : ''} />
+                                {/* Change password button  */}
+                                <div className="flex flex-wrap items-center gap-3">
+                                    <h2 className="font-bold text-slate-800 dark:text-slate-200 my-5">میخواهید رمزعبور خود را تغییر دهید؟</h2>
+                                    <Link to={'/panel/change-password'} className="bg-blue-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-600">تغییر رمزعبور</Link>
+                                </div>
+                                {/* End of Change password button  */}
                             </div>
                             {/* End of Right Side - Text form  */}
                             {/* Left side - select Image */}
