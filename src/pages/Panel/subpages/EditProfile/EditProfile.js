@@ -85,7 +85,6 @@ export default function EditProfile() {
     const authToken = getCooki('token');
 
     const changeHandler = (event) => {
-        console.log(event)
         // image and profile background color
         if (event.bgColor) {
             setFormData({ ...formData, ...event });

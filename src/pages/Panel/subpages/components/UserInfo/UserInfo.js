@@ -3,17 +3,19 @@ import { Link } from 'react-router-dom'
 
 // hooks
 import useUserInfo from '../../../hooks/useUserInfo'
+import {bgColorsArray} from '../../../../../data/avatarsArray'
+import { useState } from 'react';
 
 export default function UserInfo({ isOpen, withEvent, onClickEvent }) {
   const { isPending, userInfoObj } = useUserInfo();
   const defaultImage = process.env.PUBLIC_URL + '/images/avatars/Avatar-1.webp';
-
+ 
   return (
     withEvent ? (
       <Link onClick={onClickEvent} to={'editprofile'} id='user-info' className={`flex w-full items-center gap-6 border-b border-gray-300 pb-5 transition-colors duration-300 dark:border-slate-600`} >
-        <div className={`user-img w-fit flex items-center justify-center rounded-full min-w-fit relative `} style={{ outline: '1px solid #d8d8d8', outlineOffset: '2px', backgroundColor: `${isPending ? '#fff' : userInfoObj.bgColorCode}` }}>
+        <div className={`user-img w-fit flex items-center justify-center rounded-full min-w-fit relative -700 h-[54]`} style={{ outline: '1px solid #d8d8d8', outlineOffset: '2px' , backgroundColor: `${isPending ? '#fff' : bgColorsArray[userInfoObj.bgColorCode - 1].color}` }}>
           {isPending ? ('loading') : (
-            <img src={userInfoObj.avatarImg ? process.env.PUBLIC_URL + userInfoObj.avatarImg : defaultImage} alt="user avatar" style={{ minWidth: '54px', maxWidth: '54px' }} />
+            <img src={userInfoObj.avatarImg ? process.env.PUBLIC_URL + `/images/avatars/Avatar-${userInfoObj.avatarImg}.webp` : defaultImage} alt="user avatar" style={{ minWidth: '54px', maxWidth: '54px' }} />
           )}
           <div className="plus-btn absolute -left-2 -bottom-1 bg-gray-50 rounded-full p-1 transition-colors duration-300 dark:bg-slate-800 ">
             <HiPlusSm className='bg-green-500 text-white text-base rounded-full' style={{ boxShadow: '0 2px 10px #399b0086' }} />
@@ -30,7 +32,7 @@ export default function UserInfo({ isOpen, withEvent, onClickEvent }) {
 
       <Link to={'editprofile'} id='user-info' className={`flex w-full items-center gap-6 border-b border-gray-300 pb-5 transition-colors duration-300 dark:border-slate-600`} title='حساب کاربری من'
       >
-        <div className={`user-img w-fit flex items-center justify-center rounded-full min-w-fit relative `} style={{ outline: '1px solid #d8d8d8', outlineOffset: '2px', backgroundColor: `${isPending ? '#fff' : userInfoObj.bgColorCode}` }}>
+        <div className={`user-img w-fit flex items-center justify-center rounded-full min-w-fit relative `} style={{ outline: '1px solid #d8d8d8', outlineOffset: '2px', backgroundColor: `${isPending ? '#fff' : bgColorsArray[userInfoObj.bgColorCode - 1].color}` }}>
           {isPending ? ('loading') : (
             <img src={userInfoObj.avatarImg ? process.env.PUBLIC_URL + `/images/avatars/Avatar-${userInfoObj.avatarImg}.webp` : defaultImage} alt="user avatar" style={{ minWidth: '54px', maxWidth: '54px' }} />
           )}
