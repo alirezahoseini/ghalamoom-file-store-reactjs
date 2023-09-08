@@ -19,12 +19,10 @@ export default function SideBarMenu({ isOpen, withEvent = false, onClickEvent })
     { id: 6, title: 'دسته بندی ها', path: 'categories', icon: <TbCategory />, desc: 'دسته بندی ها' },
     { id: 7, title: 'تخفیف ها', path: 'offers', icon: <TbPercentage />, desc: 'تخفیف ها' },
     { id: 8, title: 'تیکت ها', path: 'tickets', icon: <TbMessages />, desc: 'تیکت ها' },
-    { id: 8, title: 'ویرایش حساب کاربری', path: 'editprofile', icon: <TbSettings2 />, desc: ' ویرایش حساب کاربری' },
-    { id: 9, title: 'بازگشت به سایت', path: '/', icon: <TbPlanet />, desc: 'بازگشت به سایت' },
+    { id: 9, title: 'ویرایش حساب کاربری', path: 'editprofile', icon: <TbSettings2 />, desc: ' ویرایش حساب کاربری' },
+    { id: 10, title: 'بازگشت به سایت', path: '/', icon: <TbPlanet />, desc: 'بازگشت به سایت' },
 
   ]
-
-
 
 
   return (
