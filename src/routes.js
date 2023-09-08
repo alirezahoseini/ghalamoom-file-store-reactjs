@@ -11,6 +11,7 @@ import NewItem from './pages/Panel/subpages/NewItem/NewItem'
 import EditItem from './pages/Panel/subpages/EditItem/EditItem';
 import PanelCourses from './pages/Panel/subpages/Courses/PanelCourses';
 import PanelArtworks from './pages/Panel/subpages/Artworks/PanelArtworks';
+import Categories from './pages/Panel/subpages/Categories/Categories';
 import EditProfile from './pages/Panel/subpages/EditProfile/EditProfile';
 import ChangePassword from './pages/Panel/subpages/ChangePassword/ChangePassword';
 // User Management
@@ -45,6 +46,7 @@ const routes = [
             { path: 'editcourse/:courseId', element: <PrivatePage ><EditItem /></PrivatePage> },
             { path: 'artworks', element: <PrivatePage ><PanelArtworks /></PrivatePage> },
             { path: 'newartwork', element: <PrivatePage ><NewItem /></PrivatePage> },
+            { path: 'categories', element: <PrivatePage ><Categories /></PrivatePage> },
             { path: 'editartwork/:artworkId', element: <PrivatePage ><EditItem /></PrivatePage> },
             { path: 'editprofile', element: <PrivatePage ><EditProfile /></PrivatePage> },
             { path: 'change-password', element: <PrivatePage ><ChangePassword /></PrivatePage> },
