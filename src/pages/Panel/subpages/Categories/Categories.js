@@ -53,32 +53,20 @@ export default function Categories() {
     }
     const changeHandler = (event) => {
         // Image 
-        if (event.image) {
-            setFormData({ ...formData, image: event.image })
-        } else if (event.target.className.includes('custom-select-box-input')) {
-            // Select boxes
-            const inputName = event.target.name;
-            const inputItems = inputsData[inputName].items;
-            const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-            setFormData({ ...formData, [event.target.name]: selectedItem })
+        if (event.target.className.includes('custom-select-box-input')) {
+            setFormData({ ...formData, [event.target.name]: event.target.value })
         } else {
-            // Normal inputs
             setFormData({ ...formData, [event.target.name]: event.target.value })
         }
     }
-    const galleryChangeHandler = (images) => {
-        setFormData({ ...formData, gallery: images })
-    }
     const submitHandler = (event) => {
-        console.log(formData)
         event.preventDefault();
         setAxiosPostToken(authToken);
         setAxiosPostData(formData);
-        setAxiosPostUrl(apiLinks.products);
+        setAxiosPostUrl(apiLinks.categories);
     }
     useEffect(() => {
         if (axiosPostResult !== null) {
-            console.log(axiosPostResult)
             notificationDispatch({
                 type: 'ADD_NOTE',
                 payload: {
@@ -118,10 +106,10 @@ export default function Categories() {
                     </section>
                     <div className="buttons w-full flex items-center gap-3">
                         <div className="w-8/12 xl:w-5/12" >
-                            <SubmitFormButton isPending={axiosPostIsPending} name={'ایجاد محصول'} />
+                            <SubmitFormButton isPending={axiosPostIsPending} title={'ایجاد دسته بندی ' } />
                         </div>
                         <div className={`w-4/12 xl:w-3/12 ${axiosPostIsPending && 'pointer-events-none'}`} >
-                            <CancelButton name={'لغو'} />
+                            <CancelButton title={'لغو'} />
                         </div>
                     </div>
                 </form>

@@ -42,7 +42,7 @@ export default function LoginForm({ setShowForm }) {
             name: 'password',
             type: 'password',
             placeholder: 'رمزعبور',
-            pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*)[A-Za-z\\d]{8,30}$",
+            // pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*)[A-Za-z\\d]{8,30}$",
             errorMessage: 'رمزعبور باید حداقل 8 کاراکتر که شامل حروف کوچک و بزرگ انگلیسی و یک عدد است باشد',
             required: true
         },
@@ -95,6 +95,17 @@ export default function LoginForm({ setShowForm }) {
                             payload: {
                                 id: v4(),
                                 message: 'ایمیل شما در انتظار تایید است',
+                                status: 'warning'
+                            }
+                        })
+                        navigateTo('/please-confirm-email')
+                    } else if (err.response.status === 429) {
+                        setLoadingDataFromApi(false)
+                        notificationDispatch({
+                            type: 'ADD_NOTE',
+                            payload: {
+                                id: v4(),
+                                message: "بیش از اندازه تلاش کردید، کمی صبر کنید",
                                 status: 'warning'
                             }
                         })

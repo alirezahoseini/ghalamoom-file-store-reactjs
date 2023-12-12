@@ -14,6 +14,7 @@ import PanelArtworks from './pages/Panel/subpages/Artworks/PanelArtworks';
 import Categories from './pages/Panel/subpages/Categories/Categories';
 import EditProfile from './pages/Panel/subpages/EditProfile/EditProfile';
 import ChangePassword from './pages/Panel/subpages/ChangePassword/ChangePassword';
+import PanelTickets from './pages/Panel/subpages/Tickets/PanelTickets';
 // User Management
 import ConfirmEmailPage from './pages/Panel/subpages/ConfirmEmailPage/ConfirmEmailPage';
 import PleaseConfirmEmail from './pages/Panel/subpages/LoginPage/components/PleaseConfirmEmail/PleaseConfirmEmail';
@@ -50,6 +51,7 @@ const routes = [
             { path: 'editartwork/:artworkId', element: <PrivatePage ><EditItem /></PrivatePage> },
             { path: 'editprofile', element: <PrivatePage ><EditProfile /></PrivatePage> },
             { path: 'change-password', element: <PrivatePage ><ChangePassword /></PrivatePage> },
+            { path: 'tickets', element: <PrivatePage ><PanelTickets /></PrivatePage> },
             { path: '', element: <Navigate to="dashboard" replace={true} /> },
             { path: '*', element: <Navigate to="dashboard" replace={true} /> },
         ]
