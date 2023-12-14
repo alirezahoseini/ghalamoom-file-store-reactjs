@@ -1,7 +1,9 @@
 import React from 'react'
+import { HiOutlineTicket, HiOutlineEnvelopeOpen, HiOutlineTrash } from "react-icons/hi2";
 import FormHeader from '../components/FormHeader/FormHeader'
 import CounterBox from './CounterBox'
-import { HiOutlineTicket, HiOutlineEnvelopeOpen, HiOutlineTrash, HiOutlinePlusCircle  } from "react-icons/hi2";
+import NewTicketButton from './NewTicketButton';
+import TicketItem from './TicketItem';
 
 export default function PanelTickets() {
     const countersArray = [
@@ -27,25 +29,47 @@ export default function PanelTickets() {
             color: '#F43F5E'
         },
     ]
+    const ticketArray = [
+        {
+            id: 35423,
+            title: 'دسترسی نداشتن به پلیر',
+            date: '1402/10/27',
+            departeman: 'پشتیبانی',
+            ticketStatus: 'open'
+        },
+        {
+            id: 75996,
+            title: 'ثبت سفارش جدید',
+            date: '1402/10/124',
+            departeman: 'واحد فروش',
+            ticketStatus: 'open'
+        },
+        {
+            id: 47552,
+            title: 'رفع باگ سایت',
+            date: '1402/8/13',
+            departeman: 'پشتیبانی',
+            ticketStatus: 'close'
+        },
+    ]
     return (
         <div id='tickets' className="my-3 p-2 ">
             <FormHeader title={'تیکت ها'} />
-            <div className="tickets_wrapper my-4 flex flex-wrap">
+            <div className="tickets_header my-4 flex flex-wrap">
                 {countersArray.map(item => (
                     <CounterBox key={item.id} {...item} />
                 ))}
-                <div className="w-6/12 md:w-4/12 xl:w-3/12 p-3 " >
-                    <div className=' w-full text-white rounded-xl gap-3 inline-flex items-center justify-start p-2 bg-green-500 hover:bg-green-600 hover:cursor-pointer'>
-                        <div className="icon text-3xl  p-5 rounded-xl ">
-                            <HiOutlinePlusCircle />
-                        </div>
-                        <div className="body flex flex-col gap-2">
-                            <span className='text-xl font-bold'>تیکت جدید</span>
-                        </div>
-                    </div>
-                </div>
+                <NewTicketButton />
             </div>
-
+            <div className="all_tickets bg-white p-5 rounded-xl dark:bg-slate-800">
+                <h2 className='border-b pb-4 dark:border-slate-700 
+                dark:text-slate-300 text-lg font-bold text-gray-700'>تیکت ها</h2>
+                {
+                    ticketArray.map(item => (
+                        <TicketItem key={item.id}  {...item} />
+                    ))
+                }
+            </div>
         </div>
     )
 }
