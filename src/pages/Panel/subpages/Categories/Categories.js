@@ -10,20 +10,28 @@ import { apiLinks } from '../../../../data/links';
 import { getCooki } from '../../../../utils/cookis'
 // hooks
 import useAxiosPost from "../../../../hooks/axios/useAxiosPost";
+import useAxiosGet from "../../../../hooks/axios/useAxiosGet";
+import useAxiosDelete from "../../../../hooks/axios/useAxiosDelete";
 // components
 import NormalInput from "../../components/Inputs/NormalInput";
-import Textarea from "../../components/Inputs/Textarea";
+import SimpleDataLoader from "../../../../components/ui/SimpleDataLoader/SimpleDataLoader";
 import SelectBox from "../../components/Inputs/SelectBox";
-import PriceInput from "../../components/Inputs/PriceInput";
-import ImageInput from "../../components/Inputs/ImageInput";
 import SubmitFormButton from "../components/Buttons/SubmitFormButton";
 import CancelButton from "../components/Buttons/CancelButton";
-import MultipleImageInput from "../../components/Inputs/MultipleImageInput/MultipleImageInput";
+import CategoryItem from "./CategoryItem";
+
+
+
 
 export default function Categories() {
     const notificationDispatch = useContext(NotificationContext)
     const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken, setAxiosPostError } = useAxiosPost();
-    const authToken = getCooki('token')
+    const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
+    const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl, setAxiosDeleteData, setAxiosDeleteToken, setAxiosDeleteError } = useAxiosDelete()
+    const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
+    const authToken = getCooki('token');
+    const adminAuthToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzAsImlhdCI6MTcwMjY2MTg0Nn0.q3dV3tfrc3gvJIP6hKP4xUkTAba4ietEwfEqGk42lLk'
+    const [categories, setCategories] = useState([]);
     const [formData, setFormData] = useState({
         name: "محصول",                                                  /// max length 70 
         type: 'Product',                                                /// chooseing from select box
@@ -37,9 +45,10 @@ export default function Categories() {
             placeholder: 'نام دسته را وارد کنید',
             type: 'text',
             required: true,
-            errorMessage: 'عنوان محصول باید بین 3 الی 20 کلمه باشد',
-            pattern: '^[\\w\u0600-\u06FF\\s]{3,20}',
+            errorMessage: 'عنوان دسته باید بین 3 الی 20 کلمه باشد',
+            // pattern: '',
             maxLength: 20,
+            minLength: 3
         },
         type: {
             selectBoxName: 'type',
@@ -47,7 +56,6 @@ export default function Categories() {
             items: [
                 { name: "محصول", id: 'Product' },
                 { name: "دوره", id: 'Course' },
-                { name: "نمونه کار", id: 'Artwork' },
             ]
         },
     }
@@ -61,27 +69,80 @@ export default function Categories() {
     }
     const submitHandler = (event) => {
         event.preventDefault();
-        setAxiosPostToken(authToken);
+        setAxiosPostToken(adminAuthToken);
         setAxiosPostData(formData);
         setAxiosPostUrl(apiLinks.categories);
+        console.log(formData)
     }
+    const removeHandler = (categoryId) => {
+        setAxiosDeleteUrl(`${apiLinks.categories}/${categoryId}`);
+        setAxiosDeleteToken(adminAuthToken)
+    }
+    // create category
     useEffect(() => {
-        if (axiosPostResult !== null) {
+        if (axiosPostResult !== null && axiosPostError === null) {
             notificationDispatch({
                 type: 'ADD_NOTE',
                 payload: {
                     id: v4(),
-                    message: 'محصول با موفقیت ایجاد شد',
+                    message: 'دسته با موفقیت ایجاد شد',
                     status: 'success'
                 }
             })
-            // navigateTo('/panel/products')
+            setCategories(prev => [...prev , formData])
         }
         if (axiosPostError !== null) {
-
+            if(axiosPostError.status === 409){
+                notificationDispatch({
+                    type: 'ADD_NOTE',
+                    payload: {
+                        id: v4(),
+                        message: 'این دسته قبلا ایجاد شده است',
+                        status: 'error'
+                    }
+                })
+            }
             console.log(axiosPostError)
         }
     }, [axiosPostError, axiosPostResult])
+    // Remove category
+    useEffect(() => {
+        if (axiosDeleteResult !== null ) {
+            const newCategoreis = [...categories]
+            console.log(axiosDeleteResult)
+            // const filtredCategories = newCategoreis.filter(item => {
+            //     return item.id !== item.id
+            // })
+            notificationDispatch({
+                type: 'ADD_NOTE',
+                payload: {
+                    id: v4(),
+                    message: 'دسته با موفقیت حذف شد',
+                    status: 'success'
+                }
+            })
+            
+        }
+        if (axiosDeleteError !== null) {
+            console.log(axiosDeleteError)
+        }
+    }, [axiosDeleteError, axiosDeleteResult])
+    // load old categories
+    useEffect(() => {
+        if (axiosGetResult !== null) {
+            setCategories(axiosGetResult)
+            setSimpleDataLoaderStatus('hidde')
+        }
+        if (axiosGetError !== null) {
+            console.log(axiosGetError)
+            setSimpleDataLoaderStatus('error')
+        }
+    }, [axiosGetError, axiosGetResult]);
+    // first load deta
+    useEffect(() => {
+        setAxiosGetToken(authToken);
+        setAxiosGetUrl(apiLinks.categories);
+    }, [])
 
     return (
         <div id="new-product-form">
@@ -96,22 +157,30 @@ export default function Categories() {
                                     <SelectBox value={formData.type} onChangeEvent={changeHandler} {...inputsData.type} />
                                 </div>
                             </div>
+                            <div className="buttons w-full flex items-center gap-3">
+                                <div className="w-8/12 xl:w-5/12" >
+                                    <SubmitFormButton isPending={axiosPostIsPending} title={'ایجاد دسته بندی '} />
+                                </div>
+                                <div className={`w-4/12 xl:w-3/12 ${axiosPostIsPending && 'pointer-events-none'}`} >
+                                    <CancelButton title={'لغو'} />
+                                </div>
+                            </div>
                         </div>
                         {/* End of Right Side - Text form  */}
                         {/* Left side - select Image */}
-                        <div className="left-side xl:w-4/12">
-                            left
+                        <div className="left-side xl:w-4/12 px-3">
+                            <h2 className="font-bold text-slate-800 dark:text-slate-200 dark:border-slate-600 xl:my-3 mt-10 mr-2 border-b pb-3">دسته بندی ها</h2>
+                            {simpleDataLoaderStatus === 'hidde' && (
+                                categories.length ? (categories.map(item => (
+                                        <CategoryItem key={item.id} {...item} deleteItem={removeHandler} />
+                                    ))): ((<p className="text-center dark:text-slate-300">هیچ دسته ای وجود ندارد.!</p>))
+                             )}
+                     
+                            {simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} />}
                         </div>
                         {/* End of Left side - select Image */}
                     </section>
-                    <div className="buttons w-full flex items-center gap-3">
-                        <div className="w-8/12 xl:w-5/12" >
-                            <SubmitFormButton isPending={axiosPostIsPending} title={'ایجاد دسته بندی ' } />
-                        </div>
-                        <div className={`w-4/12 xl:w-3/12 ${axiosPostIsPending && 'pointer-events-none'}`} >
-                            <CancelButton title={'لغو'} />
-                        </div>
-                    </div>
+
                 </form>
             </div>
         </div>

@@ -14,7 +14,8 @@ export default function useAxiosPost() {
 
     const sendRequest = () => {
         console.log('sended in useAxios')
-        setAxiosPostIsPending(true);            // is loading === true
+        setAxiosPostIsPending(true);   
+         // is loading === true
         if (axiosPostToken === null) {            // without Authentication request
             axios.post(axiosPostUrl, axiosPostData)     // checking all dependencies
                 .then(res => {
