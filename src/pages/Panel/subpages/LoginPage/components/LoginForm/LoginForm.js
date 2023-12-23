@@ -56,7 +56,6 @@ export default function LoginForm({ setShowForm }) {
         setLoadingDataFromApi(true)
         event.preventDefault()
         const url = apiLinks.login
-
         axios.post(url, values)
             .then(res => {
                 setCooki('token', res.data.token, 3)
@@ -116,6 +115,7 @@ export default function LoginForm({ setShowForm }) {
                     // if not connect to server
                 } else if (err.request) {
                     setLoadingDataFromApi(false)
+                    console.log(err)
                     notificationDispatch({
                         type: 'ADD_NOTE',
                         payload: {
@@ -129,6 +129,7 @@ export default function LoginForm({ setShowForm }) {
                     console.log(err)
                 }
             })
+
     }
 
     return (
