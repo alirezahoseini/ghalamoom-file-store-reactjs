@@ -197,5 +197,5 @@ export default function useAxiosPost() {
         }
     }, [axiosPostUrl])
 
-    return { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken, setAxiosPostError }
+    return { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken, setAxiosPostError, setAxiosPostResult }
 }

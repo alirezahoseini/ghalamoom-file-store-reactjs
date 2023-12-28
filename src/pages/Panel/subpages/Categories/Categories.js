@@ -25,15 +25,16 @@ import CategoryItem from "./CategoryItem";
 
 export default function Categories() {
     const notificationDispatch = useContext(NotificationContext)
-    const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken, setAxiosPostError } = useAxiosPost();
+    const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostResult, setAxiosPostData, setAxiosPostToken, setAxiosPostError } = useAxiosPost();
     const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
-    const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl, setAxiosDeleteData, setAxiosDeleteToken, setAxiosDeleteError } = useAxiosDelete()
+    const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl, setAxiosDeleteData, setAxiosDeleteToken, setAxiosDeleteError, setAxiosDeleteResult, axiosDeleteUrl } = useAxiosDelete()
     const [simpleDataLoaderStatus, setSimpleDataLoaderStatus] = useState('load')
     const authToken = getCooki('token');
     const adminAuthToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzAsImlhdCI6MTcwMjY2MTg0Nn0.q3dV3tfrc3gvJIP6hKP4xUkTAba4ietEwfEqGk42lLk'
     const [categories, setCategories] = useState([]);
+    const [selectedId, setSelectedId] = useState(null)
     const [formData, setFormData] = useState({
-        name: "محصول",                                                  /// max length 70 
+        name: "",                                                  /// max length 70 
         type: 'Product',                                                /// chooseing from select box
 
     });
@@ -69,14 +70,15 @@ export default function Categories() {
     }
     const submitHandler = (event) => {
         event.preventDefault();
+        console.log(formData)
         setAxiosPostToken(adminAuthToken);
         setAxiosPostData(formData);
         setAxiosPostUrl(apiLinks.categories);
-        console.log(formData)
     }
     const removeHandler = (categoryId) => {
         setAxiosDeleteUrl(`${apiLinks.categories}/${categoryId}`);
         setAxiosDeleteToken(adminAuthToken)
+        setSelectedId(categoryId);
     }
     // create category
     useEffect(() => {
@@ -89,10 +91,11 @@ export default function Categories() {
                     status: 'success'
                 }
             })
-            setCategories(prev => [...prev , formData])
+            setAxiosPostResult(null)
+            setCategories(prev => [...prev, axiosPostResult])
         }
         if (axiosPostError !== null) {
-            if(axiosPostError.status === 409){
+            if (axiosPostError.status === 409) {
                 notificationDispatch({
                     type: 'ADD_NOTE',
                     payload: {
@@ -101,18 +104,21 @@ export default function Categories() {
                         status: 'error'
                     }
                 })
+                setAxiosPostError(null)
             }
-            console.log(axiosPostError)
         }
     }, [axiosPostError, axiosPostResult])
     // Remove category
     useEffect(() => {
-        if (axiosDeleteResult !== null ) {
-            const newCategoreis = [...categories]
-            console.log(axiosDeleteResult)
-            // const filtredCategories = newCategoreis.filter(item => {
-            //     return item.id !== item.id
-            // })
+        if (axiosDeleteResult !== null && selectedId !== null) {
+            let newCategoreis = [...categories]
+            const filtredCategories = newCategoreis.filter(item => {
+                return item.id !== selectedId
+            })
+            newCategoreis = filtredCategories;
+            setCategories(newCategoreis)
+
+            setSelectedId(null)
             notificationDispatch({
                 type: 'ADD_NOTE',
                 payload: {
@@ -121,7 +127,9 @@ export default function Categories() {
                     status: 'success'
                 }
             })
-            
+            console.log(filtredCategories)
+            setAxiosDeleteResult(null)
+
         }
         if (axiosDeleteError !== null) {
             console.log(axiosDeleteError)
@@ -172,10 +180,10 @@ export default function Categories() {
                             <h2 className="font-bold text-slate-800 dark:text-slate-200 dark:border-slate-600 xl:my-3 mt-10 mr-2 border-b pb-3">دسته بندی ها</h2>
                             {simpleDataLoaderStatus === 'hidde' && (
                                 categories.length ? (categories.map(item => (
-                                        <CategoryItem key={item.id} {...item} deleteItem={removeHandler} />
-                                    ))): ((<p className="text-center dark:text-slate-300">هیچ دسته ای وجود ندارد.!</p>))
-                             )}
-                     
+                                    <CategoryItem key={item.id} {...item} deleteItem={removeHandler} />
+                                ))) : ((<p className="text-center mt-4 font-bold text-gray-600  dark:text-slate-300">هیچ دسته ای وجود ندارد.!</p>))
+                            )}
+
                             {simpleDataLoaderStatus !== 'hidde' && <SimpleDataLoader status={simpleDataLoaderStatus} />}
                         </div>
                         {/* End of Left side - select Image */}

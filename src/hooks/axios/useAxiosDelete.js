@@ -91,5 +91,5 @@ export default function useAxiosDelete() {
         }
     }, [axiosDeleteUrl])
 
-    return { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl, setAxiosDeleteToken, setAxiosDeleteError }
+    return { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl, setAxiosDeleteToken, setAxiosDeleteError, setAxiosDeleteResult, axiosDeleteUrl }
 }
