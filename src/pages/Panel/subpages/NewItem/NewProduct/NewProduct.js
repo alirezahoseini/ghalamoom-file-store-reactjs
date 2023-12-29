@@ -16,7 +16,7 @@ import Textarea from "../../../components/Inputs/Textarea";
 import InStockRadio from "../../../components/Inputs/InStockRadio";
 import SelectBox from "../../../components/Inputs/SelectBox";
 import PriceInput from "../../../components/Inputs/PriceInput";
-import ImageInput from "../../../components/Inputs/ImageInput";
+import ImageInput from "../../../components/Inputs/ImageInput/ImageInput";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";

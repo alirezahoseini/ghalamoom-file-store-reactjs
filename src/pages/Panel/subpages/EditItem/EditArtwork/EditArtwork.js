@@ -15,7 +15,7 @@ import useAxiosDelete from "../../../../../hooks/axios/useAxiosDelete";
 // components
 import NormalInput from "../../../components/Inputs/NormalInput";
 import Textarea from "../../../components/Inputs/Textarea";
-import ImageInput from "../../../components/Inputs/ImageInput";
+import ImageInput from "../../../components/Inputs/ImageInput/ImageInput";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
 import DeleteButton from "../../components/Buttons/DeleteButton";

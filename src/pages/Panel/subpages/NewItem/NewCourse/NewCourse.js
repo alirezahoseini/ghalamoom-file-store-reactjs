@@ -16,7 +16,7 @@ import NormalInput from "../../../components/Inputs/NormalInput";
 import Textarea from "../../../components/Inputs/Textarea";
 import SelectBox from "../../../components/Inputs/SelectBox";
 import PriceInput from "../../../components/Inputs/PriceInput";
-import ImageInput from "../../../components/Inputs/ImageInput";
+import ImageInput from "../../../components/Inputs/ImageInput/ImageInput";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";

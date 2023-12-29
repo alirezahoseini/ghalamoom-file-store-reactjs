@@ -14,7 +14,7 @@ import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
 // components
 import NormalInput from "../../../components/Inputs/NormalInput";
 import Textarea from "../../../components/Inputs/Textarea";
-import ImageInput from "../../../components/Inputs/ImageInput";
+import ImageInput from "../../../components/Inputs/ImageInput/ImageInput";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
