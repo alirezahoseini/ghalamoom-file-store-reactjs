@@ -113,6 +113,7 @@ export default function NewProduct() {
       label: 'قیمت',
       placeholder: "قیمت محصول",
       pattern: "\\d*",
+      type: 'number',
       // required: true,
       maxLength: "6",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
