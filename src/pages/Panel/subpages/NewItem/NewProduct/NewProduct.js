@@ -49,7 +49,7 @@ export default function NewProduct() {
       label: 'عنوان محصول',
       placeholder: 'عنوان محصول را وارد کنید',
       type: 'text',
-      required: true,
+      // required: true,
       errorMessage: 'عنوان محصول باید بین 5 الی 15 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{5,50}',
       maxLength: 50,
@@ -58,7 +58,7 @@ export default function NewProduct() {
       name: 'miniDes',
       label: 'توضیح کوتاه',
       placeholder: 'محصول را در حد یک خط توصیف کنید',
-      required: true,
+      // required: true,
       errorMessage: 'توضیح کوتاه باید بین 30 الی 150 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{30,150}',
       maxLength: 150,
@@ -69,7 +69,7 @@ export default function NewProduct() {
       name: 'largeDes',
       label: 'توضیح بلند',
       placeholder: 'توضیحات محصول',
-      required: true,
+      // required: true,
       errorMessage: 'توضیحات باید بین 40 الی 400 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{40,400}',
       maxLength: 400,
@@ -113,7 +113,7 @@ export default function NewProduct() {
       label: 'قیمت',
       placeholder: "قیمت محصول",
       pattern: "\\d*",
-      required: true,
+      // required: true,
       maxLength: "6",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
     },
@@ -122,7 +122,7 @@ export default function NewProduct() {
       label: 'حجم فایل به مگابایت',
       placeholder: 'حجم فایل را وارد کنید',
       pattern: "^([1-9][0-9\\.]{0,4}|10000)$",
-      required: true,
+      // required: true,
       maxLength: "5",
       errorMessage: "حجم فایل را به عدد بین 1 الی 10000 مگابایت وارد کنید",
     },
@@ -135,20 +135,22 @@ export default function NewProduct() {
       inputId: 'new-product-gallery'
     }
   }
-  const changeHandler = (event) => {
+  const changeHandler = ({id, value}) => {
     // Image 
-    if (typeof event === 'string' && event.includes('http')) {
-      setFormData({ ...formData, image: event })
-    } else if (event.target.className.includes('custom-select-box-input')) {
-      // Select boxes
-      const inputName = event.target.name;
-      const inputItems = inputsData[inputName].items;
-      const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-      setFormData({ ...formData, [event.target.name]: selectedItem })
-    } else {
-      // Normal inputs
-      setFormData({ ...formData, [event.target.name]: event.target.value })
-    }
+    // if (typeof event === 'string' && event.includes('http')) {
+    //   setFormData({ ...formData, image: event })
+    // } else if (event.target.className.includes('custom-select-box-input')) {
+    //   // Select boxes
+    //   const inputName = event.target.name;
+    //   const inputItems = inputsData[inputName].items;
+    //   const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
+    //   setFormData({ ...formData, [event.target.name]: selectedItem })
+    // } else {
+    //   // Normal inputs
+    //   setFormData({ ...formData, [event.target.name]: event.target.value })
+    // }
+
+    setFormData({...formData, [id] : value})
   }
   const galleryChangeHandler = (images) => {
     setFormData({ ...formData, gallery: images })
@@ -177,7 +179,11 @@ export default function NewProduct() {
 
       console.log(axiosPostError)
     }
-  }, [axiosPostError, axiosPostResult])
+  }, [axiosPostError, axiosPostResult]);
+
+  // useEffect(()=> {
+  //   console.log(formData)
+  // }, [formData])
 
   return (
     <div id="new-product-form">

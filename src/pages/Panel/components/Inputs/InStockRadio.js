@@ -21,7 +21,14 @@ export default function InStockRadio(props) {
 
     const changeHandler = (event) => {
         setIsTrue(prev => !prev)
-        onChangeEvent(event)
+        let result = null;
+        if(event.target.value == 'true'){
+            result = true
+        }
+        else{
+            result = false
+        }
+        onChangeEvent({id: 'inStock', value: result })
     }
   
     useEffect(()=> { 
