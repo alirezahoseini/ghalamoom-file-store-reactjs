@@ -15,7 +15,7 @@
 
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import {getCooki} from '../../../../../utils/cookis'
+import { getCooki } from '../../../../../utils/cookis'
 import { TbPhotoPlus, TbPhotoEdit } from 'react-icons/tb'
 import Uploader from './Uploader'
 
@@ -23,6 +23,7 @@ export default function ImageInput({ defaultImage, onChnageHandler, inputId = 'n
     const [selectedImage, setSelectedImage] = useState('')
     const [uploadStart, setUploadStart] = useState(true);
     const [uploadPercent, setUploadPercent] = useState(0);
+    const [uploadError, setUploadError] = useState(null);
     const userToken = getCooki('token')
 
     /// default selected image
@@ -38,17 +39,24 @@ export default function ImageInput({ defaultImage, onChnageHandler, inputId = 'n
             },
             onUploadProgress: (progressEvent) => {
                 setUploadStart(true);
-
                 let { loaded, total } = progressEvent;
                 setUploadPercent((loaded / total) * 100)
             }
         })
             .then(res => {
-                console.log(res)
+                onChnageHandler(res.data[0].image)
                 setUploadStart(false)
                 setUploadPercent(null)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                if(err.res){
+                    console.log(err.res)
+                }
+                if(err.req){
+                    console.log(err.req)
+                }
+                setUploadError(true)
+            })
 
     }
 
@@ -65,7 +73,6 @@ export default function ImageInput({ defaultImage, onChnageHandler, inputId = 'n
             try {
                 reader.addEventListener('load', () => {
                     setSelectedImage(reader.result)
-                    onChnageHandler({ image: reader.result }) /* <--<--<--<--<--<- this is output -<--<--<--<--<--<--<--<- */
                 })
                 reader.readAsDataURL(file)
             } catch (error) {
@@ -77,7 +84,7 @@ export default function ImageInput({ defaultImage, onChnageHandler, inputId = 'n
 
     return (
         <div id="image-input" className='p-3 my-3 mt-5 xl:mt-3' >
-            <input type="file" name={inputId} id={inputId} onChange={(event) => selectedFile(event)} className='bg-text-1 hidden' accept="image/*" />
+            <input type="file" name={inputId} id={inputId} onChange={(event) => selectedFile(event)} className='bg-text-1 hidden' accept="image/png, image/gif, image/jpeg, image/webp" />
             {
                 selectedImage === '' ? (
                     // / If not selected image show this

@@ -27,7 +27,7 @@ export default function NewProduct() {
   const authToken = getCooki('token')
   const [formData, setFormData] = useState({
     title: '',                                                  /// max length 70 
-    inStock: true,                                              /// default true 
+    inStock: false,                                              /// default false 
     image: '',                                                  /// dataurl image
     price: '',                                                  /// the price is in thousand tomans, like 20 
     fileSize: '',                                               /// file size in megabytes
@@ -137,8 +137,8 @@ export default function NewProduct() {
   }
   const changeHandler = (event) => {
     // Image 
-    if (event.image) {
-      setFormData({ ...formData, image: event.image })
+    if (typeof event === 'string' && event.includes('http')) {
+      setFormData({ ...formData, image: event })
     } else if (event.target.className.includes('custom-select-box-input')) {
       // Select boxes
       const inputName = event.target.name;
@@ -156,9 +156,9 @@ export default function NewProduct() {
   const submitHandler = (event) => {
     console.log(formData)
     event.preventDefault();
-    setAxiosPostToken(authToken);
-    setAxiosPostData(formData);
-    setAxiosPostUrl(apiLinks.products);
+    // setAxiosPostToken(authToken);
+    // setAxiosPostData(formData);
+    // setAxiosPostUrl(apiLinks.products);
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
