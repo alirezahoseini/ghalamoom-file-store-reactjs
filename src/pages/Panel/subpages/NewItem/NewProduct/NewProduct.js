@@ -31,16 +31,11 @@ export default function NewProduct() {
     image: '',                                                  /// dataurl image
     price: '',                                                  /// the price is in thousand tomans, like 20 
     fileSize: '',                                               /// file size in megabytes
-    miniDes: '',                                                /// max length 180
-    largeDes: '',                                               /// max length 400
-    saleCount: 0,                                               /// default 0 not change here
-    likes: 0,                                                   /// default 0 not change here
-    downloadCount: 0,                                           /// default 0 not change here
+    shortDes: '',                                                /// max length 180
+    longDes: '',                                               /// max length 400
     category: { "name": "بدون دسته", "id": "null" },           /// chooseing from select box
     format: { "name": "ZIP", "id": "zip" },                     /// chooseing from select box
-    comments: [],                                               /// default [] not change here
     gallery: [],
-    created_at: new Date().getTime()                            ///
   });
   const navigateTo = useNavigate()
   const inputsData = {
@@ -54,27 +49,27 @@ export default function NewProduct() {
       pattern: '^[\\w\u0600-\u06FF\\s]{5,50}',
       maxLength: 50,
     },
-    miniDes: {
-      name: 'miniDes',
+    shortDes: {
+      name: 'shortDes',
       label: 'توضیح کوتاه',
       placeholder: 'محصول را در حد یک خط توصیف کنید',
-      // required: true,
       errorMessage: 'توضیح کوتاه باید بین 30 الی 150 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{30,150}',
       maxLength: 150,
       minLength: 30,
-      rows: '2'
+      rows: '2',
+      require: 'true'
     },
-    largeDes: {
-      name: 'largeDes',
+    longDes: {
+      name: 'longDes',
       label: 'توضیح بلند',
       placeholder: 'توضیحات محصول',
-      // required: true,
       errorMessage: 'توضیحات باید بین 40 الی 400 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{40,400}',
       maxLength: 400,
       minLength: 50,
-      rows: '5'
+      rows: '5',
+      require: 'true'
     },
     category: {
       selectBoxName: 'category',
@@ -151,6 +146,7 @@ export default function NewProduct() {
     //   setFormData({ ...formData, [event.target.name]: event.target.value })
     // }
 
+    console.log(id, value)
     setFormData({...formData, [id] : value})
   }
   const galleryChangeHandler = (images) => {
@@ -194,7 +190,7 @@ export default function NewProduct() {
             {/* Right Side - Text form  */}
             <div className="right-side xl:w-8/12">
               <NormalInput value={formData.title} onChangeEvent={changeHandler} {...inputsData.title} />
-              <Textarea value={formData.miniDes} onChangeEvent={changeHandler} {...inputsData.miniDes} />
+              <Textarea value={formData.shortDes} onChangeEvent={changeHandler} {...inputsData.shortDes} />
               <div className="w-full flex-col xl:flex-row flex justify-start relative mb-5 mt-3">
                 <div className="w-full xl:w-6/12">
                   <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} />
@@ -212,7 +208,7 @@ export default function NewProduct() {
                 </div>
               </div>
               <NormalInput value={formData.fileSize} onChangeEvent={changeHandler} {...inputsData.fileSize} />
-              <Textarea value={formData.largeDes} onChangeEvent={changeHandler} {...inputsData.largeDes} />
+              <Textarea value={formData.longDes} onChangeEvent={changeHandler} {...inputsData.longDes} />
             </div>
             {/* End of Right Side - Text form  */}
             {/* Left side - select Image */}
