@@ -145,8 +145,11 @@ export default function NewProduct() {
     //   // Normal inputs
     //   setFormData({ ...formData, [event.target.name]: event.target.value })
     // }
+    if(id === 'fileSize'){
+      setFormData({...formData, [id]: Number(value)});
+      return
+    }
 
-    console.log(id, value)
     setFormData({...formData, [id] : value})
   }
   const galleryChangeHandler = (images) => {
