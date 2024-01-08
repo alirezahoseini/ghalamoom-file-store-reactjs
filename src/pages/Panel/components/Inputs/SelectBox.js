@@ -33,7 +33,7 @@ export default function SelectBox(props) {
     const [isOpenSelectBox, setIsOpenSelectBox] = useState(false)
 
     const changeHandler = (event) => {
-        onChangeEvent(event)
+        onChangeEvent({id: props.name, value: event.target.id})
         setSelectedItem(event.target.id)
         setIsOpenSelectBox(false)
     }
@@ -58,7 +58,7 @@ export default function SelectBox(props) {
                 <div className='flex flex-wrap gap-2'>
                     {items.map(item => (
                         <div key={item.name} className="custom-select-box-item">
-                            <input type="radio" name={selectBoxName} id={item.name} value={item.id} className='custom-select-box-input hidden' onChange={(event) => changeHandler(event)}/>
+                            <input type="radio" name={selectBoxName} id={item.name} value={item.id} className='custom-select-box-input hidden' onClick={(event) => changeHandler(event)}/>
                             <label htmlFor={item.name} className={`py-2 px-3 bg-slate-100 text-slate-700 font-bold rounded-lg cursor-pointer my-1 inline-block border-4  dark:bg-slate-800 dark:text-slate-300 ${selectedItem === item.name ? ' border-blue-500 border-opacity-40' : 'border-transparent'}`}>{item.name}</label>
                         </div>
                     ))}

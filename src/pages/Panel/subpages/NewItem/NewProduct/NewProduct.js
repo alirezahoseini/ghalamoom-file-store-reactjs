@@ -91,16 +91,16 @@ export default function NewProduct() {
       label: 'وضعیت موجودی انبار',
     },
     format: {
-      selectBoxName: 'format',
+      name: 'format',
       label: 'فرمت فایل',
       items: [
-        { name: 'ZIP', id: 'zip' },
-        { name: 'PNG', id: 'png' },
-        { name: 'JPG', id: 'jpg' },
-        { name: 'AI', id: 'ai' },
-        { name: 'PSD', id: 'psd' },
-        { name: 'TTF', id: 'TTF' },
-        { name: 'MP4', id: 'mp4' },
+        {name: 'ZIP' , id: 'ZIP'},
+        {name: 'PNG' , id: 'PNG'},
+        {name: 'JPG' , id: 'JPG'},
+        {name: 'AI' , id: 'AI'},
+        {name: 'PSD' , id: 'PSD'},
+        {name: 'TTF' , id: 'TTF'},
+        {name: 'MP4' , id: 'MP4'},
       ]
     },
     price: {
@@ -131,26 +131,13 @@ export default function NewProduct() {
       inputId: 'new-product-gallery'
     }
   }
-  const changeHandler = ({id, value}) => {
-    // Image 
-    // if (typeof event === 'string' && event.includes('http')) {
-    //   setFormData({ ...formData, image: event })
-    // } else if (event.target.className.includes('custom-select-box-input')) {
-    //   // Select boxes
-    //   const inputName = event.target.name;
-    //   const inputItems = inputsData[inputName].items;
-    //   const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-    //   setFormData({ ...formData, [event.target.name]: selectedItem })
-    // } else {
-    //   // Normal inputs
-    //   setFormData({ ...formData, [event.target.name]: event.target.value })
-    // }
-    if(id === 'fileSize'){
-      setFormData({...formData, [id]: Number(value)});
+  const changeHandler = ({ id, value }) => {
+    
+    if (id === 'fileSize') {
+      setFormData({ ...formData, [id]: Number(value) });
       return
     }
-
-    setFormData({...formData, [id] : value})
+    setFormData({ ...formData, [id]: value })
   }
   const galleryChangeHandler = (images) => {
     setFormData({ ...formData, gallery: images })
@@ -158,9 +145,30 @@ export default function NewProduct() {
   const submitHandler = (event) => {
     console.log(formData)
     event.preventDefault();
-    // setAxiosPostToken(authToken);
-    // setAxiosPostData(formData);
-    // setAxiosPostUrl(apiLinks.products);
+    if(formData.gallery < 1 ) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'حداقل یک تصویر برای گالری انتخاب کنید',
+          status: 'warning'
+        }
+      })
+    }else if (!formData.image) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا تصویر شاخص را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+    }else{
+      console.log(formData)
+      // setAxiosPostToken(authToken);
+      // setAxiosPostData(formData);
+      // setAxiosPostUrl(apiLinks.products);
+    }
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
@@ -181,9 +189,7 @@ export default function NewProduct() {
     }
   }, [axiosPostError, axiosPostResult]);
 
-  // useEffect(()=> {
-  //   console.log(formData)
-  // }, [formData])
+
 
   return (
     <div id="new-product-form">
