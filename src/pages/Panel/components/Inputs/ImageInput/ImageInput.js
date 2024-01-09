@@ -19,7 +19,7 @@ import { getCooki } from '../../../../../utils/cookis'
 import { TbPhotoPlus, TbPhotoEdit } from 'react-icons/tb'
 import Uploader from './Uploader'
 
-export default function ImageInput({ defaultImage, onChnageHandler, inputId = 'null' }) {
+export default function ImageInput({ name, defaultImage, onChnageHandler, inputId = 'null' }) {
     const [selectedImage, setSelectedImage] = useState('')
     const [uploadStart, setUploadStart] = useState(true);
     const [uploadPercent, setUploadPercent] = useState(0);
@@ -44,7 +44,7 @@ export default function ImageInput({ defaultImage, onChnageHandler, inputId = 'n
             }
         })
             .then(res => {
-                onChnageHandler(res.data[0].image)
+                onChnageHandler({id: name, value: res.data[0].image})
                 setUploadStart(false)
                 setUploadPercent(null)
             })

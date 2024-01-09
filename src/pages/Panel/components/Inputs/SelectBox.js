@@ -28,16 +28,15 @@ import { useEffect, useState } from 'react';
 import { TbChevronDown } from 'react-icons/tb'
 
 export default function SelectBox(props) {
-    const { label, onChangeEvent, selectBoxName, value, items } = props;
+    const { label, onChangeEvent, name, value, items } = props;
     const [selectedItem , setSelectedItem] = useState('');
     const [isOpenSelectBox, setIsOpenSelectBox] = useState(false)
 
     const changeHandler = (event) => {
-        onChangeEvent({id: props.name, value: event.target.id})
+        onChangeEvent({id: event.target.name, value: event.target.id})
         setSelectedItem(event.target.id)
         setIsOpenSelectBox(false)
     }
-
     useEffect(()=>{setSelectedItem(value.name)},[])
 
     return (
@@ -58,7 +57,7 @@ export default function SelectBox(props) {
                 <div className='flex flex-wrap gap-2'>
                     {items.map(item => (
                         <div key={item.name} className="custom-select-box-item">
-                            <input type="radio" name={selectBoxName} id={item.name} value={item.id} className='custom-select-box-input hidden' onClick={(event) => changeHandler(event)}/>
+                            <input type="radio" name={name} id={item.name} value={item.id} className='custom-select-box-input hidden' onClick={(event) => changeHandler(event)}/>
                             <label htmlFor={item.name} className={`py-2 px-3 bg-slate-100 text-slate-700 font-bold rounded-lg cursor-pointer my-1 inline-block border-4  dark:bg-slate-800 dark:text-slate-300 ${selectedItem === item.name ? ' border-blue-500 border-opacity-40' : 'border-transparent'}`}>{item.name}</label>
                         </div>
                     ))}

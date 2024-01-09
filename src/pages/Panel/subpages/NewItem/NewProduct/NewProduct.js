@@ -10,6 +10,7 @@ import { apiLinks } from '../../../../../data/links';
 import { getCooki } from '../../../../../utils/cookis'
 // hooks
 import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
+import useAxiosGet from '../../../../../hooks/axios/useAxiosGet';
 // components
 import NormalInput from "../../../components/Inputs/NormalInput";
 import Textarea from "../../../components/Inputs/Textarea";
@@ -24,7 +25,9 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 export default function NewProduct() {
   const notificationDispatch = useContext(NotificationContext)
   const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken, setAxiosPostError } = useAxiosPost();
-  const authToken = getCooki('token')
+  const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
+  const [categoryArray, setCategoryArray] = useState([])
+  const authToken = getCooki('token');
   const [formData, setFormData] = useState({
     title: '',                                                  /// max length 70 
     inStock: false,                                              /// default false 
@@ -33,9 +36,10 @@ export default function NewProduct() {
     fileSize: '',                                               /// file size in megabytes
     shortDes: '',                                                /// max length 180
     longDes: '',                                               /// max length 400
-    category: { "name": "بدون دسته", "id": "null" },           /// chooseing from select box
-    format: { "name": "ZIP", "id": "zip" },                     /// chooseing from select box
+    category: { name: "بدون دسته", type: "Product" },           /// chooseing from select box
+    format: "ZIP",                     /// chooseing from select box
     gallery: [],
+    saleCount: 0
   });
   const navigateTo = useNavigate()
   const inputsData = {
@@ -46,8 +50,8 @@ export default function NewProduct() {
       type: 'text',
       // required: true,
       errorMessage: 'عنوان محصول باید بین 5 الی 15 کلمه باشد',
-      pattern: '^[\\w\u0600-\u06FF\\s]{5,50}',
-      maxLength: 50,
+      pattern: '^[\\w\u0600-\u06FF\\s]{5,15}',
+      maxLength: 15,
     },
     shortDes: {
       name: 'shortDes',
@@ -72,19 +76,8 @@ export default function NewProduct() {
       require: 'true'
     },
     category: {
-      selectBoxName: 'category',
+      name: 'category',
       label: 'دسته بندی',
-      items: [
-        { name: 'بدون دسته', id: 'null' },
-        { name: 'فونت', id: 'font' },
-        { name: 'پک آیکن', id: 'icon-pack' },
-        { name: 'فایل ایلوستریتور', id: 'illustrator-file' },
-        { name: 'لایه باز فوتوشاپ', id: 'open-layer-psd' },
-        { name: 'پوستر', id: 'poster' },
-        { name: 'موکاپ', id: 'mockup' },
-        { name: 'پک استیکر', id: 'sticker-pack' },
-        { name: 'کاور پست', id: 'post-cover' },
-      ]
     },
     inStock: {
       name: 'inStock',
@@ -94,13 +87,13 @@ export default function NewProduct() {
       name: 'format',
       label: 'فرمت فایل',
       items: [
-        {name: 'ZIP' , id: 'ZIP'},
-        {name: 'PNG' , id: 'PNG'},
-        {name: 'JPG' , id: 'JPG'},
-        {name: 'AI' , id: 'AI'},
-        {name: 'PSD' , id: 'PSD'},
-        {name: 'TTF' , id: 'TTF'},
-        {name: 'MP4' , id: 'MP4'},
+        { name: 'ZIP', id: 'ZIP' },
+        { name: 'PNG', id: 'PNG' },
+        { name: 'JPG', id: 'JPG' },
+        { name: 'AI', id: 'AI' },
+        { name: 'PSD', id: 'PSD' },
+        { name: 'TTF', id: 'TTF' },
+        { name: 'MP4', id: 'MP4' },
       ]
     },
     price: {
@@ -124,7 +117,7 @@ export default function NewProduct() {
     },
     image: {
       imageValue: '',
-      inputId: 'new-product-image'
+      name: 'image'
     },
     gallery: {
       imageValue: [],
@@ -132,9 +125,13 @@ export default function NewProduct() {
     }
   }
   const changeHandler = ({ id, value }) => {
-    
+
     if (id === 'fileSize') {
       setFormData({ ...formData, [id]: Number(value) });
+      return
+    }
+    if(id === 'category'){
+      setFormData({ ...formData, [id]:  value});
       return
     }
     setFormData({ ...formData, [id]: value })
@@ -143,9 +140,8 @@ export default function NewProduct() {
     setFormData({ ...formData, gallery: images })
   }
   const submitHandler = (event) => {
-    console.log(formData)
     event.preventDefault();
-    if(formData.gallery < 1 ) {
+    if (formData.gallery < 1) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -154,7 +150,7 @@ export default function NewProduct() {
           status: 'warning'
         }
       })
-    }else if (!formData.image) {
+    } else if (!formData.image) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -163,12 +159,17 @@ export default function NewProduct() {
           status: 'warning'
         }
       })
-    }else{
+    } else {
       console.log(formData)
-      // setAxiosPostToken(authToken);
-      // setAxiosPostData(formData);
-      // setAxiosPostUrl(apiLinks.products);
+      setAxiosPostToken(authToken);
+      setAxiosPostData(formData);
+      setAxiosPostUrl(apiLinks.products);
     }
+  }
+  // Get categoreis form server
+  const getCategories = () => {
+    setAxiosGetToken(authToken);
+    setAxiosGetUrl(`${apiLinks.categories}?type=Product`)
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
@@ -181,13 +182,30 @@ export default function NewProduct() {
           status: 'success'
         }
       })
-      // navigateTo('/panel/products')
     }
     if (axiosPostError !== null) {
 
       console.log(axiosPostError)
     }
   }, [axiosPostError, axiosPostResult]);
+
+  // Get categoreis 
+  useEffect(() => {
+    getCategories()
+  }, [])
+
+  // Run get categoreis
+  useEffect(() => {
+    if (axiosGetResult !== null) {
+      let newCategoreisArray = []
+      axiosGetResult.map(item => newCategoreisArray = [...newCategoreisArray, { id: item.id, name: item.name }])
+      setCategoryArray(newCategoreisArray)
+    }
+    if (axiosGetError !== null) {
+
+      console.log(axiosGetError)
+    }
+  }, [axiosGetResult, axiosPostError])
 
 
 
@@ -202,7 +220,14 @@ export default function NewProduct() {
               <Textarea value={formData.shortDes} onChangeEvent={changeHandler} {...inputsData.shortDes} />
               <div className="w-full flex-col xl:flex-row flex justify-start relative mb-5 mt-3">
                 <div className="w-full xl:w-6/12">
-                  <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} />
+                  {
+                    categoryArray.length >= 1 && (
+                      <SelectBox value={formData.category} onChangeEvent={changeHandler} items={categoryArray} {...inputsData.category} />
+                    )
+                  }
+                  {categoryArray.length <= 0 && (
+                    <div > loading</div>
+                  )}
                 </div>
                 <div className="w-full xl:w-6/12">
                   <InStockRadio value={formData.inStock} onChangeEvent={changeHandler} {...inputsData.inStock} />
@@ -237,6 +262,6 @@ export default function NewProduct() {
           </div>
         </form>
       </div>
-    </div>
+    </div >
   )
 }
