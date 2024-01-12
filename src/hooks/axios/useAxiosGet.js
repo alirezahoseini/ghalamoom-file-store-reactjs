@@ -64,7 +64,7 @@ export default function useAxiosGet() {
                         setAxiosGetUrl(null)
                         setAxiosGetIsPending(false)
                         setAxiosGetError(err.response)
-                        console.log('request error : ', err.response)
+                        console.log('respone error : ', err.response)
                     } else if (err.request) {
                         // request errors // not send request 
                         setAxiosGetUrl(null)

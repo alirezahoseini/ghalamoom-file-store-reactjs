@@ -60,13 +60,8 @@ export default function Categories() {
             ]
         },
     }
-    const changeHandler = (event) => {
-        // Image 
-        if (event.target.className.includes('custom-select-box-input')) {
-            setFormData({ ...formData, [event.target.name]: event.target.value })
-        } else {
-            setFormData({ ...formData, [event.target.name]: event.target.value })
-        }
+    const changeHandler = ({id, value}) => {
+      setFormData({ ...formData, [id]: value })
     }
     const submitHandler = (event) => {
         event.preventDefault();

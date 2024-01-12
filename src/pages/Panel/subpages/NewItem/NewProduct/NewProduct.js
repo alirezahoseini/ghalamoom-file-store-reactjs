@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { v4 } from 'uuid'
 
 // contexts 
@@ -28,6 +28,7 @@ export default function NewProduct() {
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
   const [categoryArray, setCategoryArray] = useState([])
   const authToken = getCooki('token');
+  const [loadCategoriesStatus, setLoadCategoriesStatus] = useState('loading');
   const [formData, setFormData] = useState({
     title: '',                                                  /// max length 70 
     inStock: false,                                              /// default false 
@@ -36,7 +37,7 @@ export default function NewProduct() {
     fileSize: '',                                               /// file size in megabytes
     shortDes: '',                                                /// max length 180
     longDes: '',                                               /// max length 400
-    category: { name: "بدون دسته", type: "Product" },           /// chooseing from select box
+    category: {},           /// chooseing from select box
     format: "ZIP",                     /// chooseing from select box
     gallery: [],
     saleCount: 0
@@ -48,7 +49,7 @@ export default function NewProduct() {
       label: 'عنوان محصول',
       placeholder: 'عنوان محصول را وارد کنید',
       type: 'text',
-      // required: true,
+      required: true,
       errorMessage: 'عنوان محصول باید بین 5 الی 15 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{5,15}',
       maxLength: 15,
@@ -102,7 +103,7 @@ export default function NewProduct() {
       placeholder: "قیمت محصول",
       pattern: "\\d*",
       type: 'number',
-      // required: true,
+      required: true,
       maxLength: "6",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
     },
@@ -111,7 +112,7 @@ export default function NewProduct() {
       label: 'حجم فایل به مگابایت',
       placeholder: 'حجم فایل را وارد کنید',
       pattern: "^([1-9][0-9\\.]{0,4}|10000)$",
-      // required: true,
+      required: true,
       maxLength: "5",
       errorMessage: "حجم فایل را به عدد بین 1 الی 10000 مگابایت وارد کنید",
     },
@@ -130,8 +131,8 @@ export default function NewProduct() {
       setFormData({ ...formData, [id]: Number(value) });
       return
     }
-    if(id === 'category'){
-      setFormData({ ...formData, [id]:  value});
+    if (id === 'category') {
+      setFormData({ ...formData, [id]: value });
       return
     }
     setFormData({ ...formData, [id]: value })
@@ -159,8 +160,16 @@ export default function NewProduct() {
           status: 'warning'
         }
       })
+    }else if(!formData.category) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا دسته بندی را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
     } else {
-      console.log(formData)
       setAxiosPostToken(authToken);
       setAxiosPostData(formData);
       setAxiosPostUrl(apiLinks.products);
@@ -170,10 +179,10 @@ export default function NewProduct() {
   const getCategories = () => {
     setAxiosGetToken(authToken);
     setAxiosGetUrl(`${apiLinks.categories}?type=Product`)
+    setLoadCategoriesStatus('loading')
   }
   useEffect(() => {
     if (axiosPostResult !== null) {
-      console.log(axiosPostResult)
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -182,9 +191,17 @@ export default function NewProduct() {
           status: 'success'
         }
       })
+      navigateTo('/panel/products')
     }
     if (axiosPostError !== null) {
-
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: "محصول ایجاد نشد لطفا دوباره امتحان کنید",
+          status: 'error'
+        }
+      })
       console.log(axiosPostError)
     }
   }, [axiosPostError, axiosPostResult]);
@@ -200,12 +217,24 @@ export default function NewProduct() {
       let newCategoreisArray = []
       axiosGetResult.map(item => newCategoreisArray = [...newCategoreisArray, { id: item.id, name: item.name }])
       setCategoryArray(newCategoreisArray)
+      setLoadCategoriesStatus('loaded')
     }
     if (axiosGetError !== null) {
+      if (axiosGetError.status === 400) {
+        setLoadCategoriesStatus('create_category')
+      } else {
 
-      console.log(axiosGetError)
+        notificationDispatch({
+          type: 'ADD_NOTE',
+          payload: {
+            id: v4(),
+            message: 'دسته بندی ها بارگذاری نشدند',
+            status: 'error'
+          }
+        })
+      }
     }
-  }, [axiosGetResult, axiosPostError])
+  }, [axiosGetResult, axiosGetError])
 
 
 
@@ -221,12 +250,15 @@ export default function NewProduct() {
               <div className="w-full flex-col xl:flex-row flex justify-start relative mb-5 mt-3">
                 <div className="w-full xl:w-6/12">
                   {
-                    categoryArray.length >= 1 && (
+                    loadCategoriesStatus === 'loaded' && (
                       <SelectBox value={formData.category} onChangeEvent={changeHandler} items={categoryArray} {...inputsData.category} />
                     )
                   }
-                  {categoryArray.length <= 0 && (
-                    <div > loading</div>
+                  {loadCategoriesStatus === 'loading' && (
+                    <span className="w-full lg:w-32 h-10 inline-flex justify-center items-center text-slate-700 dark:text-slate-300 dark:bg-slate-900 bg-slate-200 mt-5 mb-3 rounded-md animate-pulse">درحال بارگذاری ...</span>
+                  )}
+                  {loadCategoriesStatus === 'create_category' && (
+                    <Link to={'/panel/categories'} className="w-full lg:w-32 h-10 inline-flex justify-center items-center text-white font-bold dark:text-slate-300 dark:bg-green-600 bg-green-500 mt-5 mb-3 rounded-md ">ایجاد دسته جدید</Link>
                   )}
                 </div>
                 <div className="w-full xl:w-6/12">
