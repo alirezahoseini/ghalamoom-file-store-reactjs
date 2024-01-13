@@ -34,11 +34,10 @@ export default function Categories() {
     const [categories, setCategories] = useState([]);
     const [selectedId, setSelectedId] = useState(null)
     const [formData, setFormData] = useState({
-        name: "",                                                  /// max length 70 
-        type: 'Product',                                                /// chooseing from select box
+        name: "",                                                        /// max length 70 
+        type: '',                                                /// chooseing from select box
 
     });
-    const navigateTo = useNavigate();
     const inputsData = {
         name: {
             name: 'name',
@@ -52,7 +51,7 @@ export default function Categories() {
             minLength: 3
         },
         type: {
-            selectBoxName: 'type',
+            name: 'type',
             label: "نوع دسته",
             items: [
                 { name: "محصول", id: 'Product' },
@@ -60,8 +59,13 @@ export default function Categories() {
             ]
         },
     }
-    const changeHandler = ({id, value}) => {
-      setFormData({ ...formData, [id]: value })
+    const changeHandler = ({ id, value }) => {
+        if (id === 'type') {
+            setFormData({ ...formData, [id]: `${value === 'محصول' ? 'Product' : 'Course'}` })
+            return
+        } else{
+            setFormData({ ...formData, [id]: value })
+        }
     }
     const submitHandler = (event) => {
         event.preventDefault();

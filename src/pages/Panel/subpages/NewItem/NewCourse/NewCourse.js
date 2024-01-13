@@ -1,15 +1,18 @@
 import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
-import {v4} from 'uuid'
+import { Link } from "react-router-dom";
+import { v4 } from 'uuid'
 
 // contexts 
 import { NotificationContext } from '../../../../../Contexts/Notifications/NotificationProvider'
 
 // datas
 import { apiLinks } from '../../../../../data/links';
-
+// Utils
+import { getCooki } from '../../../../../utils/cookis'
 // hooks
 import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
+import useAxiosGet from "../../../../../hooks/axios/useAxiosGet";
 
 // components
 import NormalInput from "../../../components/Inputs/NormalInput";
@@ -23,25 +26,26 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 
 export default function NewCourse() {
   const notificationDispatch = useContext(NotificationContext)
-  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
+  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken } = useAxiosPost();
+  const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
+  const [categoryArray, setCategoryArray] = useState([])
+  const [loadCategoriesStatus, setLoadCategoriesStatus] = useState('loading');
+  const authToken = getCooki('token');
   const [formData, setFormData] = useState({
     title: '',                                                        /// max length 70 
     image: '',                                                        /// dataurl image
     price: '',                                                        /// the price is in thousand tomans, like 20 
     fileSize: '',                                                     /// file size in megabytes
-    miniDes: '',                                                      /// max length 180
-    largeDes: '',                                                     /// max length 400
-    time: '',                                                         /// course time
-    likes: 0,                                                         /// default [] not change here
-    comments: [],                                                     /// default 0 not change here
+    shortDes: '',                                                      /// max length 180
+    longDes: '',                                                     /// max length 400
+    duration: '',                                                         /// course duration
     studentCount: 0,                                                  /// default 0 not change here
-    wayReceive: { "name": "دانلودی", "id": "download" },             /// chooseing from select box
-    support: { "name": "تیکت", "id": "ticket" },                      /// chooseing from select box
-    category: { "name": "بدون دسته", "id": "null" },                 /// chooseing from select box
-    prerequisite: { "name": "بدون پیش نیاز", "id": "null" },         /// chooseing from select box
-    level: { "name": "مبتدی", "id": "beginner" },                     /// chooseing from select box
+    wayRecive: [],                                           /// chooseing from select box
+    support: [],                      /// chooseing from select box
+    category: [],                                                     /// chooseing from select box
+    prerequisite: [],         /// chooseing from select box
+    level: [],                     /// chooseing from select box
     gallery: [],
-    created_at: new Date().getTime()
   });
   const navigateTo = useNavigate()
   const inputsData = {
@@ -52,11 +56,11 @@ export default function NewCourse() {
       type: 'text',
       required: true,
       errorMessage: 'عنوان دوره باید بین 5 الی 15 کلمه باشد',
-      pattern: '^[\\w\u0600-\u06FF\\s]{5,50}',
-      maxLength: 50,
+      pattern: '^[\\w\u0600-\u06FF\\s]{5,15}',
+      maxLength: 15,
     },
-    miniDes: {
-      name: 'miniDes',
+    shortDes: {
+      name: 'shortDes',
       label: 'توضیح کوتاه',
       placeholder: 'دوره را در حد یک خط توصیف کنید',
       required: true,
@@ -66,8 +70,8 @@ export default function NewCourse() {
       minLength: 30,
       rows: '2'
     },
-    largeDes: {
-      name: 'largeDes',
+    longDes: {
+      name: 'longDes',
       label: 'توضیح بلند',
       placeholder: 'توضیحات دوره',
       required: true,
@@ -78,52 +82,47 @@ export default function NewCourse() {
       rows: '5'
     },
     prerequisite: {
-      selectBoxName: 'prerequisite',
+      name: 'prerequisite',
       label: 'پیشنیاز',
       items: [
-        { name: "بدون پیش نیاز", id: 'null' },
-        { name: 'دوره ایلوستریتور مقدماتی', id: 'illu-base' },
-        { name: 'دوره ایلوستریتور متوسط', id: 'illu-midd' },
-        { name: 'دوره ایلوستریتور پیشرفته', id: 'illu-advance' },
-        { name: 'دوره فوتوشاپ مقدماتی', id: 'photo-base' },
-        { name: 'دوره فوتوشاپ متوسط', id: 'photo-midd' },
-        { name: 'دوره فوتوشاپ پیشرفته', id: 'photo-advance' },
+        { name: "بدون پیش نیاز", id: 'NoPrerequisite' },
+        { name: 'دوره ایلوستریتور مقدماتی', id: 'AiPreliminary' },
+        { name: 'دوره ایلوستریتور متوسط', id: 'AiIntermediate' },
+        { name: 'دوره ایلوستریتور پیشرفته', id: 'AiAdvanced' },
+        { name: 'دوره فوتوشاپ مقدماتی', id: 'PsPreliminary' },
+        { name: 'دوره فوتوشاپ متوسط', id: 'PsIntermediate' },
+        { name: 'دوره فوتوشاپ پیشرفته', id: 'PsAdvanced' },
       ]
     },
     category: {
-      selectBoxName: 'category',
+      name: 'category',
       label: 'دسته بندی',
-      items: [
-        { name: 'بدون دسته', id: 'null' },
-        { name: 'گرافیک', id: 'graphic' },
-        { name: 'طراحی', id: 'art' },
-      ]
     },
-    wayReceive: {
-      selectBoxName: 'wayReceive',
+    wayRecive: {
+      name: 'wayRecive',
       label: 'شیوه دریافت',
       items: [
-        { name: 'دانلودی', id: 'download' },
-        { name: 'اسپات پلیر', id: 'spotplayer' },
-        { name: 'تماشای آنلاین', id: 'online' },
+        { name: 'دانلودی', id: 'Download' },
+        { name: 'اسپات پلیر', id: 'SpotPlayer' },
+        { name: 'تماشای آنلاین', id: 'WatchOnline' },
       ]
     },
     level: {
-      selectBoxName: 'level',
+      name: 'level',
       label: 'سطح دوره',
       items: [
-        { name: 'مبتدی', id: 'beginner' },
-        { name: 'متوسط', id: 'middle' },
-        { name: 'پیشرفته', id: 'advanced' },
+        { name: 'مبتدی', id: 'Preliminary' },
+        { name: 'متوسط', id: 'Intermediate' },
+        { name: 'پیشرفته', id: 'Advanced' },
       ]
     },
     support: {
-      selectBoxName: 'support',
+      name: 'support',
       label: 'پشتیبانی',
       items: [
-        { name: 'تیکت', id: 'ticket' },
-        { name: 'تلفنی + تیکت', id: 'call-ticket' },
-        { name: 'تلفنی + تیکت + واتساپ', id: 'call-ticket-whatsapp' },
+        { name: 'تیکت', id: 'Ticket' },
+        { name: 'تلفنی + تیکت', id: 'TickerPhone' },
+        { name: 'تلفنی + تیکت + واتساپ', id: 'TicketPhoneWhatsapp' },
       ]
     },
     price: {
@@ -135,8 +134,8 @@ export default function NewCourse() {
       maxLength: "6",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
     },
-    time: {
-      name: 'time',
+    duration: {
+      name: 'duration',
       label: 'مدت زمان دوره',
       placeholder: "زمان دوره به ساعت",
       pattern: "^([1-9][0-9]{0,2})$",
@@ -155,52 +154,167 @@ export default function NewCourse() {
     },
     image: {
       imageValue: '',
-      inputId: 'new-course-image'
+      name: 'image'
     },
     gallery: {
       imageValue: [],
       inputId: 'new-course-gallery'
     }
   }
-  const changeHandler = (event) => {
-    // Image 
-    if (event.image) {
-      setFormData({ ...formData, image: event.image })
-    } else if (event.target.className.includes('custom-select-box-input')) {
-      // Select boxes
-      const inputName = event.target.name;
-      const inputItems = inputsData[inputName].items;
-      const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-      setFormData({ ...formData, [event.target.name]: selectedItem })
-    } else {
-      // Normal inputs
-      setFormData({ ...formData, [event.target.name]: event.target.value })
+  const changeHandler = ({ id, value }) => {
+
+    if (id === 'fileSize' || id === "duration") {
+      setFormData({ ...formData, [id]: Number(value) });
+      return
     }
+    if (id === 'category') {
+      setFormData({ ...formData, [id]: value });
+      return
+    }
+    if (id === 'level' || id === 'wayRecive' || id === 'prerequisite' || id === 'support') {
+      const filteredItem = inputsData[id].items.find((item) => {
+        if(item.name === value){
+          return item.id
+        }
+      })
+      setFormData({ ...formData, [id]: filteredItem.id });
+      return
+    }
+    setFormData({ ...formData, [id]: value })
   }
   const galleryChangeHandler = (images) => {
     setFormData({ ...formData, gallery: images })
   }
   const submitHandler = (event) => {
     event.preventDefault();
-    setAxiosPostData(formData)
-    setAxiosPostUrl(apiLinks.courses)
+    if (formData.gallery < 1) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'حداقل یک تصویر برای گالری انتخاب کنید',
+          status: 'warning'
+        }
+      }) 
+      return
+    } else if (!formData.image) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا تصویر شاخص را انتخاب نمایید',
+          status: 'warning'
+        }
+      }) 
+      return
+    } else if (!formData.category.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا دسته بندی را انتخاب نمایید',
+          status: 'warning'
+        }
+      }) 
+      return
+    }else if (!formData.wayRecive.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا شیوه دریافت را انتخاب نمایید',
+          status: 'warning'
+        }
+      }) 
+      return
+    }else if (!formData.support.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا نحوه پشتیبانی دوره را انتخاب نمایید',
+          status: 'warning'
+        }
+      }) 
+      return
+    }else if (!formData.level.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا سطح دوره را انتخاب نمایید',
+          status: 'warning'
+        }
+      }) 
+      return
+    }else if (!formData.prerequisite.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا پیشنیاز دوره را انتخاب نمایید',
+          status: 'warning'
+        }
+      }) 
+      return
+    }  else {
+      setAxiosPostToken(authToken);
+      setAxiosPostData(formData);
+      setAxiosPostUrl(apiLinks.courses)
+    }
   }
+  // 
   useEffect(() => {
     if (axiosPostResult !== null) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
-            id: v4(),
-            message: 'دوره با موفقیت منتشر شد',
-            status: 'success'
+          id: v4(),
+          message: 'دوره با موفقیت منتشر شد',
+          status: 'success'
         }
-    })
+      })
       navigateTo('/panel/courses')
     }
     if (axiosPostError !== null) {
       console.log(axiosPostError)
     }
   }, [axiosPostError, axiosPostResult])
+
+  // Get categoreis form server
+  const getCategories = () => {
+    setAxiosGetToken(authToken);
+    setAxiosGetUrl(`${apiLinks.categories}?type=Course`)
+    setLoadCategoriesStatus('loading')
+  }
+  // Get categoreis 
+  useEffect(() => {
+    getCategories()
+  }, [])
+  // Run get categoreis
+  useEffect(() => {
+    if (axiosGetResult !== null) {
+      let newCategoreisArray = []
+      axiosGetResult.map(item => newCategoreisArray = [...newCategoreisArray, { id: item.id, name: item.name }])
+      setCategoryArray(newCategoreisArray)
+      setLoadCategoriesStatus('loaded')
+    }
+    if (axiosGetError !== null) {
+      if (axiosGetError.status === 400) {
+        setLoadCategoriesStatus('create_category')
+      } else {
+
+        notificationDispatch({
+          type: 'ADD_NOTE',
+          payload: {
+            id: v4(),
+            message: 'دسته بندی ها بارگذاری نشدند',
+            status: 'error'
+          }
+        })
+      }
+    }
+  }, [axiosGetResult, axiosGetError])
 
   return (
     <div id="new-product-form">
@@ -210,10 +324,20 @@ export default function NewCourse() {
             {/* Right Side - Text form  */}
             <div className="right-side xl:w-8/12">
               <NormalInput value={formData.title} onChangeEvent={changeHandler} {...inputsData.title} />
-              <Textarea value={formData.miniDes} onChangeEvent={changeHandler} {...inputsData.miniDes} />
+              <Textarea value={formData.shortDes} onChangeEvent={changeHandler} {...inputsData.shortDes} />
               <div className="w-full flex-col xl:flex-row xl:items-center flex justify-start relative mb-5 mt-3">
                 <div className="w-full xl:w-6/12">
-                  <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} />
+                  {
+                    loadCategoriesStatus === 'loaded' && (
+                      <SelectBox value={formData.category} onChangeEvent={changeHandler} items={categoryArray} {...inputsData.category} />
+                    )
+                  }
+                  {loadCategoriesStatus === 'loading' && (
+                    <span className="w-full lg:w-32 h-10 inline-flex justify-center items-center text-slate-700 dark:text-slate-300 dark:bg-slate-900 bg-slate-200 mt-5 mb-3 rounded-md animate-pulse">درحال بارگذاری ...</span>
+                  )}
+                  {loadCategoriesStatus === 'create_category' && (
+                    <Link to={'/panel/categories'} className="w-full lg:w-32 h-10 inline-flex justify-center items-center text-white font-bold dark:text-slate-300 dark:bg-green-600 bg-green-500 mt-5 mb-3 rounded-md ">ایجاد دسته جدید</Link>
+                  )}
                 </div>
                 <div className="w-full xl:w-6/12">
                   <SelectBox value={formData.level} onChangeEvent={changeHandler} {...inputsData.level} />
@@ -221,7 +345,7 @@ export default function NewCourse() {
               </div>
               <div className="w-full flex-col xl:flex-row xl:items-center flex justify-start relative mb-5 mt-3">
                 <div className="w-full xl:w-6/12">
-                  <SelectBox value={formData.wayReceive} onChangeEvent={changeHandler} {...inputsData.wayReceive} />
+                  <SelectBox value={formData.wayRecive} onChangeEvent={changeHandler} {...inputsData.wayRecive} />
                 </div>
                 <div className="w-full xl:w-6/12">
                   <SelectBox value={formData.prerequisite} onChangeEvent={changeHandler} {...inputsData.prerequisite} />
@@ -235,9 +359,9 @@ export default function NewCourse() {
                   <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} />
                 </div>
               </div>
-              <NormalInput value={formData.time} onChangeEvent={changeHandler} {...inputsData.time} />
+              <NormalInput value={formData.duration} onChangeEvent={changeHandler} {...inputsData.duration} />
               <NormalInput value={formData.fileSize} onChangeEvent={changeHandler} {...inputsData.fileSize} />
-              <Textarea value={formData.largeDes} onChangeEvent={changeHandler} {...inputsData.largeDes} />
+              <Textarea value={formData.longDes} onChangeEvent={changeHandler} {...inputsData.longDes} />
             </div>
             {/* End of Right Side - Text form  */}
             {/* Left side - select Image */}

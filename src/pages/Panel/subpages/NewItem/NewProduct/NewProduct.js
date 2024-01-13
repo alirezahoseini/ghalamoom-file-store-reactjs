@@ -34,11 +34,11 @@ export default function NewProduct() {
     inStock: false,                                              /// default false 
     image: '',                                                  /// dataurl image
     price: '',                                                  /// the price is in thousand tomans, like 20 
-    fileSize: '',                                               /// file size in megabytes
+    fileSize: '',                                                /// file size in megabytes
     shortDes: '',                                                /// max length 180
-    longDes: '',                                               /// max length 400
-    category: {},           /// chooseing from select box
-    format: "ZIP",                     /// chooseing from select box
+    longDes: '',                                                 /// max length 400
+    category: {},                                                /// chooseing from select box
+    format: "ZIP",                                               /// chooseing from select box
     gallery: [],
     saleCount: 0
   });
