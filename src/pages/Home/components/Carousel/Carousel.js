@@ -43,7 +43,7 @@ export default function Carousel(props) {
 
   useEffect(() => {
     // send request to api for get datas
-    setAxiosGetUrl(`${apiUrl}?_sort=id&_order=desc&_page=1&_limit=${limit}`)
+    setAxiosGetUrl(`${apiUrl}?skip=0&take=${limit}&sort=desc`)
     // access and Set showing slides count
     if (isSidebar) {
       setcarouselBreakPoints(
@@ -95,7 +95,7 @@ export default function Carousel(props) {
         type: 'ADD_NOTE',
         payload: {
           id: v4(),
-          message: 'ارتباط ب vرقرار نشد، رقرار نشد، رقرار نشد، لطفا با vpn امتحان کنید',
+          message: 'ارتباط با سرور برقرار نشد',
           status: 'error'
         }
       })

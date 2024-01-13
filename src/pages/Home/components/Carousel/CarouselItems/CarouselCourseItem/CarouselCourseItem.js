@@ -16,11 +16,13 @@ const CarouselCourseItem = memo((props) => {
     level,
     prerequisite,
     price,
-    time,
-    miniDes,
+    duration,
+    shortDes,
     id,
     type
-  } = props
+  } = props;
+
+  console.log(props)
   return (
     <div className={`carousel-course-item px-3 pt-20`}>
       <div className="wrapper bg-white rounded-xl pb-3">
@@ -36,11 +38,11 @@ const CarouselCourseItem = memo((props) => {
           <Link to={`/${type}s/${id}`}>
             <Title title={title} />
           </Link>
-          <Paragraph content={miniDes} maxLength={120} />
+          <Paragraph content={shortDes} maxLength={120} />
           <div className='flex items-center gap-3 justify-between my-3'>
             <div className='flex items-center gap-3'>
               <LikeCounterButton {...props} type={type} />
-              <Badge title={time} value={'ساعت'} />
+              <Badge title={duration} value={'ساعت'} />
             </div>
             <PriceBadge price={price} />
           </div>
