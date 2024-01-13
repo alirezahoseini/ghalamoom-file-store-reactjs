@@ -7,6 +7,8 @@ import { NotificationContext } from '../../../../../Contexts/Notifications/Notif
 
 // datas
 import { apiLinks } from '../../../../../data/links';
+// Utils
+import { getCooki } from '../../../../../utils/cookis'
 
 // hooks
 import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
@@ -20,17 +22,15 @@ import CancelButton from "../../components/Buttons/CancelButton";
 import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
 
 export default function NewArtwork() {
-    const notificationDispatch = useContext(NotificationContext)
-    const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
+    const notificationDispatch = useContext(NotificationContext);
+    const authToken = getCooki('token');
+    const { axiosPostResult, axiosPostIsPending, axiosPostError,setAxiosPostToken, setAxiosPostUrl, setAxiosPostData } = useAxiosPost();
     const [formData, setFormData] = useState({
         title: '',                             /// max length 70 
         image: '',                             /// dataurl image
         runTime: '',                           ///  
         description: '',                       /// max length 400
         gallery: [],                          /// 
-        likes: 0,                              /// default [] not change here
-        comments: [],                          /// default 0 not change here
-        created_at: new Date().getTime()
     });
     const navigateTo = useNavigate()
     const inputsData = {
@@ -67,35 +67,45 @@ export default function NewArtwork() {
         },
         image: {
             imageValue: '',
-            inputId: 'new-artwork-image'
+            name: 'image'
         },
         gallery: {
             imageValue: [],
             inputId: 'new-artwork-gallery'
         }
     }
-    const changeHandler = (event) => {
-        // Image 
-        if (event.image) {
-            setFormData({ ...formData, image: event.image })
-        } else if (event.target.className.includes('custom-select-box-input')) {
-            // Select boxes
-            const inputName = event.target.name;
-            const inputItems = inputsData[inputName].items;
-            const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-            setFormData({ ...formData, [event.target.name]: selectedItem })
-        } else {
-            // Normal inputs
-            setFormData({ ...formData, [event.target.name]: event.target.value })
-        }
-    }
-    const galleryChangeHandler = (images) => {
+    const changeHandler = ({ id, value }) => {
+        setFormData({ ...formData, [id]: value })
+      }
+      const galleryChangeHandler = (images) => {
         setFormData({ ...formData, gallery: images })
-    }
+      }
     const submitHandler = (event) => {
         event.preventDefault();
-        setAxiosPostData(formData)
-        setAxiosPostUrl(apiLinks.artworks)
+        if (formData.gallery < 1) {
+            notificationDispatch({
+              type: 'ADD_NOTE',
+              payload: {
+                id: v4(),
+                message: 'حداقل یک تصویر برای گالری انتخاب کنید',
+                status: 'warning'
+              }
+            })
+          } else if (!formData.image) {
+            notificationDispatch({
+              type: 'ADD_NOTE',
+              payload: {
+                id: v4(),
+                message: 'لطفا تصویر شاخص را انتخاب نمایید',
+                status: 'warning'
+              }
+            })
+          }else {
+            // console.log(formData)
+            setAxiosPostToken(authToken);
+            setAxiosPostData(formData);
+            setAxiosPostUrl(apiLinks.artworks);
+          }
     }
     useEffect(() => {
         if (axiosPostResult !== null) {
@@ -128,7 +138,7 @@ export default function NewArtwork() {
                         {/* End of Right Side - Text form  */}
                         {/* Left side - select Image */}
                         <div className="left-side xl:w-4/12">
-                            <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} />
+                            <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image}/>
                             <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
                         </div>
                         {/* End of Left side - select Image */}
