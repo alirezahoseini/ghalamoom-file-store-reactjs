@@ -34,7 +34,11 @@ export default function CourseGridItem({ title, category, studentCount, level, p
                         </span>
                         {/* End of Category */}
                         {/*  */}
-                        <span className='text-xs font-bold text-slate-600 dark:text-slate-400'>{level.name}</span>
+                        <span className='text-xs font-bold text-slate-600 dark:text-slate-400'>
+                            {level === 'Advanced' && ' پیشرفته '}
+                            {level === 'Intermediate' && ' متوسط '}
+                            {level === 'Preliminary' && ' مبتدی '}
+                        </span>
                         {/*  */}
                     </div>
                     <div className='w-full flex items-center justify-between'>

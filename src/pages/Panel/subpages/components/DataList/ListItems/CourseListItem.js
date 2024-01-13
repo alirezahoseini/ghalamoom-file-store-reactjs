@@ -33,7 +33,9 @@ export default function ProductListItem({ title, category, studentCount, level
             {/* Item info  */}
             {/* Start course support */}
             <div className='hidden sm:w-2/12 sm:flex text-xs font-bold text-slate-600 dark:text-slate-400' >
-                { level.name }
+                { level === 'Advanced' && ' پیشرفته '  }
+                { level === 'Intermediate' && ' متوسط '   }
+                { level === 'Preliminary' && ' مبتدی ' }
             </div>
             {/* End of Item Status */}
             {/* Item Price  */}
