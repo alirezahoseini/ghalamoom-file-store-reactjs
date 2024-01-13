@@ -8,8 +8,9 @@ import tomanLogo from '../../../../../../assets/icons/toman.svg'
 
 
 
-export default function ProductListItem({ title, category, inStock, saleCount, price, image, type, id }) {
-
+export default function ProductListItem(props) {
+    const {title, category, inStock, saleCount, price, image, type, id } = props;
+    console.log(inStock)
     return (
         <div className="product-list-item bg-white my-2 p-2 rounded-xl w-full flex items-center dark:bg-slate-800">
             {/* Item info  */}
@@ -32,7 +33,7 @@ export default function ProductListItem({ title, category, inStock, saleCount, p
             {/* Item info  */}
             {/* Start Item Status */}
             <div className='hidden sm:w-2/12 sm:flex' >
-                <span className={`item-stock-status px-2 py-1 rounded-md ${inStock !== "true" && 'not'}`}>{inStock === "true" ? 'موجود' : "ناموجود"}</span>
+                <span className={`item-stock-status px-2 py-1 rounded-md ${inStock !== true && 'not'}`}>{inStock === true ? 'موجود' : "ناموجود"}</span>
             </div>
             {/* End of Item Status */}
             {/* Item Price  */}

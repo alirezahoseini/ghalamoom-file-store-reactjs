@@ -34,7 +34,7 @@ export default function ProductGridItem({ title, category, inStock, saleCount, p
                         </span>
                         {/* End of Item Status */}
                         {/* Category */}
-                        <span className={`item-stock-status px-2 py-1 rounded-md ${inStock !== 'true' && 'not'}`}>{inStock === 'true' ? 'موجود' : "ناموجود"}</span>
+                        <span className={`item-stock-status px-2 py-1 rounded-md ${inStock !== true && 'not'}`}>{inStock === true ? 'موجود' : "ناموجود"}</span>
                         {/* End of Category */}
                     </div>
                     <div className='w-full flex items-center justify-between'>

@@ -23,7 +23,7 @@ function PanelProducts() {
     pageSize: 8
   }
   useEffect(() => {
-    setAxiosGetUrl(`${apiLinks.products}?_sort=id&_order=desc`)
+    setAxiosGetUrl(`${apiLinks.products}`)
   }, []);
 
   useEffect(() => {
