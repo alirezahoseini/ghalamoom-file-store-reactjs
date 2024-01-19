@@ -101,7 +101,6 @@ export default function NewArtwork() {
               }
             })
           }else {
-            // console.log(formData)
             setAxiosPostToken(authToken);
             setAxiosPostData(formData);
             setAxiosPostUrl(apiLinks.artworks);

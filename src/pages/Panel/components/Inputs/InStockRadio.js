@@ -19,6 +19,7 @@ export default function InStockRadio(props) {
     const [isTrue, setIsTrue] = useState(true)
     const { label, onChangeEvent, name, value } = props;
 
+
     const changeHandler = (event) => {
         setIsTrue(prev => !prev)
         let result = null;
@@ -32,9 +33,10 @@ export default function InStockRadio(props) {
     }
   
     useEffect(()=> { 
-        let hasTrue = value === 'true'
+        let hasTrue = value === true
         setIsTrue(hasTrue) 
     }, [])
+
 
     return (
         <div className='instock-input input-group flex gap-3 text-xs p-0 justify-start mt-5 items-center'>

@@ -21,7 +21,7 @@ import Uploader from './Uploader'
 
 export default function ImageInput({ name, defaultImage, onChnageHandler, inputId = 'null' }) {
     const [selectedImage, setSelectedImage] = useState('')
-    const [uploadStart, setUploadStart] = useState(true);
+    const [uploadStart, setUploadStart] = useState(false);
     const [uploadPercent, setUploadPercent] = useState(0);
     const [uploadError, setUploadError] = useState(null);
     const userToken = getCooki('token')

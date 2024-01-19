@@ -4,11 +4,12 @@ import { v4 } from 'uuid'
 
 // contexts 
 import { NotificationContext } from '../../../../../Contexts/Notifications/NotificationProvider'
-
+// Utils
+import { getCooki } from '../../../../../utils/cookis'
 // datas
 import { apiLinks } from '../../../../../data/links'
 // hooks
-import useAxiosPut from "../../../../../hooks/axios/useAxiosPut";
+import useAxiosPatch from "../../../../../hooks/axios/useAxiosPatch";
 import useAxiosGet from "../../../../../hooks/axios/useAxiosGet";
 import useAxiosDelete from "../../../../../hooks/axios/useAxiosDelete";
 
@@ -28,14 +29,15 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 
 export default function EditProduct() {
   const notificationDispatch = useContext(NotificationContext)
-  const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
-  const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
+  const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
+  const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData, setAxiosPatchToken } = useAxiosPatch()
   const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
   const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
   const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
   const [formData, setFormData] = useState();
-  const navigateTo = useNavigate()
+  const navigateTo = useNavigate();
+  const authToken = getCooki('token');
   const urlParams = useParams()
   const inputsData = {
     title: {
@@ -45,61 +47,50 @@ export default function EditProduct() {
       type: 'text',
       required: true,
       errorMessage: 'عنوان محصول باید بین 5 الی 15 کلمه باشد',
-      pattern: '^[\\w\u0600-\u06FF\\s]{5,50}',
-      maxLength: 50,
+      pattern: '^[\\w\u0600-\u06FF\\s]{5,15}',
+      maxLength: 15,
     },
-    miniDes: {
-      name: 'miniDes',
+    shortDes: {
+      name: 'shortDes',
       label: 'توضیح کوتاه',
       placeholder: 'محصول را در حد یک خط توصیف کنید',
-      required: true,
       errorMessage: 'توضیح کوتاه باید بین 30 الی 150 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{30,150}',
       maxLength: 150,
       minLength: 30,
-      rows: '2'
+      rows: '2',
+      require: 'true'
     },
-    largeDes: {
-      name: 'largeDes',
+    longDes: {
+      name: 'longDes',
       label: 'توضیح بلند',
       placeholder: 'توضیحات محصول',
-      required: true,
       errorMessage: 'توضیحات باید بین 40 الی 400 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{40,400}',
       maxLength: 400,
       minLength: 50,
-      rows: '5'
+      rows: '5',
+      require: 'true'
     },
     category: {
-      selectBoxName: 'category',
+      name: 'category',
       label: 'دسته بندی',
-      items: [
-        { name: 'بدون دسته', id: 'null' },
-        { name: 'فونت', id: 'font' },
-        { name: 'پک آیکن', id: 'icon-pack' },
-        { name: 'فایل ایلوستریتور', id: 'illustrator-file' },
-        { name: 'لایه باز فوتوشاپ', id: 'open-layer-psd' },
-        { name: 'پوستر', id: 'Puter' },
-        { name: 'موکاپ', id: 'mockup' },
-        { name: 'پک استیکر', id: 'sticker-pack' },
-        { name: 'کاور پست', id: 'Put-cover' },
-      ]
     },
     inStock: {
       name: 'inStock',
       label: 'وضعیت موجودی انبار',
     },
     format: {
-      selectBoxName: 'format',
+      name: 'format',
       label: 'فرمت فایل',
       items: [
-        { name: 'ZIP', id: 'zip' },
-        { name: 'PNG', id: 'png' },
-        { name: 'JPG', id: 'jpg' },
-        { name: 'AI', id: 'ai' },
-        { name: 'PSD', id: 'psd' },
+        { name: 'ZIP', id: 'ZIP' },
+        { name: 'PNG', id: 'PNG' },
+        { name: 'JPG', id: 'JPG' },
+        { name: 'AI', id: 'AI' },
+        { name: 'PSD', id: 'PSD' },
         { name: 'TTF', id: 'TTF' },
-        { name: 'MP4', id: 'mp4' },
+        { name: 'MP4', id: 'MP4' },
       ]
     },
     price: {
@@ -107,6 +98,7 @@ export default function EditProduct() {
       label: 'قیمت',
       placeholder: "قیمت محصول",
       pattern: "\\d*",
+      type: 'number',
       required: true,
       maxLength: "6",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
@@ -122,35 +114,62 @@ export default function EditProduct() {
     },
     image: {
       imageValue: '',
-      inputId: 'new-product-image'
+      name: 'image'
     },
     gallery: {
       imageValue: [],
-      inputId: 'edit-product-gallery'
+      inputId: 'new-product-gallery'
     }
   }
-  const changeHandler = (event) => {
-    // Image 
-    if (event.image) {
-      setFormData({ ...formData, image: event.image })
-    } else if (event.target.className.includes('custom-select-box-input')) {
-      // Select boxes
-      const inputName = event.target.name;
-      const inputItems = inputsData[inputName].items;
-      const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-      setFormData({ ...formData, [event.target.name]: selectedItem })
-    } else {
-      // Normal inputs
-      setFormData({ ...formData, [event.target.name]: event.target.value })
+  const changeHandler = ({ id, value }) => {
+
+    if (id === 'fileSize') {
+      setFormData({ ...formData, [id]: Number(value) });
+      return
     }
+    if (id === 'category') {
+      setFormData({ ...formData, [id]: value });
+      return
+    }
+    setFormData({ ...formData, [id]: value })
   }
   const galleryChangeHandler = (images) => {
     setFormData({ ...formData, gallery: images })
   }
   const submitHandler = (event) => {
-    event.preventDefault()
-    setAxiosPutData(formData)
-    setAxiosPutUrl(`${apiLinks.products}/${urlParams.productId}`)
+    event.preventDefault();
+    if (formData.gallery < 1) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'حداقل یک تصویر برای گالری انتخاب کنید',
+          status: 'warning'
+        }
+      })
+    } else if (!formData.image) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا تصویر شاخص را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+    } else if (!formData.category) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا دسته بندی را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+    } else {
+      setAxiosPatchToken(authToken);
+      setAxiosPatchData(formData)
+      setAxiosPatchUrl(`${apiLinks.products}/${urlParams.productId}`)
+    }
   }
   const deleteHandler = () => {
     setIsShowDeleteModal(prev => !prev)
@@ -159,11 +178,16 @@ export default function EditProduct() {
   /////// loading prev product data from server
   useEffect(() => {
     setAxiosGetUrl(`${apiLinks.products}/${urlParams.productId}`)
+    setAxiosGetToken(authToken)
   }, [])
   /////// set prev data to inputs and showing
   useEffect(() => {
     if (axiosGetResult !== null) {
-      setFormData(axiosGetResult)
+      const { id, category, fileSize, format, gallery, image, inStock, longDes, shortDes, price, title } = axiosGetResult
+      const requiredValues = {
+        id, category, fileSize, format, gallery, image, inStock, longDes, shortDes, price, title
+      };
+      setFormData(requiredValues)
       setSimpleLoaderStatus('hidde')
       setIsLoadedDataFromApi(true)
     }
@@ -172,11 +196,11 @@ export default function EditProduct() {
         notificationDispatch({
           type: 'ADD_NOTE',
           payload: {
-              id: v4(),
-              message: `محصولی با آیدی ${urlParams.productId} پیدا نشد.!`,
-              status: 'error'
+            id: v4(),
+            message: `محصولی با آیدی ${urlParams.productId} پیدا نشد.!`,
+            status: 'error'
           }
-      })
+        })
         navigateTo('/panel/products')
       }
       setSimpleLoaderStatus('error')
@@ -185,31 +209,31 @@ export default function EditProduct() {
   //////// save changes results
   useEffect(() => {
     // show update results
-    if (axiosPutResult !== null) {
+    if (axiosPatchResult !== null) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
-            id: v4(),
-            message: 'تغییرات با موفقیت ذخیره شدند',
-            status: 'success'
+          id: v4(),
+          message: 'تغییرات با موفقیت ذخیره شدند',
+          status: 'success'
         }
-    })
+      })
     }
-    if (axiosPutError !== null) {
-      console.log(axiosPutError)
+    if (axiosPatchError !== null) {
+      console.log(axiosPatchError)
     }
-  }, [axiosPutError, axiosPutResult]);
+  }, [axiosPatchError, axiosPatchResult]);
   ///////  Delete results
   useEffect(() => {
     if (axiosDeleteResult !== null) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
-            id: v4(),
-            message: 'محصول با موفقیت پاک شد',
-            status: 'success'
+          id: v4(),
+          message: 'محصول با موفقیت پاک شد',
+          status: 'success'
         }
-    })
+      })
       navigateTo(-1)
     }
     if (axiosDeleteError !== null) {
@@ -228,10 +252,10 @@ export default function EditProduct() {
               {/* Right Side - Text form  */}
               <div className="right-side xl:w-8/12">
                 <NormalInput value={formData.title} onChangeEvent={changeHandler} {...inputsData.title} />
-                <Textarea value={formData.miniDes} onChangeEvent={changeHandler} {...inputsData.miniDes} />
+                <Textarea value={formData.shortDes} onChangeEvent={changeHandler} {...inputsData.shortDes} />
                 <div className="w-full flex-col xl:flex-row flex justify-start relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} />
+                    {/* <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} /> */}
                   </div>
                   <div className="w-full xl:w-6/12">
                     <InStockRadio value={formData.inStock} onChangeEvent={changeHandler} {...inputsData.inStock} />
@@ -239,32 +263,32 @@ export default function EditProduct() {
                 </div>
                 <div className="w-full flex-col xl:flex-row flex justify-start items-center relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    <SelectBox value={formData.format} onChangeEvent={changeHandler} {...inputsData.format} />
+                    {/* <SelectBox value={formData.format} onChangeEvent={changeHandler} {...inputsData.format} /> */}
                   </div>
                   <div className="w-full xl:w-6/12">
                     <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} />
                   </div>
                 </div>
                 <NormalInput value={formData.fileSize} onChangeEvent={changeHandler} {...inputsData.fileSize} />
-                <Textarea value={formData.largeDes} onChangeEvent={changeHandler} {...inputsData.largeDes} />
+                <Textarea value={formData.longDes} onChangeEvent={changeHandler} {...inputsData.longDes} />
               </div>
               {/* End of Right Side - Text form  */}
               {/* Left side - select Image */}
               <div className="left-side xl:w-4/12">
                 <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
-                <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
+                {/* <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} /> */}
               </div>
               {/* End of Left side - select Image */}
             </section>
             {/* Buttons  */}
             <div className="buttons w-full xl:w-8/12 flex items-center gap-3">
               <div className={`w-4/12 xl:4/12 ${axiosDeleteIsPending && 'pointer-events-none'}`} >
-                <SubmitFormButton isPending={axiosPutIsPending} title={'ذخیره تغییرات'} />
+                <SubmitFormButton isPending={axiosPatchIsPending} title={'ذخیره تغییرات'} />
               </div>
-              <div className={`w-4/12 xl:4/12 ${axiosPutIsPending || axiosDeleteIsPending ? 'pointer-events-none' : ''}`} >
+              <div className={`w-4/12 xl:4/12 ${axiosPatchIsPending || axiosDeleteIsPending ? 'pointer-events-none' : ''}`} >
                 <CancelButton title='انصراف' />
               </div>
-              <div className={`w-4/12 xl:4/12 ${axiosPutIsPending && 'pointer-events-none'}`} >
+              <div className={`w-4/12 xl:4/12 ${axiosPatchIsPending && 'pointer-events-none'}`} >
                 <DeleteButton onClickEvent={() => setIsShowDeleteModal(prev => !prev)} isPending={axiosDeleteIsPending} title='حذف محصول' />
               </div>
             </div>
