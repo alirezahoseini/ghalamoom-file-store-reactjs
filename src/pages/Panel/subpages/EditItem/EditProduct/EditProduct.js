@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react"
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 } from 'uuid'
 
 // contexts 
@@ -29,12 +29,14 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 
 export default function EditProduct() {
   const notificationDispatch = useContext(NotificationContext)
-  const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
+  const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken, setAxiosGetId } = useAxiosGet();
   const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData, setAxiosPatchToken } = useAxiosPatch()
   const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
   const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
   const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
+  const [loadCategoriesStatus, setLoadCategoriesStatus] = useState('loading');
+  const [categoryArray, setCategoryArray] = useState([])
   const [formData, setFormData] = useState();
   const navigateTo = useNavigate();
   const authToken = getCooki('token');
@@ -178,33 +180,81 @@ export default function EditProduct() {
   /////// loading prev product data from server
   useEffect(() => {
     setAxiosGetUrl(`${apiLinks.products}/${urlParams.productId}`)
-    setAxiosGetToken(authToken)
+    setAxiosGetToken(authToken);
+    setAxiosGetId('LOADING-DATA');
   }, [])
   /////// set prev data to inputs and showing
   useEffect(() => {
     if (axiosGetResult !== null) {
-      const { id, category, fileSize, format, gallery, image, inStock, longDes, shortDes, price, title } = axiosGetResult
-      const requiredValues = {
-        id, category, fileSize, format, gallery, image, inStock, longDes, shortDes, price, title
-      };
-      setFormData(requiredValues)
-      setSimpleLoaderStatus('hidde')
-      setIsLoadedDataFromApi(true)
+      ///// LOADING AND SET PERV DATA  
+      if (axiosGetResult.id === 'LOADING-DATA') {
+        const { id, category, fileSize, format, gallery, image, inStock, longDes, shortDes, price, title } = axiosGetResult.data;
+        const newGallery = gallery.map(item => {
+          return item.image
+        });
+        console.log(newGallery)
+        const requiredValues = {
+          id,
+          category: category.name,
+          gallery : newGallery,
+          fileSize, format
+          , image, inStock, longDes, shortDes, price, title
+        };
+        setFormData(requiredValues);
+        setSimpleLoaderStatus('hidde');
+        setIsLoadedDataFromApi(true);
+        getCategories();
+
+        getCategories();
+        return
+      }
+      ///// LOADING AND SET PERV CATEGOREIS
+      if (axiosGetResult.id === 'LOADING-CATEGOREIS') {
+        let newCategoreisArray = []
+        axiosGetResult.data.map(item => newCategoreisArray = [...newCategoreisArray, { id: item.id, name: item.name }])
+        setCategoryArray(newCategoreisArray)
+        setLoadCategoriesStatus('loaded');
+        return
+      }
+
     }
     if (axiosGetError !== null) {
-      if (axiosGetError.status == 404) {
-        notificationDispatch({
-          type: 'ADD_NOTE',
-          payload: {
-            id: v4(),
-            message: `محصولی با آیدی ${urlParams.productId} پیدا نشد.!`,
-            status: 'error'
-          }
-        })
-        navigateTo('/panel/products')
+      ///// LOADING AND SET PERV DATA  
+      if (axiosGetError.id === 'LOADING-DATA') {
+        if (axiosGetError.err.status == 404) {
+          notificationDispatch({
+            type: 'ADD_NOTE',
+            payload: {
+              id: v4(),
+              message: `محصولی با آیدی ${urlParams.productId} پیدا نشد.!`,
+              status: 'error'
+            }
+          })
+          navigateTo('/panel/products')
+        }
       }
+      ///// LOADING AND SET PERV CATEGOREIS
+      if (axiosGetError.id === 'LOADING-CATEGOREIS') {
+        if (axiosGetError.err.status === 400) {
+          setLoadCategoriesStatus('create_category')
+        } else {
+
+          notificationDispatch({
+            type: 'ADD_NOTE',
+            payload: {
+              id: v4(),
+              message: 'دسته بندی ها بارگذاری نشدند',
+              status: 'error'
+            }
+          })
+        }
+      }
+
+
+
       setSimpleLoaderStatus('error')
     }
+
   }, [axiosGetError, axiosGetResult]);
   //////// save changes results
   useEffect(() => {
@@ -240,9 +290,14 @@ export default function EditProduct() {
       console.log(console.log(axiosDeleteError))
     }
   }, [axiosDeleteError, axiosDeleteResult]);
-  if (isLoadedDataFromApi) {
-
+  // Get categoreis form server
+  const getCategories = () => {
+    setAxiosGetToken(authToken);
+    setAxiosGetUrl(`${apiLinks.categories}?type=Product`);
+    setAxiosGetId('LOADING-CATEGOREIS')
+    setLoadCategoriesStatus('loading');
   }
+
   return (
     isLoadedDataFromApi ? (
       <div id="edit-product-form">
@@ -255,7 +310,17 @@ export default function EditProduct() {
                 <Textarea value={formData.shortDes} onChangeEvent={changeHandler} {...inputsData.shortDes} />
                 <div className="w-full flex-col xl:flex-row flex justify-start relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    {/* <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} /> */}
+                    {
+                      loadCategoriesStatus === 'loaded' && (
+                        <SelectBox value={{ name: formData.category, id: formData.category }} onChangeEvent={changeHandler} items={categoryArray} {...inputsData.category} />
+                      )
+                    }
+                    {loadCategoriesStatus === 'loading' && (
+                      <span className="w-full lg:w-32 h-10 inline-flex justify-center items-center text-slate-700 dark:text-slate-300 dark:bg-slate-900 bg-slate-200 mt-5 mb-3 rounded-md animate-pulse">درحال بارگذاری ...</span>
+                    )}
+                    {loadCategoriesStatus === 'create_category' && (
+                      <Link to={'/panel/categories'} className="w-full lg:w-32 h-10 inline-flex justify-center items-center text-white font-bold dark:text-slate-300 dark:bg-green-600 bg-green-500 mt-5 mb-3 rounded-md ">ایجاد دسته جدید</Link>
+                    )}
                   </div>
                   <div className="w-full xl:w-6/12">
                     <InStockRadio value={formData.inStock} onChangeEvent={changeHandler} {...inputsData.inStock} />
@@ -263,7 +328,7 @@ export default function EditProduct() {
                 </div>
                 <div className="w-full flex-col xl:flex-row flex justify-start items-center relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    {/* <SelectBox value={formData.format} onChangeEvent={changeHandler} {...inputsData.format} /> */}
+                    <SelectBox value={{ name: formData.format, id: formData.format }} onChangeEvent={changeHandler} {...inputsData.format} />
                   </div>
                   <div className="w-full xl:w-6/12">
                     <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} />
@@ -276,7 +341,7 @@ export default function EditProduct() {
               {/* Left side - select Image */}
               <div className="left-side xl:w-4/12">
                 <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
-                {/* <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} /> */}
+                <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
               </div>
               {/* End of Left side - select Image */}
             </section>

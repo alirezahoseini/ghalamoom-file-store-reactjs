@@ -10,6 +10,7 @@ export default function useAxiosGet() {
     const [axiosGetIsPending, setAxiosGetIsPending] = useState(false);        // request is loading?
     const [axiosGetError, setAxiosGetError] = useState(null);                 // errors output
     const [axiosGetToken, setAxiosGetToken] = useState(null);                   // authentication token ==> sending to api
+    const [axiosGetId, setAxiosGetId] = useState(null)
 
     const sendRequest = () => {
         setAxiosGetIsPending(true);                // is loading === true
@@ -53,6 +54,11 @@ export default function useAxiosGet() {
             })
                 .then(res => {
                     // ok response
+                    if (axiosGetId) {
+                        const data = { data: res.data, id: axiosGetId }
+                        setAxiosGetResult(data);
+                        return
+                    }
                     setAxiosGetResult(res.data)
                     setAxiosGetUrl(null)
                     setAxiosGetIsPending(false)
@@ -61,15 +67,26 @@ export default function useAxiosGet() {
                 .catch(err => {
                     // response errors // 400/500
                     if (err.response) {
+                        if (axiosGetId) {
+                            const data = { err: err.response, id: axiosGetId }
+                            setAxiosGetError(data)
+                            return
+                        }
+                        setAxiosGetError(err.response)
                         setAxiosGetUrl(null)
                         setAxiosGetIsPending(false)
-                        setAxiosGetError(err.response)
                         console.log('respone error : ', err.response)
                     } else if (err.request) {
                         // request errors // not send request 
+                        if (axiosGetId) {
+                            const data = { err: err.response, id: axiosGetId }
+
+                            setAxiosGetError(data)
+                            return
+                        }
+                        setAxiosGetError(err.request)
                         setAxiosGetUrl(null)
                         setAxiosGetIsPending(false)
-                        setAxiosGetError(err.request)
                         console.log('request error : ', err.request)
                         notificationDispatch({
                             type: 'ADD_NOTE',
@@ -91,5 +108,5 @@ export default function useAxiosGet() {
         }
     }, [axiosGetUrl])
 
-    return { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken }
+    return { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl, setAxiosGetToken, axiosGetId, setAxiosGetId }
 }

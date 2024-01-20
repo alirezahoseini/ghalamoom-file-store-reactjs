@@ -15,6 +15,7 @@ import Uploader from '../ImageInput/Uploader';
 
 
 export default function MultipleImageInput({ defaultImages, onChnageHandler, inputId }) {
+  console.log(defaultImages)
   const notificationDispatch = useContext(NotificationContext)
   const [imagesArray, setImagesArray] = useState(defaultImages);
   const userToken = getCooki('token')
@@ -100,7 +101,7 @@ export default function MultipleImageInput({ defaultImages, onChnageHandler, inp
 
 
   const deleteHandler = (imageId) => {
-
+    console.log(imageId)
     const newImagesArray = imagesArray.filter(image => {
       const id = image.slice(47,).split('.')[0]
       return id !== imageId
