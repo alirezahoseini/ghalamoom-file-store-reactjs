@@ -31,7 +31,7 @@ export default function EditProduct() {
   const notificationDispatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken, setAxiosGetId } = useAxiosGet();
   const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchData, setAxiosPatchToken } = useAxiosPatch()
-  const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
+  const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl, setAxiosDeleteToken } = useAxiosDelete();
   const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
   const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
@@ -102,7 +102,7 @@ export default function EditProduct() {
       pattern: "\\d*",
       type: 'number',
       required: true,
-      maxLength: "6",
+      maxLength: "5",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
     },
     fileSize: {
@@ -174,8 +174,12 @@ export default function EditProduct() {
     }
   }
   const deleteHandler = () => {
-    setIsShowDeleteModal(prev => !prev)
-    setAxiosDeleteUrl(`${apiLinks.products}/${urlParams.productId}`)
+    if (!isShowDeleteModal) {
+      setIsShowDeleteModal(prev => !prev)
+    }else{
+      setAxiosDeleteUrl(`${apiLinks.products}/${urlParams.productId}`);
+      setAxiosDeleteToken(authToken)
+    }
   }
   /////// loading prev product data from server
   useEffect(() => {
@@ -188,15 +192,14 @@ export default function EditProduct() {
     if (axiosGetResult !== null) {
       ///// LOADING AND SET PERV DATA  
       if (axiosGetResult.id === 'LOADING-DATA') {
-        const { id, category, fileSize, format, gallery, image, inStock, longDes, shortDes, price, title } = axiosGetResult.data;
+        const { saleCount, category, fileSize, format, gallery, image, inStock, longDes, shortDes, price, title } = axiosGetResult.data;
         const newGallery = gallery.map(item => {
           return item.image
         });
-        console.log(newGallery)
         const requiredValues = {
-          id,
+          saleCount,
           category: category.name,
-          gallery : newGallery,
+          gallery: newGallery,
           fileSize, format
           , image, inStock, longDes, shortDes, price, title
         };
@@ -260,6 +263,7 @@ export default function EditProduct() {
   useEffect(() => {
     // show update results
     if (axiosPatchResult !== null) {
+      console.log(axiosPatchResult)
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -267,9 +271,21 @@ export default function EditProduct() {
           message: 'تغییرات با موفقیت ذخیره شدند',
           status: 'success'
         }
-      })
+      });
+
+      setTimeout(() => {
+        navigateTo('/panel/products')
+      }, 2000);
     }
     if (axiosPatchError !== null) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'تغییرات اعمال نشدند',
+          status: 'error'
+        }
+      })
       console.log(axiosPatchError)
     }
   }, [axiosPatchError, axiosPatchResult]);

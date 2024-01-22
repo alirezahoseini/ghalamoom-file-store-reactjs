@@ -86,7 +86,10 @@ export default function useAxiosDelete() {
 
 
     useEffect(() => {
-        if (axiosDeleteUrl !== null && axiosDeleteToken !== null) {
+        if(axiosDeleteToken === null){
+            console.log('pls get me axiosDeleteToken')
+        }
+        else if (axiosDeleteUrl !== null && axiosDeleteToken !== null) {
             sendRequest()
         }
     }, [axiosDeleteUrl])
