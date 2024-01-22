@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-expressions */
 import { useEffect, useState, useContext } from "react"
-import { Link, useNavigate } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import { v4 } from 'uuid'
 
 // contexts 
@@ -37,10 +38,10 @@ export default function NewProduct() {
     fileSize: '',                                                /// file size in megabytes
     shortDes: '',                                                /// max length 180
     longDes: '',                                                 /// max length 400
-    category: {},                                                /// chooseing from select box
+    category: [],                                                /// chooseing from select box
     format: "ZIP",                                               /// chooseing from select box
     gallery: [],
-    saleCount: 0
+    saleCount: 5,
   });
   const navigateTo = useNavigate()
   const inputsData = {
@@ -61,9 +62,9 @@ export default function NewProduct() {
       errorMessage: 'توضیح کوتاه باید بین 30 الی 150 کلمه باشد',
       pattern: '^[\\w\u0600-\u06FF\\s]{30,150}',
       maxLength: 150,
-      minLength: 30,
+      minLength: 20,
       rows: '2',
-      require: 'true'
+      required: true
     },
     longDes: {
       name: 'longDes',
@@ -74,7 +75,7 @@ export default function NewProduct() {
       maxLength: 400,
       minLength: 50,
       rows: '5',
-      require: 'true'
+      required: true
     },
     category: {
       name: 'category',
@@ -160,7 +161,7 @@ export default function NewProduct() {
           status: 'warning'
         }
       })
-    }else if(!formData.category) {
+    } else if (!formData.category.length) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -168,8 +169,11 @@ export default function NewProduct() {
           message: 'لطفا دسته بندی را انتخاب نمایید',
           status: 'warning'
         }
-      })
-    } else {
+      }) 
+      return
+    } 
+     else {
+      
       setAxiosPostToken(authToken);
       setAxiosPostData(formData);
       setAxiosPostUrl(apiLinks.products);

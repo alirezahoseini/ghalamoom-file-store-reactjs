@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from 'react'
 import { TbTrash } from 'react-icons/tb';
-
-import defaultImage from '../../../../../assets/images/landing/like-and-comments.png'
-
 export default function ImageListItem({ image, onDeleteFunc }) {
     const imageId = image.slice(47, ).split('.')[0]
     return (
