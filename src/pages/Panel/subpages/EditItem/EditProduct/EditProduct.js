@@ -176,10 +176,17 @@ export default function EditProduct() {
   const deleteHandler = () => {
     if (!isShowDeleteModal) {
       setIsShowDeleteModal(prev => !prev)
-    }else{
+    } else {
       setAxiosDeleteUrl(`${apiLinks.products}/${urlParams.productId}`);
       setAxiosDeleteToken(authToken)
     }
+  }
+  // Get categoreis form server
+  const getCategories = () => {
+    setAxiosGetToken(authToken);
+    setAxiosGetUrl(`${apiLinks.categories}?type=Product`);
+    setAxiosGetId('LOADING-CATEGOREIS')
+    setLoadCategoriesStatus('loading');
   }
   /////// loading prev product data from server
   useEffect(() => {
@@ -257,7 +264,6 @@ export default function EditProduct() {
 
       setSimpleLoaderStatus('error')
     }
-
   }, [axiosGetError, axiosGetResult]);
   //////// save changes results
   useEffect(() => {
@@ -306,13 +312,7 @@ export default function EditProduct() {
       console.log(console.log(axiosDeleteError))
     }
   }, [axiosDeleteError, axiosDeleteResult]);
-  // Get categoreis form server
-  const getCategories = () => {
-    setAxiosGetToken(authToken);
-    setAxiosGetUrl(`${apiLinks.categories}?type=Product`);
-    setAxiosGetId('LOADING-CATEGOREIS')
-    setLoadCategoriesStatus('loading');
-  }
+
 
   return (
     isLoadedDataFromApi ? (

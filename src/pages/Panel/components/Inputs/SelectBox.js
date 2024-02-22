@@ -10,13 +10,9 @@
       selectBoxName: 'format',
       label: 'فرمت فایل',
       items: [
-        { name: 'ZIP', id: 'zip' },   
-        { name: 'PNG', id: 'png' },
-        { name: 'JPG', id: 'jpg' },
-        { name: 'AI', id: 'ai' },
-        { name: 'PSD', id: 'psd' },
-        { name: 'TTF', id: 'TTF' },
-        { name: 'MP4', id: 'mp4' },
+        'Preliminary',
+        'Intermediate',
+        'Advanced'
       ]
     },
   }
@@ -29,15 +25,19 @@ import { TbChevronDown } from 'react-icons/tb'
 
 export default function SelectBox(props) {
     const { label, onChangeEvent, name, value, items } = props;
-    const [selectedItem , setSelectedItem] = useState('');
+    const [selectedItem, setSelectedItem] = useState('');
     const [isOpenSelectBox, setIsOpenSelectBox] = useState(false)
 
     const changeHandler = (event) => {
-        onChangeEvent({id: event.target.name, value: event.target.id})
+        onChangeEvent({ id: event.target.name, value: event.target.id })
         setSelectedItem(event.target.id)
         setIsOpenSelectBox(false)
     }
-    useEffect(()=>{setSelectedItem(value.name)},[])
+    useEffect(() => {
+        if (value.length) {
+            setSelectedItem(value)
+        }
+    }, [props])
 
     return (
         <div className='custom-select input-group flex flex-col xl:flex-row gap-3 text-xs p-0 justify-start my-5 xl:items-center'>
@@ -56,9 +56,9 @@ export default function SelectBox(props) {
                 {/* SelectItems  */}
                 <div className='flex flex-wrap gap-2'>
                     {items.map(item => (
-                        <div key={item.name} className="custom-select-box-item">
-                            <input type="radio" name={name} id={item.name} value={item.id} className='custom-select-box-input hidden' onClick={(event) => changeHandler(event)}/>
-                            <label htmlFor={item.name} className={`py-2 px-3 bg-slate-100 text-slate-700 font-bold rounded-lg cursor-pointer my-1 inline-block border-4  dark:bg-slate-800 dark:text-slate-300 ${selectedItem === item.name ? ' border-blue-500 border-opacity-40' : 'border-transparent'}`}>{item.name}</label>
+                        <div key={item} className="custom-select-box-item">
+                            <input type="radio" name={name} id={item} value={item} className='custom-select-box-input hidden' onClick={(event) => changeHandler(event)} />
+                            <label htmlFor={item} className={`py-2 px-3 bg-slate-100 text-slate-700 font-bold rounded-lg cursor-pointer my-1 inline-block border-4  dark:bg-slate-800 dark:text-slate-300 ${selectedItem === item ? ' border-blue-500 border-opacity-40' : 'border-transparent'}`}>{item}</label>
                         </div>
                     ))}
                 </div>

@@ -1,10 +1,11 @@
 import { useEffect, useState, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { v4 } from 'uuid'
-
+import { Link } from "react-router-dom";
 // contexts 
-import { NotificationContext } from '../../../../../Contexts/Notifications/NotificationProvider'
-
+import { NotificationContext } from '../../../../../Contexts/Notifications/NotificationProvider';
+// Utils
+import { getCooki } from '../../../../../utils/cookis'
 // datas
 import { apiLinks } from '../../../../../data/links'
 // hooks
@@ -27,15 +28,20 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 
 export default function EditCourse() {
   const notificationDispatch = useContext(NotificationContext)
-  const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
+  const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken, setAxiosGetId } = useAxiosGet();
   const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
-  const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
+  const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl, setAxiosDeleteToken } = useAxiosDelete();
   const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
   const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
-  const [formData, setFormData] = useState();
-  const navigateTo = useNavigate()
   const urlParams = useParams()
+  const authToken = getCooki('token');
+  const [formData, setFormData] = useState([]);
+  const [allLoadingCompleted, setAllLoadingCompleted] = useState(false)
+  const [loadCategoriesStatus, setLoadCategoriesStatus] = useState('loading');
+  const [categoryArray, setCategoryArray] = useState([]);
+
+  const navigateTo = useNavigate()
   const inputsData = {
     title: {
       name: 'title',
@@ -44,11 +50,11 @@ export default function EditCourse() {
       type: 'text',
       required: true,
       errorMessage: 'عنوان دوره باید بین 5 الی 15 کلمه باشد',
-      pattern: '^[\\w\u0600-\u06FF\\s]{5,50}',
-      maxLength: 50,
+      pattern: '^[\\w\u0600-\u06FF\\s]{5,15}',
+      maxLength: 15,
     },
-    miniDes: {
-      name: 'miniDes',
+    shortDes: {
+      name: 'shortDes',
       label: 'توضیح کوتاه',
       placeholder: 'دوره را در حد یک خط توصیف کنید',
       required: true,
@@ -58,8 +64,8 @@ export default function EditCourse() {
       minLength: 30,
       rows: '2'
     },
-    largeDes: {
-      name: 'largeDes',
+    longDes: {
+      name: 'longDes',
       label: 'توضیح بلند',
       placeholder: 'توضیحات دوره',
       required: true,
@@ -70,52 +76,47 @@ export default function EditCourse() {
       rows: '5'
     },
     prerequisite: {
-      selectBoxName: 'prerequisite',
+      name: 'prerequisite',
       label: 'پیشنیاز',
       items: [
-        { name: "بدون پیش نیاز", id: 'null' },
-        { name: 'دوره ایلوستریتور مقدماتی', id: 'illu-base' },
-        { name: 'دوره ایلوستریتور متوسط', id: 'illu-midd' },
-        { name: 'دوره ایلوستریتور پیشرفته', id: 'illu-advance' },
-        { name: 'دوره فوتوشاپ مقدماتی', id: 'photo-base' },
-        { name: 'دوره فوتوشاپ متوسط', id: 'photo-midd' },
-        { name: 'دوره فوتوشاپ پیشرفته', id: 'photo-advance' },
+        { name: "بدون پیش نیاز", id: 'NoPrerequisite' },
+        { name: 'دوره ایلوستریتور مقدماتی', id: 'AiPreliminary' },
+        { name: 'دوره ایلوستریتور متوسط', id: 'AiIntermediate' },
+        { name: 'دوره ایلوستریتور پیشرفته', id: 'AiAdvanced' },
+        { name: 'دوره فوتوشاپ مقدماتی', id: 'PsPreliminary' },
+        { name: 'دوره فوتوشاپ متوسط', id: 'PsIntermediate' },
+        { name: 'دوره فوتوشاپ پیشرفته', id: 'PsAdvanced' },
       ]
     },
     category: {
-      selectBoxName: 'category',
+      name: 'category',
       label: 'دسته بندی',
-      items: [
-        { name: 'بدون دسته', id: 'null' },
-        { name: 'گرافیک', id: 'graphic' },
-        { name: 'طراحی', id: 'art' },
-      ]
     },
-    wayReceive: {
-      selectBoxName: 'wayReceive',
+    wayRecive: {
+      name: 'wayRecive',
       label: 'شیوه دریافت',
       items: [
-        { name: 'دانلودی', id: 'download' },
-        { name: 'اسپات پلیر', id: 'spotplayer' },
-        { name: 'تماشای آنلاین', id: 'online' },
+        { name: 'دانلودی', id: 'Download' },
+        { name: 'اسپات پلیر', id: 'SpotPlayer' },
+        { name: 'تماشای آنلاین', id: 'WatchOnline' },
       ]
     },
     level: {
-      selectBoxName: 'level',
+      name: 'level',
       label: 'سطح دوره',
       items: [
-        { name: 'مبتدی', id: 'beginner' },
-        { name: 'متوسط', id: 'middle' },
-        { name: 'پیشرفته', id: 'advanced' },
+        { name: 'مبتدی', id: 'Preliminary' },
+        { name: 'متوسط', id: 'Intermediate' },
+        { name: 'پیشرفته', id: 'Advanced' },
       ]
     },
     support: {
-      selectBoxName: 'support',
+      name: 'support',
       label: 'پشتیبانی',
       items: [
-        { name: 'تیکت', id: 'ticket' },
-        { name: 'تلفنی + تیکت', id: 'call-ticket' },
-        { name: 'تلفنی + تیکت + واتساپ', id: 'call-ticket-whatsapp' },
+        { name: 'تیکت', id: 'Ticket' },
+        { name: 'تلفنی + تیکت', id: 'TickerPhone' },
+        { name: 'تلفنی + تیکت + واتساپ', id: 'TicketPhoneWhatsapp' },
       ]
     },
     price: {
@@ -127,8 +128,8 @@ export default function EditCourse() {
       maxLength: "6",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
     },
-    time: {
-      name: 'time',
+    duration: {
+      name: 'duration',
       label: 'مدت زمان دوره',
       placeholder: "زمان دوره به ساعت",
       pattern: "^([1-9][0-9]{0,2})$",
@@ -136,78 +137,135 @@ export default function EditCourse() {
       maxLength: "3",
       errorMessage: 'مدت زمان دوره باید بین 1 الی 999 ساعت باشد ',
     },
-    fileSize: {
-      name: 'fileSize',
-      label: 'حجم فایل به مگابایت',
-      placeholder: 'حجم فایل را وارد کنید',
-      pattern: "^([1-9][0-9\\.]{0,4}|10000)$",
-      required: true,
-      maxLength: "5",
-      errorMessage: "حجم فایل را به عدد بین 1 الی 10000 مگابایت وارد کنید",
-    },
     image: {
       imageValue: '',
-      inputId: 'new-course-image'
+      name: 'image'
     },
     gallery: {
       imageValue: [],
-      inputId: 'edit-course-gallery'
+      inputId: 'new-course-gallery'
     }
   }
-  const changeHandler = (event) => {
-    // Image 
-    if (event.image) {
-      setFormData({ ...formData, image: event.image })
-    } else if (event.target.className.includes('custom-select-box-input')) {
-      // Select boxes
-      const inputName = event.target.name;
-      const inputItems = inputsData[inputName].items;
-      const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-      setFormData({ ...formData, [event.target.name]: selectedItem })
-    } else {
-      // Normal inputs
-      setFormData({ ...formData, [event.target.name]: event.target.value })
+  const changeHandler = ({ id, value }) => {
+
+    if (id === 'fileSize' || id === "duration") {
+      setFormData({ ...formData, [id]: Number(value) });
+      return
     }
-  }
-  const galleryChangeHandler = (images) => {
-    setFormData({ ...formData, gallery: images })
+    if (id === 'category') {
+      setFormData({ ...formData, [id]: value });
+      return
+    }
+    if (id === 'level' || id === 'wayRecive' || id === 'prerequisite' || id === 'support') {
+      const filteredItem = inputsData[id].items.find((item) => {
+        if (item.name === value) {
+          return item.id
+        }
+      })
+      setFormData({ ...formData, [id]: filteredItem.id });
+      return
+    }
+    setFormData({ ...formData, [id]: value })
   }
   const submitHandler = (event) => {
     event.preventDefault()
     setAxiosPutData(formData)
     setAxiosPutUrl(`${apiLinks.courses}/${urlParams.courseId}`)
   }
-  const deleteHandler = () => {
-    setIsShowDeleteModal(prev => !prev)
-    setAxiosDeleteUrl(`${apiLinks.courses}/${urlParams.courseId}`)
+  // const deleteHandler = () => {
+
+  //   if (!isShowDeleteModal) {
+  //     setIsShowDeleteModal(prev => !prev)
+  //   } else {
+  //     setAxiosDeleteUrl(`${apiLinks.courses}/${urlParams.courseId}`)
+  //     setAxiosDeleteToken(authToken)
+  //   }
+  // }
+  // Get categoreis form server
+  const getCategories = () => {
+    setAxiosGetToken(authToken);
+    setAxiosGetUrl(`${apiLinks.categories}?type=Course`);
+    setAxiosGetId('LOADING-CATEGOREIS')
+    setLoadCategoriesStatus('loading');
   }
+
+
   /////// loading prev course data from server
   useEffect(() => {
-    setAxiosGetUrl(`${apiLinks.courses}/${urlParams.courseId}`)
+    setAxiosGetUrl(`${apiLinks.courses}/${urlParams.courseId}`);
+    setAxiosGetToken(authToken);
+    setAxiosGetId('LOADING-DATA');
   }, [])
+
   /////// set prev data to inputs and showing
   useEffect(() => {
     if (axiosGetResult !== null) {
-      setFormData(axiosGetResult)
-      setSimpleLoaderStatus('hidde')
-      setIsLoadedDataFromApi(true)
+      ///// LOADING AND SET PERV DATA  
+      if (axiosGetResult.id === 'LOADING-DATA') {
+        const { title,
+          shortDes, longDes, prerequisite, category, wayRecive, level, support, price, duration, image, gallery } = axiosGetResult.data;
+        const newGallery = gallery.map(item => {
+          return item.image
+        });
+        const requiredValues = {
+          category: category.name,
+          gallery: newGallery,
+          title,
+          shortDes, longDes, prerequisite, wayRecive, level, support, price, duration, image
+        };
+        setFormData(requiredValues);
+        //////// down line FOr test
+        setAllLoadingCompleted(true)
+        //////// up line FOr test 
+        setSimpleLoaderStatus('hidde');
+        setIsLoadedDataFromApi(true);
+        getCategories();
+        return
+      }
+      ///// LOADING AND SET PERV CATEGOREIS
+      if (axiosGetResult.id === 'LOADING-CATEGOREIS') {
+        let newCategoreisArray = []
+        axiosGetResult.data.map(item => newCategoreisArray = [...newCategoreisArray, { id: item.id, name: item.name }])
+        setCategoryArray(newCategoreisArray)
+        setLoadCategoriesStatus('loaded');
+        return
+      }
     }
     if (axiosGetError !== null) {
-      if (axiosGetError.status == 404) {
-        notificationDispatch({
-          type: 'ADD_NOTE',
-          payload: {
+      ///// LOADING AND SET PERV DATA  
+      if (axiosGetError.id === 'LOADING-DATA') {
+        if (axiosGetError.err.status == 404) {
+          notificationDispatch({
+            type: 'ADD_NOTE',
+            payload: {
               id: v4(),
               message: `دوره ای با آیدی ${urlParams.courseId} پیدا نشد.!`,
               status: 'error'
-          }
-      })
-        alert()
-        navigateTo('/panel/products')
+            }
+          })
+          navigateTo('/panel/products')
+        }
+      }
+      ///// LOADING AND SET PERV CATEGOREIS
+      if (axiosGetError.id === 'LOADING-CATEGOREIS') {
+        if (axiosGetError.err.status === 400) {
+          setLoadCategoriesStatus('create_category')
+        } else {
+
+          notificationDispatch({
+            type: 'ADD_NOTE',
+            payload: {
+              id: v4(),
+              message: 'دسته بندی ها بارگذاری نشدند',
+              status: 'error'
+            }
+          })
+        }
       }
       setSimpleLoaderStatus('error')
     }
   }, [axiosGetError, axiosGetResult]);
+
   //////// save changes results
   useEffect(() => {
     // show update results
@@ -215,11 +273,11 @@ export default function EditCourse() {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
-            id: v4(),
-            message: 'تغییرات با موفقیت ذخیره شدند',
-            status: 'success'
+          id: v4(),
+          message: 'تغییرات با موفقیت ذخیره شدند',
+          status: 'success'
         }
-    })
+      })
     }
     if (axiosPutError !== null) {
       console.log(axiosPutError)
@@ -231,18 +289,18 @@ export default function EditCourse() {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
-            id: v4(),
-            message: 'دوره با موفقیت پاک شد',
-            status: 'success'
+          id: v4(),
+          message: 'دوره با موفقیت پاک شد',
+          status: 'success'
         }
-    })
+      })
       navigateTo(-1)
     }
     if (axiosDeleteError !== null) {
       console.log(console.log(axiosDeleteError))
     }
   }, [axiosDeleteError, axiosDeleteResult]);
- 
+
   return (
     isLoadedDataFromApi ? (
       <div id="edit-product-form">
@@ -252,40 +310,50 @@ export default function EditCourse() {
               {/* Right Side - Text form  */}
               <div className="right-side xl:w-8/12">
                 <NormalInput value={formData.title} onChangeEvent={changeHandler} {...inputsData.title} />
-                <Textarea value={formData.miniDes} onChangeEvent={changeHandler} {...inputsData.miniDes} />
+                <Textarea value={formData.shortDes} onChangeEvent={changeHandler} {...inputsData.shortDes} />
                 <div className="w-full flex-col xl:flex-row xl:items-center flex justify-start relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    <SelectBox value={formData.category} onChangeEvent={changeHandler} {...inputsData.category} />
+                    {
+                      loadCategoriesStatus === 'loaded' && (
+                        <SelectBox value={{ name: formData.category, id: formData.category }} onChangeEvent={changeHandler} items={categoryArray} {...inputsData.category} />
+                      )
+                    }
+                    {loadCategoriesStatus === 'loading' && (
+                      <span className="w-full lg:w-32 h-10 inline-flex justify-center items-center text-slate-700 dark:text-slate-300 dark:bg-slate-900 bg-slate-200 mt-5 mb-3 rounded-md animate-pulse">درحال بارگذاری ...</span>
+                    )}
+                    {loadCategoriesStatus === 'create_category' && (
+                      <Link to={'/panel/categories'} className="w-full lg:w-32 h-10 inline-flex justify-center items-center text-white font-bold dark:text-slate-300 dark:bg-green-600 bg-green-500 mt-5 mb-3 rounded-md ">ایجاد دسته جدید</Link>
+                    )}
                   </div>
                   <div className="w-full xl:w-6/12">
-                    <SelectBox value={formData.level} onChangeEvent={changeHandler} {...inputsData.level} />
+                    <SelectBox value={''} onChangeEvent={changeHandler} {...inputsData.level} />
                   </div>
                 </div>
                 <div className="w-full flex-col xl:flex-row xl:items-center flex justify-start relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    <SelectBox value={formData.wayReceive} onChangeEvent={changeHandler} {...inputsData.wayReceive} />
+                    {/* <SelectBox value={formData.wayReceive} onChangeEvent={changeHandler} {...inputsData.wayReceive} /> */}
                   </div>
                   <div className="w-full xl:w-6/12">
-                    <SelectBox value={formData.prerequisite} onChangeEvent={changeHandler} {...inputsData.prerequisite} />
+                    {/* <SelectBox value={formData.prerequisite} onChangeEvent={changeHandler} {...inputsData.prerequisite} /> */}
                   </div>
                 </div>
                 <div className="w-full flex-col xl:flex-row flex justify-start items-center relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    <SelectBox value={formData.support} onChangeEvent={changeHandler} {...inputsData.support} />
+                    {/* <SelectBox value={formData.support} onChangeEvent={changeHandler} {...inputsData.support} /> */}
                   </div>
                   <div className="w-full xl:w-6/12">
-                    <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} />
+                    {/* <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} /> */}
                   </div>
                 </div>
-                <NormalInput value={formData.time} onChangeEvent={changeHandler} {...inputsData.time} />
+                {/* <NormalInput value={formData.time} onChangeEvent={changeHandler} {...inputsData.time} />
                 <NormalInput value={formData.fileSize} onChangeEvent={changeHandler} {...inputsData.fileSize} />
-                <Textarea value={formData.largeDes} onChangeEvent={changeHandler} {...inputsData.largeDes} />
+                <Textarea value={formData.largeDes} onChangeEvent={changeHandler} {...inputsData.largeDes} /> */}
               </div>
               {/* End of Right Side - Text form  */}
               {/* Left side - select Image */}
               <div className="left-side xl:w-4/12">
-                <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
-                <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
+                {/* <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} /> */}
+                {/* <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} /> */}
               </div>
               {/* End of Left side - select Image */}
             </section>
@@ -298,7 +366,7 @@ export default function EditCourse() {
                 <CancelButton title='انصراف' />
               </div>
               <div className={`w-4/12 xl:4/12 ${axiosPutIsPending && 'pointer-events-none'}`} >
-                <DeleteButton onClickEvent={() => setIsShowDeleteModal(prev => !prev)} isPending={axiosDeleteIsPending} title='حذف دوره' />
+                {/* <DeleteButton onClickEvent={() => setIsShowDeleteModal(prev => !prev)} isPending={axiosDeleteIsPending} title='حذف دوره' /> */}
               </div>
             </div>
             {/* End of Buttons  */}
@@ -308,7 +376,7 @@ export default function EditCourse() {
           <div className="w-full p-3 text-center font-bold">
             <h2 className="text-slate-800 mb-5 dark:text-slate-100">آیا دوره مورد نظر پاک شود؟</h2>
             <div className="flex items-center justify-around gap-3 w-full">
-              <button onClick={() => deleteHandler()} className="bg-slate-200 text-slate-800 px-4 py-2 rounded-md w-6/12 dark:bg-slate-600 dark:text-slate-200">بله</button>
+              {/* <button onClick={() => deleteHandler()} className="bg-slate-200 text-slate-800 px-4 py-2 rounded-md w-6/12 dark:bg-slate-600 dark:text-slate-200">بله</button> */}
               <button onClick={() => setIsShowDeleteModal(prev => !prev)} className="bg-blue-600 text-white px-4 py-2 rounded-md w-6/12">لغو</button>
             </div>
           </div>

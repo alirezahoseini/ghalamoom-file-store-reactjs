@@ -35,7 +35,6 @@ export default function NewCourse() {
     title: '',                                                        /// max length 70 
     image: '',                                                        /// dataurl image
     price: '',                                                        /// the price is in thousand tomans, like 20 
-    fileSize: '',                                                     /// file size in megabytes
     shortDes: '',                                                      /// max length 180
     longDes: '',                                                     /// max length 400
     duration: '',                                                         /// course duration
@@ -85,13 +84,13 @@ export default function NewCourse() {
       name: 'prerequisite',
       label: 'پیشنیاز',
       items: [
-        { name: "بدون پیش نیاز", id: 'NoPrerequisite' },
-        { name: 'دوره ایلوستریتور مقدماتی', id: 'AiPreliminary' },
-        { name: 'دوره ایلوستریتور متوسط', id: 'AiIntermediate' },
-        { name: 'دوره ایلوستریتور پیشرفته', id: 'AiAdvanced' },
-        { name: 'دوره فوتوشاپ مقدماتی', id: 'PsPreliminary' },
-        { name: 'دوره فوتوشاپ متوسط', id: 'PsIntermediate' },
-        { name: 'دوره فوتوشاپ پیشرفته', id: 'PsAdvanced' },
+        'NoPrerequisite',
+        'AiPreliminary',
+        'AiIntermediate',
+        'AiAdvanced',
+        'PsPreliminary',
+        'PsIntermediate',
+        'PsAdvanced',
       ]
     },
     category: {
@@ -102,27 +101,27 @@ export default function NewCourse() {
       name: 'wayRecive',
       label: 'شیوه دریافت',
       items: [
-        { name: 'دانلودی', id: 'Download' },
-        { name: 'اسپات پلیر', id: 'SpotPlayer' },
-        { name: 'تماشای آنلاین', id: 'WatchOnline' },
+        'Download',
+        'SpotPlayer',
+        'WatchOnline',
       ]
     },
     level: {
       name: 'level',
       label: 'سطح دوره',
       items: [
-        { name: 'مبتدی', id: 'Preliminary' },
-        { name: 'متوسط', id: 'Intermediate' },
-        { name: 'پیشرفته', id: 'Advanced' },
+        'Preliminary',
+        'Intermediate',
+        'Advanced'
       ]
     },
     support: {
       name: 'support',
       label: 'پشتیبانی',
       items: [
-        { name: 'تیکت', id: 'Ticket' },
-        { name: 'تلفنی + تیکت', id: 'TickerPhone' },
-        { name: 'تلفنی + تیکت + واتساپ', id: 'TicketPhoneWhatsapp' },
+        'Ticket',
+        'TickerPhone',
+        'TicketPhoneWhatsapp'
       ]
     },
     price: {
@@ -143,15 +142,6 @@ export default function NewCourse() {
       maxLength: "3",
       errorMessage: 'مدت زمان دوره باید بین 1 الی 999 ساعت باشد ',
     },
-    fileSize: {
-      name: 'fileSize',
-      label: 'حجم فایل به مگابایت',
-      placeholder: 'حجم فایل را وارد کنید',
-      pattern: "^([1-9][0-9\\.]{0,4}|10000)$",
-      required: true,
-      maxLength: "5",
-      errorMessage: "حجم فایل را به عدد بین 1 الی 10000 مگابایت وارد کنید",
-    },
     image: {
       imageValue: '',
       name: 'image'
@@ -163,7 +153,7 @@ export default function NewCourse() {
   }
   const changeHandler = ({ id, value }) => {
 
-    if (id === 'fileSize' || id === "duration") {
+    if (id === "duration") {
       setFormData({ ...formData, [id]: Number(value) });
       return
     }
@@ -173,11 +163,11 @@ export default function NewCourse() {
     }
     if (id === 'level' || id === 'wayRecive' || id === 'prerequisite' || id === 'support') {
       const filteredItem = inputsData[id].items.find((item) => {
-        if(item.name === value){
-          return item.id
+        if (item === value) {
+          return item
         }
       })
-      setFormData({ ...formData, [id]: filteredItem.id });
+      setFormData({ ...formData, [id]: filteredItem });
       return
     }
     setFormData({ ...formData, [id]: value })
@@ -195,7 +185,7 @@ export default function NewCourse() {
           message: 'حداقل یک تصویر برای گالری انتخاب کنید',
           status: 'warning'
         }
-      }) 
+      })
       return
     } else if (!formData.image) {
       notificationDispatch({
@@ -205,7 +195,7 @@ export default function NewCourse() {
           message: 'لطفا تصویر شاخص را انتخاب نمایید',
           status: 'warning'
         }
-      }) 
+      })
       return
     } else if (!formData.category.length) {
       notificationDispatch({
@@ -215,9 +205,9 @@ export default function NewCourse() {
           message: 'لطفا دسته بندی را انتخاب نمایید',
           status: 'warning'
         }
-      }) 
+      })
       return
-    }else if (!formData.wayRecive.length) {
+    } else if (!formData.wayRecive.length) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -225,9 +215,9 @@ export default function NewCourse() {
           message: 'لطفا شیوه دریافت را انتخاب نمایید',
           status: 'warning'
         }
-      }) 
+      })
       return
-    }else if (!formData.support.length) {
+    } else if (!formData.support.length) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -235,9 +225,9 @@ export default function NewCourse() {
           message: 'لطفا نحوه پشتیبانی دوره را انتخاب نمایید',
           status: 'warning'
         }
-      }) 
+      })
       return
-    }else if (!formData.level.length) {
+    } else if (!formData.level.length) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -245,9 +235,9 @@ export default function NewCourse() {
           message: 'لطفا سطح دوره را انتخاب نمایید',
           status: 'warning'
         }
-      }) 
+      })
       return
-    }else if (!formData.prerequisite.length) {
+    } else if (!formData.prerequisite.length) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -255,9 +245,9 @@ export default function NewCourse() {
           message: 'لطفا پیشنیاز دوره را انتخاب نمایید',
           status: 'warning'
         }
-      }) 
+      })
       return
-    }  else {
+    } else {
       setAxiosPostToken(authToken);
       setAxiosPostData(formData);
       setAxiosPostUrl(apiLinks.courses)
@@ -294,8 +284,10 @@ export default function NewCourse() {
   // Run get categoreis
   useEffect(() => {
     if (axiosGetResult !== null) {
-      let newCategoreisArray = []
-      axiosGetResult.map(item => newCategoreisArray = [...newCategoreisArray, { id: item.id, name: item.name }])
+      let newCategoreisArray = [];
+       axiosGetResult.forEach(item => {
+        newCategoreisArray = [...newCategoreisArray , item.name]
+      });
       setCategoryArray(newCategoreisArray)
       setLoadCategoriesStatus('loaded')
     }
@@ -360,7 +352,6 @@ export default function NewCourse() {
                 </div>
               </div>
               <NormalInput value={formData.duration} onChangeEvent={changeHandler} {...inputsData.duration} />
-              <NormalInput value={formData.fileSize} onChangeEvent={changeHandler} {...inputsData.fileSize} />
               <Textarea value={formData.longDes} onChangeEvent={changeHandler} {...inputsData.longDes} />
             </div>
             {/* End of Right Side - Text form  */}
