@@ -30,7 +30,8 @@ export default function NewArtwork() {
         image: '',                             /// dataurl image
         runTime: '',                           ///  
         description: '',                       /// max length 400
-        gallery: [],                          /// 
+        gallery: [],          
+        duration: ''                /// 
     });
     const navigateTo = useNavigate()
     const inputsData = {

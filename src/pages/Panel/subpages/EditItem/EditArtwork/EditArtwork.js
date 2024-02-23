@@ -4,11 +4,13 @@ import { v4 } from 'uuid'
 
 // contexts 
 import { NotificationContext } from '../../../../../Contexts/Notifications/NotificationProvider'
+// Utils
+import { getCooki } from '../../../../../utils/cookis'
 
 // datas
 import { apiLinks } from '../../../../../data/links'
 // hooks
-import useAxiosPut from "../../../../../hooks/axios/useAxiosPut";
+import useAxiosPatch from "../../../../../hooks/axios/useAxiosPatch";
 import useAxiosGet from "../../../../../hooks/axios/useAxiosGet";
 import useAxiosDelete from "../../../../../hooks/axios/useAxiosDelete";
 
@@ -26,15 +28,16 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 
 export default function EditArtwork() {
   const notificationDispatch = useContext(NotificationContext)
-  const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
-  const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
+  const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
+  const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchToken, setAxiosPatchUrl, setAxiosPatchData } = useAxiosPatch();
   const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl } = useAxiosDelete();
   const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
   const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
   const [formData, setFormData] = useState();
-  const navigateTo = useNavigate()
-  const urlParams = useParams()
+  const navigateTo = useNavigate();
+  const urlParams = useParams();
+  const authToken = getCooki('token');
   const inputsData = {
     title: {
       name: 'title',
@@ -76,28 +79,37 @@ export default function EditArtwork() {
       inputId: 'edit-artwork-gallery'
     }
   }
-  const changeHandler = (event) => {
-    // Image 
-    if (event.image) {
-      setFormData({ ...formData, image: event.image })
-    } else if (event.target.className.includes('custom-select-box-input')) {
-      // Select boxes
-      const inputName = event.target.name;
-      const inputItems = inputsData[inputName].items;
-      const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-      setFormData({ ...formData, [event.target.name]: selectedItem })
-    } else {
-      // Normal inputs
-      setFormData({ ...formData, [event.target.name]: event.target.value })
-    }
+  const changeHandler = ({ id, value }) => {
+    setFormData({ ...formData, [id]: value })
   }
   const galleryChangeHandler = (images) => {
     setFormData({ ...formData, gallery: images })
   }
   const submitHandler = (event) => {
-    event.preventDefault()
-    setAxiosPutData(formData)
-    setAxiosPutUrl(`${apiLinks.artworks}/${urlParams.artworkId}`)
+    event.preventDefault();
+    if (formData.gallery < 1) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'حداقل یک تصویر برای گالری انتخاب کنید',
+          status: 'warning'
+        }
+      })
+    } else if (!formData.image) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا تصویر شاخص را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+    } else {
+      setAxiosPatchToken(authToken);
+      setAxiosPatchData(formData);
+      setAxiosPatchUrl(`${apiLinks.artworks}/${urlParams.productId}`);
+    }
   }
   const deleteHandler = () => {
     setIsShowDeleteModal(prev => !prev)
@@ -105,14 +117,23 @@ export default function EditArtwork() {
   }
   /////// loading prev course data from server
   useEffect(() => {
+    setAxiosGetToken(authToken);
     setAxiosGetUrl(`${apiLinks.artworks}/${urlParams.artworkId}`)
   }, [])
   /////// set prev data to inputs and showing
   useEffect(() => {
     if (axiosGetResult !== null) {
-      setFormData(axiosGetResult)
-      setSimpleLoaderStatus('hidde')
-      setIsLoadedDataFromApi(true)
+      const {gallery, image, runTime, description, title } = axiosGetResult;
+        const newGallery = gallery.map(item => {
+          return item.image
+        });
+        const requiredValues = {
+          gallery: newGallery, image, runTime, description, title
+        };
+        setFormData(requiredValues);
+        setSimpleLoaderStatus('hidde');
+        setIsLoadedDataFromApi(true);
+        return
     }
     if (axiosGetError !== null) {
       if (axiosGetError.status == 404) {
@@ -132,7 +153,7 @@ export default function EditArtwork() {
   //////// save changes results
   useEffect(() => {
     // show update results
-    if (axiosPutResult !== null) {
+    if (axiosPatchResult !== null) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -142,10 +163,10 @@ export default function EditArtwork() {
         }
       })
     }
-    if (axiosPutError !== null) {
-      console.log(axiosPutError)
+    if (axiosPatchError !== null) {
+      console.log(axiosPatchError)
     }
-  }, [axiosPutError, axiosPutResult]);
+  }, [axiosPatchError, axiosPatchResult]);
   ///////  Delete results
   useEffect(() => {
     if (axiosDeleteResult !== null) {
@@ -179,7 +200,7 @@ export default function EditArtwork() {
               {/* End of Right Side - Text form  */}
               {/* Left side - select Image */}
               <div className="left-side xl:w-4/12">
-                <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} />
+                <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
                 <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
               </div>
               {/* End of Left side - select Image */}
@@ -187,12 +208,12 @@ export default function EditArtwork() {
             {/* Buttons  */}
             <div className="buttons w-full xl:w-8/12 flex items-center gap-3">
               <div className={`w-4/12 xl:4/12 ${axiosDeleteIsPending && 'pointer-events-none'}`} >
-                <SubmitFormButton isPending={axiosPutIsPending} title={'ذخیره تغییرات'} />
+                <SubmitFormButton isPending={axiosPatchIsPending} title={'ذخیره تغییرات'} />
               </div>
-              <div className={`w-4/12 xl:4/12 ${axiosPutIsPending || axiosDeleteIsPending ? 'pointer-events-none' : ''}`} >
+              <div className={`w-4/12 xl:4/12 ${axiosPatchIsPending || axiosDeleteIsPending ? 'pointer-events-none' : ''}`} >
                 <CancelButton title='انصراف' />
               </div>
-              <div className={`w-4/12 xl:4/12 ${axiosPutIsPending && 'pointer-events-none'}`} >
+              <div className={`w-4/12 xl:4/12 ${axiosPatchIsPending && 'pointer-events-none'}`} >
                 <DeleteButton onClickEvent={() => setIsShowDeleteModal(prev => !prev)} isPending={axiosDeleteIsPending} title='حذف نمونه کار' />
               </div>
             </div>
