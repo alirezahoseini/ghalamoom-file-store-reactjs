@@ -130,7 +130,8 @@ export default function NewCourse() {
       placeholder: "قیمت دوره",
       pattern: "\\d*",
       required: true,
-      maxLength: "6",
+      type: 'text',
+      maxLength: "5",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
     },
     duration: {
@@ -139,6 +140,7 @@ export default function NewCourse() {
       placeholder: "زمان دوره به ساعت",
       pattern: "^([1-9][0-9]{0,2})$",
       required: true,
+      type: 'text',
       maxLength: "3",
       errorMessage: 'مدت زمان دوره باید بین 1 الی 999 ساعت باشد ',
     },
@@ -152,9 +154,10 @@ export default function NewCourse() {
     }
   }
   const changeHandler = ({ id, value }) => {
-
-    if (id === "duration") {
-      setFormData({ ...formData, [id]: Number(value) });
+    if (id === 'duration' || id === 'price') {
+      if (!isNaN(value)) {
+        setFormData({ ...formData, [id]: Number(value) });
+      }
       return
     }
     if (id === 'category') {
@@ -285,8 +288,8 @@ export default function NewCourse() {
   useEffect(() => {
     if (axiosGetResult !== null) {
       let newCategoreisArray = [];
-       axiosGetResult.forEach(item => {
-        newCategoreisArray = [...newCategoreisArray , item.name]
+      axiosGetResult.forEach(item => {
+        newCategoreisArray = [...newCategoreisArray, item.name]
       });
       setCategoryArray(newCategoreisArray)
       setLoadCategoriesStatus('loaded')

@@ -61,7 +61,7 @@ export default function EditProduct() {
       maxLength: 150,
       minLength: 30,
       rows: '2',
-      require: 'true'
+      required: true
     },
     longDes: {
       name: 'longDes',
@@ -72,7 +72,7 @@ export default function EditProduct() {
       maxLength: 400,
       minLength: 50,
       rows: '5',
-      require: 'true'
+      required: true
     },
     category: {
       name: 'category',
@@ -86,13 +86,13 @@ export default function EditProduct() {
       name: 'format',
       label: 'فرمت فایل',
       items: [
-        { name: 'ZIP', id: 'ZIP' },
-        { name: 'PNG', id: 'PNG' },
-        { name: 'JPG', id: 'JPG' },
-        { name: 'AI', id: 'AI' },
-        { name: 'PSD', id: 'PSD' },
-        { name: 'TTF', id: 'TTF' },
-        { name: 'MP4', id: 'MP4' },
+        'ZIP',
+        'PNG',
+        'JPG',
+        'AI',
+        'PSD',
+        'TTF',
+        'MP4',
       ]
     },
     price: {
@@ -100,9 +100,9 @@ export default function EditProduct() {
       label: 'قیمت',
       placeholder: "قیمت محصول",
       pattern: "\\d*",
-      type: 'number',
+      type: 'text',
       required: true,
-      maxLength: "5",
+      maxLength: '5',
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
     },
     fileSize: {
@@ -125,8 +125,10 @@ export default function EditProduct() {
   }
   const changeHandler = ({ id, value }) => {
 
-    if (id === 'fileSize') {
-      setFormData({ ...formData, [id]: Number(value) });
+    if (id === 'fileSize' || id === 'price') {
+      if (!isNaN(value)) {
+        setFormData({ ...formData, [id]: Number(value) });
+      }
       return
     }
     if (id === 'category') {
@@ -214,14 +216,12 @@ export default function EditProduct() {
         setSimpleLoaderStatus('hidde');
         setIsLoadedDataFromApi(true);
         getCategories();
-
-        getCategories();
         return
       }
       ///// LOADING AND SET PERV CATEGOREIS
       if (axiosGetResult.id === 'LOADING-CATEGOREIS') {
         let newCategoreisArray = []
-        axiosGetResult.data.map(item => newCategoreisArray = [...newCategoreisArray, { id: item.id, name: item.name }])
+        axiosGetResult.data.map(item => newCategoreisArray = [...newCategoreisArray, item.name])
         setCategoryArray(newCategoreisArray)
         setLoadCategoriesStatus('loaded');
         return
@@ -314,6 +314,7 @@ export default function EditProduct() {
   }, [axiosDeleteError, axiosDeleteResult]);
 
 
+
   return (
     isLoadedDataFromApi ? (
       <div id="edit-product-form">
@@ -328,7 +329,7 @@ export default function EditProduct() {
                   <div className="w-full xl:w-6/12">
                     {
                       loadCategoriesStatus === 'loaded' && (
-                        <SelectBox value={{ name: formData.category, id: formData.category }} onChangeEvent={changeHandler} items={categoryArray} {...inputsData.category} />
+                        <SelectBox value={formData.category} onChangeEvent={changeHandler} items={categoryArray} {...inputsData.category} />
                       )
                     }
                     {loadCategoriesStatus === 'loading' && (
@@ -344,7 +345,7 @@ export default function EditProduct() {
                 </div>
                 <div className="w-full flex-col xl:flex-row flex justify-start items-center relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    <SelectBox value={{ name: formData.format, id: formData.format }} onChangeEvent={changeHandler} {...inputsData.format} />
+                    <SelectBox value={formData.format} onChangeEvent={changeHandler} {...inputsData.format} />
                   </div>
                   <div className="w-full xl:w-6/12">
                     <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} />

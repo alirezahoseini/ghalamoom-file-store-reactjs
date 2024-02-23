@@ -89,13 +89,13 @@ export default function NewProduct() {
       name: 'format',
       label: 'فرمت فایل',
       items: [
-        { name: 'ZIP', id: 'ZIP' },
-        { name: 'PNG', id: 'PNG' },
-        { name: 'JPG', id: 'JPG' },
-        { name: 'AI', id: 'AI' },
-        { name: 'PSD', id: 'PSD' },
-        { name: 'TTF', id: 'TTF' },
-        { name: 'MP4', id: 'MP4' },
+        'ZIP',
+        'PNG',
+        'JPG',
+        'AI',
+        'PSD',
+        'TTF',
+        'MP4',
       ]
     },
     price: {
@@ -103,7 +103,7 @@ export default function NewProduct() {
       label: 'قیمت',
       placeholder: "قیمت محصول",
       pattern: "\\d*",
-      type: 'number',
+      type: 'text',
       required: true,
       maxLength: "6",
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
@@ -115,6 +115,7 @@ export default function NewProduct() {
       pattern: "^([1-9][0-9\\.]{0,4}|10000)$",
       required: true,
       maxLength: "5",
+      type: 'text',
       errorMessage: "حجم فایل را به عدد بین 1 الی 10000 مگابایت وارد کنید",
     },
     image: {
@@ -127,9 +128,10 @@ export default function NewProduct() {
     }
   }
   const changeHandler = ({ id, value }) => {
-
-    if (id === 'fileSize') {
-      setFormData({ ...formData, [id]: Number(value) });
+    if (id === 'fileSize' || id === 'price') {
+      if (!isNaN(value)) {
+        setFormData({ ...formData, [id]: Number(value) });
+      }
       return
     }
     if (id === 'category') {
@@ -169,11 +171,11 @@ export default function NewProduct() {
           message: 'لطفا دسته بندی را انتخاب نمایید',
           status: 'warning'
         }
-      }) 
+      })
       return
-    } 
-     else {
-      
+    }
+    else {
+
       setAxiosPostToken(authToken);
       setAxiosPostData(formData);
       setAxiosPostUrl(apiLinks.products);
@@ -218,8 +220,10 @@ export default function NewProduct() {
   // Run get categoreis
   useEffect(() => {
     if (axiosGetResult !== null) {
-      let newCategoreisArray = []
-      axiosGetResult.map(item => newCategoreisArray = [...newCategoreisArray, { id: item.id, name: item.name }])
+      let newCategoreisArray = [];
+      axiosGetResult.forEach(item => {
+        newCategoreisArray = [...newCategoreisArray, item.name]
+      });
       setCategoryArray(newCategoreisArray)
       setLoadCategoriesStatus('loaded')
     }

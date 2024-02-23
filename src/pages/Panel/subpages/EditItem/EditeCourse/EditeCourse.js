@@ -9,7 +9,7 @@ import { getCooki } from '../../../../../utils/cookis'
 // datas
 import { apiLinks } from '../../../../../data/links'
 // hooks
-import useAxiosPut from "../../../../../hooks/axios/useAxiosPut";
+import useAxiosPatch from "../../../../../hooks/axios/useAxiosPatch";
 import useAxiosGet from "../../../../../hooks/axios/useAxiosGet";
 import useAxiosDelete from "../../../../../hooks/axios/useAxiosDelete";
 
@@ -29,7 +29,7 @@ import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/Mu
 export default function EditCourse() {
   const notificationDispatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken, setAxiosGetId } = useAxiosGet();
-  const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut();
+  const { axiosPatchResult, axiosPatchIsPending, axiosPatchError, setAxiosPatchUrl, setAxiosPatchToken, setAxiosPatchData } = useAxiosPatch();
   const { axiosDeleteResult, axiosDeleteIsPending, axiosDeleteError, setAxiosDeleteUrl, setAxiosDeleteToken } = useAxiosDelete();
   const [isLoadedDataFromApi, setIsLoadedDataFromApi] = useState(false)
   const [simpleLoaderStatus, setSimpleLoaderStatus] = useState('load')
@@ -79,13 +79,13 @@ export default function EditCourse() {
       name: 'prerequisite',
       label: 'پیشنیاز',
       items: [
-        { name: "بدون پیش نیاز", id: 'NoPrerequisite' },
-        { name: 'دوره ایلوستریتور مقدماتی', id: 'AiPreliminary' },
-        { name: 'دوره ایلوستریتور متوسط', id: 'AiIntermediate' },
-        { name: 'دوره ایلوستریتور پیشرفته', id: 'AiAdvanced' },
-        { name: 'دوره فوتوشاپ مقدماتی', id: 'PsPreliminary' },
-        { name: 'دوره فوتوشاپ متوسط', id: 'PsIntermediate' },
-        { name: 'دوره فوتوشاپ پیشرفته', id: 'PsAdvanced' },
+        'NoPrerequisite',
+        'AiPreliminary',
+        'AiIntermediate',
+        'AiAdvanced',
+        'PsPreliminary',
+        'PsIntermediate',
+        'PsAdvanced',
       ]
     },
     category: {
@@ -96,27 +96,18 @@ export default function EditCourse() {
       name: 'wayRecive',
       label: 'شیوه دریافت',
       items: [
-        { name: 'دانلودی', id: 'Download' },
-        { name: 'اسپات پلیر', id: 'SpotPlayer' },
-        { name: 'تماشای آنلاین', id: 'WatchOnline' },
+        'Download',
+        'SpotPlayer',
+        'WatchOnline',
       ]
     },
     level: {
       name: 'level',
       label: 'سطح دوره',
       items: [
-        { name: 'مبتدی', id: 'Preliminary' },
-        { name: 'متوسط', id: 'Intermediate' },
-        { name: 'پیشرفته', id: 'Advanced' },
-      ]
-    },
-    support: {
-      name: 'support',
-      label: 'پشتیبانی',
-      items: [
-        { name: 'تیکت', id: 'Ticket' },
-        { name: 'تلفنی + تیکت', id: 'TickerPhone' },
-        { name: 'تلفنی + تیکت + واتساپ', id: 'TicketPhoneWhatsapp' },
+        'Preliminary',
+        'Intermediate',
+        'Advanced'
       ]
     },
     price: {
@@ -125,8 +116,18 @@ export default function EditCourse() {
       placeholder: "قیمت دوره",
       pattern: "\\d*",
       required: true,
-      maxLength: "6",
+      maxLength: "5",
+      type: 'text',
       errorMessage: 'قیمت را به عدد وارد کنید. اگر رایگان است 0 وارد کنید',
+    },
+    support: {
+      name: 'support',
+      label: 'پشتیبانی',
+      items: [
+        'Ticket',
+        'TickerPhone',
+        'TicketPhoneWhatsapp'
+      ]
     },
     duration: {
       name: 'duration',
@@ -134,6 +135,7 @@ export default function EditCourse() {
       placeholder: "زمان دوره به ساعت",
       pattern: "^([1-9][0-9]{0,2})$",
       required: true,
+      type: 'text',
       maxLength: "3",
       errorMessage: 'مدت زمان دوره باید بین 1 الی 999 ساعت باشد ',
     },
@@ -147,9 +149,10 @@ export default function EditCourse() {
     }
   }
   const changeHandler = ({ id, value }) => {
-
-    if (id === 'fileSize' || id === "duration") {
-      setFormData({ ...formData, [id]: Number(value) });
+    if (id === 'duration' || id === 'price') {
+      if (!isNaN(value)) {
+        setFormData({ ...formData, [id]: Number(value) });
+      }
       return
     }
     if (id === 'category') {
@@ -158,29 +161,105 @@ export default function EditCourse() {
     }
     if (id === 'level' || id === 'wayRecive' || id === 'prerequisite' || id === 'support') {
       const filteredItem = inputsData[id].items.find((item) => {
-        if (item.name === value) {
-          return item.id
+        if (item === value) {
+          return item
         }
       })
-      setFormData({ ...formData, [id]: filteredItem.id });
+      setFormData({ ...formData, [id]: filteredItem });
       return
     }
     setFormData({ ...formData, [id]: value })
   }
-  const submitHandler = (event) => {
-    event.preventDefault()
-    setAxiosPutData(formData)
-    setAxiosPutUrl(`${apiLinks.courses}/${urlParams.courseId}`)
+  const galleryChangeHandler = (images) => {
+    setFormData({ ...formData, gallery: images })
   }
-  // const deleteHandler = () => {
+  const submitHandler = (event) => {
+    event.preventDefault();
+    if (formData.gallery < 1) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'حداقل یک تصویر برای گالری انتخاب کنید',
+          status: 'warning'
+        }
+      })
+      return
+    } else if (!formData.image) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا تصویر شاخص را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+      return
+    } else if (!formData.category.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا دسته بندی را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+      return
+    } else if (!formData.wayRecive.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا شیوه دریافت را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+      return
+    } else if (!formData.support.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا نحوه پشتیبانی دوره را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+      return
+    } else if (!formData.level.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا سطح دوره را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+      return
+    } else if (!formData.prerequisite.length) {
+      notificationDispatch({
+        type: 'ADD_NOTE',
+        payload: {
+          id: v4(),
+          message: 'لطفا پیشنیاز دوره را انتخاب نمایید',
+          status: 'warning'
+        }
+      })
+      return
+    } else {
+      setAxiosPatchData(formData);
+      setAxiosPatchToken(authToken)
+      setAxiosPatchUrl(`${apiLinks.courses}/${urlParams.courseId}`)
+    }
 
-  //   if (!isShowDeleteModal) {
-  //     setIsShowDeleteModal(prev => !prev)
-  //   } else {
-  //     setAxiosDeleteUrl(`${apiLinks.courses}/${urlParams.courseId}`)
-  //     setAxiosDeleteToken(authToken)
-  //   }
-  // }
+  }
+  const deleteHandler = () => {
+    if (!isShowDeleteModal) {
+      setIsShowDeleteModal(prev => !prev)
+    } else {
+      setAxiosDeleteUrl(`${apiLinks.courses}/${urlParams.courseId}`)
+      setAxiosDeleteToken(authToken)
+    }
+  }
   // Get categoreis form server
   const getCategories = () => {
     setAxiosGetToken(authToken);
@@ -225,7 +304,9 @@ export default function EditCourse() {
       ///// LOADING AND SET PERV CATEGOREIS
       if (axiosGetResult.id === 'LOADING-CATEGOREIS') {
         let newCategoreisArray = []
-        axiosGetResult.data.map(item => newCategoreisArray = [...newCategoreisArray, { id: item.id, name: item.name }])
+        axiosGetResult.data.forEach(item => {
+          newCategoreisArray = [...newCategoreisArray, item.name]
+        });
         setCategoryArray(newCategoreisArray)
         setLoadCategoriesStatus('loaded');
         return
@@ -269,7 +350,7 @@ export default function EditCourse() {
   //////// save changes results
   useEffect(() => {
     // show update results
-    if (axiosPutResult !== null) {
+    if (axiosPatchResult !== null) {
       notificationDispatch({
         type: 'ADD_NOTE',
         payload: {
@@ -277,12 +358,13 @@ export default function EditCourse() {
           message: 'تغییرات با موفقیت ذخیره شدند',
           status: 'success'
         }
-      })
+      });
+      navigateTo('/panel/courses')
     }
-    if (axiosPutError !== null) {
-      console.log(axiosPutError)
+    if (axiosPatchError !== null) {
+      console.log(axiosPatchError)
     }
-  }, [axiosPutError, axiosPutResult]);
+  }, [axiosPatchError, axiosPatchResult]);
   ///////  Delete results
   useEffect(() => {
     if (axiosDeleteResult !== null) {
@@ -315,7 +397,7 @@ export default function EditCourse() {
                   <div className="w-full xl:w-6/12">
                     {
                       loadCategoriesStatus === 'loaded' && (
-                        <SelectBox value={{ name: formData.category, id: formData.category }} onChangeEvent={changeHandler} items={categoryArray} {...inputsData.category} />
+                        <SelectBox value={formData.category} onChangeEvent={changeHandler} items={categoryArray} {...inputsData.category} />
                       )
                     }
                     {loadCategoriesStatus === 'loading' && (
@@ -326,47 +408,46 @@ export default function EditCourse() {
                     )}
                   </div>
                   <div className="w-full xl:w-6/12">
-                    <SelectBox value={''} onChangeEvent={changeHandler} {...inputsData.level} />
+                    <SelectBox value={formData.level} onChangeEvent={changeHandler} {...inputsData.level} />
                   </div>
                 </div>
                 <div className="w-full flex-col xl:flex-row xl:items-center flex justify-start relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    {/* <SelectBox value={formData.wayReceive} onChangeEvent={changeHandler} {...inputsData.wayReceive} /> */}
+                    <SelectBox value={formData.wayRecive} onChangeEvent={changeHandler} {...inputsData.wayRecive} />
                   </div>
                   <div className="w-full xl:w-6/12">
-                    {/* <SelectBox value={formData.prerequisite} onChangeEvent={changeHandler} {...inputsData.prerequisite} /> */}
+                    <SelectBox value={formData.prerequisite} onChangeEvent={changeHandler} {...inputsData.prerequisite} />
                   </div>
                 </div>
                 <div className="w-full flex-col xl:flex-row flex justify-start items-center relative mb-5 mt-3">
                   <div className="w-full xl:w-6/12">
-                    {/* <SelectBox value={formData.support} onChangeEvent={changeHandler} {...inputsData.support} /> */}
+                    <SelectBox value={formData.support} onChangeEvent={changeHandler} {...inputsData.support} />
                   </div>
                   <div className="w-full xl:w-6/12">
-                    {/* <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} /> */}
+                    <PriceInput value={formData.price} onChangeEvent={changeHandler} {...inputsData.price} />
                   </div>
                 </div>
-                {/* <NormalInput value={formData.time} onChangeEvent={changeHandler} {...inputsData.time} />
-                <NormalInput value={formData.fileSize} onChangeEvent={changeHandler} {...inputsData.fileSize} />
-                <Textarea value={formData.largeDes} onChangeEvent={changeHandler} {...inputsData.largeDes} /> */}
+                <NormalInput value={formData.duration} onChangeEvent={changeHandler} {...inputsData.duration} />
+                <Textarea value={formData.longDes} onChangeEvent={changeHandler} {...inputsData.longDes} />
               </div>
               {/* End of Right Side - Text form  */}
               {/* Left side - select Image */}
               <div className="left-side xl:w-4/12">
-                {/* <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} /> */}
-                {/* <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} /> */}
+                <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
+                <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
               </div>
               {/* End of Left side - select Image */}
             </section>
             {/* Buttons  */}
             <div className="buttons w-full xl:w-8/12 flex items-center gap-3">
               <div className={`w-4/12 xl:4/12 ${axiosDeleteIsPending && 'pointer-events-none'}`} >
-                <SubmitFormButton isPending={axiosPutIsPending} title={'ذخیره تغییرات'} />
+                <SubmitFormButton isPending={axiosPatchIsPending} title={'ذخیره تغییرات'} />
               </div>
-              <div className={`w-4/12 xl:4/12 ${axiosPutIsPending || axiosDeleteIsPending ? 'pointer-events-none' : ''}`} >
+              <div className={`w-4/12 xl:4/12 ${axiosPatchIsPending || axiosDeleteIsPending ? 'pointer-events-none' : ''}`} >
                 <CancelButton title='انصراف' />
               </div>
-              <div className={`w-4/12 xl:4/12 ${axiosPutIsPending && 'pointer-events-none'}`} >
-                {/* <DeleteButton onClickEvent={() => setIsShowDeleteModal(prev => !prev)} isPending={axiosDeleteIsPending} title='حذف دوره' /> */}
+              <div className={`w-4/12 xl:4/12 ${axiosPatchIsPending && 'pointer-events-none'}`} >
+                <DeleteButton onClickEvent={() => setIsShowDeleteModal(prev => !prev)} isPending={axiosDeleteIsPending} title='حذف دوره' />
               </div>
             </div>
             {/* End of Buttons  */}
@@ -376,7 +457,7 @@ export default function EditCourse() {
           <div className="w-full p-3 text-center font-bold">
             <h2 className="text-slate-800 mb-5 dark:text-slate-100">آیا دوره مورد نظر پاک شود؟</h2>
             <div className="flex items-center justify-around gap-3 w-full">
-              {/* <button onClick={() => deleteHandler()} className="bg-slate-200 text-slate-800 px-4 py-2 rounded-md w-6/12 dark:bg-slate-600 dark:text-slate-200">بله</button> */}
+              <button onClick={() => deleteHandler()} className="bg-slate-200 text-slate-800 px-4 py-2 rounded-md w-6/12 dark:bg-slate-600 dark:text-slate-200">بله</button>
               <button onClick={() => setIsShowDeleteModal(prev => !prev)} className="bg-blue-600 text-white px-4 py-2 rounded-md w-6/12">لغو</button>
             </div>
           </div>
