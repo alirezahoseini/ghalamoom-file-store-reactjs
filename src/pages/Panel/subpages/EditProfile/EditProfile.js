@@ -59,7 +59,7 @@ export default function EditProfile() {
             placeholder: 'چند خط در مورد خود بنویسید',
             required: false,
             errorMessage: 'بیوگرافی باید بین 30 الی 150 کلمه باشد',
-            pattern: '^[\\w\u0600-\u06FF\\s]{0,150}',
+            pattern: '^[\\w\u0600-\u06FF\\s]{30,150}',
             maxLength: 150,
             minLength: 30,
             rows: '2'
@@ -89,27 +89,10 @@ export default function EditProfile() {
         // image and profile background color
         if (event.bgColor) {
             setFormData({ ...formData, ...event });
-        } else if (event.target.className.includes('custom-select-box-input')) {
-            // Select boxes
-            const inputName = event.target.name;
-            const inputItems = inputsData[inputName].items;
-            const [selectedItem] = inputItems.filter(item => item.id === event.target.value)
-            setFormData({ ...formData, [event.target.name]: selectedItem })
-        } else if (event.target.type === 'number') {
-            if (event.target.value === '' || event.target.value === null) {
-                setFormData({ ...formData, [event.target.name]: null })
-            } else {
-                setFormData({ ...formData, [event.target.name]: +event.target.value })
-            }
-        } else if (event.target.name === 'bio') {
-            if (event.target.value === '' || event.target.value === null) {
-                setFormData({ ...formData, [event.target.name]: null })
-            } else {
-                setFormData({ ...formData, [event.target.name]: event.target.value })
-            }
+        } else if (event.id === 'age') {
+            setFormData({ ...formData, [event.id]: Number(event.value) });
         } else {
-            // Normal inputs
-            setFormData({ ...formData, [event.target.name]: event.target.value })
+            setFormData({ ...formData, [event.id]: event.value});
         }
     }
     // Submit form handler
