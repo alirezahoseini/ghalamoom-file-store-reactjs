@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 // hooks
 import useUserInfo from '../../../hooks/useUserInfo'
 import {bgColorsArray} from '../../../../../data/avatarsArray'
-import { useState } from 'react';
+
 
 export default function UserInfo({ isOpen, withEvent, onClickEvent }) {
   const { isPending, userInfoObj } = useUserInfo();

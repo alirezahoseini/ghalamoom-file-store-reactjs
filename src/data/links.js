@@ -55,7 +55,9 @@ const apiLinks = {
     users: 'https://ghalamoom.m0x61h0x64i.ir/users',
     courses: 'https://ghalamoom.m0x61h0x64i.ir/courses',
     artworks: 'https://ghalamoom.m0x61h0x64i.ir/artworks',
-    categories: 'https://ghalamoom.m0x61h0x64i.ir/categories'
+    categories: 'https://ghalamoom.m0x61h0x64i.ir/categories',
+    likes: 'https://ghalamoom.m0x61h0x64i.ir/likes',
+    comments: 'https://ghalamoom.m0x61h0x64i.ir/comments'
 }
 
 

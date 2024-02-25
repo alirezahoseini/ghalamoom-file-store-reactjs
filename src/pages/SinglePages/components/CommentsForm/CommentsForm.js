@@ -20,7 +20,6 @@ import CommentItem from "./CommentItem/CommentItem";
 import { Link } from "react-router-dom";
 
 export default function CommentsForm({ type, ...otherProps }) {
-  console.log(otherProps)
   const notificationDispatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl } = useAxiosGet();
   const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut()
@@ -28,12 +27,10 @@ export default function CommentsForm({ type, ...otherProps }) {
   const [resetingForm, setResetingForm] = useState(false);
   const authToken = getCooki('token');
 
-  console.log(authToken)
 
   // Loading prev comments
   const loadComments = () => {
     setAxiosGetUrl(`${apiLinks.comments}/${type}/${otherProps.id}`);
-
   }
   const addNewComment = (newComment) => {
     const newCommentsArray = [...comments, newComment];
@@ -81,6 +78,7 @@ export default function CommentsForm({ type, ...otherProps }) {
   // If loaded useAxios get ===>>> geting comments
   useEffect(() => {
     if (axiosGetResult !== null) {
+      console.log(axiosGetResult)
       setComments(axiosGetResult)
     } else if (axiosGetError !== null) {
       console.log(axiosGetError)
@@ -92,10 +90,9 @@ export default function CommentsForm({ type, ...otherProps }) {
       {/*  */}
       <div className="flex flex-col gap-5 my-5">
         {comments.length ? comments.map((comment) => (
-          // <div key={comment.id}>
-          //   <CommentItem {...comment} />
-          // </div>
-          ''
+          <div key={comment.id}>
+            <CommentItem {...comment} />
+          </div>
         )) : (
           <h2 className="font-bold text-sm text-slate-400 my-5">دیدگاهی ثبت نشده است</h2>
         )
