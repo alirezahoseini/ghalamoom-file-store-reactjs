@@ -66,7 +66,6 @@ export default function SingleProduct() {
     if (product !== null) {
       setSimpleLoadierStatus('hidde')
       setIsLoadedData(true);
-      console.log(product)
       setCrumb(prevCrumbs => [...prevCrumbs, { id: prevCrumbs.length + 1, name: product.title, path: '#' }])
     }
   }, [product])
@@ -124,7 +123,7 @@ export default function SingleProduct() {
                 {/* Sidebar */}
                 <div className="sidebar w-full lg:w-4/12 lg:px-4 flex flex-col gap-5">
                   <SingleImage image={product.image} alt={product.title} />
-                  <AddToCartBox {...product} type='product' />
+                  <AddToCartBox {...product} type='Product' />
                   <ShareBox />
                 </div>
                 {/* End of sidebar */}
@@ -132,7 +131,7 @@ export default function SingleProduct() {
               <div className='w-full lg:w-8/12 px-5'>
                 {/* Comments form */}
                 <section className="bg-white p-8 rounded-3xl my-5 lg:mt-2">
-                  {/* <CommentsForm  {...product} type={'product'} /> */}
+                  <CommentsForm  {...product} type={'Product'} />
                 </section>
                 {/* End of Comments form */}
               </div>
