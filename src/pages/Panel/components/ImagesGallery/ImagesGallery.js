@@ -14,7 +14,7 @@ export default function ImagesGallery({ images, imagePadding = 'p-3 lg:p-6' }) {
             ) : (
                 images.map(image => (
                     <div key={image.id} className={`w-6/12 lg:w-4/12 xl:w-3/12 cursor-pointer ${imagePadding}`}>
-                        <img src={image.base64} alt={image.name} className='rounded-xl hover:scale-105 hover:opacity-90' />
+                        <img src={image.image} alt={'gallery imag'} className='rounded-xl hover:scale-105 hover:opacity-90' />
                     </div>
                 ))
             )}

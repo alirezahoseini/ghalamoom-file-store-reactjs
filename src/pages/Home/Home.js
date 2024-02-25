@@ -71,7 +71,7 @@ export default function Home() {
         {/* End of Newslater form  */}
         {/* Courses Carousel  */}
         <section className='mb-8'>
-          {/* <Carousel {...sectionsData.artworks} /> */}
+          <Carousel {...sectionsData.artworks} />
         </section>
         {/* End of Courses Carousel  */}
         {/* Instagram banner  */}

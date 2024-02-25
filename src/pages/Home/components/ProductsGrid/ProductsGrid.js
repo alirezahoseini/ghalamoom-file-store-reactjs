@@ -29,7 +29,7 @@ export default function ProductsGrid(props) {
 
     useEffect(() => {
         // send request to api for get datas
-        setAxiosGetUrl(`${apiUrl}?_sort=id&_order=desc&_page=1&_limit=${limit}`)
+        setAxiosGetUrl(`${apiUrl}?_sort=id&_order=desc`)
     }, []);
 
     // 
@@ -50,7 +50,7 @@ export default function ProductsGrid(props) {
                 <NormalParagraph content={desc} />
             </div>
             <div className="wrapper flex flex-wrap pt-10">
-                {dataArray && dataArray.map(item => (
+                {dataArray && dataArray.slice(0,limit).map(item => (
                     <ProductGridItem key={item.id} {...item} type={type} />
                 ))}
             </div>

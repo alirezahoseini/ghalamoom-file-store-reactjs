@@ -1,0 +1,3 @@
+const globalAuthToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzcsImlhdCI6MTcwODYzMDk5MH0.VLAOHlXIkuE7WEbcbl3pVePJ1i542lLPhxNvPVMelfs'
+
+export default globalAuthToken

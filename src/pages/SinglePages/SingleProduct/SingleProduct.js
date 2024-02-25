@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { TbFile, TbDatabase } from 'react-icons/tb'
 import { v4 } from 'uuid'
+import globalAuthToken from '../../../data/globalAuthToken'
 
 // datas
 import { apiLinks } from '../../../data/links'
@@ -28,7 +29,7 @@ import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 
 export default function SingleProduct() {
   const notificationDispatch = useContext(NotificationContext)
-  const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
+  const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
   const [product, setProduct] = useState(null)
   const [crumb, setCrumb] = useState([
     { id: 1, name: 'خانه', path: '/' },
@@ -39,7 +40,8 @@ export default function SingleProduct() {
   const urlParams = useParams()
   // send request
   useEffect(() => {
-    setAxiosGetUrl(`${apiLinks.products}/${urlParams.productId}`)
+    setAxiosGetUrl(`${apiLinks.products}/${urlParams.productId}`);
+    setAxiosGetToken(globalAuthToken);
   }, [])
   // Result and error management
   useEffect(() => {
@@ -63,7 +65,8 @@ export default function SingleProduct() {
   useEffect(() => {
     if (product !== null) {
       setSimpleLoadierStatus('hidde')
-      setIsLoadedData(true)
+      setIsLoadedData(true);
+      console.log(product)
       setCrumb(prevCrumbs => [...prevCrumbs, { id: prevCrumbs.length + 1, name: product.title, path: '#' }])
     }
   }, [product])
@@ -89,14 +92,14 @@ export default function SingleProduct() {
                     </div>
                     <div className="mini-description">
                       <p className='text-xs lg:text-sm font-semibold text-slate-500 my-4 mx-w-full break-words' style={{ lineHeight: '36px' }} >
-                        {product.miniDes}
+                        {product.shortDes}
                       </p>
                     </div>
                     <div className="badges flex gap-2 flex-wrap items-center">
                       <LikeCounterButton type='product' {...product} />
                       <Badge title='حجم فایل:' icon={<TbDatabase />} value={product.fileSize + ' مگابایت'} />
-                      <Badge title='فرمت فایل (ها) :' icon={<TbFile />} value={product.format.name} />
-                      <DateBadge date={product.created_at} />
+                      <Badge title='فرمت فایل (ها) :' icon={<TbFile />} value={product.format} />
+                      <DateBadge date={product.createdAt} />
                     </div>
                   </section>
                   {/* End of First section --- Quick info */}
@@ -104,7 +107,7 @@ export default function SingleProduct() {
                   <section className="bg-white p-8 rounded-3xl mb-4">
                     <SecondeTitle title='توضیحات' />
                     <p className='text-xs lg:text-sm font-semibold text-slate-500 my-4 mx-w-full break-words' style={{ lineHeight: '36px' }} >
-                      {product.largeDes}
+                      {product.longDes}
                     </p>
                   </section>
                   {/* End of Seconde section --- Description */}
@@ -129,7 +132,7 @@ export default function SingleProduct() {
               <div className='w-full lg:w-8/12 px-5'>
                 {/* Comments form */}
                 <section className="bg-white p-8 rounded-3xl my-5 lg:mt-2">
-                  <CommentsForm  {...product} type={'product'} />
+                  {/* <CommentsForm  {...product} type={'product'} /> */}
                 </section>
                 {/* End of Comments form */}
               </div>

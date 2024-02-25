@@ -54,14 +54,14 @@ export default function Categories() {
             name: 'type',
             label: "نوع دسته",
             items: [
-                { name: "محصول", id: 'Product' },
-                { name: "دوره", id: 'Course' },
+                'Product',
+                'Course'
             ]
         },
     }
     const changeHandler = ({ id, value }) => {
         if (id === 'type') {
-            setFormData({ ...formData, [id]: `${value === 'محصول' ? 'Product' : 'Course'}` })
+            setFormData({ ...formData, [id]: value })
             return
         } else{
             setFormData({ ...formData, [id]: value })
