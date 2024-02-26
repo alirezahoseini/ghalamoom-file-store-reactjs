@@ -8,7 +8,7 @@ import { NotificationContext } from "../../../../Contexts/Notifications/Notifica
 import { apiLinks } from '../../../../data/links'
 
 // hooks
-import useAxiosPut from "../../../../hooks/axios/useAxiosPut";
+import useAxiosPost from "../../../../hooks/axios/useAxiosPost";
 import useAxiosGet from "../../../../hooks/axios/useAxiosGet";
 
 // utils
@@ -22,9 +22,9 @@ import { Link } from "react-router-dom";
 export default function CommentsForm({ type, ...otherProps }) {
   const notificationDispatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl } = useAxiosGet();
-  const { axiosPutResult, axiosPutIsPending, axiosPutError, setAxiosPutUrl, setAxiosPutData } = useAxiosPut()
-  const [comments, setComments] = useState([]);
+  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken } = useAxiosPost ();
   const [resetingForm, setResetingForm] = useState(false);
+  const [comments, setComments] = useState([]);
   const authToken = getCooki('token');
 
 
@@ -33,10 +33,9 @@ export default function CommentsForm({ type, ...otherProps }) {
     setAxiosGetUrl(`${apiLinks.comments}/${type}/${otherProps.id}`);
   }
   const addNewComment = (newComment) => {
-    const newCommentsArray = [...comments, newComment];
-    const newItemObject = { ...otherProps, comments: JSON.stringify(newCommentsArray) };
-    setAxiosPutUrl(`${apiLinks[`${type}s`]}/${otherProps.id}`)
-    setAxiosPutData(newItemObject)
+    setAxiosPostUrl(`${apiLinks.comments}/${type}/${otherProps.id}`)
+    setAxiosPostData(newComment);
+    setAxiosPostToken(authToken);
   }
 
   // Run component
@@ -47,9 +46,8 @@ export default function CommentsForm({ type, ...otherProps }) {
   }, []);
 
   useEffect(() => {
-    if (axiosPutResult !== null) {
-      setComments(JSON.parse(axiosPutResult.comments))
-
+    if (axiosGetResult !== null) {
+      loadComments()
       notificationDispatch({
         type: 'ADD_NOTE',
         id: v4(),
@@ -62,7 +60,7 @@ export default function CommentsForm({ type, ...otherProps }) {
       setTimeout(() => {
         setResetingForm(false);
       }, 1);
-    } else if (axiosPutError !== null) {
+    } else if (axiosPostError !== null) {
       notificationDispatch({
         type: 'ADD_NOTE',
         id: v4(),
@@ -71,14 +69,13 @@ export default function CommentsForm({ type, ...otherProps }) {
           status: 'error'
         }
       })
-      console.log(axiosPutError)
+      console.log(axiosPostError)
     }
-  }, [axiosPutResult, axiosPutError]);
+  }, [axiosPostResult, axiosPostError]);
 
   // If loaded useAxios get ===>>> geting comments
   useEffect(() => {
     if (axiosGetResult !== null) {
-      console.log(axiosGetResult)
       setComments(axiosGetResult)
     } else if (axiosGetError !== null) {
       console.log(axiosGetError)
@@ -102,7 +99,7 @@ export default function CommentsForm({ type, ...otherProps }) {
       {/*  */}
       <div className="">
         {
-          authToken && (<Form addNewComment={addNewComment} isPending={axiosPutIsPending} isResetForm={resetingForm} />)
+          authToken && (<Form addNewComment={addNewComment} isPending={axiosPostIsPending} isResetForm={resetingForm} />)
         }
         {
           authToken === null && (
