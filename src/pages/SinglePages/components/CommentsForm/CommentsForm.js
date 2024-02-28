@@ -17,12 +17,13 @@ import { getCooki } from '../../../../utils/cookis'
 // components
 import Form from "./Form"
 import CommentItem from "./CommentItem/CommentItem";
+import QuestForm from './QuestForm'
 import { Link } from "react-router-dom";
 
 export default function CommentsForm({ type, ...otherProps }) {
   const notificationDispatch = useContext(NotificationContext)
   const { axiosGetResult, axiosGetIsPending, axiosGetError, setAxiosGetUrl } = useAxiosGet();
-  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken } = useAxiosPost ();
+  const { axiosPostResult, axiosPostIsPending, axiosPostError, setAxiosPostUrl, setAxiosPostData, setAxiosPostToken } = useAxiosPost();
   const [resetingForm, setResetingForm] = useState(false);
   const [comments, setComments] = useState([]);
   const authToken = getCooki('token');
@@ -33,9 +34,13 @@ export default function CommentsForm({ type, ...otherProps }) {
     setAxiosGetUrl(`${apiLinks.comments}/${type}/${otherProps.id}`);
   }
   const addNewComment = (newComment) => {
-    setAxiosPostUrl(`${apiLinks.comments}/${type}/${otherProps.id}`)
+    if (authToken) {
+      setAxiosPostUrl(`${apiLinks.comments}/${type}/${otherProps.id}`)
+      setAxiosPostToken(authToken);
+    } else {
+      setAxiosPostUrl(`${apiLinks.comments}/guest/${type}/${otherProps.id}`)
+    }
     setAxiosPostData(newComment);
-    setAxiosPostToken(authToken);
   }
 
   // Run component
@@ -46,8 +51,8 @@ export default function CommentsForm({ type, ...otherProps }) {
   }, []);
 
   useEffect(() => {
-    if (axiosGetResult !== null) {
-      loadComments()
+    if (axiosPostResult !== null) {
+      loadComments();
       notificationDispatch({
         type: 'ADD_NOTE',
         id: v4(),
@@ -103,13 +108,7 @@ export default function CommentsForm({ type, ...otherProps }) {
         }
         {
           authToken === null && (
-            <div className="relative">
-              <div className="pointer-events-none"><Form /></div>
-              <div className="flex items-center justify-center flex-col absolute w-full h-full bg-white top-0 backdrop-blur-sm bg-opacity-10">
-                <p className="font-bold text-[16px]">برای ثبت دیدگاه باید وارد حساب کاربری خود شوید</p>
-                <Link to={'/panel'} className="bg-blue-500 px-4 py-2 mt-4 rounded-lg text-white hover:bg-gray-600" >ورود | عضویت</Link>
-              </div>
-            </div>
+            <QuestForm addNewComment={addNewComment} isPending={axiosPostIsPending} isResetForm={resetingForm} />
           )
         }
       </div>
