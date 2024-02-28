@@ -95,7 +95,7 @@ export default function SingleProduct() {
                       </p>
                     </div>
                     <div className="badges flex gap-2 flex-wrap items-center">
-                      <LikeCounterButton type='product' {...product} />
+                      <LikeCounterButton type='Product' {...product} />
                       <Badge title='حجم فایل:' icon={<TbDatabase />} value={product.fileSize + ' مگابایت'} />
                       <Badge title='فرمت فایل (ها) :' icon={<TbFile />} value={product.format} />
                       <DateBadge date={product.createdAt} />
