@@ -6,13 +6,13 @@ import useAxiosGet from '../../../../hooks/axios/useAxiosGet'
 // datas
 import { apiLinks } from '../../../../data/links'
 
-const NextAndPrevPostsButtons = memo(({ title, type, itemId }) => {
+const NextAndPrevPostsButtons = memo(({ title, type, itemId, setLoading }) => {
     const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
-    const [currentItemId, setCurrentItemId] = useState(itemId)
-    const [itemsArray, setItemsArray] = useState()
-    const [nextItem, setNextItem] = useState()
-    const [prevItem, setPrevItem] = useState()
-    const [isLoading, setIsLoading] = useState(true)
+    const [currentItemId, setCurrentItemId] = useState(itemId);
+    const [itemsArray, setItemsArray] = useState();
+    const [nextItem, setNextItem] = useState();
+    const [prevItem, setPrevItem] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
     const findPrevAndNextItems = () => {
         const currentIndex = itemsArray.findIndex(item => item.id === currentItemId);
@@ -50,7 +50,7 @@ const NextAndPrevPostsButtons = memo(({ title, type, itemId }) => {
         <div id='next-prev-buttons' className='flex items-center justify-between py-2 my-8 w-full gap-2 '>
             <div className={`prev-button ${isLoading ? 'w-6/12 h-20 loading' : ''}`}>
                 {prevItem && (
-                    <Link to={`/${type}s/${prevItem.id}`}>
+                    <Link to={`/${type}s/${prevItem.id}`} onClick={() => setLoading('loading')}>
                         <div className='flex items-center gap-2 hover:translate-x-1'>
                             <TbChevronRight className='text-3xl text-slate-400' />
                             <div className='flex flex-col items-start'>
@@ -68,7 +68,7 @@ const NextAndPrevPostsButtons = memo(({ title, type, itemId }) => {
             <div className='h-10  bg-custom-gold-100 inline-block' style={{ width: '2px' }}> </div>
             <div className={`prev-button ${isLoading ? 'w-6/12 h-20 loading' : ''}`}>
                 {nextItem && (
-                    <Link to={`/${type}s/${nextItem.id}`}>
+                    <Link to={`/${type}s/${nextItem.id}`} onClick={() => setLoading('loading')}>
                         <div className='flex items-center gap-2 hover:-translate-x-1'>
                             <div className='flex flex-col items-end'>
                                 <span className='text-xs text-slate-400'>

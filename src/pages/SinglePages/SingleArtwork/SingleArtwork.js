@@ -8,7 +8,9 @@ import { v4 } from 'uuid'
 import { NotificationContext } from '../../../Contexts/Notifications/NotificationProvider'
 
 // datas
-import { apiLinks } from '../../../data/links'
+import { apiLinks } from '../../../data/links';
+import globalAuthToken from '../../../data/globalAuthToken';
+import loaderSvg from '../../../assets/images/simple-loader.svg'
 
 // hooks
 import useAxiosGet from '../../../hooks/axios/useAxiosGet'
@@ -27,23 +29,28 @@ import NextAndPrevPostsButtons from '../components/NextAndPrevPostsButtons/NextA
 
 export default function SingleArtwork() {
     const notificationDispatch = useContext(NotificationContext)
-    const { axiosGetResult, axiosGetError, setAxiosGetUrl } = useAxiosGet();
+    const { axiosGetResult, axiosGetError, setAxiosGetUrl, setAxiosGetToken } = useAxiosGet();
     const [artwork, setArtwork] = useState(null)
     const [simpleloadierStatus, setSimpleLoadierStatus] = useState('load');
     const [isLoadedData, setIsLoadedData] = useState(false);
-    const [createdDate, setCreatedDate] = useState()
+    const [createdDate, setCreatedDate] = useState();
     const urlParams = useParams();
+    //Paginate loader states
+    /*
+    Status : load , loading
+    */
+    const [paginateLoaderStatus, setPaginateLoaderStatus] = useState('load');
+
     // send request
     useEffect(() => {
         setAxiosGetUrl(`${apiLinks.artworks}/${urlParams.artworkId}`);
+        setAxiosGetToken(globalAuthToken)
     }, [urlParams])
     // Result and error management
     useEffect(() => {
         if (axiosGetResult !== null) {
             // set data to state
             setArtwork(axiosGetResult);
-            // created time
-            accessTime(axiosGetResult.created_at)
         } else if (axiosGetError !== null) {
             if (axiosGetError.status === 404) {
                 notificationDispatch({
@@ -61,20 +68,38 @@ export default function SingleArtwork() {
 
     useEffect(() => {
         if (artwork !== null) {
-            setSimpleLoadierStatus('hidde')
-            setIsLoadedData(true)
+            // created time
+            accessTime();
+            // Hide loader
+            setSimpleLoadierStatus('hidde');
+            setIsLoadedData(true);
+            setPaginateLoaderStatus('load')
         }
     }, [artwork])
 
-    const accessTime = (time) => {
-        const now = new Date();
-        now.setTime(Number(time))
+    const accessTime = () => {
+        const now = new Date(artwork.createdAt);
         setCreatedDate(now.toLocaleDateString('fa-IR'))
     }
 
     return (
         <>
-            <div id='single-artwork'>
+            <div id='single-artwork' className=' relative'>
+                {/* Start paginate loader  */}
+                {paginateLoaderStatus === 'loading' && (
+                    <div className="paginate-loader w-full h-full bg-white fixed z-[100] top-0 right-0 bg-opacity-10 backdrop-blur-md flex items-center justify-center">
+                        <div className='bg-white rounded-lg px-10 py-4 flex flex-col items-center justify-center gap-3 shadow-both-2'>
+                            <img src={loaderSvg} className='w-16 block' alt="" />
+
+                            <p>
+                                درحال بارگزاری...
+                            </p>
+                        </div>
+                    </div>
+                )}
+                {/* End of paginate loader  */}
+
+                {/* Main content  */}
                 <div className="container mx-auto">
                     {!isLoadedData && <SimpleDataLoader status={simpleloadierStatus} />}
                     {isLoadedData && (
@@ -108,7 +133,7 @@ export default function SingleArtwork() {
                                         {/* Share box  */}
                                         <div className="share-box bg-white p-4 rounded-xl flex flex-col justify-center lg:flex-row gap-5 lg:gap-0">
                                             <div className='flex items-center justify-center gap-3 w-full lg:w-6/12'>
-                                                <LikeCounterButton type='artwork' {...artwork} />
+                                                <LikeCounterButton type='ArtWork' {...artwork} />
                                                 <Badge title="تاریخ اجرا:" icon={<TbCalendarMinus />} value={artwork.runTime} />
                                             </div>
                                             <div className='w-full lg:w-6/12'>
@@ -117,7 +142,7 @@ export default function SingleArtwork() {
                                         </div>
                                         {/* End of Share box  */}
                                         <div className="w-full">
-                                            <NextAndPrevPostsButtons title={'نمونه کار'} type={'artwork'} itemId={artwork.id} />
+                                            <NextAndPrevPostsButtons setLoading={setPaginateLoaderStatus} title={'نمونه کار'} type={'artwork'} itemId={artwork.id} />
                                         </div>
                                     </div>
                                     {/* End of Artwork body  */}
@@ -132,7 +157,7 @@ export default function SingleArtwork() {
                                 {/* Comments form */}
                                 <div className='px-5'>
                                     <section className="bg-white p-8 rounded-3xl my-5 lg:mt-2">
-                                        <CommentsForm  {...artwork} type={'artwork'} />
+                                        <CommentsForm  {...artwork} type={'ArtWork'} />
                                     </section>
                                 </div>
                                 {/* End of Comments form */}
@@ -140,6 +165,7 @@ export default function SingleArtwork() {
                         </>
                     )}
                 </div>
+                {/* Main content  */}
             </div>
         </>
     )
