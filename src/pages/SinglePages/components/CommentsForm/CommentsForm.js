@@ -38,6 +38,7 @@ export default function CommentsForm({ type, ...otherProps }) {
       setAxiosPostUrl(`${apiLinks.comments}/${type}/${otherProps.id}`)
       setAxiosPostToken(authToken);
     } else {
+      console.log('quest user')
       setAxiosPostUrl(`${apiLinks.comments}/guest/${type}/${otherProps.id}`)
     }
     setAxiosPostData(newComment);

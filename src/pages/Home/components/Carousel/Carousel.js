@@ -137,7 +137,7 @@ export default function Carousel(props) {
               {
                 dataArray !== undefined && (
                   dataArray.map(item => (
-                    <SwiperSlide key={item.id}  >
+                    <SwiperSlide key={item._id}  >
                       {type === 'course' && <CarouselCourseItem {...item} type={type} />}
                       {type === 'artwork' && <CarouselArtworkItem {...item} type={type} />}
                     </SwiperSlide>

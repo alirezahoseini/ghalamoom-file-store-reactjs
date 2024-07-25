@@ -48,6 +48,7 @@ export default function Home() {
     }
   }
 
+
   return (
     <>
       <div id='home-page' className='mx-auto container' >
@@ -57,14 +58,14 @@ export default function Home() {
         </section>
         {/* End of Starter Baner  */}
         {/* Courses Carousel  */}
-        <section className='mb-8'>
+        {/* <section className='mb-8'>
           <Carousel {...sectionsData.courses} />
-        </section>
+        </section> */}
         {/* End of Courses Carousel  */}
         {/* Products grid */}
-        <section className='mb-8'>
+        {/* <section className='mb-8'>
           <ProductsGrid {...sectionsData.products} />
-        </section>
+        </section> */}
         {/* End of Products grid */}
         {/* Newslater form  */}
         <NewslaterForm />

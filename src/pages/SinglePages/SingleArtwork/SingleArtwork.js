@@ -88,10 +88,10 @@ export default function SingleArtwork() {
                 {/* Start paginate loader  */}
                 {paginateLoaderStatus === 'loading' && (
                     <div className="paginate-loader w-full h-full bg-white fixed z-[100] top-0 right-0 bg-opacity-10 backdrop-blur-md flex items-center justify-center">
-                        <div className='bg-white rounded-lg px-10 py-4 flex flex-col items-center justify-center gap-3 shadow-both-2'>
-                            <img src={loaderSvg} className='w-16 block' alt="" />
+                        <div className='bg-white rounded-lg px-10 py-3 flex flex-col items-center justify-center gap-3 shadow-both-2'>
+                            <img src={loaderSvg} className='w-[50px] block' alt="" />
 
-                            <p>
+                            <p className='font-sm'>
                                 درحال بارگزاری...
                             </p>
                         </div>

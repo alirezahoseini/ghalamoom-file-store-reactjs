@@ -9,7 +9,8 @@ import ShoppingCartProvider from './Contexts/ShopipingCart/ShoppingCartProvider'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <BrowserRouter basename='/projects/react/ghalamoom' >
+    // <BrowserRouter basename='/projects/react/ghalamoom' >
+    <BrowserRouter basename='/' >
         <NotificationProvider>
             <ShoppingCartProvider>
                 <App />
