@@ -12,6 +12,7 @@ const dynamicLinks = {
     videos: '/blog/video',
     cast: '/blog/cast',
     panel: '/panel',
+    upload: '/api/upload',
 }
 
 // Header Links 
@@ -57,7 +58,20 @@ const apiLinks = {
     artworks: 'http://localhost:3000/api/artworks',
     categories: 'https://ghalamoom.m0x61h0x64i.ir/categories',
     likes: 'https://ghalamoom.m0x61h0x64i.ir/likes',
-    comments: 'https://ghalamoom.m0x61h0x64i.ir/comments'
+    comments: 'https://ghalamoom.m0x61h0x64i.ir/comments',
+
+    /* New backend from Next js */
+    // products: 'http://localhost:3000/api/products',
+    // login: 'http://localhost:3000/api/login',
+    // signup: 'http://localhost:3000/api/signup',
+    // users: 'http://localhost:3000/api/users',
+    // courses: 'http://localhost:3000/api/courses',
+    // artworks: 'http://localhost:3000/api/artworks',
+    // categories: 'http://localhost:3000/api/categories',
+    // likes: 'http://localhost:3000/api/likes',
+    // comments: 'http://localhost:3000/api/comments',
+    // upload: 'http://localhost:3000/api/upload'
+    upload: 'https://ghalamoom-next-api.onrender.com/api/upload'
 }
 
 

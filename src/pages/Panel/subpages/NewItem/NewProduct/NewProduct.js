@@ -287,8 +287,8 @@ export default function NewProduct() {
             {/* End of Right Side - Text form  */}
             {/* Left side - select Image */}
             <div className="left-side xl:w-4/12">
-              <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
-              <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
+              <ImageInput defaultImage={formData.image} onChangeHandler={changeHandler} {...inputsData.image} />
+              <MultipleImageInput defaultImages={formData.gallery} onChangeHandler={galleryChangeHandler} {...inputsData.gallery} />
             </div>
             {/* End of Left side - select Image */}
           </section>

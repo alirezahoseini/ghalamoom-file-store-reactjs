@@ -16,21 +16,21 @@ export default function CarouselArtworkItem(props) {
         image,
         title,
         runTime,
-        miniDes,
-        id,
+        description,
+        _id,
         type
     } = props
     return (
         <div className={`carousel-artwork-item pt-20 px-3`}>
             <div className="wrapper bg-white rounded-xl relative">
-                <Link to={`/${type}s/${id}`} className='w-full'>
+                <Link to={`/${type}s/${_id}`} className='w-full'>
                     <img src={image ? image : defaultImage[0]} alt={title} className='mx-auto rounded-xl relative -top-10 shadow-both-2' style={{ width: '93%' }} />
                 </Link>
                 <div className="flex flex-col px-5 -mt-4">
-                    <Link to={`/${type}s/${id}`}>
+                    <Link to={`/${type}s/${_id}`}>
                         <Title title={title} />
                     </Link>
-                    <Paragraph content={miniDes} maxLength={120} />
+                    <Paragraph content={description} maxLength={120} />
                     <div className='flex items-center gap-3 justify-start mt-6 mb-3 w-full'>
                         <LikeCounterButton {...props} type={type} />
                         <Badge title={runTime} />

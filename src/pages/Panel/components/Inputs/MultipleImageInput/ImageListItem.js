@@ -1,6 +1,6 @@
 import { TbTrash } from 'react-icons/tb';
 export default function ImageListItem({ image, onDeleteFunc }) {
-    const imageId = image.slice(47, ).split('.')[0]
+    const imageId = image.split('_')[1].split('.')[0];
     return (
         <div className="w-1/2  inline-flex p-2 ">
             <div onClick={() => onDeleteFunc(imageId)} className='rounded-md overflow-hidden bg-white dark:bg-slate-700 relative '>

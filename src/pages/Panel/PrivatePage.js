@@ -5,17 +5,17 @@ import { useNavigate } from 'react-router-dom'
 import { getCooki } from '../../utils/cookis'
 
 export default function PrivatePage({ children }) {
-    const navegate = useNavigate()
-    const checkLogin = async () => {
-        const cookiValue = await getCooki('token')
-        if (cookiValue === null) {
-            navegate('/login')
-        }return
-    }
-    useEffect(() => {
+    // const navegate = useNavigate()
+    // const checkLogin = async () => {
+    //     const cookiValue = await getCooki('token')
+    //     if (cookiValue === null) {
+    //         navegate('/login')
+    //     }return
+    // }
+    // useEffect(() => {
 
-        checkLogin()
-    })
+    //     checkLogin()
+    // })
     return (
         <>
         {children}

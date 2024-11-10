@@ -18,7 +18,7 @@ const CarouselCourseItem = memo((props) => {
     price,
     duration,
     shortDes,
-    id,
+    _id,
     type
   } = props;
 
@@ -26,7 +26,7 @@ const CarouselCourseItem = memo((props) => {
   return (
     <div className={`carousel-course-item px-3 pt-20`}>
       <div className="wrapper bg-white rounded-xl pb-3">
-        <Link to={`/${type}s/${id}`}>
+        <Link to={`/${type}s/${_id}`}>
           <CourseImageBox
             image={image}
             level={level}
@@ -35,7 +35,7 @@ const CarouselCourseItem = memo((props) => {
           />
         </Link>
         <div className="flex flex-col px-5 mb-3 gap-3">
-          <Link to={`/${type}s/${id}`}>
+          <Link to={`/${type}s/${_id}`}>
             <Title title={title} />
           </Link>
           <Paragraph content={shortDes} maxLength={120} />
@@ -46,7 +46,7 @@ const CarouselCourseItem = memo((props) => {
             </div>
             <PriceBadge price={price} />
           </div>
-          <Link to={`/${type}s/${id}`} className='w-full'>
+          <Link to={`/${type}s/${_id}`} className='w-full'>
             <button className='flex items-center justify-center font-bold text-slate-500 w-full border-2 py-3 rounded-md gap-2 hover:bg-blue-600 hover:text-white hover:border-blue-600'>
               <span>
                 مشاهده اطلاعات بیشتر
