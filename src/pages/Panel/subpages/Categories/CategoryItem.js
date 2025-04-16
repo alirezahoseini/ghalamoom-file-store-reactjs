@@ -1,9 +1,9 @@
 import React from 'react'
 import { FiTrash2 } from "react-icons/fi";
 
-function CategoryItem({id, name, type, deleteItem}) {
+function CategoryItem({_id, name, type, deleteItem}) {
     const clickHandler = () => {
-        deleteItem(id)
+        deleteItem(_id)
     }
   return (
     <div className='flex gap-2 my-2 p-3 hover:bg-slate-50 dark:hover:bg-slate-900 items-center rounded-xl'>
