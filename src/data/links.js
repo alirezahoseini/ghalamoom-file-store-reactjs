@@ -34,16 +34,26 @@ const navigaitionLinks = [
 const apiLinks = {
 
     /* New backend from Next js */
-    products: 'http://localhost:3000/api/products',
-    login: 'http://localhost:3000/api/login',
-    signup: 'http://localhost:3000/api/signup',
-    users: 'http://localhost:3000/api/users',
-    courses: 'http://localhost:3000/api/courses',
-    artworks: 'http://localhost:3000/api/artworks',
-    categories: 'http://localhost:3000/api/categories',
-    likes: 'http://localhost:3000/api/likes',
-    comments: 'http://localhost:3000/api/comments',
-    upload: 'http://localhost:3000/api/upload'
+    // products: 'http://localhost:3000/api/products',
+    // login: 'http://localhost:3000/api/login',
+    // signup: 'http://localhost:3000/api/signup',
+    // users: 'http://localhost:3000/api/users',
+    // courses: 'http://localhost:3000/api/courses',
+    // artworks: 'http://localhost:3000/api/artworks',
+    // categories: 'http://localhost:3000/api/categories',
+    // likes: 'http://localhost:3000/api/likes',
+    // comments: 'http://localhost:3000/api/comments',
+
+    /* Online backend */
+    products: 'https://ghalamoom-next-api.vercel.app/api/products',
+    login: 'https://ghalamoom-next-api.vercel.app/api/login',
+    signup: 'https://ghalamoom-next-api.vercel.app/api/signup',
+    users: 'https://ghalamoom-next-api.vercel.app/api/users',
+    courses: 'https://ghalamoom-next-api.vercel.app/api/courses',
+    artworks: 'https://ghalamoom-next-api.vercel.app/api/artworks',
+    categories: 'https://ghalamoom-next-api.vercel.app/api/categories',
+    likes: 'https://ghalamoom-next-api.vercel.app/api/likes',
+    comments: 'https://ghalamoom-next-api.vercel.app/api/comments',
 }
 
 

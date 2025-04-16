@@ -293,6 +293,7 @@ export default function NewCourse() {
   // Run get categoreis
   useEffect(() => {
     if (axiosGetResult !== null) {
+      console.log(axiosGetResult);
       let newCategoreisArray = [];
       axiosGetResult.forEach(item => {
         newCategoreisArray = [...newCategoreisArray, item.name]
