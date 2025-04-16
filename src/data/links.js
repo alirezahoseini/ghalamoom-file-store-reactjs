@@ -33,45 +33,17 @@ const navigaitionLinks = [
 
 const apiLinks = {
 
-    /* Render.com */
-    // products: 'https://ghalamoom-backend-jsonserver.onrender.com/products',
-    // login: 'https://ghalamoom-backend-jsonserver.onrender.com/login',
-    // signup: 'https://ghalamoom-backend-jsonserver.onrender.com/register',
-    // users: 'https://ghalamoom-backend-jsonserver.onrender.com/users',
-    // courses: 'https://ghalamoom-backend-jsonserver.onrender.com/courses',
-    // artworks: 'https://ghalamoom-backend-jsonserver.onrender.com/artworks',
-
-    /* Localhost */
-    // products: 'http://localhost:5000/products',
-    // login: 'http://localhost:5000/login',
-    // signup: 'http://localhost:5000/register',
-    // users: 'http://localhost:5000/users',
-    // courses: 'http://localhost:5000/courses',
-    // artworks: 'http://localhost:5000/artworks'
-
-    /* New backend from m0x1h0x64i */
-    products: 'https://ghalamoom.m0x61h0x64i.ir/products',
-    login: 'https://ghalamoom.m0x61h0x64i.ir/login',
-    signup: 'https://ghalamoom.m0x61h0x64i.ir/signup',
-    users: 'https://ghalamoom.m0x61h0x64i.ir/users',
-    courses: 'https://ghalamoom.m0x61h0x64i.ir/courses',
-    artworks: 'http://localhost:3000/api/artworks',
-    categories: 'https://ghalamoom.m0x61h0x64i.ir/categories',
-    likes: 'https://ghalamoom.m0x61h0x64i.ir/likes',
-    comments: 'https://ghalamoom.m0x61h0x64i.ir/comments',
-
     /* New backend from Next js */
-    // products: 'http://localhost:3000/api/products',
-    // login: 'http://localhost:3000/api/login',
-    // signup: 'http://localhost:3000/api/signup',
-    // users: 'http://localhost:3000/api/users',
-    // courses: 'http://localhost:3000/api/courses',
-    // artworks: 'http://localhost:3000/api/artworks',
-    // categories: 'http://localhost:3000/api/categories',
-    // likes: 'http://localhost:3000/api/likes',
-    // comments: 'http://localhost:3000/api/comments',
-    // upload: 'http://localhost:3000/api/upload'
-    upload: 'https://ghalamoom-next-api.onrender.com/api/upload'
+    products: 'http://localhost:3000/api/products',
+    login: 'http://localhost:3000/api/login',
+    signup: 'http://localhost:3000/api/signup',
+    users: 'http://localhost:3000/api/users',
+    courses: 'http://localhost:3000/api/courses',
+    artworks: 'http://localhost:3000/api/artworks',
+    categories: 'http://localhost:3000/api/categories',
+    likes: 'http://localhost:3000/api/likes',
+    comments: 'http://localhost:3000/api/comments',
+    upload: 'http://localhost:3000/api/upload'
 }
 
 

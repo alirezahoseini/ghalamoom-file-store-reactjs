@@ -17,13 +17,13 @@ import useAxiosDelete from "../../../../../hooks/axios/useAxiosDelete";
 // components
 import NormalInput from "../../../components/Inputs/NormalInput";
 import Textarea from "../../../components/Inputs/Textarea";
-import ImageInput from "../../../components/Inputs/ImageInput/ImageInput";
+import ImageUploader from "../../../components/ImageUploader/ImageUploader";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import SimpleDataLoader from '../../../../../components/ui/SimpleDataLoader/SimpleDataLoader'
 import Modal from '../../../../../components/ui/Modal'
-import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
+import MultipleImageUploader from '../../../components/MultipleImageUploader/MultipleImageUploader';
 
 
 export default function EditArtwork() {
@@ -84,6 +84,9 @@ export default function EditArtwork() {
   }
   const galleryChangeHandler = (images) => {
     setFormData({ ...formData, gallery: images })
+  }
+  const handleImageUpload = (imageUrl) => {
+    setFormData({ ...formData, image: imageUrl })
   }
   const submitHandler = (event) => {
     event.preventDefault();
@@ -200,8 +203,14 @@ export default function EditArtwork() {
               {/* End of Right Side - Text form  */}
               {/* Left side - select Image */}
               <div className="left-side xl:w-4/12">
-                <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image} />
-                <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
+                <ImageUploader 
+                  existingImage={formData.image} 
+                  onImageUpload={handleImageUpload}
+                />
+                <MultipleImageUploader
+                  existingImages={formData.gallery}
+                  onImagesUpload={galleryChangeHandler}
+                />
               </div>
               {/* End of Left side - select Image */}
             </section>

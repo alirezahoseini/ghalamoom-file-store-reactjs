@@ -16,10 +16,10 @@ import useAxiosPost from "../../../../../hooks/axios/useAxiosPost";
 // components
 import NormalInput from "../../../components/Inputs/NormalInput";
 import Textarea from "../../../components/Inputs/Textarea";
-import ImageInput from "../../../components/Inputs/ImageInput/ImageInput";
+import ImageUploader from "../../../components/ImageUploader/ImageUploader";
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
-import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
+import MultipleImageUploader from "../../../components/MultipleImageUploader/MultipleImageUploader";
 
 export default function NewArtwork() {
     const notificationDispatch = useContext(NotificationContext);
@@ -77,10 +77,15 @@ export default function NewArtwork() {
     }
     const changeHandler = ({ id, value }) => {
         setFormData({ ...formData, [id]: value })
-      }
-      const galleryChangeHandler = (images) => {
+    }
+
+    const handleImageUpload = (imageUrl) => {
+        setFormData({ ...formData, image: imageUrl })
+    }
+
+    const galleryChangeHandler = (images) => {
         setFormData({ ...formData, gallery: images })
-      }
+    }
     const submitHandler = (event) => {
         event.preventDefault();
         if (formData.gallery < 1) {
@@ -138,8 +143,14 @@ export default function NewArtwork() {
                         {/* End of Right Side - Text form  */}
                         {/* Left side - select Image */}
                         <div className="left-side xl:w-4/12">
-                            <ImageInput defaultImage={formData.image} onChnageHandler={changeHandler} {...inputsData.image}/>
-                            <MultipleImageInput defaultImages={formData.gallery} onChnageHandler={galleryChangeHandler} {...inputsData.gallery} />
+                            <ImageUploader 
+                                existingImage={formData.image} 
+                                onImageUpload={handleImageUpload}
+                            />
+                            <MultipleImageUploader
+                                existingImages={formData.gallery}
+                                onImagesUpload={galleryChangeHandler}
+                            />
                         </div>
                         {/* End of Left side - select Image */}
                     </section>

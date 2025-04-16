@@ -23,7 +23,7 @@ import Badge from '../../../components/ui/Badge/Badge'
 import LikeCounterButton from '../../../components/ui/LikeCounterButton/LikeCounterButton'
 import CommentsForm from '../components/CommentsForm/CommentsForm'
 import SocialIcons from '../components/ShareBox/SocialIcons'
-import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
+// import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 import Paragraph from '../components/Paragraph/Paragraph'
 import NextAndPrevPostsButtons from '../components/NextAndPrevPostsButtons/NextAndPrevPostsButtons'
 
@@ -151,7 +151,7 @@ export default function SingleArtwork() {
                                 <div id="artwork-gallery" className='mt-8 px-3 lg:px-0'>
                                     <div className='w-36 h-1 bg-custom-gold-100 mt-8'></div>
                                     <Title title='تصاویر بیشتر' customClass={'text-right my-8'} />
-                                    <ImagesGallery images={artwork.gallery} />
+                                    {/* <ImagesGallery images={artwork.gallery} /> */}
                                 </div>
                                 {/* End of Artwork gallery  */}
                                 {/* Comments form */}

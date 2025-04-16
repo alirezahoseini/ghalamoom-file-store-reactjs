@@ -18,10 +18,10 @@ import Textarea from "../../../components/Inputs/Textarea";
 import InStockRadio from "../../../components/Inputs/InStockRadio";
 import SelectBox from "../../../components/Inputs/SelectBox";
 import PriceInput from "../../../components/Inputs/PriceInput";
-import ImageInput from "../../../components/Inputs/ImageInput/ImageInput";
+import ImageUploader from '../../../components/ImageUploader/ImageUploader';
 import SubmitFormButton from "../../components/Buttons/SubmitFormButton";
 import CancelButton from "../../components/Buttons/CancelButton";
-import MultipleImageInput from "../../../components/Inputs/MultipleImageInput/MultipleImageInput";
+import MultipleImageUploader from '../../../components/MultipleImageUploader/MultipleImageUploader';
 
 export default function NewProduct() {
   const notificationDispatch = useContext(NotificationContext)
@@ -140,9 +140,15 @@ export default function NewProduct() {
     }
     setFormData({ ...formData, [id]: value })
   }
+
+  const handleImageUpload = (imageUrl) => {
+    setFormData({ ...formData, image: imageUrl })
+  }
+
   const galleryChangeHandler = (images) => {
     setFormData({ ...formData, gallery: images })
   }
+
   const submitHandler = (event) => {
     event.preventDefault();
     if (formData.gallery < 1) {
@@ -287,8 +293,14 @@ export default function NewProduct() {
             {/* End of Right Side - Text form  */}
             {/* Left side - select Image */}
             <div className="left-side xl:w-4/12">
-              <ImageInput defaultImage={formData.image} onChangeHandler={changeHandler} {...inputsData.image} />
-              <MultipleImageInput defaultImages={formData.gallery} onChangeHandler={galleryChangeHandler} {...inputsData.gallery} />
+              <ImageUploader 
+                existingImage={formData.image}
+                onImageUpload={handleImageUpload}
+              />
+              <MultipleImageUploader
+                existingImages={formData.gallery}
+                onImagesUpload={galleryChangeHandler}
+              />
             </div>
             {/* End of Left side - select Image */}
           </section>

@@ -32,7 +32,7 @@ import ShareBox from '../components/ShareBox/ShareBox';
 import Paragraph from '../components/Paragraph/Paragraph'
 import TrustBadgesBox from '../components/TrustBadgesBox/TrustBadgesBox'
 import TelegramSupportBanner from '../components/TelegramSupportBanner/TelegramSupportBanner'
-import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
+// import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 
 export default function SingleCourse() {
     const notificationDispatch = useContext(NotificationContext)
@@ -156,7 +156,7 @@ export default function SingleCourse() {
                                     <section className="bg-white p-3 rounded-3xl mb-4">
                                         <SecondeTitle title='تصاویر بیشتر' />
                                         <div className='w-full'>
-                                            <ImagesGallery images={course.gallery} imagePadding={'p-3 lg:p-4'} />
+                                            {/* <ImagesGallery images={course.gallery} imagePadding={'p-3 lg:p-4'} /> */}
                                         </div>
                                     </section>
                                     {/* End of Fourth section --- Description */}

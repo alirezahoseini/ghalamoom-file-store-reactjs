@@ -25,7 +25,7 @@ import LikeCounterButton from '../../../components/ui/LikeCounterButton/LikeCoun
 import SecondeTitle from '../components/SecondeTitle/SecondeTitle'
 import CommentsForm from '../components/CommentsForm/CommentsForm'
 import ShareBox from '../components/ShareBox/ShareBox'
-import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
+// import ImagesGallery from '../../Panel/components/ImagesGallery/ImagesGallery'
 
 export default function SingleProduct() {
   const notificationDispatch = useContext(NotificationContext)
@@ -114,7 +114,7 @@ export default function SingleProduct() {
                   <section className="bg-white p-8 rounded-3xl mb-4">
                     <SecondeTitle title='تصاویر بیشتر' />
                     <div className='w-full'>
-                      <ImagesGallery images={product.gallery} imagePadding={'p-3 lg:p-4'} />
+                      {/* <ImagesGallery images={product.gallery} imagePadding={'p-3 lg:p-4'} /> */}
                     </div>
                   </section>
                   {/* End of Third section --- Description */}
